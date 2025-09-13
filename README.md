@@ -92,10 +92,12 @@ Once configured, the SitePaige MCP server provides two main tools:
 
 ### 1. Generate Site
 
-Generate a complete web application from a natural language prompt:
+Generate a web application from natural language prompts:
 
 ```
-"Use sitepaige to generate a modern e-commerce website for selling handmade jewelry with product catalog, shopping cart, and checkout"
+First: "Use sitepaige to generate a modern e-commerce website for selling handmade jewelry with product catalog, shopping cart, and checkout"
+
+Second: Build out all routes and views from the prompts provided in the code
 ```
 
 The tool will:
