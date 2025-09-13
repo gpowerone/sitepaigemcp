@@ -18,6 +18,18 @@ Quickly transform your ideas into web applications with Sitepaige. Every generat
 
 ## Installation Methods
 
+### Install from NPM (Recommended)
+
+The easiest way to install the SitePaige MCP server is via NPM:
+
+```bash
+# Global installation (recommended)
+npm install -g sitepaige-mcp-server
+
+# Or install locally in your project
+npm install sitepaige-mcp-server
+```
+
 ### Install from Source
 
 1. Clone the repository:
@@ -46,6 +58,23 @@ npm run build
 
 2. Add the SitePaige MCP server to the `mcpServers` section:
 
+#### For NPM Installation:
+```json
+{
+  "mcpServers": {
+    "sitepaige": {
+      "command": "npx",
+      "args": ["sitepaige-mcp-server"],
+      "env": {
+        "SITEPAIGE_API_KEY": "your-api-key-here",
+        "SITEPAIGE_ALLOWED_ROOTS": "/Users/yourusername/Projects"
+      }
+    }
+  }
+}
+```
+
+#### For Source Installation:
 ```json
 {
   "mcpServers": {
@@ -65,6 +94,12 @@ npm run build
 
 Refer to your MCP client's documentation for specific configuration steps. The key parameters are:
 
+#### For NPM Installation:
+- **Command**: `npx sitepaige-mcp-server` 
+- **Type**: stdio
+- **Environment Variables**: See below
+
+#### For Source Installation:
 - **Command**: `node /path/to/dist/index.js` 
 - **Type**: stdio
 - **Environment Variables**: See below

@@ -1,6 +1,6 @@
 {
   "name": "sitepaige-mcp-server",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "MCP server for generating complete web applications using SitePaige AI",
   "keywords": ["mcp", "model-context-protocol", "ai", "website-generator", "sitepaige", "code-generation"],
