@@ -1,0 +1,53 @@
+{
+  "name": "sitepaige-mcp-server",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "MCP server for generating complete web applications using SitePaige AI",
+  "keywords": ["mcp", "model-context-protocol", "ai", "website-generator", "sitepaige", "code-generation"],
+  "author": "SitePaige Team",
+  "license": "MIT",
+  "homepage": "https://github.com/sitepaige/sitepaige-mcp-server#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sitepaige/sitepaige-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sitepaige/sitepaige-mcp-server/issues"
+  },
+  "main": "dist/index.js",
+  "bin": {
+    "sitepaige-mcp-server": "dist/index.js"
+  },
+  "files": [
+    "dist/",
+    "components/",
+    "defaultapp/",
+    "manifest.json",
+    "README.md",
+    "INSTALL.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && npm run copy-assets",
+    "copy-assets": "npm run copy-components && npm run copy-templates && npm run copy-defaultapp",
+    "copy-components": "mkdir -p dist/components && cp -r components/* dist/components/",
+    "copy-templates": "mkdir -p dist/generators && cp src/generators/*.txt src/generators/*.md dist/generators/ 2>/dev/null || true",
+    "copy-defaultapp": "mkdir -p dist && cp -r defaultapp dist/",
+    "start": "node dist/index.js",
+    "dev": "tsx src/index.ts"
+  },
+  "engines": {
+    "node": ">=18.17"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.17.5",
+    "undici": "^6.19.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "@types/node": "^22.7.7",
+    "tsx": "^4.19.1"
+  }
+}
+

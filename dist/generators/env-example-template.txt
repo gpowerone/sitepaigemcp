@@ -1,0 +1,40 @@
+# Database Configuration
+# Set DATABASE_TYPE to one of: sqlite, postgres, mysql
+DATABASE_TYPE=sqlite
+
+# SQLite Configuration
+# For local development
+SQLITE_DIR=./data
+# For production with EFS (AWS)
+# EFS_MOUNT_PATH=/mnt/efs
+
+# PostgreSQL Configuration
+# Option 1: Use connection string
+# DATABASE_URL=postgresql://user:password@localhost:5432/dbname
+# POSTGRES_URL=postgresql://user:password@localhost:5432/dbname
+
+# Option 2: Use individual settings
+# POSTGRES_HOST=localhost
+# POSTGRES_PORT=5432
+# POSTGRES_USER=postgres
+# POSTGRES_PASSWORD=yourpassword
+# POSTGRES_DB=app
+
+# MySQL Configuration
+# Option 1: Use connection string
+# DATABASE_URL=mysql://user:password@localhost:3306/dbname
+# MYSQL_URL=mysql://user:password@localhost:3306/dbname
+
+# Option 2: Use individual settings
+# MYSQL_HOST=localhost
+# MYSQL_PORT=3306
+# MYSQL_USER=root
+# MYSQL_PASSWORD=yourpassword
+# MYSQL_DATABASE=app
+
+# Generic database settings (used by all database types)
+# DB_HOST=localhost
+# DB_PORT=5432
+# DB_USER=dbuser
+# DB_PASSWORD=dbpassword
+# DB_NAME=app

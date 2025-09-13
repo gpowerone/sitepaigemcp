@@ -1,0 +1,125 @@
+{
+  "name": "sitepaige",
+  "version": "0.1.0",
+  "description": "Generate complete web applications from natural language prompts using SitePaige AI",
+  "author": {
+    "name": "SitePaige Team"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/sitepaige/sitepaige-mcp-server",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sitepaige/sitepaige-mcp-server.git"
+  },
+  "mcp": {
+    "version": "1.0.0",
+    "tools": [
+      {
+        "name": "generate_site",
+        "description": "Generate a complete web application from a natural language prompt",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "prompt": {
+              "type": "string",
+              "description": "Natural language description of the website you want to create"
+            },
+            "targetDir": {
+              "type": "string",
+              "description": "Absolute path to the directory where the site will be generated"
+            },
+            "projectName": {
+              "type": "string",
+              "description": "Name for the project (optional, defaults to 'My Project')"
+            },
+            "databaseType": {
+              "type": "string",
+              "enum": ["sqlite", "postgres", "mysql"],
+              "description": "Database type to use (defaults to sqlite)"
+            },
+            "login_providers": {
+              "type": "string",
+              "description": "Login providers to support (defaults to 'google')"
+            },
+            "designStyle": {
+              "type": "string",
+              "enum": ["hero-banner", "grid", "split-screen", "single-column", "magazine", "fullscreen"],
+              "description": "Design style for the generated site"
+            }
+          },
+          "required": ["prompt", "targetDir"]
+        }
+      },
+      {
+        "name": "get_status",
+        "description": "Check the status of a site generation job",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "jobId": {
+              "type": "string",
+              "description": "The job ID returned from generate_site"
+            },
+            "projectId": {
+              "type": "string",
+              "description": "The project ID (alternative to jobId)"
+            },
+            "targetDir": {
+              "type": "string",
+              "description": "Target directory (required with projectId)"
+            }
+          }
+        }
+      }
+    ],
+    "resources": [
+      {
+        "uri": "mem://jobs/{jobId}/status",
+        "name": "job_statuses",
+        "mimeType": "application/json",
+        "description": "Job status information"
+      },
+      {
+        "uri": "mem://jobs/{jobId}/logs",
+        "name": "job_logs",
+        "mimeType": "text/plain",
+        "description": "Job execution logs"
+      },
+      {
+        "uri": "mem://jobs/{jobId}/plan",
+        "name": "job_plan",
+        "mimeType": "text/markdown",
+        "description": "Generated site plan"
+      },
+      {
+        "uri": "mem://jobs/{jobId}/result",
+        "name": "job_result",
+        "mimeType": "application/json",
+        "description": "Job result details"
+      }
+    ],
+    "capabilities": {
+      "tools": true,
+      "resources": true
+    },
+    "runtime": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["dist/index.js"],
+      "env": {
+        "SITEPAIGE_API_KEY": {
+          "required": false,
+          "description": "API key for SitePaige API (optional)"
+        },
+        "SITEPAIGE_ALLOWED_ROOTS": {
+          "required": false,
+          "description": "Comma-separated list of allowed root directories for file writes"
+        },
+        "SITEPAIGE_DEBUG": {
+          "required": false,
+          "description": "Enable debug logging (1, true, yes, or on)"
+        }
+      }
+    }
+  }
+}

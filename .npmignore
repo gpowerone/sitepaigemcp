@@ -1,0 +1,54 @@
+# Source files (we publish compiled JS)
+src/
+tsconfig.json
+
+# Development files
+.git/
+.gitignore
+node_modules/
+.DS_Store
+*.log
+.env*
+
+# Test files
+test/
+tests/
+__tests__/
+*.test.js
+*.test.ts
+*.spec.js
+*.spec.ts
+
+# Documentation source files (keep compiled docs)
+*.md
+!README.md
+!INSTALL.md
+!LICENSE
+
+# Example and temporary files
+example-*
+tmp/
+temp/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build artifacts we don't need
+*.map
+.cache/
+
+# Development scripts
+.github/
+.eslintrc*
+.prettierrc*
+
+# Keep only necessary compiled files
+!dist/
+!components/
+!defaultapp/
+!package.json
+!package-lock.json
+!manifest.json
