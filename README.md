@@ -73,7 +73,7 @@ Refer to your MCP client's documentation for specific configuration steps. The k
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `SITEPAIGE_API_KEY` | No | API key for SitePaige API. If not provided, uses public tier with rate limits |
+| `SITEPAIGE_API_KEY` | No | API key for SitePaige API. |
 | `SITEPAIGE_ALLOWED_ROOTS` | No | Comma-separated list of absolute paths where sites can be generated. Defaults to current working directory |
 | `SITEPAIGE_DEBUG` | No | Enable debug logging. Set to `1`, `true`, `yes`, or `on` |
 
