@@ -23,7 +23,6 @@ Quickly transform your ideas into web applications with Sitepaige. Every generat
 1. Clone the repository:
 ```bash
 git clone https://github.com/gpowerone/sitepaigemcp/sitepaigemcp.git
-cd sitepaige-mcp-server
 ```
 
 2. Install dependencies:
@@ -96,7 +95,7 @@ Once configured, the SitePaige MCP server provides two main tools:
 Generate a complete web application from a natural language prompt:
 
 ```
-"Generate a modern e-commerce website for selling handmade jewelry with product catalog, shopping cart, and checkout"
+"Use sitepaige to generate a modern e-commerce website for selling handmade jewelry with product catalog, shopping cart, and checkout"
 ```
 
 The tool will:
@@ -106,13 +105,14 @@ The tool will:
 
 ### 2. Check Status
 
-Monitor the progress of site generation using the job ID or project ID returned from `generate_site`.
-If a job has been completed but the files are not written, then this function will write the files to disk
+Monitor the progress of site generation using the project ID returned from `generate_site`.
+If a job has been completed but the files are not written, then this function will write the files to disk. 
+If you are stalled out, use 'check the status of sitepaige' to get the latest status
 
 ## Cost
 
 - First project is free
-- Additional projects are 50 credits each. You can purchase credits via https://sitepaige.com
+- Additional projects cost 50 credits each. You can purchase credits via https://sitepaige.com
 
 ## Troubleshooting
 
