@@ -86,7 +86,7 @@ async function requestJson<T>(
   }
 }
 
-// Generate new Sitepaige project
+// Generate new Sitepaige project (pages-first only, no backend)
 export async function generate_site(
   params: GenerateSiteParams,
   options?: RequestOptions
@@ -136,7 +136,7 @@ export async function generate_site(
   const jobRes = await requestJson<SitepaigeJobsResponseBody>("POST", "/api/jobs", jobsBody, options);
   const projectId = jobRes.projectId;
 
-  // 2) Pages-first blueprint
+  // 2) Pages-first blueprint (FREE for first project, then 12 credits)
   const pagesFirstBody: SitepaigePagesFirstBody = {
     projectId,
     ...(designStyle ? { designStyle } : {}),
@@ -147,11 +147,7 @@ export async function generate_site(
   };
   await requestJson<SitepaigePagesFirstResponse>("POST", "/api/agentic/pages-first", pagesFirstBody, options);
 
-  // 3) Complete generation
-  const completeBody: SitepaigeCompleteGenerationBody = { projectId };
-  await requestJson<SitepaigeCompleteGenerationResponse>("POST", "/api/agentic/complete-generation", completeBody, options);
-
-  // 4) Fetch project details
+  // 3) Fetch project details (which will only have frontend parts)
   const projectUrl = `/api/project?id=${encodeURIComponent(projectId)}`;
   const project = await requestJson<SitepaigeProject>("GET", projectUrl, undefined, options);
 
@@ -159,8 +155,25 @@ export async function generate_site(
     projectId,
     mode: jobRes.mode,
     project,
-    tbd: "TBD: further processing/integration will be implemented in the next phase."
+    tbd: "Frontend generated. Use complete_backend to add models and API routes."
   };
+}
+
+// Complete backend generation (models/SQL and API routes) - costs 50 credits
+export async function complete_backend(
+  projectId: string,
+  options?: RequestOptions
+): Promise<SitepaigeProject> {
+  // WARNING: This endpoint costs 50 credits
+  // Call complete generation endpoint to add models, SQL migrations, and API routes
+  const completeBody: SitepaigeCompleteGenerationBody = { projectId };
+  await requestJson<SitepaigeCompleteGenerationResponse>("POST", "/api/agentic/complete-generation", completeBody, options);
+
+  // Fetch updated project details with backend included
+  const projectUrl = `/api/project?id=${encodeURIComponent(projectId)}`;
+  const project = await requestJson<SitepaigeProject>("GET", projectUrl, undefined, options);
+
+  return project;
 }
 
 // Helper function to build full API URLs
@@ -222,7 +235,7 @@ export async function initialize_site_generation(
   };
 }
 
-// Continue site generation after initialization
+// Continue site generation after initialization (pages-first only)
 export async function continue_site_generation(
   projectId: string,
   params: Partial<GenerateSiteParams>,
@@ -236,7 +249,7 @@ export async function continue_site_generation(
     requiresAuth
   } = params;
 
-  // Pages-first blueprint
+  // Pages-first blueprint (FREE for first project, then 12 credits)
   const pagesFirstBody: SitepaigePagesFirstBody = {
     projectId,
     ...(designStyle ? { designStyle } : {}),
@@ -246,21 +259,19 @@ export async function continue_site_generation(
     ...(requiresAuth !== undefined ? { requiresAuth } : {})
   };
   await requestJson<SitepaigePagesFirstResponse>("POST", "/api/agentic/pages-first", pagesFirstBody, options);
-
-  // Complete generation
-  const completeBody: SitepaigeCompleteGenerationBody = { projectId };
-  await requestJson<SitepaigeCompleteGenerationResponse>("POST", "/api/agentic/complete-generation", completeBody, options);
+  
+  // No longer calling complete-generation here - that's a separate paid operation
 }
 
-// Convenience: run generation, then write files to disk based on the blueprint/code
+// Convenience: run generation, then write files to disk based on the blueprint/code (pages only)
 export async function generate_site_and_write(
   params: GenerateSiteParams & { targetDir: string },
   options?: RequestOptions
 ): Promise<GenerateSiteResult & { wroteTo: string }> {
   const res = await generate_site(params, options);
   try {
-    const { writeProjectFromBlueprint } = await import("./blueprintWriter.js");
-    await writeProjectFromBlueprint(res.project as any, { 
+    const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
+    await writeProjectPagesOnly(res.project as any, { 
       targetDir: params.targetDir,
       databaseType: params.databaseType 
     });
@@ -281,18 +292,45 @@ export async function fetch_project_by_id(
   return project;
 }
 
-// Fetch a project and write it to disk
+// Fetch a project and write it to disk (pages only)
 export async function write_site_by_project_id(
-  params: { projectId: string; targetDir: string },
+  params: { projectId: string; targetDir: string; databaseType?: "sqlite" | "postgres" | "mysql" },
   options?: RequestOptions
 ): Promise<{ project: SitepaigeProject; wroteTo: string }> {
   const project = await fetch_project_by_id(params.projectId, options);
   
   try {
-    const { writeProjectFromBlueprint } = await import("./blueprintWriter.js");
-    await writeProjectFromBlueprint(project as any, { targetDir: params.targetDir });
+    const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
+    await writeProjectPagesOnly(project as any, { 
+      targetDir: params.targetDir,
+      databaseType: params.databaseType || "sqlite"
+    });
   } catch (error) {
-    console.error(`[write_site_by_project_id] ERROR in writeProjectFromBlueprint:`, error);
+    console.error(`[write_site_by_project_id] ERROR in writeProjectPagesOnly:`, error);
+    throw error;
+  }
+  return { project, wroteTo: params.targetDir };
+}
+
+// Complete backend and write to disk (costs 50 credits)
+export async function complete_backend_and_write(
+  params: { projectId: string; targetDir: string; databaseType?: "sqlite" | "postgres" | "mysql" },
+  options?: RequestOptions
+): Promise<{ project: SitepaigeProject; wroteTo: string }> {
+  // WARNING: This operation costs 50 credits
+  // First complete the backend generation including models, SQL migrations, and API routes
+  const project = await complete_backend(params.projectId, options);
+  
+  // Then write ONLY the backend files (models/SQL, APIs, architecture doc)
+  // This ensures we don't overwrite frontend files from generate_site
+  try {
+    const { writeProjectBackendOnly } = await import("./blueprintWriter.js");
+    await writeProjectBackendOnly(project as any, { 
+      targetDir: params.targetDir,
+      databaseType: params.databaseType || "sqlite"
+    });
+  } catch (error) {
+    console.error(`[complete_backend_and_write] ERROR in writeProjectBackendOnly:`, error);
     throw error;
   }
   return { project, wroteTo: params.targetDir };

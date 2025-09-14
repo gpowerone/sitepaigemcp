@@ -5,8 +5,8 @@ import { z } from "zod";
 import path from "node:path";
 import fsp from "node:fs/promises";
 import { JobRegistry } from "./jobRegistry.js";
-import { write_site_by_project_id, fetch_project_by_id, initialize_site_generation, continue_site_generation } from "./sitepaige.js";
-export { generate_site } from "./sitepaige.js";
+import { write_site_by_project_id, fetch_project_by_id, initialize_site_generation, continue_site_generation, complete_backend_and_write } from "./sitepaige.js";
+export { generate_site, complete_backend } from "./sitepaige.js";
 const server = new McpServer({ name: "sitepaige-mcp-server", version: "0.1.0" });
 const transport = new StdioServerTransport();
 const jobs = new JobRegistry();
@@ -45,7 +45,7 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
         }, {
             onLog: (message) => jobs.appendLog(jobId, message)
         }).then(() => {
-            jobs.appendLog(jobId, `Generation complete for project ${projectId}. Use get_status to check when files can be written.`);
+            jobs.appendLog(jobId, `Frontend generation complete for project ${projectId}. Use get_status to check when files can be written.`);
             jobs.setStatus(jobId, { status: "completed", step: "done", progressPercent: 100 });
             publishResourceListChanged();
         }).catch(err => {
@@ -112,6 +112,66 @@ async function runWriteJob(jobId, projectId, targetDir) {
         publishResourceListChanged();
     }
 }
+async function runCompleteBackendJob(jobId, projectId, targetDir, databaseType) {
+    try {
+        jobs.setStatus(jobId, { status: "running", step: "complete_backend", progressPercent: 10 });
+        jobs.appendLog(jobId, `Starting backend completion job ${jobId} for project ${projectId}`);
+        jobs.appendLog(jobId, `WARNING: This operation will consume 50 credits`);
+        const debugEnv = process.env.SITEPAIGE_DEBUG;
+        const debug = typeof debugEnv === "string" && ["1", "true", "yes", "on"].includes(debugEnv.toLowerCase());
+        if (debug)
+            jobs.appendLog(jobId, `Debug: calling complete_backend_and_write`);
+        let project, wroteTo;
+        try {
+            jobs.setStatus(jobId, { step: "generating_backend", progressPercent: 30 });
+            const result = await complete_backend_and_write({ projectId, targetDir, databaseType: databaseType || "sqlite" }, {
+                onLog: (message) => jobs.appendLog(jobId, message)
+            });
+            project = result.project;
+            wroteTo = result.wroteTo;
+            jobs.appendLog(jobId, `Backend generation and writing completed`);
+        }
+        catch (error) {
+            console.error(`[runCompleteBackendJob] ERROR:`, error);
+            jobs.appendLog(jobId, `ERROR: ${error?.message ?? String(error)}`);
+            // Check for insufficient credits
+            if (error?.code === 'INSUFFICIENT_CREDITS') {
+                throw error; // Re-throw to be handled by caller
+            }
+            throw error;
+        }
+        jobs.setStatus(jobId, { step: "finalize", progressPercent: 95 });
+        jobs.setResult(jobId, {
+            created: ["Backend files written: models, SQL migrations, API routes, ARCHITECTURE.md"],
+            updated: [],
+            skipped: ["Frontend files preserved"],
+            conflicts: [],
+            backups: []
+        });
+        jobs.appendLog(jobId, `Backend files written to ${wroteTo}. Frontend files were preserved.`);
+        jobs.setStatus(jobId, { status: "completed", step: "done", progressPercent: 100 });
+    }
+    catch (err) {
+        // Check if this is an insufficient credits error
+        if (err?.code === 'INSUFFICIENT_CREDITS') {
+            const message = `Insufficient credits: The user needs 50 credits to complete backend generation. Please direct them to upgrade their account or purchase more credits.`;
+            jobs.appendLog(jobId, message);
+            jobs.setStatus(jobId, {
+                status: "failed",
+                step: "error",
+                progressPercent: 100,
+                errorMessage: message
+            });
+        }
+        else {
+            jobs.appendLog(jobId, `Error: ${err?.message ?? String(err)}`);
+            jobs.setStatus(jobId, { status: "failed", step: "error", progressPercent: 100, errorMessage: err?.message ?? String(err) });
+        }
+    }
+    finally {
+        publishResourceListChanged();
+    }
+}
 server.tool("generate_site", {
     prompt: z.string().min(1),
     targetDir: z.string().min(1),
@@ -142,7 +202,7 @@ server.tool("generate_site", {
                         resultUri: `${baseUri}/result`,
                         expectedDurationSeconds: 300,
                         recommendedPollingIntervalSeconds: 150,
-                        hint: "Site generation started in the background and typically takes 3-5 minutes. Use get_status with the projectId to check progress and write files when ready."
+                        hint: "Frontend generation started in the background and typically takes 3-5 minutes. Use get_status with the projectId to check progress and write files when ready. To add backend functionality later, use complete_backend (50 credits)."
                     })
                 }
             ]
@@ -267,9 +327,9 @@ server.tool("get_status", {
                             ]
                         };
                     }
-                    // Write the project files
-                    const { writeProjectFromBlueprint } = await import("./blueprintWriter.js");
-                    await writeProjectFromBlueprint(project, {
+                    // Write the project files (pages only for generate_site)
+                    const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
+                    await writeProjectPagesOnly(project, {
                         targetDir: actualTargetDir,
                         databaseType: actualDatabaseType || "sqlite"
                     });
@@ -292,7 +352,7 @@ server.tool("get_status", {
                                     status: "success",
                                     jobId,
                                     projectId: actualProjectId,
-                                    message: "Project generation complete and files written successfully",
+                                    message: "Frontend generation complete and files written successfully. To add backend functionality, use complete_backend (50 credits).",
                                     targetDir: actualTargetDir
                                 })
                             }
@@ -368,6 +428,44 @@ server.tool("get_status", {
             ]
         };
     }
+});
+server.tool("complete_backend", {
+    projectId: z.string().min(1),
+    targetDir: z.string().min(1),
+    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("sqlite")
+}, async ({ projectId, targetDir, databaseType }) => {
+    // Backend completion typically takes 2-3 minutes
+    const job = jobs.createJob(180, 90); // 3 minutes expected, poll every 1.5 minutes
+    const baseUri = `mem://jobs/${job.id}`;
+    publishResourceListChanged();
+    // Store project info in the job for status checking
+    jobs.setProjectId(job.id, projectId);
+    jobs.setTargetDir(job.id, targetDir);
+    jobs.setDatabaseType(job.id, databaseType || "sqlite");
+    // Start the backend completion job asynchronously
+    void runCompleteBackendJob(job.id, projectId, targetDir, databaseType);
+    return {
+        content: [
+            {
+                type: "text",
+                text: JSON.stringify({
+                    status: "generating",
+                    jobId: job.id,
+                    projectId: projectId,
+                    targetDir: targetDir,
+                    statusUri: `${baseUri}/status`,
+                    logsUri: `${baseUri}/logs`,
+                    planUri: `${baseUri}/plan`,
+                    resultUri: `${baseUri}/result`,
+                    expectedDurationSeconds: 180,
+                    recommendedPollingIntervalSeconds: 90,
+                    creditsCost: 50,
+                    warning: "This operation will consume 50 credits from your account",
+                    hint: "Backend generation started. This will add models, SQL migrations, API routes, and ARCHITECTURE.md to your project. Frontend files will be preserved. Use get_status to check progress."
+                })
+            }
+        ]
+    };
 });
 // Commented out write_site tool - can be re-enabled if needed
 // server.tool(

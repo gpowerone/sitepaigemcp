@@ -1,13 +1,18 @@
 # SitePaige MCP Installation Guide
 
-Quickly transform your ideas into web applications with Sitepaige. Every generated site comes fully equipped with:
+Quickly transform your ideas into web applications with Sitepaige. Generate sites in two steps:
 
+## Step 1: Frontend Generation (FREE for first project, then 12 credits)
 - **Next.js application** built with TypeScript 
-- **Production-ready database architecture** (SQLite, PostgreSQL, or MySQL) - no setup headaches
-- **Seamless authentication system** powered by OAuth - your users can sign in with one click
 - **Responsive UI** with intelligent prompts that guide you to complete your frontend vision
+- **Seamless authentication system** powered by OAuth - your users can sign in with one click
+- **All frontend components, pages, and views** ready to use
+
+## Step 2: Backend Completion (50 credits - optional)
+- **Production-ready database architecture** (SQLite, PostgreSQL, or MySQL) - no setup headaches
 - **RESTful API endpoints** with complete input/output schemas and step-by-step implementation guidance
 - **Comprehensive [ARCHITECTURE.md](EXAMPLE_ARCHITECTURE.md) documentation** that maps out your entire codebase for your coding agent to finish the site - no guesswork required
+- **SQL models and migrations** ready for production
 
 ## Prerequisites
 
@@ -123,33 +128,86 @@ SITEPAIGE_ALLOWED_ROOTS="/Users/you/Projects,/Users/you/Sites,/tmp/sitepaige"
 
 ## Usage
 
-Once configured, the SitePaige MCP server provides two main tools:
+Once configured, the SitePaige MCP server provides three main tools:
 
-### 1. Generate Site
+### 1. Generate Site (Frontend)
 
-Generate a web application from natural language prompts:
+Generate the frontend of a web application from natural language prompts:
 
 ```
-First: "Use sitepaige to generate a modern e-commerce website for selling handmade jewelry with product catalog, shopping cart, and checkout"
-
-Second: Build out all routes and views from the prompts provided in the code
+"Use sitepaige to generate a modern e-commerce website for selling handmade jewelry with product catalog, shopping cart, and checkout"
 ```
 
 The tool will:
-- Return immediately with a job ID
-- Generate the site asynchronously (typically takes 3-5 minutes)
-- Automatically write files when generation is complete
+- Return immediately with a job ID and project ID
+- Generate the frontend asynchronously (typically takes 2-3 minutes)
+- Automatically write frontend files when generation is complete
+- **Cost**: FREE for your first project, then 12 credits
 
-### 2. Check Status
+**Note**: This generates only the frontend (pages, components, views, styles). To add backend functionality, use `complete_backend`. Frontend will
+require further generation after backend is completed
 
-Monitor the progress of site generation using the project ID returned from `generate_site`.
-If a job has been completed but the files are not written, then this function will write the files to disk. 
+### 2. Complete Backend (Optional)
+
+Add backend functionality to your generated site:
+
+```
+"Complete the backend for the project using the project ID from generate_site"
+```
+
+The tool will:
+- Add database models and SQL migrations
+- Generate API routes with full implementation
+- Create comprehensive ARCHITECTURE.md documentation
+- Preserve all frontend files (no overwrites)
+- **Cost**: 50 credits
+
+### 3. Check Status
+
+Monitor the progress of site generation using the job ID or project ID.
+If a job has been completed but the files are not written, this function will write the files to disk. 
 If you are stalled out, use 'check the status of sitepaige' to get the latest status
 
 ## Cost
 
-- First project is free
-- Additional projects cost 50 credits each. You can purchase credits via https://sitepaige.com
+### Frontend Generation (generate_site)
+- **First project**: FREE
+- **Additional projects**: 12 credits each
+
+### Backend Completion (complete_backend)
+- **All projects**: 50 credits each
+
+### Total for a Complete Site
+- **First complete site**: 50 credits (free frontend + 50 credit backend)
+- **Additional complete sites**: 62 credits (12 credit frontend + 50 credit backend)
+
+Purchase credits at https://sitepaige.com
+
+## Example Workflow
+
+Here's a typical workflow for generating a complete site:
+
+1. **Generate the frontend**:
+   ```
+   "Use sitepaige to create a task management app with user authentication in /Users/me/projects/taskapp"
+   ```
+   This returns a project ID (e.g., `proj_abc123`) and starts frontend generation.
+
+2. **Check status** (optional):
+   ```
+   "Check the status of the sitepaige generation"
+   ```
+   
+3. **Complete the backend** (after frontend is done):
+   ```
+   "Complete the backend for project proj_abc123"
+   ```
+   This adds database models, API routes, and full documentation.
+
+4. **Start developing**:
+   - Frontend is ready immediately after step 1
+   - Full backend functionality available after step 3
+   - Use the generated ARCHITECTURE.md as a guide
 
 ## Troubleshooting
 
