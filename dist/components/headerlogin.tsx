@@ -100,12 +100,22 @@ const LoginSection: React.FC = () => {
             setUserData(null);
             setIsAuthenticated(false);
           }
+        } else if (response.status === 500) {
+          // Server error - likely database doesn't exist
+          const errorData = await response.json();
+          if (errorData.error && (errorData.error.includes('no such table') || errorData.error.includes('database'))) {
+            // Store error state to show special message
+            localStorage.setItem('db_setup_required', 'true');
+          }
+          setUserData(null);
+          setIsAuthenticated(false);
         } else {
           setUserData(null);
           setIsAuthenticated(false);
         }
       } catch (error) {
         console.error('Failed to fetch user data:', error);
+        // Network error or other issues
         setUserData(null);
         setIsAuthenticated(false);
       } finally {
@@ -138,8 +148,15 @@ const LoginSection: React.FC = () => {
     }
   };
 
-  const handleLoginClick = () => {
-    // Simple navigation - no onClick handler needed
+  const handleLoginClick = (e: React.MouseEvent) => {
+    // Check if database setup is required
+    const dbSetupRequired = localStorage.getItem('db_setup_required');
+    if (dbSetupRequired === 'true') {
+      e.preventDefault();
+      alert('Backend generation needs to be completed before you can log in. Please complete the backend generation process first.');
+      return;
+    }
+    // Otherwise, let the link navigate normally
   };
 
   const handleMenuItemClick = (link?: string) => {

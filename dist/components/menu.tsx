@@ -7,7 +7,7 @@ checked in the system build settings. It is safe to modify this file without it 
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface Menu {
   id: string;
@@ -56,16 +56,39 @@ const CloseIcon = () => (
 export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Handle case where menu is undefined/null
   if (!menu) {
     return null;
   }
 
+  // Check if menu has items
+  if (!menu.items || menu.items.length === 0) {
+    return (
+      <div className="p-4 text-gray-500 text-sm">
+        Menu has no items to display
+      </div>
+    );
+  }
+
+  // Mobile detection with proper SSR handling
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+    
+    // Check on mount
+    checkMobile();
+    
+    // Add resize listener
+    window.addEventListener('resize', checkMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const direction = menu.direction === 'vertical' ? 'vertical' : 'horizontal';
-  
-  // Mobile detection - check if screen width is 768px or below
-  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
   const renderMenuItem = (item: MenuItem, index: number) => {
     const handleClick = () => {

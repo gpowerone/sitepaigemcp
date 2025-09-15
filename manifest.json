@@ -1,6 +1,6 @@
 {
   "name": "sitepaige",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Generate complete web applications from natural language prompts using SitePaige AI",
   "author": {
     "name": "SitePaige Team"

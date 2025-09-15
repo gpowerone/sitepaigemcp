@@ -316,34 +316,13 @@ export default function ${comp}() {
 
   return (
     <>
-      <style jsx>{\`
-        .icon-bar-button {
-          background: transparent !important;
-          background-color: transparent !important;
-          border: none !important;
-          box-shadow: none !important;
-          outline: none !important;
-        }
-        .icon-bar-button:hover {
-          background: transparent !important;
-          background-color: transparent !important;
-        }
-        .icon-bar-button:focus {
-          background: transparent !important;
-          background-color: transparent !important;
-        }
-        .icon-bar-button:active {
-          background: transparent !important;
-          background-color: transparent !important;
-        }
-      \`}</style>
       <div className={\`hidden md:flex gap-4 p-2 \${alignmentClasses[align as keyof typeof alignmentClasses]}\`}>
         {items.map((item, index) => (
           <button
             key={index}
             onClick={() => handleClick(item.pageId)}
             disabled={!item.pageId}
-            className="icon-bar-button flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="!bg-transparent flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               height: '40px',
               width: '40px'

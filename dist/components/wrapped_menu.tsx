@@ -6,6 +6,7 @@ checked in the system build settings. It is safe to modify this file without it 
 
 'use client';
 
+import React from 'react';
 import Menu from './menu';
 import { useState, useEffect } from 'react';
 
@@ -67,12 +68,15 @@ export default function WrappedMenu({
   pages,
   blueprintData 
 }: WrappedMenuProps) {
-  const [menuToRender, setMenuToRender] = useState<Menu | null>(null);
-  const [pagesToRender, setPagesToRender] = useState<Array<{id: string, name: string}>>([]);
+  // Initialize state with menu data if available
+  const [menuToRender, setMenuToRender] = useState<Menu | null>(menu || null);
+  const [pagesToRender, setPagesToRender] = useState<Array<{id: string, name: string}>>(pages || []);
+
 
   useEffect(() => {
     // If we have direct menu/pages props, use those (legacy mode)
     if (menu && pages) {
+      console.log('Using direct menu/pages props');
       setMenuToRender(menu);
       setPagesToRender(pages);
       return;
@@ -84,7 +88,7 @@ export default function WrappedMenu({
       const pages = blueprintData.pages;
       
       // Get the specific menu based on menuIndex
-      let selectedMenu = null;
+      let selectedMenu: Menu | null = null;
       if (typeof menuIndex === 'number' && menuIndex >= 0 && menuIndex < menus.length) {
         selectedMenu = menus[menuIndex];
       }
@@ -143,9 +147,17 @@ export default function WrappedMenu({
     setPagesToRender(fallbackPages);
   }, [menuType, menuIndex, direction, menu, pages, blueprintData]);
 
+  // Debug render
+  console.log('WrappedMenu render - menuToRender:', menuToRender);
+  console.log('WrappedMenu render - pagesToRender:', pagesToRender);
+  
+  if (!menuToRender) {
+    return <div style={{color: 'orange', padding: '10px'}}>WrappedMenu: No menu to render</div>;
+  }
+  
   return (
     <Menu
-      menu={menuToRender || undefined}
+      menu={menuToRender}
       onClick={onClick}
       pages={pagesToRender}
     />
