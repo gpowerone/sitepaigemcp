@@ -151,9 +151,7 @@ export async function updateGlobalCSS(targetDir: string, blueprint: Blueprint, v
   
   const cssToInsert = `
 body {
-  background: ${design.useGradient ? 
-    `linear-gradient(to top right, ${design.gradientColor}, ${design.backgroundColor || 'white'})` : 
-    (design.backgroundColor || 'white')};
+  background: ${design.backgroundColor || 'white'}; 
   color: ${design.textColor || 'black'};
   font-family: ${design.textFont || 'Roboto'}, sans-serif;
   font-size: ${textFontSizeValue};

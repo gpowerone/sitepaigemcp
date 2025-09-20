@@ -40,11 +40,6 @@
             "login_providers": {
               "type": "string",
               "description": "Login providers to support (defaults to 'google')"
-            },
-            "designStyle": {
-              "type": "string",
-              "enum": ["hero-banner", "grid", "split-screen", "single-column", "magazine", "fullscreen"],
-              "description": "Design style for the generated site"
             }
           },
           "required": ["prompt", "targetDir"]

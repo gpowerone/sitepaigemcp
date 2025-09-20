@@ -9,6 +9,7 @@ const COMPONENT_FILES = [
   "adminmenu.tsx",
   "auth.tsx",
   "csrf-provider.tsx",
+  "cta.tsx",
   "error.tsx",
   "headerlogin.tsx",
   "IntegrationComponent.tsx",
@@ -19,8 +20,7 @@ const COMPONENT_FILES = [
   "profile.tsx",
   "SecureContent.tsx",
   "upgrade.tsx",
-  "wrapped_menu.tsx",
-  "youtubevideo.tsx"
+  "wrapped_menu.tsx"
 ];
 
 export async function writeComponents(targetDir: string, _blueprint: Blueprint): Promise<void> {

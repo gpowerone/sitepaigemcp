@@ -3,7 +3,14 @@
   "version": "0.2.1",
   "type": "module",
   "description": "MCP server for generating web applications using SitePaige AI. Generate frontend (FREE/12 credits) then optionally add backend (50 credits)",
-  "keywords": ["mcp", "model-context-protocol", "ai", "website-generator", "sitepaige", "code-generation"],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai",
+    "website-generator",
+    "sitepaige",
+    "code-generation"
+  ],
   "author": "SitePaige Team",
   "license": "MIT",
   "homepage": "https://github.com/sitepaige/sitepaige-mcp-server#readme",
@@ -45,9 +52,12 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5.6.3",
+    "@babel/generator": "^7.28.3",
+    "@babel/parser": "^7.28.4",
+    "@babel/traverse": "^7.28.4",
+    "@babel/types": "^7.28.4",
     "@types/node": "^22.7.7",
-    "tsx": "^4.19.1"
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
   }
 }
-

@@ -2,7 +2,18 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 import { ensureDir, viewFileBaseName } from "./utils.js";
 import { generateMenuViewCode } from "./menus.js";
-import { Blueprint, View, Menu, Page, PageView } from "../types.js";
+import { Blueprint, View, Menu, Page, PageView, Code } from "../types.js";
+
+// Debug logging helper for MCP context
+async function debugLog(message: string): Promise<void> {
+  try {
+    const logFile = path.join(process.cwd(), 'sitepaige-debug.log');
+    const timestamp = new Date().toISOString();
+    await fsp.appendFile(logFile, `[${timestamp}] ${message}\n`);
+  } catch {
+    // Silently fail if can't write log
+  }
+}
 
 // Icon definitions for icon bar views
 // Global array to collect CSS classes for injection into global.css
@@ -31,8 +42,25 @@ const ICON_SVGS_CONST = `const ICON_SVGS: { [key: string]: string } = {
   'chart': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>'
 };`;
 
-function pascalCaseFromBase(base: string): string {
-  return `${base.replace(/(^|_)([a-z])/g, (_m, _g1, c) => c.toUpperCase())}View`;
+// Track generated component names to ensure uniqueness
+const generatedComponentNames = new Set<string>();
+
+function pascalCaseFromBase(base: string, viewId?: string): string {
+  // IMPORTANT: Add 'Generated' prefix to avoid naming conflicts with imported components
+  // Without this prefix, views like "HeaderLogin" would become "HeaderLoginView" which could
+  // conflict with or circular import the LoginSection component from headerlogin.tsx
+  // With the prefix, it becomes "GeneratedHeaderLoginView" which is guaranteed to be unique
+  let componentName = `Generated${base.replace(/(^|_)([a-z])/g, (_m, _g1, c) => c.toUpperCase())}View`;
+  
+  // If this name already exists, append a suffix to make it unique
+  if (generatedComponentNames.has(componentName) && viewId) {
+    // Use part of the view ID to create a unique suffix
+    const suffix = viewId.slice(-6).replace(/[^a-zA-Z0-9]/g, '');
+    componentName = `${componentName}_${suffix}`;
+  }
+  
+  generatedComponentNames.add(componentName);
+  return componentName;
 }
 
 // Helper function to generate style props from View object
@@ -83,6 +111,11 @@ function generateStyleProps(systemView: View, isContainer: boolean): { styleAttr
     
     // Layout system - using grid layout like in rview.tsx
     styleProps.push(`display: 'grid'`);
+    
+    // Opacity
+    if (systemView.opacity !== null && systemView.opacity !== undefined) {
+        styleProps.push(`opacity: ${systemView.opacity}`);
+    }
     
     // Combined alignment using placeItems (matches rview.tsx exactly)
     const placeItems = 
@@ -165,7 +198,10 @@ function parseContainerSubviews(desc: unknown): Array<ContainerSubview> {
   return [];
 }
 
-export async function writeViews(targetDir: string, blueprint: Blueprint): Promise<Map<string, { componentName: string; relImport: string }>> {
+export async function writeViews(targetDir: string, blueprint: Blueprint, projectCode?: Code, authProviders?: { apple: boolean; facebook: boolean; github: boolean; google: boolean }): Promise<Map<string, { componentName: string; relImport: string }>> {
+  // Clear the component names set for a fresh start
+  generatedComponentNames.clear();
+  
   const viewsDir = path.join(targetDir, "src", "views");
   ensureDir(viewsDir);
   const viewMap = new Map<string, { componentName: string; relImport: string }>();
@@ -176,6 +212,15 @@ export async function writeViews(targetDir: string, blueprint: Blueprint): Promi
   for (const v of views) {
     if (v.id) byId.set(v.id, v);
   }
+  
+  // Debug logging
+  await debugLog('[writeViews] projectCode: ' + (projectCode ? 'exists' : 'undefined'));
+  if (projectCode && projectCode.views) {
+    await debugLog('[writeViews] projectCode.views count: ' + projectCode.views.length);
+    for (const vc of projectCode.views) {
+      await debugLog(`[writeViews] View code available for ID: ${vc.viewID}, code length: ${vc.code?.length || 0}`);
+    }
+  }
 
   // First pass: non-container views
   for (const v of views) {
@@ -183,8 +228,57 @@ export async function writeViews(targetDir: string, blueprint: Blueprint): Promi
     if (type === "container") continue;
     const base = viewFileBaseName(v);
     const file = path.join(viewsDir, `${base}.tsx`);
-    const comp = pascalCaseFromBase(base);
+    const comp = pascalCaseFromBase(base, v.id);
     let code = "";
+    
+    await debugLog(`[writeViews] Processing view: ${v.id}, type: ${type}, name: ${v.name}`);
+    
+    // Check if we have code from the blueprint
+    let hasProvidedCode = false;
+    if (projectCode && projectCode.views) {
+      const viewCode = projectCode.views.find(vc => vc.viewID === v.id);
+      await debugLog(`[writeViews] Looking for code for view ${v.id}, found: ${viewCode ? 'yes' : 'no'}`);
+      if (viewCode && viewCode.code) {
+        // Clean the code by removing data:image base64 prefixes
+        const cleanedCode = viewCode.code.replace(/data:image\/[^;]+;base64,/g, '');
+        
+        try {
+          // Dynamically import the transpiler
+          // @ts-ignore - CommonJS module
+          const { transpileCode } = await import("../../transpiler/transpiler.cjs");
+          const transpiler = { transpileCode };
+          
+          // Transpile the code
+          const dictionary = {}; // Add dictionary if needed
+          const transpiledResult: { success: boolean, code: string, error?: string } = JSON.parse(
+            transpiler.transpileCode(cleanedCode, pages, dictionary)
+          );
+          
+          if (transpiledResult.success) {
+            code = transpiledResult.code;
+            hasProvidedCode = true;
+          } else {
+            await debugLog(`[writeViews] Transpilation failed for view ${v.id}: ${transpiledResult.error}`);
+            // Fall back to description-based transpilation if available
+            if (v.custom_view_description) {
+              const cleanedDescription = v.custom_view_description.replace(/data:image\/[^;]+;base64,/g, '');
+              const fallbackResult = JSON.parse(
+                transpiler.transpileCode(cleanedDescription, pages, dictionary)
+              );
+              if (fallbackResult.success) {
+                code = fallbackResult.code;
+                hasProvidedCode = true;
+              }
+            }
+          }
+        } catch (error) {
+          await debugLog(`[writeViews] Error processing code for view ${v.id}: ${error}`);
+        }
+      }
+    }
+    
+    // Only generate default code if we don't have provided code
+    if (!hasProvidedCode) {
     if (type === "text") {
       const html = v.custom_view_description.replace(/`/g, "\\`");
       const useCard = false; // You can modify this based on view properties if needed
@@ -209,9 +303,28 @@ export default function ${comp}({ isContainer = false }: ${comp}Props){
 }`;
     } else if (type === "image") {
       const src = v.custom_view_description || v.background_image || "";
+      const height = v.height;
       code = `import React from 'react';
 
-export default function ${comp}(){return <div style={{display:'grid',placeItems:'center'}}><img src=${JSON.stringify(src)} alt=\"image\" style={{maxWidth:'100%',height:'auto'}}/></div>}`;
+export default function ${comp}(){
+  return (
+    <>
+      ${src ? `<img
+        src=${JSON.stringify(src)}
+        alt="image"
+        style={{ 
+          objectFit: 'cover',
+          objectPosition: 'center',
+          width: '100%',
+          height: ${height ? `'${height}px'` : "'auto'"},
+          display: 'block'
+        }}
+        crossOrigin="anonymous"
+        referrerPolicy="no-referrer"
+      />` : ''}
+    </>
+  );
+}`;
     } else if (type === "logo") {
       // Logo images are now saved directly as logo.png/logo.jpg by the image processor
       const logoPath = v.background_image || v.custom_view_description || "";
@@ -228,12 +341,6 @@ export default function ${comp}(){return <div className=\"logo\"><a href=\"/\"><
     } else if (type === "menu") {
       const menuId = v.custom_view_description;
       code = generateMenuViewCode(comp, menuId, menus, pages);
-    } else if (type === "youtubevideo" || type === "youtube" || type === "video") {
-      const link = v.custom_view_description || "";
-      // simple responsive iframe
-      code = `import React from 'react';
-
-export default function ${comp}(){return <div style={{position:'relative',paddingBottom:'56.25%',height:0}}><iframe src=${JSON.stringify(link)} title=\"YouTube video\" style={{position:'absolute',top:0,left:0,width:'100%',height:'100%'}} frameBorder={0} allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share\" allowFullScreen/></div>}`;
     } else if (type === "component") {
       const promptText = v.prompt || "Component view";
       code = `import React from 'react';
@@ -282,14 +389,14 @@ export default function ${comp}() {
     const parsed = customViewDescription ? JSON.parse(customViewDescription) : [];
     items = Array.isArray(parsed) ? parsed : [];
   } catch (error) {
-    console.error('Error parsing icon bar data:', error);
+    // Error parsing icon bar data - no MCP logging in client component
     items = [];
   }
 
   if (items.length === 0) {
     return (
-      <div className="p-8 text-center text-gray-500">
-        <p className="text-sm">No icons configured</p>
+      <div>
+       &nbsp;
       </div>
     );
   }
@@ -340,7 +447,7 @@ export default function ${comp}() {
             }}
           >
             <div
-              className="w-full h-full flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6 [&>svg]:stroke-gray-700"
+              className="w-full h-full flex items-center justify-center [&>svg]:w-6 [&>svg]:h-6"
               dangerouslySetInnerHTML={{ __html: ICON_SVGS[item.icon] || ICON_SVGS['bell'] }}
             />
           </button>
@@ -375,11 +482,23 @@ export default function ${comp}() {
 }`;
     } else if (type === "login") {
       // Import the Login component
+      // Convert authProviders object to providers array
+      const providers: string[] = [];
+      if (authProviders) {
+        if (authProviders.google) providers.push('google');
+        if (authProviders.facebook) providers.push('facebook');
+        if (authProviders.github) providers.push('github');
+        if (authProviders.apple) providers.push('apple');
+      } else {
+        // Default to google if no auth providers specified
+        providers.push('google');
+      }
+      
       code = `import React from 'react';
 import Login from '../components/login';
 
 export default function ${comp}() {
-  return <Login />;
+  return <Login providers={${JSON.stringify(providers)}} />;
 }`;
     } else if (type === "profile") {
       // Import the Profile component
@@ -388,6 +507,46 @@ import Profile from '../components/profile';
 
 export default function ${comp}() {
   return <Profile />;
+}`;
+    } else if (type === "cta") {
+      // Import the CTA component and wrap it with navigation logic
+      const customViewDescription = v.custom_view_description || '{}';
+      code = `'use client';
+
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import RCTA from '../components/cta';
+
+export default function ${comp}() {
+  const router = useRouter();
+  const customViewDescription = ${JSON.stringify(customViewDescription)};
+  
+  const handleNavigate = (pageId: string) => {
+    if (!pageId) return;
+    
+    // Find the page using the pageId and navigate to it
+    const pages = ${JSON.stringify(pages.map(p => ({ id: p.id, name: p.name })))};
+    const page = pages.find(p => p.id === pageId);
+    if (page) {
+      // Use page name for URL, replace non-alphanumeric with underscore
+      let folderName = page.name.toLowerCase().replace(/[^a-zA-Z0-9]/g, '_');
+      
+      // Replace multiple consecutive underscores with a single underscore
+      folderName = folderName.replace(/_+/g, '_');
+      
+      // Remove leading and trailing underscores
+      folderName = folderName.replace(/^_+|_+$/g, '');
+      
+      // If empty or just 'home', use root
+      if (!folderName || folderName === 'home') {
+        router.push('/');
+      } else {
+        router.push('/' + folderName);
+      }
+    }
+  };
+  
+  return <RCTA custom_view_description={customViewDescription} onNavigate={handleNavigate} isPaigeLoading={false} />;
 }`;
     } else if (type === "loggedinmenu") {
       // Import the LoggedInMenu component
@@ -443,6 +602,8 @@ export default function ${comp}(){
   );
 }`;
     }
+    } // Close if (!hasProvidedCode)
+    
     await fsp.writeFile(file, code, "utf8");
     viewMap.set(v.id, { componentName: comp, relImport: path.posix.join("../../views", `${base}`) });
   }
@@ -454,7 +615,7 @@ export default function ${comp}(){
 
     const base = viewFileBaseName(v);
     const file = path.join(viewsDir, `${base}.tsx`);
-    const comp = pascalCaseFromBase(base);
+    const comp = pascalCaseFromBase(base, v.id);
 
     const subviews = parseContainerSubviews(v.custom_view_description);
     // Normalize into objects with viewId/colpos...
@@ -476,10 +637,24 @@ export default function ${comp}(){
     for (const s of normalized) {
       const subId = s.viewId || s.id || "";
       if (!subId) continue;
+      
       const target = byId.get(subId);
       if (!target) continue;
+      
       const subBase = viewFileBaseName(target);
-      const subComp = pascalCaseFromBase(subBase);
+      
+      // CRITICAL: Skip if the subview would generate the same file name as the container
+      // This prevents circular imports when views have the same name but different IDs
+      if (subBase === base) {
+        await debugLog(`[writeViews] WARNING: Container view "${v.name}" (${v.id}) is trying to reference a view "${target.name}" (${target.id}) that generates the same file name. Skipping to prevent circular import.`);
+        // Add a placeholder comment in the generated output
+        const cols = buildResponsiveColClasses(s, legacy, colsPerView);
+        const allClasses = ["h-full", "w-full", cols].join(" ");
+        blocks.push(`\n            {/* WARNING: Circular reference detected - view would import itself */}\n            <div className="${allClasses}">\n              <div className="w-full p-4 text-center text-gray-500">\n                <p className="text-sm">Circular reference prevented</p>\n                <p className="text-xs mt-1">Container and subview generate same file: ${subBase}.tsx</p>\n              </div>\n            </div>`);
+        continue;
+      }
+      
+      const subComp = pascalCaseFromBase(subBase, target.id);
       importLines.push(`import ${subComp} from './${subBase}';`);
       
       // Build subview wrapper style and CSS classes

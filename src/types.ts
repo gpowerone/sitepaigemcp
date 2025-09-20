@@ -83,8 +83,6 @@ export interface Design {
     textFont: string;
     logoFont: string;
     ideaCloud: string[];
-    designStyle: string;
-    colorScheme: string;
     targetLocation: string;
     websiteLanguage: string;
     buttonRoundedness: string;
@@ -142,11 +140,15 @@ export interface View {
     flowVertical: boolean | null;
     align: string | null;
     verticalAlign: string | null;
+    opacity: number | null;
     // Cache busting for background images
     background_image_updated?: number;
     // Background image dimensions
     background_image_width?: number;
     background_image_height?: number;
+    // Image view dimensions
+    width?: number;
+    height?: number;
     // Complex component specific fields
     subComponents: SubComponent[];
     // Link type and external URL support for buttons
@@ -180,12 +182,12 @@ export const viewTypes = [
   { value: 'loginbutton', label: 'Login Button', hasauthoption:false, sectiontype: 'commoncontent' },
   { value: 'headerlogin', label: 'Header Login', hasauthoption:false, sectiontype: 'internal' },
   { value: 'ctabutton', label: 'Call To Action Button', hasauthoption:false, sectiontype: 'commoncontent' },
+  { value: 'cta', label: 'Call to Action', disabled: false, sectiontype: 'commoncontent' },
   { value: 'logo', label: 'Logo', hasauthoption:false, sectiontype: 'commoncontent' },
   { value: 'pricing', label: 'Pricing', hasauthoption:false, sectiontype: 'internal' },
   { value: 'integration', label: 'Integration Section', disabled: false, sectiontype: 'commoncontent' },
   { value: 'generatedintegration', label: 'Integration Prompt', sectiontype: 'prompt' },
   { value: 'logincallback', label: 'Login Callback', hasauthoption:false, sectiontype: 'internal' },
-  { value: 'youtubevideo', label: 'Youtube Video', hasauthoption:null, sectiontype: 'commoncontent' },
   { value: 'iconbar', label: 'Icon Bar', hasauthoption:null, sectiontype: 'commoncontent' },
   { value: 'useradmin', label: 'User Admin', hasauthoption:false, sectiontype: 'internal' },
   { value: 'loggedinmenu', label: 'Logged In Menu', hasauthoption:false, sectiontype: 'internal' },
@@ -406,7 +408,6 @@ export function getDesign(blueprint: Blueprint): Design {
     textColor: '#333333',
     accentColor: '#516ab8',
     backgroundColor: '#ffffff',
-    colorScheme: 'Ocean Blue',
     accentTextColor: '#ffffff',
     useGradient: true,
     gradientColor: '#f0f0f0',
@@ -414,7 +415,6 @@ export function getDesign(blueprint: Blueprint): Design {
     textFont: 'Roboto',
     logoFont: 'Roboto',
     ideaCloud: [],
-    designStyle: 'hero-banner',
     targetLocation: 'Worldwide',
     websiteLanguage: 'English',
     buttonRoundedness: 'rounded',
@@ -442,7 +442,6 @@ export function getDesign(blueprint: Blueprint): Design {
     textColor: blueprint.design.textColor ?? defaultDesign.textColor,
     accentColor: blueprint.design.accentColor ?? defaultDesign.accentColor,
     backgroundColor: blueprint.design.backgroundColor ?? defaultDesign.backgroundColor,
-    colorScheme: blueprint.design.colorScheme ?? defaultDesign.colorScheme,
     accentTextColor: blueprint.design.accentTextColor ?? defaultDesign.accentTextColor,
     useGradient: blueprint.design.useGradient ?? defaultDesign.useGradient,
     gradientColor: blueprint.design.gradientColor ?? defaultDesign.gradientColor,
@@ -450,7 +449,6 @@ export function getDesign(blueprint: Blueprint): Design {
     textFont: blueprint.design.textFont ?? defaultDesign.textFont,
     logoFont: blueprint.design.logoFont ?? defaultDesign.logoFont,
     ideaCloud: blueprint.design.ideaCloud ?? defaultDesign.ideaCloud,
-    designStyle: blueprint.design.designStyle ?? defaultDesign.designStyle,
     targetLocation: blueprint.design.targetLocation ?? defaultDesign.targetLocation,
     websiteLanguage: blueprint.design.websiteLanguage ?? defaultDesign.websiteLanguage,
     buttonRoundedness: blueprint.design.buttonRoundedness ?? defaultDesign.buttonRoundedness,
@@ -530,8 +528,6 @@ export interface SitepaigeJobsRequestBody {
   requiresAuth: boolean;
   relationalDatabase?: string | null;
   objectDatabase?: string | null;
-  colorScheme?: string | null;
-  designStyle?: string | null;
   targetLocation?: string | null;
   websiteLanguage?: string | null;
   generateLogo?: boolean | null;
@@ -547,8 +543,6 @@ export interface SitepaigeJobsResponseBody {
 
 export interface SitepaigePagesFirstBody {
   projectId: string; // UUID
-  designStyle?: string;
-  colorScheme?: string;
   targetLocation?: string;
   websiteLanguage?: string;
   requiresAuth?: boolean;
@@ -587,8 +581,6 @@ export type SitepaigeProject = Record<string, unknown> & {
 export interface GenerateSiteParams {
   projectName: string;
   requirements: string;
-  designStyle?: string;
-  colorScheme?: string;
   targetLocation?: string;
   websiteLanguage?: string;
   requiresAuth?: boolean; // default true

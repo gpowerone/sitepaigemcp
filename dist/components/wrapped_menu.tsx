@@ -76,7 +76,6 @@ export default function WrappedMenu({
   useEffect(() => {
     // If we have direct menu/pages props, use those (legacy mode)
     if (menu && pages) {
-      console.log('Using direct menu/pages props');
       setMenuToRender(menu);
       setPagesToRender(pages);
       return;
@@ -147,9 +146,6 @@ export default function WrappedMenu({
     setPagesToRender(fallbackPages);
   }, [menuType, menuIndex, direction, menu, pages, blueprintData]);
 
-  // Debug render
-  console.log('WrappedMenu render - menuToRender:', menuToRender);
-  console.log('WrappedMenu render - pagesToRender:', pagesToRender);
   
   if (!menuToRender) {
     return <div style={{color: 'orange', padding: '10px'}}>WrappedMenu: No menu to render</div>;

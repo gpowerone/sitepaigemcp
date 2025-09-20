@@ -112,7 +112,8 @@ export async function writePackageJson(targetDir: string, projectName?: string, 
     ...(pkg.dependencies ?? {}),
     next: pkg.dependencies?.next ?? "latest",
     react: pkg.dependencies?.react ?? "latest",
-    "react-dom": pkg.dependencies?.["react-dom"] ?? "latest"
+    "react-dom": pkg.dependencies?.["react-dom"] ?? "latest",
+    "mime-types": pkg.dependencies?.["mime-types"] ?? "^3.0.0"
   };
   
   // Add database-specific dependencies
@@ -135,6 +136,7 @@ export async function writePackageJson(targetDir: string, projectName?: string, 
     "@types/node": pkg.devDependencies?.["@types/node"] ?? "latest",
     "@types/react": pkg.devDependencies?.["@types/react"] ?? "latest",
     "@types/react-dom": pkg.devDependencies?.["@types/react-dom"] ?? "latest",
+    "@types/mime-types": pkg.devDependencies?.["@types/mime-types"] ?? "^2.1.4",
     tailwindcss: pkg.devDependencies?.tailwindcss ?? "^3.4.1",
     postcss: pkg.devDependencies?.postcss ?? "latest",
     autoprefixer: pkg.devDependencies?.autoprefixer ?? "latest"

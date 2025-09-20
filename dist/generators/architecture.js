@@ -336,7 +336,6 @@ function formatViewType(type) {
         'pricing': 'Pricing Components',
         'integration': 'Integration Sections',
         'logincallback': 'Login Callbacks',
-        'youtubevideo': 'YouTube Videos',
         'iconbar': 'Icon Bars',
         'useradmin': 'User Admin',
         'loggedinmenu': 'Logged In Menus',

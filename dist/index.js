@@ -10,10 +10,16 @@ export { generate_site, complete_backend } from "./sitepaige.js";
 const server = new McpServer({ name: "sitepaige-mcp-server", version: "0.1.0" });
 const transport = new StdioServerTransport();
 const jobs = new JobRegistry();
+// Debug logging function
+async function debugLog(message) {
+    if (process.env.SITEPAIGE_DEBUG === '1') {
+        console.error('[Sitepaige-MCP]', message);
+    }
+}
 function publishResourceListChanged() {
     server.sendResourceListChanged();
 }
-async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, databaseType, login_providers, designStyle) {
+async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, databaseType, login_providers) {
     try {
         jobs.setStatus(jobId, { status: "running", step: "generate", progressPercent: 5 });
         jobs.appendLog(jobId, `Starting job ${jobId}`);
@@ -28,8 +34,7 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
             projectName,
             requirements: prompt,
             databaseType: databaseType || "sqlite",
-            login_providers: login_providers || "google",
-            designStyle: designStyle
+            login_providers: login_providers || "google"
         }, {
             onLog: (message) => jobs.appendLog(jobId, message)
         });
@@ -40,9 +45,7 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
         jobs.appendLog(jobId, `Project initialized with ID: ${projectId}, mode: ${mode}`);
         jobs.setStatus(jobId, { step: "generating", progressPercent: 20 });
         // Continue generation asynchronously (don't await)
-        continue_site_generation(projectId, {
-            designStyle: designStyle
-        }, {
+        continue_site_generation(projectId, {}, {
             onLog: (message) => jobs.appendLog(jobId, message)
         }).then(() => {
             jobs.appendLog(jobId, `Frontend generation complete for project ${projectId}. Use get_status to check when files can be written.`);
@@ -177,16 +180,15 @@ server.tool("generate_site", {
     targetDir: z.string().min(1),
     projectName: z.string().optional(),
     databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("sqlite"),
-    login_providers: z.string().optional().default("google"),
-    designStyle: z.enum(["hero-banner", "grid", "split-screen", "single-column", "magazine", "fullscreen"]).optional()
-}, async ({ prompt, targetDir, projectName, databaseType, login_providers, designStyle }) => {
+    login_providers: z.string().optional().default("google")
+}, async ({ prompt, targetDir, projectName, databaseType, login_providers }) => {
     // Site generation typically takes around 5 minutes
     const job = jobs.createJob(300, 150); // 5 minutes expected, poll every 2.5 minutes
     const baseUri = `mem://jobs/${job.id}`;
     publishResourceListChanged();
     try {
         // Wait for the projectId from the initial API call
-        const projectId = await runGenerateJob(job.id, prompt, targetDir, projectName, databaseType, login_providers, designStyle);
+        const projectId = await runGenerateJob(job.id, prompt, targetDir, projectName, databaseType, login_providers);
         return {
             content: [
                 {
@@ -227,8 +229,10 @@ server.tool("generate_site", {
 server.tool("get_status", {
     jobId: z.string().min(1).optional(),
     projectId: z.string().min(1).optional(),
-    targetDir: z.string().min(1).optional()
-}, async ({ jobId, projectId, targetDir }) => {
+    targetDir: z.string().min(1).optional(),
+    buildId: z.string().min(1).optional()
+}, async ({ jobId, projectId, targetDir, buildId }) => {
+    await debugLog(`get_status called with: jobId=${jobId}, projectId=${projectId}, targetDir=${targetDir}, buildId=${buildId}`);
     // Validate input - need either jobId or (projectId + targetDir)
     if (!jobId && (!projectId || !targetDir)) {
         return {
@@ -280,10 +284,13 @@ server.tool("get_status", {
     }
     try {
         // Query the project status
-        const project = await fetch_project_by_id(actualProjectId);
+        await debugLog(`Fetching project with ID: ${actualProjectId}, buildId: ${buildId}`);
+        const project = await fetch_project_by_id(actualProjectId, buildId ? { buildId } : undefined);
+        await debugLog(`Project response: ${JSON.stringify(project, null, 2)}`);
         // Check if the project status indicates completion
         // The project object should have a status field or we check if it has the required data
         const isComplete = project && project.blueprint && project.code;
+        await debugLog(`Project completion status: isComplete=${isComplete}, hasBlueprint=${!!project?.blueprint}, hasCode=${!!project?.code}`);
         if (isComplete && actualTargetDir) {
             // Check if files were already written
             const filesWritten = job && job.result && job.result.created && job.result.created.length > 0;
@@ -327,11 +334,12 @@ server.tool("get_status", {
                             ]
                         };
                     }
-                    // Write the project files (pages only for generate_site)
+                    // Write the project files (including APIs for get_status)
                     const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
                     await writeProjectPagesOnly(project, {
                         targetDir: actualTargetDir,
-                        databaseType: actualDatabaseType || "sqlite"
+                        databaseType: actualDatabaseType || "sqlite",
+                        writeApis: true // get_status should write everything including APIs
                     });
                     // Update job status if we have a job
                     if (job && jobId) {
@@ -396,6 +404,11 @@ server.tool("get_status", {
             }
         }
         else {
+            await debugLog(`Returning 'generating' status because isComplete=false`);
+            await debugLog(`Project state: blueprint=${!!project?.blueprint}, code=${!!project?.code}`);
+            if (project) {
+                await debugLog(`Full project object: ${JSON.stringify(project, null, 2)}`);
+            }
             return {
                 content: [
                     {
@@ -414,6 +427,9 @@ server.tool("get_status", {
     catch (err) {
         // If there's any error (network, API, etc.), just return that it's still generating
         // This could mean the project is still being created or there was a temporary issue
+        await debugLog(`Error in get_status: ${err?.message ?? String(err)}`);
+        await debugLog(`Error stack: ${err?.stack}`);
+        await debugLog(`Returning 'generating' status due to error`);
         return {
             content: [
                 {
@@ -467,36 +483,6 @@ server.tool("complete_backend", {
         ]
     };
 });
-// Commented out write_site tool - can be re-enabled if needed
-// server.tool(
-//   "write_site",
-//   {
-//     projectId: z.string().min(1),
-//     targetDir: z.string().min(1)
-//   },
-//   async ({ projectId, targetDir }) => {
-//     const job = jobs.createJob();
-//     const baseUri = `mem://jobs/${job.id}`;
-//     publishResourceListChanged();
-//
-//     void runWriteJob(job.id, projectId, targetDir);
-//     return {
-//       content: [
-//         {
-//           type: "text",
-//           text: JSON.stringify({
-//             status: "writing",
-//             jobId: job.id,
-//             statusUri: `${baseUri}/status`,
-//             logsUri: `${baseUri}/logs`,
-//             planUri: `${baseUri}/plan`,
-//             resultUri: `${baseUri}/result`
-//           })
-//         }
-//       ]
-//     } as const;
-//   }
-// );
 server.resource("job_statuses", "mem://jobs/{jobId}/status", { mimeType: "application/json" }, async (uri) => {
     const res = jobs.readResource(uri.toString());
     if (!res)

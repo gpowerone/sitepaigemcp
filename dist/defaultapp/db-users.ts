@@ -41,6 +41,11 @@ export interface OAuthToken {
  * Ensure the Users table exists with the correct schema
  */
 export async function ensureUsersTable(): Promise<void> {
+  // Skip table creation during build time
+  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
+    return;
+  }
+  
   const client = await db_init();
 
   // Create or migrate the Users table
@@ -81,6 +86,11 @@ export async function ensureUsersTable(): Promise<void> {
  * Ensure the UserSession table exists
  */
 export async function ensureUserSessionTable(): Promise<void> {
+  // Skip table creation during build time
+  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
+    return;
+  }
+  
   const client = await db_init();
   
   const createTableSQL = `
@@ -115,6 +125,11 @@ export async function ensureUserSessionTable(): Promise<void> {
  * Ensure the OAuthTokens table exists
  */
 export async function ensureOAuthTokensTable(): Promise<void> {
+  // Skip table creation during build time
+  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
+    return;
+  }
+  
   const client = await db_init();
   
   const createTableSQL = `
@@ -152,6 +167,11 @@ export async function ensureOAuthTokensTable(): Promise<void> {
  * Ensure all authentication tables exist
  */
 export async function ensureAuthTables(): Promise<void> {
+  // Skip table creation during build time
+  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
+    return;
+  }
+  
   const client = await db_init();
   
   // IMPORTANT: Create Users table first since UserSession and OAuthTokens have foreign keys to it

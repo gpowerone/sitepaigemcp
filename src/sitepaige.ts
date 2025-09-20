@@ -26,6 +26,13 @@ if (!API_KEY) {
   console.warn("Warning: SITEPAIGE_API_KEY env var not set.");
 }
 
+// Debug logging function
+async function debugLog(message: string): Promise<void> {
+  if (process.env.SITEPAIGE_DEBUG === '1') {
+    console.error('[Sitepaige]', message);
+  }
+}
+
 /**
  * Internal JSON request helper
  */
@@ -67,6 +74,22 @@ async function requestJson<T>(
   }
 
   if (!resp.ok) {
+    // Enhanced debug logging for failed requests
+    await debugLog(`Failed request to ${pathname}`);
+    await debugLog(`Response status: ${resp.status} ${resp.statusText}`);
+    await debugLog(`Response headers: ${JSON.stringify(Object.fromEntries(resp.headers.entries()))}`);
+    await debugLog(`Response body: ${text}`);
+    
+    // Special debug for /api/project endpoint
+    if (pathname.includes('/api/project')) {
+      await debugLog(`DEBUG: /api/project request failed`);
+      await debugLog(`Full URL: ${url}`);
+      await debugLog(`Request method: ${method}`);
+      if (body) {
+        await debugLog(`Request body: ${JSON.stringify(body, null, 2)}`);
+      }
+    }
+
     // Check for insufficient credits error
     if (resp.status === 400 && text.includes('Insufficient credits')) {
       const error = new Error('Insufficient credits') as any;
@@ -77,11 +100,21 @@ async function requestJson<T>(
   }
 
   try {
-    return JSON.parse(text) as T;
+    const result = JSON.parse(text) as T;
+    
+    // Debug logging for successful /api/project responses
+    if (pathname.includes('/api/project')) {
+      await debugLog(`DEBUG: /api/project request succeeded`);
+      await debugLog(`Response: ${JSON.stringify(result, null, 2)}`);
+    }
+    
+    return result;
   } catch (err) {
     if (isDebug) {
       console.error(`[sitepaige] Failed to parse JSON response:`, err);
     }
+    await debugLog(`Failed to parse JSON response from ${pathname}`);
+    await debugLog(`Raw response: ${text}`);
     throw new Error(`Failed to parse Sitepaige API response as JSON: ${text}`);
   }
 }
@@ -94,8 +127,6 @@ export async function generate_site(
   const {
     projectName,
     requirements,
-    designStyle,
-    colorScheme,
     targetLocation,
     websiteLanguage,
     requiresAuth,
@@ -118,8 +149,6 @@ export async function generate_site(
     ideaText: requirements,
     requiresAuth: requiresAuth ?? true,
     // Send other fields only if provided to let server use defaults
-    designStyle: designStyle ?? null,
-    colorScheme: colorScheme ?? null,
     targetLocation: targetLocation ?? null,
     websiteLanguage: websiteLanguage ?? null,
     baasProvider: null,
@@ -139,8 +168,6 @@ export async function generate_site(
   // 2) Pages-first blueprint (FREE for first project, then 12 credits)
   const pagesFirstBody: SitepaigePagesFirstBody = {
     projectId,
-    ...(designStyle ? { designStyle } : {}),
-    ...(colorScheme ? { colorScheme } : {}),
     ...(targetLocation ? { targetLocation } : {}),
     ...(websiteLanguage ? { websiteLanguage } : {}),
     ...(requiresAuth !== undefined ? { requiresAuth } : {})
@@ -189,8 +216,6 @@ export async function initialize_site_generation(
   const {
     projectName,
     requirements,
-    designStyle,
-    colorScheme,
     targetLocation,
     websiteLanguage,
     requiresAuth,
@@ -213,8 +238,6 @@ export async function initialize_site_generation(
     ideaText: requirements,
     requiresAuth: requiresAuth ?? true,
     // Send other fields only if provided to let server use defaults
-    designStyle: designStyle ?? null,
-    colorScheme: colorScheme ?? null,
     targetLocation: targetLocation ?? null,
     websiteLanguage: websiteLanguage ?? null,
     baasProvider: null,
@@ -242,8 +265,6 @@ export async function continue_site_generation(
   options?: RequestOptions
 ): Promise<void> {
   const {
-    designStyle,
-    colorScheme,
     targetLocation,
     websiteLanguage,
     requiresAuth
@@ -252,8 +273,6 @@ export async function continue_site_generation(
   // Pages-first blueprint (FREE for first project, then 12 credits)
   const pagesFirstBody: SitepaigePagesFirstBody = {
     projectId,
-    ...(designStyle ? { designStyle } : {}),
-    ...(colorScheme ? { colorScheme } : {}),
     ...(targetLocation ? { targetLocation } : {}),
     ...(websiteLanguage ? { websiteLanguage } : {}),
     ...(requiresAuth !== undefined ? { requiresAuth } : {})
@@ -273,7 +292,8 @@ export async function generate_site_and_write(
     const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
     await writeProjectPagesOnly(res.project as any, { 
       targetDir: params.targetDir,
-      databaseType: params.databaseType 
+      databaseType: params.databaseType,
+      writeApis: false // pages-first generation should not write APIs
     });
     return { ...res, wroteTo: params.targetDir };
   } catch (err) {
@@ -285,9 +305,12 @@ export async function generate_site_and_write(
 // Fetch existing project by ID
 export async function fetch_project_by_id(
   projectId: string,
-  options?: RequestOptions
+  options?: RequestOptions & { buildId?: string }
 ): Promise<SitepaigeProject> {
-  const projectUrl = `/api/project?id=${encodeURIComponent(projectId)}`;
+  let projectUrl = `/api/project?id=${encodeURIComponent(projectId)}`;
+  if (options?.buildId) {
+    projectUrl += `&buildId=${encodeURIComponent(options.buildId)}`;
+  }
   const project = await requestJson<SitepaigeProject>("GET", projectUrl, undefined, options);
   return project;
 }
@@ -299,14 +322,31 @@ export async function write_site_by_project_id(
 ): Promise<{ project: SitepaigeProject; wroteTo: string }> {
   const project = await fetch_project_by_id(params.projectId, options);
   
+  if (options?.onLog) {
+    options.onLog('[write_site_by_project_id] Fetched project keys: ' + Object.keys(project).join(', '));
+    options.onLog('[write_site_by_project_id] Has code? ' + (!!project.code));
+    options.onLog('[write_site_by_project_id] Has blueprint? ' + (!!project.blueprint));
+    
+    if (project.code) {
+      options.onLog('[write_site_by_project_id] Code structure: ' + JSON.stringify({
+        isObject: typeof project.code === 'object',
+        hasApis: 'apis' in project.code,
+        hasViews: 'views' in project.code
+      }));
+    }
+  }
+  
   try {
     const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
     await writeProjectPagesOnly(project as any, { 
       targetDir: params.targetDir,
-      databaseType: params.databaseType || "sqlite"
+      databaseType: params.databaseType || "sqlite",
+      writeApis: true // get_status should write everything including APIs
     });
   } catch (error) {
-    console.error(`[write_site_by_project_id] ERROR in writeProjectPagesOnly:`, error);
+    if (options?.onLog) {
+      options.onLog(`[write_site_by_project_id] ERROR in writeProjectPagesOnly: ${error}`);
+    }
     throw error;
   }
   return { project, wroteTo: params.targetDir };
@@ -321,6 +361,20 @@ export async function complete_backend_and_write(
   // First complete the backend generation including models, SQL migrations, and API routes
   const project = await complete_backend(params.projectId, options);
   
+  if (options?.onLog) {
+    options.onLog('[complete_backend_and_write] Fetched project keys: ' + Object.keys(project).join(', '));
+    options.onLog('[complete_backend_and_write] Has code? ' + (!!project.code));
+    options.onLog('[complete_backend_and_write] Has blueprint? ' + (!!project.blueprint));
+    
+    if (project.code) {
+      options.onLog('[complete_backend_and_write] Code structure: ' + JSON.stringify({
+        isObject: typeof project.code === 'object',
+        hasApis: 'apis' in project.code,
+        hasViews: 'views' in project.code
+      }));
+    }
+  }
+  
   // Then write ONLY the backend files (models/SQL, APIs, architecture doc)
   // This ensures we don't overwrite frontend files from generate_site
   try {
@@ -330,7 +384,9 @@ export async function complete_backend_and_write(
       databaseType: params.databaseType || "sqlite"
     });
   } catch (error) {
-    console.error(`[complete_backend_and_write] ERROR in writeProjectBackendOnly:`, error);
+    if (options?.onLog) {
+      options.onLog(`[complete_backend_and_write] ERROR in writeProjectBackendOnly: ${error}`);
+    }
     throw error;
   }
   return { project, wroteTo: params.targetDir };

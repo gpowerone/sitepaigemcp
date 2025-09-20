@@ -1,5 +1,7 @@
 import { Metadata } from 'next';
-import LoginCallback from '@/components/logincallback';
+import LoginCallback from '../../components/logincallback';
+import React from 'react';
+
 
 export const metadata: Metadata = {
     title: 'Login Callback',
