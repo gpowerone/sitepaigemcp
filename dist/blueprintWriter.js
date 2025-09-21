@@ -28,13 +28,11 @@ async function debugLog(message) {
 export async function writeProjectFromBlueprint(project, options) {
     const targetDir = path.resolve(options.targetDir);
     ensureDir(targetDir);
-    const blueprint = project.blueprint || project.data?.blueprint;
-    const projectCode = project.code || project.data?.code;
+    const blueprint = project.blueprint;
+    const projectCode = project.code;
     await debugLog('[writeProjectFromBlueprint] project structure: ' + JSON.stringify({
         hasBlueprint: !!project.blueprint,
-        hasDataBlueprint: !!(project.data?.blueprint),
-        hasCode: !!project.code,
-        hasDataCode: !!(project.data?.code)
+        hasCode: !!project.code
     }));
     if (!blueprint) {
         throw new Error("No blueprint found in project data");
@@ -50,7 +48,7 @@ export async function writeProjectFromBlueprint(project, options) {
         viewsCount: projectCode.views?.length || 0
     }));
     // package.json first to allow immediate npm install
-    const projectName = project.name || project.data?.name || undefined;
+    const projectName = project.name || undefined;
     await writePackageJson(targetDir, projectName, options.databaseType || "sqlite");
     await writeNextConfig(targetDir);
     await writeBaseAppSkeleton(targetDir);
@@ -74,8 +72,8 @@ export async function writeProjectFromBlueprint(project, options) {
 export async function writeProjectPagesOnly(project, options) {
     const targetDir = path.resolve(options.targetDir);
     ensureDir(targetDir);
-    const blueprint = project.blueprint || project.data?.blueprint;
-    const projectCode = project.code || project.data?.code;
+    const blueprint = project.blueprint;
+    const projectCode = project.code;
     await debugLog('[writeProjectPagesOnly] Called with options: ' + JSON.stringify({
         targetDir: options.targetDir,
         databaseType: options.databaseType,
@@ -83,9 +81,7 @@ export async function writeProjectPagesOnly(project, options) {
     }));
     await debugLog('[writeProjectPagesOnly] project structure: ' + JSON.stringify({
         hasBlueprint: !!project.blueprint,
-        hasDataBlueprint: !!(project.data?.blueprint),
-        hasCode: !!project.code,
-        hasDataCode: !!(project.data?.code)
+        hasCode: !!project.code
     }));
     if (!blueprint) {
         throw new Error("No blueprint found in project data");
@@ -102,7 +98,7 @@ export async function writeProjectPagesOnly(project, options) {
         await debugLog('[writeProjectPagesOnly] WARNING: No projectCode provided');
     }
     // package.json first to allow immediate npm install
-    const projectName = project.name || project.data?.name || undefined;
+    const projectName = project.name || undefined;
     await writePackageJson(targetDir, projectName, options.databaseType || "sqlite");
     await writeNextConfig(targetDir);
     await writeBaseAppSkeleton(targetDir);
@@ -140,8 +136,8 @@ export async function writeProjectPagesOnly(project, options) {
 // Write only backend parts (models/SQL, API routes, and architecture doc)
 export async function writeProjectBackendOnly(project, options) {
     const targetDir = path.resolve(options.targetDir);
-    const blueprint = project.blueprint || project.data?.blueprint;
-    const projectCode = project.code || project.data?.code;
+    const blueprint = project.blueprint;
+    const projectCode = project.code;
     if (!blueprint) {
         throw new Error("No blueprint found in project data");
     }
