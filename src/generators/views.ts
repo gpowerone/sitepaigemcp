@@ -239,8 +239,8 @@ export async function writeViews(targetDir: string, blueprint: Blueprint, projec
       const viewCode = projectCode.views.find(vc => vc.viewID === v.id);
       await debugLog(`[writeViews] Looking for code for view ${v.id}, found: ${viewCode ? 'yes' : 'no'}`);
       if (viewCode && viewCode.code) {
-        // Clean the code by removing data:image base64 prefixes
-        const cleanedCode = viewCode.code.replace(/data:image\/[^;]+;base64,/g, '');
+        // Don't clean data:image prefixes - let them pass through to transpiler
+        const cleanedCode = viewCode.code;
         
         try {
           // Dynamically import the transpiler
@@ -249,7 +249,7 @@ export async function writeViews(targetDir: string, blueprint: Blueprint, projec
           const transpiler = { transpileCode };
           
           // Transpile the code
-          const dictionary = {}; // Add dictionary if needed
+          const dictionary = blueprint.dictionary || {}; // Use dictionary from blueprint
           const transpiledResult: { success: boolean, code: string, error?: string } = JSON.parse(
             transpiler.transpileCode(cleanedCode, pages, dictionary)
           );
@@ -261,9 +261,9 @@ export async function writeViews(targetDir: string, blueprint: Blueprint, projec
             await debugLog(`[writeViews] Transpilation failed for view ${v.id}: ${transpiledResult.error}`);
             // Fall back to description-based transpilation if available
             if (v.custom_view_description) {
-              const cleanedDescription = v.custom_view_description.replace(/data:image\/[^;]+;base64,/g, '');
+              const cleanedDescription = v.custom_view_description;
               const fallbackResult = JSON.parse(
-                transpiler.transpileCode(cleanedDescription, pages, dictionary)
+                transpiler.transpileCode(cleanedDescription, pages, blueprint.dictionary || {})
               );
               if (fallbackResult.success) {
                 code = fallbackResult.code;

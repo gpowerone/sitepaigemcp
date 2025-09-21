@@ -334,12 +334,19 @@ server.tool("get_status", {
                             ]
                         };
                     }
-                    // Write the project files (including APIs for get_status)
+                    // Write the project files
+                    // Check if there are models or APIs in the blueprint to decide what to write
+                    const hasModels = !!(project.blueprint?.models && Array.isArray(project.blueprint.models) && project.blueprint.models.length > 0);
+                    const hasApis = !!(project.code?.apis && Array.isArray(project.code.apis) && project.code.apis.length > 0);
+                    const shouldWriteBackend = hasModels || hasApis;
+                    if (job && jobId) {
+                        jobs.appendLog(jobId, `Project has models: ${hasModels}, has APIs: ${hasApis}`);
+                    }
                     const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
                     await writeProjectPagesOnly(project, {
                         targetDir: actualTargetDir,
                         databaseType: actualDatabaseType || "sqlite",
-                        writeApis: true // get_status should write everything including APIs
+                        writeApis: shouldWriteBackend // Only write backend stuff if it exists
                     });
                     // Update job status if we have a job
                     if (job && jobId) {

@@ -108,10 +108,5 @@ export async function writeDefaultApp(targetDir: string, databaseType: "sqlite" 
     await fsp.writeFile(envExamplePath, updatedEnvTemplate, "utf8");
   }
   
-  // Create DATABASE_SETUP.md file
-  const dbSetupPath = path.join(targetDir, "DATABASE_SETUP.md");
-  if (!fs.existsSync(dbSetupPath)) {
-    const dbReadmeTemplate = await fsp.readFile(path.join(__dirname, "database-readme-template.md"), "utf8");
-    await fsp.writeFile(dbSetupPath, dbReadmeTemplate, "utf8");
-  }
+  // DATABASE_SETUP.md is now written by writeModelsSql when migrations are created
 }

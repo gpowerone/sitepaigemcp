@@ -72,6 +72,7 @@ export function getDatabaseConfig(): DatabaseConfig {
     default: // sqlite
       return {
         type: 'sqlite',
+        connectionString: process.env.DATABASE_URL, // Add support for DATABASE_URL
         sqliteDir: process.env.SQLITE_DIR || '.',
         efsMountPath: process.env.EFS_MOUNT_PATH
       };

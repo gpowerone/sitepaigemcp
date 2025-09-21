@@ -170,3 +170,522 @@
 [2025-09-20T21:04:24.014Z] [writeApis] Found code group for API wellnessjournal-update: no
 [2025-09-20T21:04:24.015Z] [writeApis] Processing API: wellnessjournal-delete, name: WellnessJournalDelete
 [2025-09-20T21:04:24.015Z] [writeApis] Found code group for API wellnessjournal-delete: no
+[2025-09-21T02:33:07.091Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":true}
+[2025-09-21T02:33:07.093Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasDataBlueprint":false,"hasCode":true,"hasDataCode":false}
+[2025-09-21T02:33:07.093Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":1,"hasViews":true,"viewsCount":1}
+[2025-09-21T02:33:07.147Z] [writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)
+[2025-09-21T02:33:07.850Z] [writeViews] projectCode: exists
+[2025-09-21T02:33:07.851Z] [writeViews] projectCode.views count: 1
+[2025-09-21T02:33:07.851Z] [writeViews] View code available for ID: practitioners_grid, code length: 11718
+[2025-09-21T02:33:07.852Z] [writeViews] Processing view: 809bbea4-d2c2-4e69-a470-ba14664e1b3c, type: logo, name: Logo
+[2025-09-21T02:33:07.852Z] [writeViews] Looking for code for view 809bbea4-d2c2-4e69-a470-ba14664e1b3c, found: no
+[2025-09-21T02:33:07.853Z] [writeViews] Processing view: ab6f84f7-0fd6-49c3-92b9-deb491825d5e, type: menu, name: Header Menu
+[2025-09-21T02:33:07.853Z] [writeViews] Looking for code for view ab6f84f7-0fd6-49c3-92b9-deb491825d5e, found: no
+[2025-09-21T02:33:07.854Z] [writeViews] Processing view: 3c138804-ab60-4b79-82f4-f4afce425e07, type: loginbutton, name: Header Login
+[2025-09-21T02:33:07.854Z] [writeViews] Looking for code for view 3c138804-ab60-4b79-82f4-f4afce425e07, found: no
+[2025-09-21T02:33:07.854Z] [writeViews] Processing view: 40924730-c5bc-417f-8b9d-0a0ca72c87a2, type: iconbar, name: Header Icon Bar
+[2025-09-21T02:33:07.854Z] [writeViews] Looking for code for view 40924730-c5bc-417f-8b9d-0a0ca72c87a2, found: no
+[2025-09-21T02:33:07.855Z] [writeViews] Processing view: f54ea140-973a-49c2-a4ff-b4199830fa3d, type: menu, name: Header (Logged In)
+[2025-09-21T02:33:07.855Z] [writeViews] Looking for code for view f54ea140-973a-49c2-a4ff-b4199830fa3d, found: no
+[2025-09-21T02:33:07.855Z] [writeViews] Processing view: 7ee74ab3-cc12-4716-84ec-bee3ca5af037, type: iconbar, name: Header Icon Bar (Logged In)
+[2025-09-21T02:33:07.856Z] [writeViews] Looking for code for view 7ee74ab3-cc12-4716-84ec-bee3ca5af037, found: no
+[2025-09-21T02:33:07.856Z] [writeViews] Processing view: fe867dc9-9288-4949-8128-63ae77d4a45d, type: menu, name: Header (Admin)
+[2025-09-21T02:33:07.856Z] [writeViews] Looking for code for view fe867dc9-9288-4949-8128-63ae77d4a45d, found: no
+[2025-09-21T02:33:07.857Z] [writeViews] Processing view: 71f6ade5-36e9-4bd8-8366-5971241e95a6, type: iconbar, name: Header Icon Bar (Admin)
+[2025-09-21T02:33:07.857Z] [writeViews] Looking for code for view 71f6ade5-36e9-4bd8-8366-5971241e95a6, found: no
+[2025-09-21T02:33:07.858Z] [writeViews] Processing view: e9d44476-51d3-4daf-8ec2-1c416cf5c4a1, type: menu, name: Footer Menu
+[2025-09-21T02:33:07.858Z] [writeViews] Looking for code for view e9d44476-51d3-4daf-8ec2-1c416cf5c4a1, found: no
+[2025-09-21T02:33:07.859Z] [writeViews] Processing view: 5d2c3336-bb92-4844-99fa-29e2cee7daef, type: text, name: Copyright
+[2025-09-21T02:33:07.860Z] [writeViews] Looking for code for view 5d2c3336-bb92-4844-99fa-29e2cee7daef, found: no
+[2025-09-21T02:33:07.860Z] [writeViews] Processing view: 6ff2994c-3e8b-4fa4-90b9-2a1cf7af4504, type: generatedintegration, name: Analytics Tracking
+[2025-09-21T02:33:07.861Z] [writeViews] Looking for code for view 6ff2994c-3e8b-4fa4-90b9-2a1cf7af4504, found: no
+[2025-09-21T02:33:07.861Z] [writeViews] Processing view: 212031e3-3f0d-492e-ac06-7fc01abb266b, type: loggedinmenu, name: DashboardMenuView
+[2025-09-21T02:33:07.862Z] [writeViews] Looking for code for view 212031e3-3f0d-492e-ac06-7fc01abb266b, found: no
+[2025-09-21T02:33:07.862Z] [writeViews] Processing view: 62db0042-c0f4-470c-9c5c-07bb2a5a07f0, type: useradmin, name: UserAdminView
+[2025-09-21T02:33:07.863Z] [writeViews] Looking for code for view 62db0042-c0f4-470c-9c5c-07bb2a5a07f0, found: no
+[2025-09-21T02:33:07.863Z] [writeViews] Processing view: 9ed9e15a-53ef-4473-b57c-b15992d04410, type: adminmenu, name: AdminMenuView
+[2025-09-21T02:33:07.863Z] [writeViews] Looking for code for view 9ed9e15a-53ef-4473-b57c-b15992d04410, found: no
+[2025-09-21T02:33:07.864Z] [writeViews] Processing view: d546dcf0-d266-46f5-8612-963a21a633d6, type: cta, name: Hero CTA
+[2025-09-21T02:33:07.864Z] [writeViews] Looking for code for view d546dcf0-d266-46f5-8612-963a21a633d6, found: no
+[2025-09-21T02:33:07.865Z] [writeViews] Processing view: philosophy_section, type: text, name: Our Philosophy
+[2025-09-21T02:33:07.866Z] [writeViews] Looking for code for view philosophy_section, found: no
+[2025-09-21T02:33:07.866Z] [writeViews] Processing view: philosophy_image, type: generatedimage, name: Sound Healing Visualization
+[2025-09-21T02:33:07.867Z] [writeViews] Looking for code for view philosophy_image, found: no
+[2025-09-21T02:33:07.867Z] [writeViews] Processing view: benefits_image, type: updateimage, name: Healing Benefits Visual
+[2025-09-21T02:33:07.868Z] [writeViews] Looking for code for view benefits_image, found: no
+[2025-09-21T02:33:07.868Z] [writeViews] Processing view: benefits_section, type: generatedtext, name: Healing Benefits
+[2025-09-21T02:33:07.869Z] [writeViews] Looking for code for view benefits_section, found: no
+[2025-09-21T02:33:07.869Z] [writeViews] Processing view: featured_services, type: generatedtext, name: Featured Services Preview
+[2025-09-21T02:33:07.870Z] [writeViews] Looking for code for view featured_services, found: no
+[2025-09-21T02:33:07.870Z] [writeViews] Processing view: services_listing, type: generatedcomponent, name: Services Catalog
+[2025-09-21T02:33:07.871Z] [writeViews] Looking for code for view services_listing, found: no
+[2025-09-21T02:33:07.872Z] [writeViews] Processing view: service_details, type: generatedcomponent, name: Service Information
+[2025-09-21T02:33:07.872Z] [writeViews] Looking for code for view service_details, found: no
+[2025-09-21T02:33:07.873Z] [writeViews] Processing view: booking_system, type: generatedcomponent, name: Appointment Booking
+[2025-09-21T02:33:07.873Z] [writeViews] Looking for code for view booking_system, found: no
+[2025-09-21T02:33:07.874Z] [writeViews] Processing view: booking_calendar, type: generatedintegration, name: Calendar Integration
+[2025-09-21T02:33:07.874Z] [writeViews] Looking for code for view booking_calendar, found: no
+[2025-09-21T02:33:07.875Z] [writeViews] Processing view: mission_statement, type: generatedtext, name: Our Mission
+[2025-09-21T02:33:07.875Z] [writeViews] Looking for code for view mission_statement, found: no
+[2025-09-21T02:33:07.876Z] [writeViews] Processing view: founder_story, type: generatedtext, name: Founder Story
+[2025-09-21T02:33:07.876Z] [writeViews] Looking for code for view founder_story, found: no
+[2025-09-21T02:33:07.877Z] [writeViews] Processing view: founder_image, type: generatedimage, name: Founder Portrait
+[2025-09-21T02:33:07.877Z] [writeViews] Looking for code for view founder_image, found: no
+[2025-09-21T02:33:07.878Z] [writeViews] Processing view: credentials_image, type: generatedimage, name: Training and Certifications Visual
+[2025-09-21T02:33:07.878Z] [writeViews] Looking for code for view credentials_image, found: no
+[2025-09-21T02:33:07.879Z] [writeViews] Processing view: credentials_text, type: generatedtext, name: Training and Certifications
+[2025-09-21T02:33:07.879Z] [writeViews] Looking for code for view credentials_text, found: no
+[2025-09-21T02:33:07.880Z] [writeViews] Processing view: practitioners_grid, type: component, name: Practitioner Profiles
+[2025-09-21T02:33:07.880Z] [writeViews] Looking for code for view practitioners_grid, found: yes
+[2025-09-21T02:33:08.102Z] [writeViews] Processing view: practitioner_profile, type: generatedcomponent, name: Detailed Practitioner Information
+[2025-09-21T02:33:08.102Z] [writeViews] Looking for code for view practitioner_profile, found: no
+[2025-09-21T02:33:08.102Z] [writeViews] Processing view: audio_library, type: generatedcomponent, name: Healing Audio Collection
+[2025-09-21T02:33:08.102Z] [writeViews] Looking for code for view audio_library, found: no
+[2025-09-21T02:33:08.103Z] [writeViews] Processing view: resources_library, type: generatedcomponent, name: Educational Resources
+[2025-09-21T02:33:08.103Z] [writeViews] Looking for code for view resources_library, found: no
+[2025-09-21T02:33:08.103Z] [writeViews] Processing view: testimonials_showcase, type: generatedcomponent, name: Client Success Stories
+[2025-09-21T02:33:08.103Z] [writeViews] Looking for code for view testimonials_showcase, found: no
+[2025-09-21T02:33:08.104Z] [writeViews] Processing view: contact_form, type: generatedcomponent, name: Contact Form
+[2025-09-21T02:33:08.104Z] [writeViews] Looking for code for view contact_form, found: no
+[2025-09-21T02:33:08.104Z] [writeViews] Processing view: contact_info, type: generatedtext, name: Contact Information
+[2025-09-21T02:33:08.104Z] [writeViews] Looking for code for view contact_info, found: no
+[2025-09-21T02:33:08.105Z] [writeViews] Processing view: location_map, type: generatedintegration, name: Location Map
+[2025-09-21T02:33:08.105Z] [writeViews] Looking for code for view location_map, found: no
+[2025-09-21T02:33:08.105Z] [writeViews] Processing view: session_dashboard, type: generatedcomponent, name: Session Management
+[2025-09-21T02:33:08.106Z] [writeViews] Looking for code for view session_dashboard, found: no
+[2025-09-21T02:33:08.106Z] [writeViews] Processing view: journal_interface, type: generatedcomponent, name: Personal Wellness Journal
+[2025-09-21T02:33:08.106Z] [writeViews] Looking for code for view journal_interface, found: no
+[2025-09-21T02:33:08.107Z] [writeViews] Processing view: admin_session_management, type: generatedcomponent, name: Session Administration
+[2025-09-21T02:33:08.107Z] [writeViews] Looking for code for view admin_session_management, found: no
+[2025-09-21T02:33:08.108Z] [writeViews] Processing view: admin_practitioner_management, type: generatedcomponent, name: Practitioner Administration
+[2025-09-21T02:33:08.108Z] [writeViews] Looking for code for view admin_practitioner_management, found: no
+[2025-09-21T02:33:08.108Z] [writeViews] Processing view: admin_content_management, type: generatedcomponent, name: Content Administration
+[2025-09-21T02:33:08.109Z] [writeViews] Looking for code for view admin_content_management, found: no
+[2025-09-21T02:33:08.109Z] [writeViews] Processing view: 307e7747-cd14-4dfb-be93-a76cadfeaa5c, type: text, name: Terms of Service
+[2025-09-21T02:33:08.110Z] [writeViews] Looking for code for view 307e7747-cd14-4dfb-be93-a76cadfeaa5c, found: no
+[2025-09-21T02:33:08.110Z] [writeViews] Processing view: a791fa2a-532a-4283-925f-9fa03a835f01, type: text, name: Privacy Policy
+[2025-09-21T02:33:08.111Z] [writeViews] Looking for code for view a791fa2a-532a-4283-925f-9fa03a835f01, found: no
+[2025-09-21T02:33:08.111Z] [writeViews] Processing view: 5b8b8caf-631e-4de1-a21c-021cdabfbb4f, type: login, name: LoginView
+[2025-09-21T02:33:08.111Z] [writeViews] Looking for code for view 5b8b8caf-631e-4de1-a21c-021cdabfbb4f, found: no
+[2025-09-21T02:33:08.113Z] [writeViews] WARNING: Container view "Header (Logged In)" (fe36ccb0-44a7-4761-9997-55757a1ecf7e) is trying to reference a view "Header (Logged In)" (f54ea140-973a-49c2-a4ff-b4199830fa3d) that generates the same file name. Skipping to prevent circular import.
+[2025-09-21T02:33:08.114Z] [writeViews] WARNING: Container view "Header (Admin)" (595ddd70-86ca-4fe8-ba2d-3a343178758a) is trying to reference a view "Header (Admin)" (fe867dc9-9288-4949-8128-63ae77d4a45d) that generates the same file name. Skipping to prevent circular import.
+[2025-09-21T02:33:08.129Z] [writeProjectPagesOnly] Writing APIs (writeApis=true and APIs exist)
+[2025-09-21T02:33:08.129Z] [writeApis] APIs count: 35
+[2025-09-21T02:33:08.130Z] [writeApis] Code groups count: 1
+[2025-09-21T02:33:08.130Z] [writeApis] Processing API: services-list, name: ServicesList
+[2025-09-21T02:33:08.130Z] [writeApis] Found code group for API services-list: no
+[2025-09-21T02:33:08.132Z] [writeApis] Processing API: services-get, name: ServicesGet
+[2025-09-21T02:33:08.132Z] [writeApis] Found code group for API services-get: no
+[2025-09-21T02:33:08.133Z] [writeApis] Processing API: services-create, name: ServicesCreate
+[2025-09-21T02:33:08.133Z] [writeApis] Found code group for API services-create: no
+[2025-09-21T02:33:08.134Z] [writeApis] Processing API: services-update, name: ServicesUpdate
+[2025-09-21T02:33:08.134Z] [writeApis] Found code group for API services-update: no
+[2025-09-21T02:33:08.135Z] [writeApis] Processing API: services-delete, name: ServicesDelete
+[2025-09-21T02:33:08.135Z] [writeApis] Found code group for API services-delete: no
+[2025-09-21T02:33:08.136Z] [writeApis] Processing API: practitioners-list, name: PractitionersList
+[2025-09-21T02:33:08.136Z] [writeApis] Found code group for API practitioners-list: yes
+[2025-09-21T02:33:08.137Z] [writeApis] API code length: 3541
+[2025-09-21T02:33:08.137Z] [writeApis] Processing API: practitioners-get, name: PractitionersGet
+[2025-09-21T02:33:08.137Z] [writeApis] Found code group for API practitioners-get: no
+[2025-09-21T02:33:08.138Z] [writeApis] Processing API: practitioners-create, name: PractitionersCreate
+[2025-09-21T02:33:08.138Z] [writeApis] Found code group for API practitioners-create: no
+[2025-09-21T02:33:08.139Z] [writeApis] Processing API: practitioners-update, name: PractitionersUpdate
+[2025-09-21T02:33:08.139Z] [writeApis] Found code group for API practitioners-update: no
+[2025-09-21T02:33:08.140Z] [writeApis] Processing API: practitioners-delete, name: PractitionersDelete
+[2025-09-21T02:33:08.140Z] [writeApis] Found code group for API practitioners-delete: no
+[2025-09-21T02:33:08.141Z] [writeApis] Processing API: sessions-list, name: SessionsList
+[2025-09-21T02:33:08.141Z] [writeApis] Found code group for API sessions-list: no
+[2025-09-21T02:33:08.142Z] [writeApis] Processing API: sessions-get, name: SessionsGet
+[2025-09-21T02:33:08.143Z] [writeApis] Found code group for API sessions-get: no
+[2025-09-21T02:33:08.143Z] [writeApis] Processing API: sessions-create, name: SessionsCreate
+[2025-09-21T02:33:08.144Z] [writeApis] Found code group for API sessions-create: no
+[2025-09-21T02:33:08.145Z] [writeApis] Processing API: sessions-update, name: SessionsUpdate
+[2025-09-21T02:33:08.145Z] [writeApis] Found code group for API sessions-update: no
+[2025-09-21T02:33:08.146Z] [writeApis] Processing API: sessions-delete, name: SessionsDelete
+[2025-09-21T02:33:08.146Z] [writeApis] Found code group for API sessions-delete: no
+[2025-09-21T02:33:08.147Z] [writeApis] Processing API: soundlibrary-list, name: SoundLibraryList
+[2025-09-21T02:33:08.147Z] [writeApis] Found code group for API soundlibrary-list: no
+[2025-09-21T02:33:08.148Z] [writeApis] Processing API: soundlibrary-get, name: SoundLibraryGet
+[2025-09-21T02:33:08.148Z] [writeApis] Found code group for API soundlibrary-get: no
+[2025-09-21T02:33:08.148Z] [writeApis] Processing API: soundlibrary-create, name: SoundLibraryCreate
+[2025-09-21T02:33:08.149Z] [writeApis] Found code group for API soundlibrary-create: no
+[2025-09-21T02:33:08.150Z] [writeApis] Processing API: soundlibrary-update, name: SoundLibraryUpdate
+[2025-09-21T02:33:08.150Z] [writeApis] Found code group for API soundlibrary-update: no
+[2025-09-21T02:33:08.150Z] [writeApis] Processing API: soundlibrary-delete, name: SoundLibraryDelete
+[2025-09-21T02:33:08.151Z] [writeApis] Found code group for API soundlibrary-delete: no
+[2025-09-21T02:33:08.152Z] [writeApis] Processing API: wellnessresources-list, name: WellnessResourcesList
+[2025-09-21T02:33:08.152Z] [writeApis] Found code group for API wellnessresources-list: no
+[2025-09-21T02:33:08.153Z] [writeApis] Processing API: wellnessresources-get, name: WellnessResourcesGet
+[2025-09-21T02:33:08.153Z] [writeApis] Found code group for API wellnessresources-get: no
+[2025-09-21T02:33:08.154Z] [writeApis] Processing API: wellnessresources-create, name: WellnessResourcesCreate
+[2025-09-21T02:33:08.154Z] [writeApis] Found code group for API wellnessresources-create: no
+[2025-09-21T02:33:08.155Z] [writeApis] Processing API: wellnessresources-update, name: WellnessResourcesUpdate
+[2025-09-21T02:33:08.155Z] [writeApis] Found code group for API wellnessresources-update: no
+[2025-09-21T02:33:08.156Z] [writeApis] Processing API: wellnessresources-delete, name: WellnessResourcesDelete
+[2025-09-21T02:33:08.156Z] [writeApis] Found code group for API wellnessresources-delete: no
+[2025-09-21T02:33:08.157Z] [writeApis] Processing API: testimonials-list, name: TestimonialsList
+[2025-09-21T02:33:08.157Z] [writeApis] Found code group for API testimonials-list: no
+[2025-09-21T02:33:08.158Z] [writeApis] Processing API: testimonials-get, name: TestimonialsGet
+[2025-09-21T02:33:08.158Z] [writeApis] Found code group for API testimonials-get: no
+[2025-09-21T02:33:08.158Z] [writeApis] Processing API: testimonials-create, name: TestimonialsCreate
+[2025-09-21T02:33:08.159Z] [writeApis] Found code group for API testimonials-create: no
+[2025-09-21T02:33:08.159Z] [writeApis] Processing API: testimonials-update, name: TestimonialsUpdate
+[2025-09-21T02:33:08.160Z] [writeApis] Found code group for API testimonials-update: no
+[2025-09-21T02:33:08.160Z] [writeApis] Processing API: testimonials-delete, name: TestimonialsDelete
+[2025-09-21T02:33:08.161Z] [writeApis] Found code group for API testimonials-delete: no
+[2025-09-21T02:33:08.161Z] [writeApis] Processing API: wellnessjournal-list, name: WellnessJournalList
+[2025-09-21T02:33:08.162Z] [writeApis] Found code group for API wellnessjournal-list: no
+[2025-09-21T02:33:08.162Z] [writeApis] Processing API: wellnessjournal-get, name: WellnessJournalGet
+[2025-09-21T02:33:08.162Z] [writeApis] Found code group for API wellnessjournal-get: no
+[2025-09-21T02:33:08.163Z] [writeApis] Processing API: wellnessjournal-create, name: WellnessJournalCreate
+[2025-09-21T02:33:08.163Z] [writeApis] Found code group for API wellnessjournal-create: no
+[2025-09-21T02:33:08.164Z] [writeApis] Processing API: wellnessjournal-update, name: WellnessJournalUpdate
+[2025-09-21T02:33:08.164Z] [writeApis] Found code group for API wellnessjournal-update: no
+[2025-09-21T02:33:08.165Z] [writeApis] Processing API: wellnessjournal-delete, name: WellnessJournalDelete
+[2025-09-21T02:33:08.165Z] [writeApis] Found code group for API wellnessjournal-delete: no
+[2025-09-21T03:35:07.785Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":true}
+[2025-09-21T03:35:07.787Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasDataBlueprint":false,"hasCode":true,"hasDataCode":false}
+[2025-09-21T03:35:07.788Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":1,"hasViews":true,"viewsCount":1}
+[2025-09-21T03:35:07.818Z] [writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)
+[2025-09-21T03:35:08.691Z] [writeViews] projectCode: exists
+[2025-09-21T03:35:08.691Z] [writeViews] projectCode.views count: 1
+[2025-09-21T03:35:08.692Z] [writeViews] View code available for ID: practitioners_grid, code length: 11718
+[2025-09-21T03:35:08.692Z] [writeViews] Processing view: 809bbea4-d2c2-4e69-a470-ba14664e1b3c, type: logo, name: Logo
+[2025-09-21T03:35:08.693Z] [writeViews] Looking for code for view 809bbea4-d2c2-4e69-a470-ba14664e1b3c, found: no
+[2025-09-21T03:35:08.694Z] [writeViews] Processing view: ab6f84f7-0fd6-49c3-92b9-deb491825d5e, type: menu, name: Header Menu
+[2025-09-21T03:35:08.694Z] [writeViews] Looking for code for view ab6f84f7-0fd6-49c3-92b9-deb491825d5e, found: no
+[2025-09-21T03:35:08.695Z] [writeViews] Processing view: 3c138804-ab60-4b79-82f4-f4afce425e07, type: loginbutton, name: Header Login
+[2025-09-21T03:35:08.695Z] [writeViews] Looking for code for view 3c138804-ab60-4b79-82f4-f4afce425e07, found: no
+[2025-09-21T03:35:08.696Z] [writeViews] Processing view: 40924730-c5bc-417f-8b9d-0a0ca72c87a2, type: iconbar, name: Header Icon Bar
+[2025-09-21T03:35:08.696Z] [writeViews] Looking for code for view 40924730-c5bc-417f-8b9d-0a0ca72c87a2, found: no
+[2025-09-21T03:35:08.697Z] [writeViews] Processing view: f54ea140-973a-49c2-a4ff-b4199830fa3d, type: menu, name: Header (Logged In)
+[2025-09-21T03:35:08.698Z] [writeViews] Looking for code for view f54ea140-973a-49c2-a4ff-b4199830fa3d, found: no
+[2025-09-21T03:35:08.699Z] [writeViews] Processing view: 7ee74ab3-cc12-4716-84ec-bee3ca5af037, type: iconbar, name: Header Icon Bar (Logged In)
+[2025-09-21T03:35:08.699Z] [writeViews] Looking for code for view 7ee74ab3-cc12-4716-84ec-bee3ca5af037, found: no
+[2025-09-21T03:35:08.701Z] [writeViews] Processing view: fe867dc9-9288-4949-8128-63ae77d4a45d, type: menu, name: Header (Admin)
+[2025-09-21T03:35:08.701Z] [writeViews] Looking for code for view fe867dc9-9288-4949-8128-63ae77d4a45d, found: no
+[2025-09-21T03:35:08.702Z] [writeViews] Processing view: 71f6ade5-36e9-4bd8-8366-5971241e95a6, type: iconbar, name: Header Icon Bar (Admin)
+[2025-09-21T03:35:08.702Z] [writeViews] Looking for code for view 71f6ade5-36e9-4bd8-8366-5971241e95a6, found: no
+[2025-09-21T03:35:08.704Z] [writeViews] Processing view: e9d44476-51d3-4daf-8ec2-1c416cf5c4a1, type: menu, name: Footer Menu
+[2025-09-21T03:35:08.704Z] [writeViews] Looking for code for view e9d44476-51d3-4daf-8ec2-1c416cf5c4a1, found: no
+[2025-09-21T03:35:08.706Z] [writeViews] Processing view: 5d2c3336-bb92-4844-99fa-29e2cee7daef, type: text, name: Copyright
+[2025-09-21T03:35:08.706Z] [writeViews] Looking for code for view 5d2c3336-bb92-4844-99fa-29e2cee7daef, found: no
+[2025-09-21T03:35:08.708Z] [writeViews] Processing view: 6ff2994c-3e8b-4fa4-90b9-2a1cf7af4504, type: generatedintegration, name: Analytics Tracking
+[2025-09-21T03:35:08.708Z] [writeViews] Looking for code for view 6ff2994c-3e8b-4fa4-90b9-2a1cf7af4504, found: no
+[2025-09-21T03:35:08.709Z] [writeViews] Processing view: 212031e3-3f0d-492e-ac06-7fc01abb266b, type: loggedinmenu, name: DashboardMenuView
+[2025-09-21T03:35:08.709Z] [writeViews] Looking for code for view 212031e3-3f0d-492e-ac06-7fc01abb266b, found: no
+[2025-09-21T03:35:08.710Z] [writeViews] Processing view: 62db0042-c0f4-470c-9c5c-07bb2a5a07f0, type: useradmin, name: UserAdminView
+[2025-09-21T03:35:08.711Z] [writeViews] Looking for code for view 62db0042-c0f4-470c-9c5c-07bb2a5a07f0, found: no
+[2025-09-21T03:35:08.712Z] [writeViews] Processing view: 9ed9e15a-53ef-4473-b57c-b15992d04410, type: adminmenu, name: AdminMenuView
+[2025-09-21T03:35:08.712Z] [writeViews] Looking for code for view 9ed9e15a-53ef-4473-b57c-b15992d04410, found: no
+[2025-09-21T03:35:08.713Z] [writeViews] Processing view: d546dcf0-d266-46f5-8612-963a21a633d6, type: cta, name: Hero CTA
+[2025-09-21T03:35:08.713Z] [writeViews] Looking for code for view d546dcf0-d266-46f5-8612-963a21a633d6, found: no
+[2025-09-21T03:35:08.714Z] [writeViews] Processing view: philosophy_section, type: text, name: Our Philosophy
+[2025-09-21T03:35:08.715Z] [writeViews] Looking for code for view philosophy_section, found: no
+[2025-09-21T03:35:08.716Z] [writeViews] Processing view: philosophy_image, type: generatedimage, name: Sound Healing Visualization
+[2025-09-21T03:35:08.716Z] [writeViews] Looking for code for view philosophy_image, found: no
+[2025-09-21T03:35:08.724Z] [writeViews] Processing view: benefits_image, type: updateimage, name: Healing Benefits Visual
+[2025-09-21T03:35:08.724Z] [writeViews] Looking for code for view benefits_image, found: no
+[2025-09-21T03:35:08.725Z] [writeViews] Processing view: benefits_section, type: generatedtext, name: Healing Benefits
+[2025-09-21T03:35:08.726Z] [writeViews] Looking for code for view benefits_section, found: no
+[2025-09-21T03:35:08.727Z] [writeViews] Processing view: featured_services, type: generatedtext, name: Featured Services Preview
+[2025-09-21T03:35:08.728Z] [writeViews] Looking for code for view featured_services, found: no
+[2025-09-21T03:35:08.729Z] [writeViews] Processing view: services_listing, type: generatedcomponent, name: Services Catalog
+[2025-09-21T03:35:08.729Z] [writeViews] Looking for code for view services_listing, found: no
+[2025-09-21T03:35:08.730Z] [writeViews] Processing view: service_details, type: generatedcomponent, name: Service Information
+[2025-09-21T03:35:08.730Z] [writeViews] Looking for code for view service_details, found: no
+[2025-09-21T03:35:08.731Z] [writeViews] Processing view: booking_system, type: generatedcomponent, name: Appointment Booking
+[2025-09-21T03:35:08.731Z] [writeViews] Looking for code for view booking_system, found: no
+[2025-09-21T03:35:08.732Z] [writeViews] Processing view: booking_calendar, type: generatedintegration, name: Calendar Integration
+[2025-09-21T03:35:08.734Z] [writeViews] Looking for code for view booking_calendar, found: no
+[2025-09-21T03:35:08.735Z] [writeViews] Processing view: mission_statement, type: generatedtext, name: Our Mission
+[2025-09-21T03:35:08.736Z] [writeViews] Looking for code for view mission_statement, found: no
+[2025-09-21T03:35:08.738Z] [writeViews] Processing view: founder_story, type: generatedtext, name: Founder Story
+[2025-09-21T03:35:08.739Z] [writeViews] Looking for code for view founder_story, found: no
+[2025-09-21T03:35:08.742Z] [writeViews] Processing view: founder_image, type: generatedimage, name: Founder Portrait
+[2025-09-21T03:35:08.743Z] [writeViews] Looking for code for view founder_image, found: no
+[2025-09-21T03:35:08.744Z] [writeViews] Processing view: credentials_image, type: generatedimage, name: Training and Certifications Visual
+[2025-09-21T03:35:08.746Z] [writeViews] Looking for code for view credentials_image, found: no
+[2025-09-21T03:35:08.747Z] [writeViews] Processing view: credentials_text, type: generatedtext, name: Training and Certifications
+[2025-09-21T03:35:08.747Z] [writeViews] Looking for code for view credentials_text, found: no
+[2025-09-21T03:35:08.748Z] [writeViews] Processing view: practitioners_grid, type: component, name: Practitioner Profiles
+[2025-09-21T03:35:08.748Z] [writeViews] Looking for code for view practitioners_grid, found: yes
+[2025-09-21T03:35:09.205Z] [writeViews] Processing view: practitioner_profile, type: generatedcomponent, name: Detailed Practitioner Information
+[2025-09-21T03:35:09.205Z] [writeViews] Looking for code for view practitioner_profile, found: no
+[2025-09-21T03:35:09.206Z] [writeViews] Processing view: audio_library, type: generatedcomponent, name: Healing Audio Collection
+[2025-09-21T03:35:09.206Z] [writeViews] Looking for code for view audio_library, found: no
+[2025-09-21T03:35:09.207Z] [writeViews] Processing view: resources_library, type: generatedcomponent, name: Educational Resources
+[2025-09-21T03:35:09.208Z] [writeViews] Looking for code for view resources_library, found: no
+[2025-09-21T03:35:09.209Z] [writeViews] Processing view: testimonials_showcase, type: generatedcomponent, name: Client Success Stories
+[2025-09-21T03:35:09.209Z] [writeViews] Looking for code for view testimonials_showcase, found: no
+[2025-09-21T03:35:09.209Z] [writeViews] Processing view: contact_form, type: generatedcomponent, name: Contact Form
+[2025-09-21T03:35:09.210Z] [writeViews] Looking for code for view contact_form, found: no
+[2025-09-21T03:35:09.210Z] [writeViews] Processing view: contact_info, type: generatedtext, name: Contact Information
+[2025-09-21T03:35:09.210Z] [writeViews] Looking for code for view contact_info, found: no
+[2025-09-21T03:35:09.211Z] [writeViews] Processing view: location_map, type: generatedintegration, name: Location Map
+[2025-09-21T03:35:09.211Z] [writeViews] Looking for code for view location_map, found: no
+[2025-09-21T03:35:09.212Z] [writeViews] Processing view: session_dashboard, type: generatedcomponent, name: Session Management
+[2025-09-21T03:35:09.212Z] [writeViews] Looking for code for view session_dashboard, found: no
+[2025-09-21T03:35:09.213Z] [writeViews] Processing view: journal_interface, type: generatedcomponent, name: Personal Wellness Journal
+[2025-09-21T03:35:09.213Z] [writeViews] Looking for code for view journal_interface, found: no
+[2025-09-21T03:35:09.214Z] [writeViews] Processing view: admin_session_management, type: generatedcomponent, name: Session Administration
+[2025-09-21T03:35:09.214Z] [writeViews] Looking for code for view admin_session_management, found: no
+[2025-09-21T03:35:09.214Z] [writeViews] Processing view: admin_practitioner_management, type: generatedcomponent, name: Practitioner Administration
+[2025-09-21T03:35:09.214Z] [writeViews] Looking for code for view admin_practitioner_management, found: no
+[2025-09-21T03:35:09.215Z] [writeViews] Processing view: admin_content_management, type: generatedcomponent, name: Content Administration
+[2025-09-21T03:35:09.215Z] [writeViews] Looking for code for view admin_content_management, found: no
+[2025-09-21T03:35:09.216Z] [writeViews] Processing view: 307e7747-cd14-4dfb-be93-a76cadfeaa5c, type: text, name: Terms of Service
+[2025-09-21T03:35:09.216Z] [writeViews] Looking for code for view 307e7747-cd14-4dfb-be93-a76cadfeaa5c, found: no
+[2025-09-21T03:35:09.217Z] [writeViews] Processing view: a791fa2a-532a-4283-925f-9fa03a835f01, type: text, name: Privacy Policy
+[2025-09-21T03:35:09.217Z] [writeViews] Looking for code for view a791fa2a-532a-4283-925f-9fa03a835f01, found: no
+[2025-09-21T03:35:09.217Z] [writeViews] Processing view: 5b8b8caf-631e-4de1-a21c-021cdabfbb4f, type: login, name: LoginView
+[2025-09-21T03:35:09.218Z] [writeViews] Looking for code for view 5b8b8caf-631e-4de1-a21c-021cdabfbb4f, found: no
+[2025-09-21T03:35:09.220Z] [writeViews] WARNING: Container view "Header (Logged In)" (fe36ccb0-44a7-4761-9997-55757a1ecf7e) is trying to reference a view "Header (Logged In)" (f54ea140-973a-49c2-a4ff-b4199830fa3d) that generates the same file name. Skipping to prevent circular import.
+[2025-09-21T03:35:09.221Z] [writeViews] WARNING: Container view "Header (Admin)" (595ddd70-86ca-4fe8-ba2d-3a343178758a) is trying to reference a view "Header (Admin)" (fe867dc9-9288-4949-8128-63ae77d4a45d) that generates the same file name. Skipping to prevent circular import.
+[2025-09-21T03:35:09.241Z] [writeProjectPagesOnly] Writing APIs (writeApis=true and APIs exist)
+[2025-09-21T03:35:09.242Z] [writeApis] APIs count: 35
+[2025-09-21T03:35:09.242Z] [writeApis] Code groups count: 1
+[2025-09-21T03:35:09.243Z] [writeApis] Processing API: services-list, name: ServicesList
+[2025-09-21T03:35:09.243Z] [writeApis] Found code group for API services-list: no
+[2025-09-21T03:35:09.244Z] [writeApis] Processing API: services-get, name: ServicesGet
+[2025-09-21T03:35:09.245Z] [writeApis] Found code group for API services-get: no
+[2025-09-21T03:35:09.245Z] [writeApis] Processing API: services-create, name: ServicesCreate
+[2025-09-21T03:35:09.246Z] [writeApis] Found code group for API services-create: no
+[2025-09-21T03:35:09.247Z] [writeApis] Processing API: services-update, name: ServicesUpdate
+[2025-09-21T03:35:09.247Z] [writeApis] Found code group for API services-update: no
+[2025-09-21T03:35:09.248Z] [writeApis] Processing API: services-delete, name: ServicesDelete
+[2025-09-21T03:35:09.248Z] [writeApis] Found code group for API services-delete: no
+[2025-09-21T03:35:09.249Z] [writeApis] Processing API: practitioners-list, name: PractitionersList
+[2025-09-21T03:35:09.249Z] [writeApis] Found code group for API practitioners-list: yes
+[2025-09-21T03:35:09.249Z] [writeApis] API code length: 3541
+[2025-09-21T03:35:09.250Z] [writeApis] Processing API: practitioners-get, name: PractitionersGet
+[2025-09-21T03:35:09.250Z] [writeApis] Found code group for API practitioners-get: no
+[2025-09-21T03:35:09.252Z] [writeApis] Processing API: practitioners-create, name: PractitionersCreate
+[2025-09-21T03:35:09.252Z] [writeApis] Found code group for API practitioners-create: no
+[2025-09-21T03:35:09.253Z] [writeApis] Processing API: practitioners-update, name: PractitionersUpdate
+[2025-09-21T03:35:09.253Z] [writeApis] Found code group for API practitioners-update: no
+[2025-09-21T03:35:09.254Z] [writeApis] Processing API: practitioners-delete, name: PractitionersDelete
+[2025-09-21T03:35:09.254Z] [writeApis] Found code group for API practitioners-delete: no
+[2025-09-21T03:35:09.255Z] [writeApis] Processing API: sessions-list, name: SessionsList
+[2025-09-21T03:35:09.255Z] [writeApis] Found code group for API sessions-list: no
+[2025-09-21T03:35:09.256Z] [writeApis] Processing API: sessions-get, name: SessionsGet
+[2025-09-21T03:35:09.256Z] [writeApis] Found code group for API sessions-get: no
+[2025-09-21T03:35:09.257Z] [writeApis] Processing API: sessions-create, name: SessionsCreate
+[2025-09-21T03:35:09.258Z] [writeApis] Found code group for API sessions-create: no
+[2025-09-21T03:35:09.259Z] [writeApis] Processing API: sessions-update, name: SessionsUpdate
+[2025-09-21T03:35:09.259Z] [writeApis] Found code group for API sessions-update: no
+[2025-09-21T03:35:09.260Z] [writeApis] Processing API: sessions-delete, name: SessionsDelete
+[2025-09-21T03:35:09.260Z] [writeApis] Found code group for API sessions-delete: no
+[2025-09-21T03:35:09.261Z] [writeApis] Processing API: soundlibrary-list, name: SoundLibraryList
+[2025-09-21T03:35:09.261Z] [writeApis] Found code group for API soundlibrary-list: no
+[2025-09-21T03:35:09.262Z] [writeApis] Processing API: soundlibrary-get, name: SoundLibraryGet
+[2025-09-21T03:35:09.262Z] [writeApis] Found code group for API soundlibrary-get: no
+[2025-09-21T03:35:09.263Z] [writeApis] Processing API: soundlibrary-create, name: SoundLibraryCreate
+[2025-09-21T03:35:09.263Z] [writeApis] Found code group for API soundlibrary-create: no
+[2025-09-21T03:35:09.264Z] [writeApis] Processing API: soundlibrary-update, name: SoundLibraryUpdate
+[2025-09-21T03:35:09.264Z] [writeApis] Found code group for API soundlibrary-update: no
+[2025-09-21T03:35:09.265Z] [writeApis] Processing API: soundlibrary-delete, name: SoundLibraryDelete
+[2025-09-21T03:35:09.265Z] [writeApis] Found code group for API soundlibrary-delete: no
+[2025-09-21T03:35:09.266Z] [writeApis] Processing API: wellnessresources-list, name: WellnessResourcesList
+[2025-09-21T03:35:09.266Z] [writeApis] Found code group for API wellnessresources-list: no
+[2025-09-21T03:35:09.267Z] [writeApis] Processing API: wellnessresources-get, name: WellnessResourcesGet
+[2025-09-21T03:35:09.267Z] [writeApis] Found code group for API wellnessresources-get: no
+[2025-09-21T03:35:09.268Z] [writeApis] Processing API: wellnessresources-create, name: WellnessResourcesCreate
+[2025-09-21T03:35:09.269Z] [writeApis] Found code group for API wellnessresources-create: no
+[2025-09-21T03:35:09.269Z] [writeApis] Processing API: wellnessresources-update, name: WellnessResourcesUpdate
+[2025-09-21T03:35:09.270Z] [writeApis] Found code group for API wellnessresources-update: no
+[2025-09-21T03:35:09.270Z] [writeApis] Processing API: wellnessresources-delete, name: WellnessResourcesDelete
+[2025-09-21T03:35:09.271Z] [writeApis] Found code group for API wellnessresources-delete: no
+[2025-09-21T03:35:09.272Z] [writeApis] Processing API: testimonials-list, name: TestimonialsList
+[2025-09-21T03:35:09.272Z] [writeApis] Found code group for API testimonials-list: no
+[2025-09-21T03:35:09.273Z] [writeApis] Processing API: testimonials-get, name: TestimonialsGet
+[2025-09-21T03:35:09.273Z] [writeApis] Found code group for API testimonials-get: no
+[2025-09-21T03:35:09.274Z] [writeApis] Processing API: testimonials-create, name: TestimonialsCreate
+[2025-09-21T03:35:09.275Z] [writeApis] Found code group for API testimonials-create: no
+[2025-09-21T03:35:09.275Z] [writeApis] Processing API: testimonials-update, name: TestimonialsUpdate
+[2025-09-21T03:35:09.275Z] [writeApis] Found code group for API testimonials-update: no
+[2025-09-21T03:35:09.276Z] [writeApis] Processing API: testimonials-delete, name: TestimonialsDelete
+[2025-09-21T03:35:09.276Z] [writeApis] Found code group for API testimonials-delete: no
+[2025-09-21T03:35:09.277Z] [writeApis] Processing API: wellnessjournal-list, name: WellnessJournalList
+[2025-09-21T03:35:09.277Z] [writeApis] Found code group for API wellnessjournal-list: no
+[2025-09-21T03:35:09.278Z] [writeApis] Processing API: wellnessjournal-get, name: WellnessJournalGet
+[2025-09-21T03:35:09.279Z] [writeApis] Found code group for API wellnessjournal-get: no
+[2025-09-21T03:35:09.279Z] [writeApis] Processing API: wellnessjournal-create, name: WellnessJournalCreate
+[2025-09-21T03:35:09.279Z] [writeApis] Found code group for API wellnessjournal-create: no
+[2025-09-21T03:35:09.280Z] [writeApis] Processing API: wellnessjournal-update, name: WellnessJournalUpdate
+[2025-09-21T03:35:09.281Z] [writeApis] Found code group for API wellnessjournal-update: no
+[2025-09-21T03:35:09.281Z] [writeApis] Processing API: wellnessjournal-delete, name: WellnessJournalDelete
+[2025-09-21T03:35:09.281Z] [writeApis] Found code group for API wellnessjournal-delete: no
+[2025-09-21T03:45:50.526Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":true}
+[2025-09-21T03:45:50.528Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasDataBlueprint":false,"hasCode":true,"hasDataCode":false}
+[2025-09-21T03:45:50.528Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":1,"hasViews":true,"viewsCount":1}
+[2025-09-21T03:45:50.560Z] [writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)
+[2025-09-21T03:45:51.357Z] [writeViews] projectCode: exists
+[2025-09-21T03:45:51.358Z] [writeViews] projectCode.views count: 1
+[2025-09-21T03:45:51.358Z] [writeViews] View code available for ID: practitioners_grid, code length: 11718
+[2025-09-21T03:45:51.359Z] [writeViews] Processing view: 809bbea4-d2c2-4e69-a470-ba14664e1b3c, type: logo, name: Logo
+[2025-09-21T03:45:51.359Z] [writeViews] Looking for code for view 809bbea4-d2c2-4e69-a470-ba14664e1b3c, found: no
+[2025-09-21T03:45:51.360Z] [writeViews] Processing view: ab6f84f7-0fd6-49c3-92b9-deb491825d5e, type: menu, name: Header Menu
+[2025-09-21T03:45:51.360Z] [writeViews] Looking for code for view ab6f84f7-0fd6-49c3-92b9-deb491825d5e, found: no
+[2025-09-21T03:45:51.361Z] [writeViews] Processing view: 3c138804-ab60-4b79-82f4-f4afce425e07, type: loginbutton, name: Header Login
+[2025-09-21T03:45:51.361Z] [writeViews] Looking for code for view 3c138804-ab60-4b79-82f4-f4afce425e07, found: no
+[2025-09-21T03:45:51.361Z] [writeViews] Processing view: 40924730-c5bc-417f-8b9d-0a0ca72c87a2, type: iconbar, name: Header Icon Bar
+[2025-09-21T03:45:51.361Z] [writeViews] Looking for code for view 40924730-c5bc-417f-8b9d-0a0ca72c87a2, found: no
+[2025-09-21T03:45:51.362Z] [writeViews] Processing view: f54ea140-973a-49c2-a4ff-b4199830fa3d, type: menu, name: Header (Logged In)
+[2025-09-21T03:45:51.362Z] [writeViews] Looking for code for view f54ea140-973a-49c2-a4ff-b4199830fa3d, found: no
+[2025-09-21T03:45:51.363Z] [writeViews] Processing view: 7ee74ab3-cc12-4716-84ec-bee3ca5af037, type: iconbar, name: Header Icon Bar (Logged In)
+[2025-09-21T03:45:51.363Z] [writeViews] Looking for code for view 7ee74ab3-cc12-4716-84ec-bee3ca5af037, found: no
+[2025-09-21T03:45:51.364Z] [writeViews] Processing view: fe867dc9-9288-4949-8128-63ae77d4a45d, type: menu, name: Header (Admin)
+[2025-09-21T03:45:51.364Z] [writeViews] Looking for code for view fe867dc9-9288-4949-8128-63ae77d4a45d, found: no
+[2025-09-21T03:45:51.364Z] [writeViews] Processing view: 71f6ade5-36e9-4bd8-8366-5971241e95a6, type: iconbar, name: Header Icon Bar (Admin)
+[2025-09-21T03:45:51.365Z] [writeViews] Looking for code for view 71f6ade5-36e9-4bd8-8366-5971241e95a6, found: no
+[2025-09-21T03:45:51.365Z] [writeViews] Processing view: e9d44476-51d3-4daf-8ec2-1c416cf5c4a1, type: menu, name: Footer Menu
+[2025-09-21T03:45:51.366Z] [writeViews] Looking for code for view e9d44476-51d3-4daf-8ec2-1c416cf5c4a1, found: no
+[2025-09-21T03:45:51.366Z] [writeViews] Processing view: 5d2c3336-bb92-4844-99fa-29e2cee7daef, type: text, name: Copyright
+[2025-09-21T03:45:51.366Z] [writeViews] Looking for code for view 5d2c3336-bb92-4844-99fa-29e2cee7daef, found: no
+[2025-09-21T03:45:51.367Z] [writeViews] Processing view: 6ff2994c-3e8b-4fa4-90b9-2a1cf7af4504, type: generatedintegration, name: Analytics Tracking
+[2025-09-21T03:45:51.368Z] [writeViews] Looking for code for view 6ff2994c-3e8b-4fa4-90b9-2a1cf7af4504, found: no
+[2025-09-21T03:45:51.368Z] [writeViews] Processing view: 212031e3-3f0d-492e-ac06-7fc01abb266b, type: loggedinmenu, name: DashboardMenuView
+[2025-09-21T03:45:51.368Z] [writeViews] Looking for code for view 212031e3-3f0d-492e-ac06-7fc01abb266b, found: no
+[2025-09-21T03:45:51.369Z] [writeViews] Processing view: 62db0042-c0f4-470c-9c5c-07bb2a5a07f0, type: useradmin, name: UserAdminView
+[2025-09-21T03:45:51.370Z] [writeViews] Looking for code for view 62db0042-c0f4-470c-9c5c-07bb2a5a07f0, found: no
+[2025-09-21T03:45:51.370Z] [writeViews] Processing view: 9ed9e15a-53ef-4473-b57c-b15992d04410, type: adminmenu, name: AdminMenuView
+[2025-09-21T03:45:51.370Z] [writeViews] Looking for code for view 9ed9e15a-53ef-4473-b57c-b15992d04410, found: no
+[2025-09-21T03:45:51.371Z] [writeViews] Processing view: d546dcf0-d266-46f5-8612-963a21a633d6, type: cta, name: Hero CTA
+[2025-09-21T03:45:51.371Z] [writeViews] Looking for code for view d546dcf0-d266-46f5-8612-963a21a633d6, found: no
+[2025-09-21T03:45:51.372Z] [writeViews] Processing view: philosophy_section, type: text, name: Our Philosophy
+[2025-09-21T03:45:51.373Z] [writeViews] Looking for code for view philosophy_section, found: no
+[2025-09-21T03:45:51.373Z] [writeViews] Processing view: philosophy_image, type: generatedimage, name: Sound Healing Visualization
+[2025-09-21T03:45:51.374Z] [writeViews] Looking for code for view philosophy_image, found: no
+[2025-09-21T03:45:51.374Z] [writeViews] Processing view: benefits_image, type: updateimage, name: Healing Benefits Visual
+[2025-09-21T03:45:51.375Z] [writeViews] Looking for code for view benefits_image, found: no
+[2025-09-21T03:45:51.375Z] [writeViews] Processing view: benefits_section, type: generatedtext, name: Healing Benefits
+[2025-09-21T03:45:51.375Z] [writeViews] Looking for code for view benefits_section, found: no
+[2025-09-21T03:45:51.376Z] [writeViews] Processing view: featured_services, type: generatedtext, name: Featured Services Preview
+[2025-09-21T03:45:51.376Z] [writeViews] Looking for code for view featured_services, found: no
+[2025-09-21T03:45:51.377Z] [writeViews] Processing view: services_listing, type: generatedcomponent, name: Services Catalog
+[2025-09-21T03:45:51.377Z] [writeViews] Looking for code for view services_listing, found: no
+[2025-09-21T03:45:51.378Z] [writeViews] Processing view: service_details, type: generatedcomponent, name: Service Information
+[2025-09-21T03:45:51.378Z] [writeViews] Looking for code for view service_details, found: no
+[2025-09-21T03:45:51.379Z] [writeViews] Processing view: booking_system, type: generatedcomponent, name: Appointment Booking
+[2025-09-21T03:45:51.379Z] [writeViews] Looking for code for view booking_system, found: no
+[2025-09-21T03:45:51.380Z] [writeViews] Processing view: booking_calendar, type: generatedintegration, name: Calendar Integration
+[2025-09-21T03:45:51.380Z] [writeViews] Looking for code for view booking_calendar, found: no
+[2025-09-21T03:45:51.381Z] [writeViews] Processing view: mission_statement, type: generatedtext, name: Our Mission
+[2025-09-21T03:45:51.381Z] [writeViews] Looking for code for view mission_statement, found: no
+[2025-09-21T03:45:51.382Z] [writeViews] Processing view: founder_story, type: generatedtext, name: Founder Story
+[2025-09-21T03:45:51.383Z] [writeViews] Looking for code for view founder_story, found: no
+[2025-09-21T03:45:51.383Z] [writeViews] Processing view: founder_image, type: generatedimage, name: Founder Portrait
+[2025-09-21T03:45:51.384Z] [writeViews] Looking for code for view founder_image, found: no
+[2025-09-21T03:45:51.384Z] [writeViews] Processing view: credentials_image, type: generatedimage, name: Training and Certifications Visual
+[2025-09-21T03:45:51.385Z] [writeViews] Looking for code for view credentials_image, found: no
+[2025-09-21T03:45:51.385Z] [writeViews] Processing view: credentials_text, type: generatedtext, name: Training and Certifications
+[2025-09-21T03:45:51.386Z] [writeViews] Looking for code for view credentials_text, found: no
+[2025-09-21T03:45:51.386Z] [writeViews] Processing view: practitioners_grid, type: component, name: Practitioner Profiles
+[2025-09-21T03:45:51.387Z] [writeViews] Looking for code for view practitioners_grid, found: yes
+[2025-09-21T03:45:51.575Z] [writeViews] Processing view: practitioner_profile, type: generatedcomponent, name: Detailed Practitioner Information
+[2025-09-21T03:45:51.575Z] [writeViews] Looking for code for view practitioner_profile, found: no
+[2025-09-21T03:45:51.575Z] [writeViews] Processing view: audio_library, type: generatedcomponent, name: Healing Audio Collection
+[2025-09-21T03:45:51.576Z] [writeViews] Looking for code for view audio_library, found: no
+[2025-09-21T03:45:51.576Z] [writeViews] Processing view: resources_library, type: generatedcomponent, name: Educational Resources
+[2025-09-21T03:45:51.576Z] [writeViews] Looking for code for view resources_library, found: no
+[2025-09-21T03:45:51.576Z] [writeViews] Processing view: testimonials_showcase, type: generatedcomponent, name: Client Success Stories
+[2025-09-21T03:45:51.577Z] [writeViews] Looking for code for view testimonials_showcase, found: no
+[2025-09-21T03:45:51.577Z] [writeViews] Processing view: contact_form, type: generatedcomponent, name: Contact Form
+[2025-09-21T03:45:51.577Z] [writeViews] Looking for code for view contact_form, found: no
+[2025-09-21T03:45:51.578Z] [writeViews] Processing view: contact_info, type: generatedtext, name: Contact Information
+[2025-09-21T03:45:51.578Z] [writeViews] Looking for code for view contact_info, found: no
+[2025-09-21T03:45:51.578Z] [writeViews] Processing view: location_map, type: generatedintegration, name: Location Map
+[2025-09-21T03:45:51.578Z] [writeViews] Looking for code for view location_map, found: no
+[2025-09-21T03:45:51.579Z] [writeViews] Processing view: session_dashboard, type: generatedcomponent, name: Session Management
+[2025-09-21T03:45:51.579Z] [writeViews] Looking for code for view session_dashboard, found: no
+[2025-09-21T03:45:51.579Z] [writeViews] Processing view: journal_interface, type: generatedcomponent, name: Personal Wellness Journal
+[2025-09-21T03:45:51.580Z] [writeViews] Looking for code for view journal_interface, found: no
+[2025-09-21T03:45:51.580Z] [writeViews] Processing view: admin_session_management, type: generatedcomponent, name: Session Administration
+[2025-09-21T03:45:51.580Z] [writeViews] Looking for code for view admin_session_management, found: no
+[2025-09-21T03:45:51.581Z] [writeViews] Processing view: admin_practitioner_management, type: generatedcomponent, name: Practitioner Administration
+[2025-09-21T03:45:51.581Z] [writeViews] Looking for code for view admin_practitioner_management, found: no
+[2025-09-21T03:45:51.582Z] [writeViews] Processing view: admin_content_management, type: generatedcomponent, name: Content Administration
+[2025-09-21T03:45:51.582Z] [writeViews] Looking for code for view admin_content_management, found: no
+[2025-09-21T03:45:51.583Z] [writeViews] Processing view: 307e7747-cd14-4dfb-be93-a76cadfeaa5c, type: text, name: Terms of Service
+[2025-09-21T03:45:51.584Z] [writeViews] Looking for code for view 307e7747-cd14-4dfb-be93-a76cadfeaa5c, found: no
+[2025-09-21T03:45:51.584Z] [writeViews] Processing view: a791fa2a-532a-4283-925f-9fa03a835f01, type: text, name: Privacy Policy
+[2025-09-21T03:45:51.584Z] [writeViews] Looking for code for view a791fa2a-532a-4283-925f-9fa03a835f01, found: no
+[2025-09-21T03:45:51.585Z] [writeViews] Processing view: 5b8b8caf-631e-4de1-a21c-021cdabfbb4f, type: login, name: LoginView
+[2025-09-21T03:45:51.585Z] [writeViews] Looking for code for view 5b8b8caf-631e-4de1-a21c-021cdabfbb4f, found: no
+[2025-09-21T03:45:51.587Z] [writeViews] WARNING: Container view "Header (Logged In)" (fe36ccb0-44a7-4761-9997-55757a1ecf7e) is trying to reference a view "Header (Logged In)" (f54ea140-973a-49c2-a4ff-b4199830fa3d) that generates the same file name. Skipping to prevent circular import.
+[2025-09-21T03:45:51.588Z] [writeViews] WARNING: Container view "Header (Admin)" (595ddd70-86ca-4fe8-ba2d-3a343178758a) is trying to reference a view "Header (Admin)" (fe867dc9-9288-4949-8128-63ae77d4a45d) that generates the same file name. Skipping to prevent circular import.
+[2025-09-21T03:45:51.602Z] [writeProjectPagesOnly] Writing APIs (writeApis=true and APIs exist)
+[2025-09-21T03:45:51.603Z] [writeApis] APIs count: 35
+[2025-09-21T03:45:51.603Z] [writeApis] Code groups count: 1
+[2025-09-21T03:45:51.603Z] [writeApis] Processing API: services-list, name: ServicesList
+[2025-09-21T03:45:51.603Z] [writeApis] Found code group for API services-list: no
+[2025-09-21T03:45:51.605Z] [writeApis] Processing API: services-get, name: ServicesGet
+[2025-09-21T03:45:51.605Z] [writeApis] Found code group for API services-get: no
+[2025-09-21T03:45:51.606Z] [writeApis] Processing API: services-create, name: ServicesCreate
+[2025-09-21T03:45:51.606Z] [writeApis] Found code group for API services-create: no
+[2025-09-21T03:45:51.607Z] [writeApis] Processing API: services-update, name: ServicesUpdate
+[2025-09-21T03:45:51.607Z] [writeApis] Found code group for API services-update: no
+[2025-09-21T03:45:51.608Z] [writeApis] Processing API: services-delete, name: ServicesDelete
+[2025-09-21T03:45:51.608Z] [writeApis] Found code group for API services-delete: no
+[2025-09-21T03:45:51.609Z] [writeApis] Processing API: practitioners-list, name: PractitionersList
+[2025-09-21T03:45:51.609Z] [writeApis] Found code group for API practitioners-list: yes
+[2025-09-21T03:45:51.609Z] [writeApis] API code length: 3541
+[2025-09-21T03:45:51.610Z] [writeApis] Processing API: practitioners-get, name: PractitionersGet
+[2025-09-21T03:45:51.610Z] [writeApis] Found code group for API practitioners-get: no
+[2025-09-21T03:45:51.611Z] [writeApis] Processing API: practitioners-create, name: PractitionersCreate
+[2025-09-21T03:45:51.611Z] [writeApis] Found code group for API practitioners-create: no
+[2025-09-21T03:45:51.612Z] [writeApis] Processing API: practitioners-update, name: PractitionersUpdate
+[2025-09-21T03:45:51.612Z] [writeApis] Found code group for API practitioners-update: no
+[2025-09-21T03:45:51.613Z] [writeApis] Processing API: practitioners-delete, name: PractitionersDelete
+[2025-09-21T03:45:51.613Z] [writeApis] Found code group for API practitioners-delete: no
+[2025-09-21T03:45:51.614Z] [writeApis] Processing API: sessions-list, name: SessionsList
+[2025-09-21T03:45:51.615Z] [writeApis] Found code group for API sessions-list: no
+[2025-09-21T03:45:51.615Z] [writeApis] Processing API: sessions-get, name: SessionsGet
+[2025-09-21T03:45:51.616Z] [writeApis] Found code group for API sessions-get: no
+[2025-09-21T03:45:51.617Z] [writeApis] Processing API: sessions-create, name: SessionsCreate
+[2025-09-21T03:45:51.617Z] [writeApis] Found code group for API sessions-create: no
+[2025-09-21T03:45:51.618Z] [writeApis] Processing API: sessions-update, name: SessionsUpdate
+[2025-09-21T03:45:51.618Z] [writeApis] Found code group for API sessions-update: no
+[2025-09-21T03:45:51.619Z] [writeApis] Processing API: sessions-delete, name: SessionsDelete
+[2025-09-21T03:45:51.619Z] [writeApis] Found code group for API sessions-delete: no
+[2025-09-21T03:45:51.620Z] [writeApis] Processing API: soundlibrary-list, name: SoundLibraryList
+[2025-09-21T03:45:51.620Z] [writeApis] Found code group for API soundlibrary-list: no
+[2025-09-21T03:45:51.620Z] [writeApis] Processing API: soundlibrary-get, name: SoundLibraryGet
+[2025-09-21T03:45:51.621Z] [writeApis] Found code group for API soundlibrary-get: no
+[2025-09-21T03:45:51.621Z] [writeApis] Processing API: soundlibrary-create, name: SoundLibraryCreate
+[2025-09-21T03:45:51.622Z] [writeApis] Found code group for API soundlibrary-create: no
+[2025-09-21T03:45:51.622Z] [writeApis] Processing API: soundlibrary-update, name: SoundLibraryUpdate
+[2025-09-21T03:45:51.623Z] [writeApis] Found code group for API soundlibrary-update: no
+[2025-09-21T03:45:51.624Z] [writeApis] Processing API: soundlibrary-delete, name: SoundLibraryDelete
+[2025-09-21T03:45:51.624Z] [writeApis] Found code group for API soundlibrary-delete: no
+[2025-09-21T03:45:51.624Z] [writeApis] Processing API: wellnessresources-list, name: WellnessResourcesList
+[2025-09-21T03:45:51.625Z] [writeApis] Found code group for API wellnessresources-list: no
+[2025-09-21T03:45:51.625Z] [writeApis] Processing API: wellnessresources-get, name: WellnessResourcesGet
+[2025-09-21T03:45:51.626Z] [writeApis] Found code group for API wellnessresources-get: no
+[2025-09-21T03:45:51.626Z] [writeApis] Processing API: wellnessresources-create, name: WellnessResourcesCreate
+[2025-09-21T03:45:51.627Z] [writeApis] Found code group for API wellnessresources-create: no
+[2025-09-21T03:45:51.628Z] [writeApis] Processing API: wellnessresources-update, name: WellnessResourcesUpdate
+[2025-09-21T03:45:51.628Z] [writeApis] Found code group for API wellnessresources-update: no
+[2025-09-21T03:45:51.629Z] [writeApis] Processing API: wellnessresources-delete, name: WellnessResourcesDelete
+[2025-09-21T03:45:51.629Z] [writeApis] Found code group for API wellnessresources-delete: no
+[2025-09-21T03:45:51.630Z] [writeApis] Processing API: testimonials-list, name: TestimonialsList
+[2025-09-21T03:45:51.630Z] [writeApis] Found code group for API testimonials-list: no
+[2025-09-21T03:45:51.631Z] [writeApis] Processing API: testimonials-get, name: TestimonialsGet
+[2025-09-21T03:45:51.631Z] [writeApis] Found code group for API testimonials-get: no
+[2025-09-21T03:45:51.632Z] [writeApis] Processing API: testimonials-create, name: TestimonialsCreate
+[2025-09-21T03:45:51.632Z] [writeApis] Found code group for API testimonials-create: no
+[2025-09-21T03:45:51.633Z] [writeApis] Processing API: testimonials-update, name: TestimonialsUpdate
+[2025-09-21T03:45:51.633Z] [writeApis] Found code group for API testimonials-update: no
+[2025-09-21T03:45:51.634Z] [writeApis] Processing API: testimonials-delete, name: TestimonialsDelete
+[2025-09-21T03:45:51.634Z] [writeApis] Found code group for API testimonials-delete: no
+[2025-09-21T03:45:51.635Z] [writeApis] Processing API: wellnessjournal-list, name: WellnessJournalList
+[2025-09-21T03:45:51.635Z] [writeApis] Found code group for API wellnessjournal-list: no
+[2025-09-21T03:45:51.636Z] [writeApis] Processing API: wellnessjournal-get, name: WellnessJournalGet
+[2025-09-21T03:45:51.636Z] [writeApis] Found code group for API wellnessjournal-get: no
+[2025-09-21T03:45:51.637Z] [writeApis] Processing API: wellnessjournal-create, name: WellnessJournalCreate
+[2025-09-21T03:45:51.637Z] [writeApis] Found code group for API wellnessjournal-create: no
+[2025-09-21T03:45:51.638Z] [writeApis] Processing API: wellnessjournal-update, name: WellnessJournalUpdate
+[2025-09-21T03:45:51.638Z] [writeApis] Found code group for API wellnessjournal-update: no
+[2025-09-21T03:45:51.639Z] [writeApis] Processing API: wellnessjournal-delete, name: WellnessJournalDelete
+[2025-09-21T03:45:51.639Z] [writeApis] Found code group for API wellnessjournal-delete: no

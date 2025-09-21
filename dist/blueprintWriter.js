@@ -109,7 +109,16 @@ export async function writeProjectPagesOnly(project, options) {
     // Copy default app files after base skeleton
     await writeDefaultApp(targetDir, options.databaseType || "sqlite");
     await writeComponents(targetDir, blueprint);
-    // Skip writeModelsSql and writeIncrementalMigrations
+    // Write database/models if requested and they exist in blueprint
+    const hasModels = blueprint.models && blueprint.models.length > 0;
+    if (options.writeApis && hasModels) {
+        await debugLog('[writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)');
+        await writeModelsSql(targetDir, blueprint, options.databaseType || "sqlite");
+        await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "sqlite");
+    }
+    else {
+        await debugLog('[writeProjectPagesOnly] Skipping models/migrations (writeApis=' + options.writeApis + ', hasModels=' + hasModels + ')');
+    }
     // Process images: download to public/images and replace refs in blueprint before views/pages
     const bpWithImages = await processBlueprintImages(targetDir, blueprint);
     const viewMap = await writeViews(targetDir, bpWithImages, projectCode, project.AuthProviders);
@@ -117,13 +126,14 @@ export async function writeProjectPagesOnly(project, options) {
     const viewStyles = getViewStyles();
     await updateGlobalCSS(targetDir, bpWithImages, viewStyles);
     await writePages(targetDir, bpWithImages, viewMap);
-    // Conditionally write APIs based on writeApis option
-    if (options.writeApis) {
-        await debugLog('[writeProjectPagesOnly] Writing APIs (writeApis=true)');
-        await writeApis(targetDir, bpWithImages, projectCode || {});
+    // Conditionally write APIs based on writeApis option AND if they exist in code
+    const hasApis = projectCode && projectCode.apis && projectCode.apis.length > 0;
+    if (options.writeApis && hasApis) {
+        await debugLog('[writeProjectPagesOnly] Writing APIs (writeApis=true and APIs exist)');
+        await writeApis(targetDir, bpWithImages, projectCode);
     }
     else {
-        await debugLog('[writeProjectPagesOnly] Skipping APIs (writeApis=false or undefined)');
+        await debugLog('[writeProjectPagesOnly] Skipping APIs (writeApis=' + options.writeApis + ', hasApis=' + hasApis + ')');
     }
     // Skip writeArchitectureDoc - only written in complete backend
 }

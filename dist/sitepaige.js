@@ -206,7 +206,7 @@ export async function generate_site_and_write(params, options) {
         await writeProjectPagesOnly(res.project, {
             targetDir: params.targetDir,
             databaseType: params.databaseType,
-            writeApis: false // pages-first generation should not write APIs
+            writeApis: false // pages-first generation should never write database or APIs
         });
         return { ...res, wroteTo: params.targetDir };
     }
@@ -224,7 +224,7 @@ export async function fetch_project_by_id(projectId, options) {
     const project = await requestJson("GET", projectUrl, undefined, options);
     return project;
 }
-// Fetch a project and write it to disk (pages only)
+// Fetch a project and write it to disk (includes APIs if they exist in the project)
 export async function write_site_by_project_id(params, options) {
     const project = await fetch_project_by_id(params.projectId, options);
     if (options?.onLog) {
@@ -244,7 +244,7 @@ export async function write_site_by_project_id(params, options) {
         await writeProjectPagesOnly(project, {
             targetDir: params.targetDir,
             databaseType: params.databaseType || "sqlite",
-            writeApis: true // get_status should write everything including APIs
+            writeApis: true // write_site_by_project_id will conditionally write APIs/models if they exist
         });
     }
     catch (error) {

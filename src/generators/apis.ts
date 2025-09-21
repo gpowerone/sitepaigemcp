@@ -207,6 +207,20 @@ export async function writeApis(targetDir: string, blueprint: Blueprint, project
   await debugLog('[writeApis] APIs count: ' + apis.length);
   await debugLog('[writeApis] Code groups count: ' + codeGroups.length);
 
+  // Define user tiers for conversion
+  const tiers = [
+    {"name":"Free","paid":false,"description":"Free tier","yearly_price":0,"monthly_price":0},
+    {"name":"Basic","paid":true,"description":"Basic tier","yearly_price":100,"monthly_price":10},
+    {"name":"Pro","paid":true,"description":"Pro tier","yearly_price":200,"monthly_price":20},
+    {"name":"Enterprise","paid":true,"description":"Enterprise tier","yearly_price":300,"monthly_price":30}
+  ];
+
+  // Function to get tier index from tier name
+  const getTierIndex = (tierName: string): number => {
+    const index = tiers.findIndex(tier => tier.name === tierName);
+    return index >= 0 ? index : 0; // Default to Free tier if not found
+  };
+
   for (const api of apis) {
     const routeDir = path.join(apiDir, safeSlug(api.name || api.id || "api"));
     ensureDir(routeDir);
@@ -228,6 +242,32 @@ export async function writeApis(targetDir: string, blueprint: Blueprint, project
       continue;
     }
 
+    // Build auth code if required
+    let authCode = '';
+    if (api.requires_auth === 'admin' || api.requires_auth === 'registereduser') {
+      authCode = `
+    const UserInfo = await check_auth(db, db_query);
+    if (UserInfo.userid.length === 0) { return NextResponse.json({ error: "Forbidden" }, { status: 403 }); }
+    const user_id = UserInfo.userid;
+`;
+
+      if (api.requires_auth === 'admin') {
+        authCode += `
+    if (UserInfo.IsAdmin !== true) { return NextResponse.json({ error: "Forbidden" }, { status: 403 }); }
+`;
+      }
+
+      if (api.user_tier && api.user_tier !== '') {
+        const requiredTierIndex = getTierIndex(api.user_tier);
+        authCode += `
+    if (UserInfo.UserTier < ${requiredTierIndex}) { return NextResponse.json({ error: "Forbidden" }, { status: 403 }); }
+`;
+      }
+    }
+
+    // Replace the auth code placeholder in the API code
+    const processedApiCode = apiCode.replace('/* AUTH CODE (NOT AI GENERATED) */', authCode);
+
     // Calculate relative path from API route to app root (defaultapp)
     const depth = (api.name || api.id || "api").split('/').filter(Boolean).length;
     const relativePathToRoot = '../'.repeat(depth + 1); // +2 for api/routename
@@ -240,7 +280,7 @@ import { check_auth } from '${relativePathToRoot}auth/auth';
 import { store_file } from '${relativePathToRoot}storage/files';
 import { db_init, db_query } from '${relativePathToRoot}db';
 `;
-    const routeCode = header + "\n" + apiCode + "\n";
+    const routeCode = header + "\n" + processedApiCode + "\n";
     await fsp.writeFile(path.join(routeDir, "route.ts"), routeCode, "utf8");
   }
 }

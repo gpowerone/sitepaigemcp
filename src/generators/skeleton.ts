@@ -103,9 +103,10 @@ export async function writePackageJson(targetDir: string, projectName?: string, 
 
   pkg.scripts = {
     ...(pkg.scripts ?? {}),
-    dev: pkg.scripts?.dev ?? "next dev",
+    dev: pkg.scripts?.dev ?? "npx tsx src/app/migrate.ts && next dev",
     build: pkg.scripts?.build ?? "next build",
-    start: pkg.scripts?.start ?? "next start"
+    start: pkg.scripts?.start ?? "npx tsx src/app/migrate.ts && next start",
+    migrate: pkg.scripts?.migrate ?? "npx tsx src/app/migrate.ts"
   };
 
   pkg.dependencies = {

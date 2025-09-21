@@ -3,6 +3,10 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 import { ensureDir } from "./utils.js";
 import { Blueprint, Model, ModelField, Migration } from "../types.js";
+import { fileURLToPath } from 'node:url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function writeModelsSql(targetDir: string, blueprint: Blueprint, databaseType: "sqlite" | "postgres" | "mysql" = "sqlite"): Promise<void> {
   const migrationsDir = path.join(targetDir, "migrations");
@@ -12,6 +16,17 @@ export async function writeModelsSql(targetDir: string, blueprint: Blueprint, da
 
   const models = blueprint.models || [];
   const lines: string[] = ["-- Base schema generated from blueprint.models" ];
+  
+  // Write DATABASE_SETUP.md when we write migrations
+  const dbSetupPath = path.join(targetDir, "DATABASE_SETUP.md");
+  if (!fs.existsSync(dbSetupPath)) {
+    try {
+      const dbReadmeTemplate = await fsp.readFile(path.join(__dirname, "database-readme-template.md"), "utf8");
+      await fsp.writeFile(dbSetupPath, dbReadmeTemplate, "utf8");
+    } catch (err) {
+      console.error("Warning: Could not write DATABASE_SETUP.md:", err);
+    }
+  }
   
   // Database-specific type mappings
   const typeMap: Record<string, Record<string, string>> = {
@@ -93,7 +108,7 @@ export async function writeModelsSql(targetDir: string, blueprint: Blueprint, da
     if (model.data_is_user_specific.toLowerCase() === "true") {
       const userIdType = databaseType === 'mysql' ? 'VARCHAR(36)' : (databaseType === 'postgres' ? 'UUID' : 'TEXT');
       fieldDefs.push(`  ${quoteChar}userid${quoteChar} ${userIdType} NOT NULL`);
-      fieldDefs.push(`  ,FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}Users${quoteChar} (${quoteChar}userid${quoteChar})`);
+      fieldDefs.push(`  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}Users${quoteChar} (${quoteChar}userid${quoteChar})`);
     }
 
     const createSql = `CREATE TABLE IF NOT EXISTS ${quoteChar}${tableName}${quoteChar} (\n${fieldDefs.join(",\n")}\n);`;

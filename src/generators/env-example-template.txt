@@ -3,8 +3,16 @@
 DATABASE_TYPE=sqlite
 
 # SQLite Configuration
-# For local development
-SQLITE_DIR=./data
+# Option 1: Specify full database path (recommended)
+# DATABASE_URL=./data/app.db
+# DATABASE_URL=sqlite://./data/app.db
+
+# Option 2: Specify directory only (defaults to current directory if not set)
+# SQLITE_DIR=./data
+
+# Option 3: Use defaults (no configuration needed)
+# If neither DATABASE_URL nor SQLITE_DIR is set, creates ./app.db in current directory
+
 # For production with EFS (AWS)
 # EFS_MOUNT_PATH=/mnt/efs
 

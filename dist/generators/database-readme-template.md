@@ -18,12 +18,26 @@ This project supports multiple database types: SQLite, PostgreSQL, and MySQL.
 
 ## SQLite Configuration
 
-SQLite is the default database and requires no additional setup.
+SQLite is the default database and requires no additional setup. If no configuration is provided, it will create `app.db` in the current directory.
 
+### Option 1: Using DATABASE_URL (Recommended)
 ```env
 DATABASE_TYPE=sqlite
-SQLITE_DIR=./data  # Directory where the database file will be stored
+DATABASE_URL=./data/app.db  # Full path to the SQLite database file
+# Or use sqlite:// prefix:
+# DATABASE_URL=sqlite://./data/app.db
 ```
+
+### Option 2: Using SQLITE_DIR
+```env
+DATABASE_TYPE=sqlite
+SQLITE_DIR=./data  # Directory where the database file will be stored (defaults to current directory)
+```
+
+### Option 3: Default Behavior (No Configuration)
+If neither `DATABASE_URL` nor `SQLITE_DIR` is set, the database will be created as `./app.db` in the current directory.
+
+The database file will be created automatically if it doesn't exist.
 
 ## PostgreSQL Configuration
 

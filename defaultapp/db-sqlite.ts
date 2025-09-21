@@ -17,6 +17,18 @@ const dbConnections: Map<string, Database.Database> = new Map();
  * Get the default database path
  */
 function getDefaultDbPath(config: DatabaseConfig): string {
+  // First check if DATABASE_URL is provided (connectionString)
+  if (config.connectionString) {
+    // DATABASE_URL can be either a direct file path or a sqlite:// URL
+    if (config.connectionString.startsWith('sqlite://')) {
+      // Remove the sqlite:// prefix and return the path
+      return config.connectionString.slice(9);
+    } else {
+      // Assume it's a direct file path
+      return config.connectionString;
+    }
+  }
+  
   // Use EFS_MOUNT_PATH for production (in container with EFS)
   // Use SQLITE_DIR for local development
   const efsMountPath = config.efsMountPath;
@@ -33,7 +45,8 @@ function getDefaultDbPath(config: DatabaseConfig): string {
 
 /**
  * Initialize database connection
- * Uses default database path based on EFS_MOUNT_PATH (production) or SQLITE_DIR (development).
+ * Uses DATABASE_URL if provided, otherwise uses default database path based on 
+ * EFS_MOUNT_PATH (production) or SQLITE_DIR (development).
  * If the file doesn't exist, it will be created automatically.
  * @returns Database client
  */

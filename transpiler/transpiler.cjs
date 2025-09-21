@@ -174,6 +174,12 @@ function convertReactCreateElement(path) {
               t.jsxAttribute(t.jsxIdentifier(name), t.stringLiteral(prop.value.value))
             );
           }
+          // Handle template literals - preserve them as expression containers
+          else if (prop.value.type === 'TemplateLiteral') {
+            openingElement.attributes.push(
+              t.jsxAttribute(t.jsxIdentifier(name), t.jsxExpressionContainer(prop.value))
+            );
+          }
           // Handle other props
           else {
             openingElement.attributes.push(
@@ -346,6 +352,12 @@ function convertReactCreateElementToJSX(node) {
         else if (prop.value.type === 'StringLiteral') {
           openingElement.attributes.push(
             t.jsxAttribute(t.jsxIdentifier(name), t.stringLiteral(prop.value.value))
+          );
+        }
+        // Handle template literals - preserve them as expression containers
+        else if (prop.value.type === 'TemplateLiteral') {
+          openingElement.attributes.push(
+            t.jsxAttribute(t.jsxIdentifier(name), t.jsxExpressionContainer(prop.value))
           );
         }
         // Handle other props
@@ -564,6 +576,9 @@ function pageNameLookup(pages, pageId) {
       return page.name.toLowerCase().replace(/[^a-zA-Z0-9]/g, '_');
     }
   }
+  // If page not found by ID, use the ID itself as fallback
+  // This handles cases where the page ID is passed directly as the page name
+  return pageId.toLowerCase().replace(/[^a-zA-Z0-9]/g, '_');
 }
 /**
  * Removes all comments from the code
