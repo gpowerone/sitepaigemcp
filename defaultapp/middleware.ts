@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
 
   // Get request headers
-  const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
+  // const nonce = Buffer.from(crypto.randomUUID()).toString('base64');
   
   // Add security headers
   response.headers.set('X-DNS-Prefetch-Control', 'on');
@@ -32,24 +32,25 @@ export function middleware(request: NextRequest) {
   
   // Add Content Security Policy with nonce for inline scripts
   // In development mode, allow 'unsafe-eval' for webpack HMR and source maps
-  const scriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic' https: 'unsafe-inline' 'unsafe-eval'`
-  
-  const cspHeader = `
-    default-src 'self';
-    script-src ${scriptSrc};
-    style-src 'self' 'unsafe-inline' https:;
-    img-src 'self' data: https: blob:;
-    font-src 'self' https: data:;
-    connect-src 'self' https:;
-    media-src 'self' https:;
-    object-src 'none';
-    base-uri 'self';
-    form-action 'self';
-    frame-ancestors 'none';
-    upgrade-insecure-requests;
-  `.replace(/\s{2,}/g, ' ').trim();
-  
-  response.headers.set('Content-Security-Policy', cspHeader);
+  // COMMENTED OUT TO DISABLE CSP RESTRICTIONS
+  // const scriptSrc = `'self' 'nonce-${nonce}' 'strict-dynamic' https: 'unsafe-inline' 'unsafe-eval'`
+  // 
+  // const cspHeader = `
+  //   default-src 'self';
+  //   script-src ${scriptSrc};
+  //   style-src 'self' 'unsafe-inline' https:;
+  //   img-src 'self' data: https: blob:;
+  //   font-src 'self' https: data:;
+  //   connect-src 'self' https:;
+  //   media-src 'self' https:;
+  //   object-src 'none';
+  //   base-uri 'self';
+  //   form-action 'self';
+  //   frame-ancestors 'none';
+  //   upgrade-insecure-requests;
+  // `.replace(/\s{2,}/g, ' ').trim();
+  // 
+  // response.headers.set('Content-Security-Policy', cspHeader);
   
   // Add CSRF token generation for state-changing requests
   if (request.method !== 'GET' && request.method !== 'HEAD') {
@@ -71,7 +72,7 @@ export function middleware(request: NextRequest) {
   }
   
   // Store nonce in response headers for use in the app
-  response.headers.set('x-nonce', nonce);
+  // response.headers.set('x-nonce', nonce);
   
   return response;
 }
