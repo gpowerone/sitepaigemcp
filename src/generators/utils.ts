@@ -16,9 +16,31 @@ export function safeSlug(input: string): string {
   return s;
 }
 
+// Track generated file names to detect duplicates
+const generatedFileNames = new Map<string, number>();
+
 export function viewFileBaseName(view: View): string {
   const name = view.name || view.id || "view";
-  return safeSlug(name);
+  let baseName = safeSlug(name);
+  
+  // Check if this filename has been used before
+  const count = generatedFileNames.get(baseName) || 0;
+  if (count > 0) {
+    // Add view type and/or ID suffix to make it unique
+    const typeSuffix = view.type ? `_${safeSlug(view.type)}` : '';
+    const idSuffix = view.id ? `_${view.id.slice(-6).replace(/[^a-zA-Z0-9]/g, '')}` : '';
+    baseName = `${baseName}${typeSuffix}${idSuffix}`;
+  }
+  
+  // Track this filename
+  generatedFileNames.set(baseName, count + 1);
+  
+  return baseName;
+}
+
+// Clear the filename tracking when starting a new generation
+export function clearGeneratedFileNames(): void {
+  generatedFileNames.clear();
 }
 
 

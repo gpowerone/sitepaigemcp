@@ -1,6 +1,6 @@
 import fsp from "node:fs/promises";
 import path from "node:path";
-import { ensureDir, viewFileBaseName } from "./utils.js";
+import { ensureDir, viewFileBaseName, clearGeneratedFileNames } from "./utils.js";
 import { generateMenuViewCode } from "./menus.js";
 // Debug logging helper for MCP context
 async function debugLog(message) {
@@ -188,6 +188,8 @@ function parseContainerSubviews(desc) {
 export async function writeViews(targetDir, blueprint, projectCode, authProviders) {
     // Clear the component names set for a fresh start
     generatedComponentNames.clear();
+    // Clear the generated file names tracking for unique filenames
+    clearGeneratedFileNames();
     const viewsDir = path.join(targetDir, "src", "views");
     ensureDir(viewsDir);
     const viewMap = new Map();
