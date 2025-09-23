@@ -10,9 +10,9 @@ function isUuidV4Like(s: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
 }
 
-function collectImageUuidsFromBlueprint(blueprint: Blueprint): Map<string, { uuid: string; isLogo?: boolean }> {
-  const imageInfo = new Map<string, { uuid: string; isLogo?: boolean }>();
-  const add = (val: string, isLogo = false) => {
+function collectImageUuidsFromBlueprint(blueprint: Blueprint): Map<string, { uuid: string; isLogo?: boolean; isFavicon?: boolean }> {
+  const imageInfo = new Map<string, { uuid: string; isLogo?: boolean; isFavicon?: boolean }>();
+  const add = (val: string, isLogo = false, isFavicon = false) => {
     if (!val) return;
     let uuid: string | null = null;
     if (val.startsWith("image|")) {
@@ -22,23 +22,23 @@ function collectImageUuidsFromBlueprint(blueprint: Blueprint): Map<string, { uui
       uuid = val;
     }
     if (uuid && !imageInfo.has(uuid)) {
-      imageInfo.set(uuid, { uuid, isLogo });
+      imageInfo.set(uuid, { uuid, isLogo, isFavicon });
     }
   };
 
   // Design-level images
   const d = blueprint.design;
-  add(d.logo || "", true);  // Mark logo as special
-  add(d.favicon || "");
+  add(d.logo || "", true, false);  // Mark logo as special
+  add(d.favicon || "", false, true);  // Mark favicon as special
 
   // Views background_image and image views
   const views = blueprint.views || [];
   for (const v of views) {
     const type = v.type.toLowerCase();
     const isLogoView = type === "logo";
-    add(v.background_image || "", isLogoView);
-    if (type === "image") add(v.custom_view_description || v.background_image || "");
-    if (isLogoView) add(v.custom_view_description || v.background_image || "", true);
+    add(v.background_image || "", isLogoView, false);
+    if (type === "image") add(v.custom_view_description || v.background_image || "", false, false);
+    if (isLogoView) add(v.custom_view_description || v.background_image || "", true, false);
   }
 
   // SQL sample data pattern: 'image|uuid' or ="image|uuid"
@@ -63,7 +63,7 @@ async function detectExtensionFromBytes(buf: Buffer): Promise<string> {
   return ".jpg";
 }
 
-export async function downloadImagesToPublic(targetDir: string, imageInfoMap: Map<string, { uuid: string; isLogo?: boolean }>): Promise<Map<string, string>> {
+export async function downloadImagesToPublic(targetDir: string, imageInfoMap: Map<string, { uuid: string; isLogo?: boolean; isFavicon?: boolean }>): Promise<Map<string, string>> {
   const map = new Map<string, string>();
   if (!imageInfoMap.size) return map;
   const publicImages = path.join(targetDir, "public", "images");
@@ -141,6 +141,12 @@ export async function downloadImagesToPublic(targetDir: string, imageInfoMap: Ma
       if (info.isLogo) {
         // Save logo as "logo.png" in the public root directory
         fileName = `logo${ext}`;
+        const abs = path.join(publicRoot, fileName);
+        await fsp.writeFile(abs, buf);
+        filePath = `/${fileName}`;
+      } else if (info.isFavicon) {
+        // Save favicon as "favicon.ico" in the public root directory
+        fileName = `favicon.ico`;
         const abs = path.join(publicRoot, fileName);
         await fsp.writeFile(abs, buf);
         filePath = `/${fileName}`;

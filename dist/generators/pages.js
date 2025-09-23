@@ -2,68 +2,7 @@ import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { ensureDir, safeSlug } from "./utils.js";
-function buildStyleAttrForView(v) {
-    if (!v)
-        return "";
-    const style = [];
-    const bg = v.background_color || "";
-    if (bg)
-        style.push(`backgroundColor: '${bg}'`);
-    const bgImg = v.background_image || "";
-    if (bgImg) {
-        style.push(`backgroundImage: 'url(${bgImg})'`);
-        style.push(`backgroundSize: 'cover'`);
-        style.push(`backgroundPosition: 'center'`);
-        style.push(`backgroundRepeat: 'no-repeat'`);
-    }
-    const textColor = v.text_color || "";
-    if (textColor)
-        style.push(`color: '${textColor}'`);
-    // paddings
-    if (v.paddingLeft)
-        style.push(`paddingLeft: '${v.paddingLeft}px'`);
-    if (v.paddingRight)
-        style.push(`paddingRight: '${v.paddingRight}px'`);
-    if (v.paddingTop)
-        style.push(`paddingTop: '${v.paddingTop}px'`);
-    if (v.paddingBottom)
-        style.push(`paddingBottom: '${v.paddingBottom}px'`);
-    // margins
-    if (v.marginLeft)
-        style.push(`marginLeft: '${v.marginLeft}px'`);
-    if (v.marginRight)
-        style.push(`marginRight: '${v.marginRight}px'`);
-    if (v.marginTop)
-        style.push(`marginTop: '${v.marginTop}px'`);
-    if (v.marginBottom)
-        style.push(`marginBottom: '${v.marginBottom}px'`);
-    // dimensions
-    if (v.minHeight)
-        style.push(`minHeight: '${v.minHeight}px'`);
-    if (v.minWidth)
-        style.push(`minWidth: '${v.minWidth}px'`);
-    if (v.maxHeight)
-        style.push(`maxHeight: '${v.maxHeight}px'`);
-    if (v.maxWidth)
-        style.push(`maxWidth: '${v.maxWidth}px'`);
-    // grid centering similar to reference
-    style.push(`display: 'grid'`);
-    const vertical = v.verticalAlign || '';
-    const horiz = v.align || '';
-    const place = (vertical === 'Top' && horiz === 'Left') ? 'start start' :
-        (vertical === 'Top' && horiz === 'Center') ? 'start center' :
-            (vertical === 'Top' && horiz === 'Right') ? 'start end' :
-                (vertical === 'Center' && horiz === 'Left') ? 'center start' :
-                    (vertical === 'Center' && horiz === 'Center') ? 'center center' :
-                        (vertical === 'Center' && horiz === 'Right') ? 'center end' :
-                            (vertical === 'Bottom' && horiz === 'Left') ? 'end start' :
-                                (vertical === 'Bottom' && horiz === 'Center') ? 'end center' :
-                                    (vertical === 'Bottom' && horiz === 'Right') ? 'end end' : 'center center';
-    style.push(`placeItems: '${place}'`);
-    if (style.length === 0)
-        return "";
-    return ` style={{ ${style.join(", ")} }}`;
-}
+import { generateStyleProps } from "./views.js";
 function buildResponsiveColClasses(viewCfg, legacy, colsPerView) {
     const col = viewCfg.colpos || 1;
     const colMd = viewCfg.colposmd || col;
@@ -108,13 +47,26 @@ export async function writePages(targetDir, blueprint, viewMap) {
                 // import - adjust path for home page
                 const adjustedImport = isHome ? info.relImport.replace('../../', '../') : info.relImport;
                 imports.push(`import ${info.componentName} from '${adjustedImport}';`);
-                const styleAttr = buildStyleAttrForView(sys);
+                // For page-level wrappers, we should not apply visual styles to container views
+                // Visual styles for containers are applied within the container component itself
+                const shouldApplyStyles = sys && sys.type !== 'container';
+                const { styleAttrs, cssClasses } = shouldApplyStyles && sys ? generateStyleProps(sys, false) : { styleAttrs: '', cssClasses: [] };
                 const cols = buildResponsiveColClasses(rv, legacy, colsPerView);
-                const allClasses = ["h-full", "w-full", cols].join(" ");
+                const allClasses = ["h-full", "w-full", cols, ...cssClasses].join(" ");
                 // Pass isContainer={false} for text components at page level
                 const componentProps = sys && sys.type === 'text' ? ' isContainer={false}' : '';
-                rowCode += `\n                        <div className="${allClasses}"${styleAttr}>`;
-                rowCode += `\n                          <div className="w-full">`;
+                // Extract alignment from the system view to add appropriate classes to inner wrapper
+                const verticalAlign = (sys?.verticalAlign || '').toLowerCase();
+                const align = (sys?.align || '').toLowerCase();
+                // Add flex classes to inner wrapper to ensure proper content alignment
+                const innerWrapperClasses = [
+                    "w-full",
+                    "h-full",
+                    "flex",
+                    "flex-col"
+                ].join(" ");
+                rowCode += `\n                        <div className="${allClasses}"${styleAttrs}>`;
+                rowCode += `\n                          <div className="${innerWrapperClasses}">`;
                 rowCode += `\n                            <${info.componentName}${componentProps} />`;
                 rowCode += `\n                          </div>`;
                 rowCode += `\n                        </div>`;

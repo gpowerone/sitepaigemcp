@@ -8,7 +8,7 @@ function isUuidV4Like(s) {
 }
 function collectImageUuidsFromBlueprint(blueprint) {
     const imageInfo = new Map();
-    const add = (val, isLogo = false) => {
+    const add = (val, isLogo = false, isFavicon = false) => {
         if (!val)
             return;
         let uuid = null;
@@ -21,23 +21,23 @@ function collectImageUuidsFromBlueprint(blueprint) {
             uuid = val;
         }
         if (uuid && !imageInfo.has(uuid)) {
-            imageInfo.set(uuid, { uuid, isLogo });
+            imageInfo.set(uuid, { uuid, isLogo, isFavicon });
         }
     };
     // Design-level images
     const d = blueprint.design;
-    add(d.logo || "", true); // Mark logo as special
-    add(d.favicon || "");
+    add(d.logo || "", true, false); // Mark logo as special
+    add(d.favicon || "", false, true); // Mark favicon as special
     // Views background_image and image views
     const views = blueprint.views || [];
     for (const v of views) {
         const type = v.type.toLowerCase();
         const isLogoView = type === "logo";
-        add(v.background_image || "", isLogoView);
+        add(v.background_image || "", isLogoView, false);
         if (type === "image")
-            add(v.custom_view_description || v.background_image || "");
+            add(v.custom_view_description || v.background_image || "", false, false);
         if (isLogoView)
-            add(v.custom_view_description || v.background_image || "", true);
+            add(v.custom_view_description || v.background_image || "", true, false);
     }
     // SQL sample data pattern: 'image|uuid' or ="image|uuid"
     const sample = blueprint.sample_data || [];
@@ -147,6 +147,13 @@ export async function downloadImagesToPublic(targetDir, imageInfoMap) {
             if (info.isLogo) {
                 // Save logo as "logo.png" in the public root directory
                 fileName = `logo${ext}`;
+                const abs = path.join(publicRoot, fileName);
+                await fsp.writeFile(abs, buf);
+                filePath = `/${fileName}`;
+            }
+            else if (info.isFavicon) {
+                // Save favicon as "favicon.ico" in the public root directory
+                fileName = `favicon.ico`;
                 const abs = path.join(publicRoot, fileName);
                 await fsp.writeFile(abs, buf);
                 filePath = `/${fileName}`;

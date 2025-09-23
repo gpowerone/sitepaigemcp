@@ -19,6 +19,17 @@ async function debugLog(message: string): Promise<void> {
 // Global array to collect CSS classes for injection into global.css
 const viewStyleClasses: string[] = [];
 
+// Add CSS for heading color handling via custom properties
+viewStyleClasses.push(`
+.view-with-heading-color h1,
+.view-with-heading-color h2,
+.view-with-heading-color h3,
+.view-with-heading-color h4,
+.view-with-heading-color h5,
+.view-with-heading-color h6 {
+  color: var(--heading-color) !important;
+}`);
+
 const ICON_SVGS_CONST = `const ICON_SVGS: { [key: string]: string } = {
   'shopping-cart': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>',
   'search': '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>',
@@ -64,17 +75,19 @@ function pascalCaseFromBase(base: string, viewId?: string): string {
 }
 
 // Helper function to generate style props from View object
-function generateStyleProps(systemView: View, isContainer: boolean): { styleAttrs: string, cssClasses: string[] } {
+export function generateStyleProps(systemView: View, isContainer: boolean): { styleAttrs: string, cssClasses: string[] } {
     const styleProps = [];
     const cssClasses = [];
-    const viewId = systemView.id.replace(/[^a-zA-Z0-9]/g, '_');
-    const className = `view-${viewId}`;
     
     // Background color and image
-    if (!isContainer && systemView.background_color && systemView.background_color !== '') {
+    if (systemView.background_color && systemView.background_color !== '') {
         styleProps.push(`backgroundColor: '${systemView.background_color}'`);
     }
     
+    if (systemView.opacity !== null && systemView.opacity !== undefined) {
+        styleProps.push(`opacity: ${systemView.opacity}`);
+    }
+
     if (systemView.background_image && systemView.background_image !== '') {
         // CRITICAL FIX: Clean any data:image/jpeg;base64, prefix from background image
         const cleanedBackgroundImage = systemView.background_image.replace(/data:image\/[^;]+;base64,/g, '');
@@ -118,44 +131,40 @@ function generateStyleProps(systemView: View, isContainer: boolean): { styleAttr
     }
     
     // Combined alignment using placeItems (matches rview.tsx exactly)
+    const verticalAlign = (systemView.verticalAlign || '').toLowerCase();
+    const align = (systemView.align || '').toLowerCase();
+
     const placeItems = 
-        systemView.verticalAlign === 'Top' && systemView.align === 'Left' ? 'start start' :
-        systemView.verticalAlign === 'Top' && systemView.align === 'Center' ? 'start center' :
-        systemView.verticalAlign === 'Top' && systemView.align === 'Right' ? 'start end' :
-        systemView.verticalAlign === 'Center' && systemView.align === 'Left' ? 'center start' :
-        systemView.verticalAlign === 'Center' && systemView.align === 'Center' ? 'center center' :
-        systemView.verticalAlign === 'Center' && systemView.align === 'Right' ? 'center end' :
-        systemView.verticalAlign === 'Bottom' && systemView.align === 'Left' ? 'end start' :
-        systemView.verticalAlign === 'Bottom' && systemView.align === 'Center' ? 'end center' :
-        systemView.verticalAlign === 'Bottom' && systemView.align === 'Right' ? 'end end' : 'center center';
-    
+        verticalAlign.toLowerCase() === 'top' && align.toLowerCase() === 'left' ? 'start start' :
+        verticalAlign.toLowerCase() === 'top' && align.toLowerCase() === 'center' ? 'start center' :
+        verticalAlign.toLowerCase() === 'top' && align.toLowerCase() === 'right' ? 'start end' :
+        verticalAlign.toLowerCase() === 'center' && align.toLowerCase() === 'left' ? 'center start' :
+        verticalAlign.toLowerCase() === 'center' && align.toLowerCase() === 'center' ? 'center center' :
+        verticalAlign.toLowerCase() === 'center' && align.toLowerCase() === 'right' ? 'center end' :
+        verticalAlign.toLowerCase() === 'bottom' && align.toLowerCase() === 'left' ? 'end start' :
+        verticalAlign.toLowerCase() === 'bottom' && align.toLowerCase() === 'center' ? 'end center' :
+        verticalAlign.toLowerCase() === 'bottom' && align.toLowerCase() === 'right' ? 'end end' : 'center center';
+
     styleProps.push(`placeItems: '${placeItems}'`);
-    
+
     // Text alignment 
-    if (systemView.align === 'Left') {
-        styleProps.push(`textAlign: 'left'`);
-        styleProps.push(`justifyContent: 'start'`);
-    } else if (systemView.align === 'Center') {
-        styleProps.push(`textAlign: 'center'`);
-        styleProps.push(`justifyContent: 'center'`);
-    } else if (systemView.align === 'Right') {
-        styleProps.push(`textAlign: 'right'`);
-        styleProps.push(`justifyContent: 'end'`);
+    if (systemView.type!=="container") {
+      if (align.toLowerCase() === 'left') {
+          styleProps.push(`textAlign: 'left'`);
+          styleProps.push(`justifyContent: 'start'`);
+      } else if (align.toLowerCase() === 'center') {
+          styleProps.push(`textAlign: 'center'`);
+          styleProps.push(`justifyContent: 'center'`);
+      } else if (align.toLowerCase() === 'right') {
+          styleProps.push(`textAlign: 'right'`);
+          styleProps.push(`justifyContent: 'end'`);
+      }
     }
     
-    // Generate CSS class for card title color if specified
+    // Apply heading color via CSS custom property
     if (systemView.card_title_color && systemView.card_title_color !== '') {
-        const titleColorClass = `${className}-title`;
-        cssClasses.push(titleColorClass);
-        viewStyleClasses.push(`
-.${titleColorClass} h1,
-.${titleColorClass} h2,
-.${titleColorClass} h3,
-.${titleColorClass} .card h1,
-.${titleColorClass} .card h2,
-.${titleColorClass} .card h3 {
-    color: ${systemView.card_title_color} !important;
-}`);
+        styleProps.push(`'--heading-color': '${systemView.card_title_color}'`);
+        cssClasses.push('view-with-heading-color');
     }
     
     const styleAttrs = styleProps.length > 0 ? ` style={{ ${styleProps.join(', ')} }}` : '';
@@ -291,14 +300,7 @@ interface ${comp}Props {
 export default function ${comp}({ isContainer = false }: ${comp}Props){
   const useCard = ${useCard};
   return (
-    <div className={\`\${useCard ? "card" : "text-content"} \${!useCard ? "opacity-80" : ""}\`} style={{ 
-      margin: '5% 10%',
-      padding: useCard ? undefined : '1.5rem',
-      borderRadius: useCard ? undefined : '0.5rem'${v.background_color ? `,
-      backgroundColor: ${JSON.stringify(v.background_color)}` : ''}
-    }}>
       <div className="rtext-content" dangerouslySetInnerHTML={{__html: ${JSON.stringify(html)} }} />
-    </div>
   );
 }`;
     } else if (type === "image") {
@@ -667,7 +669,26 @@ export default function ${comp}(){
       const allClasses = ["h-full", "w-full", cols, ...cssClasses].join(" ");
       // Pass isContainer={true} for text components
       const componentProps = target.type === 'text' ? ' isContainer={true}' : '';
-      blocks.push(`\n            <div className=\"${allClasses}\"${modifiedWrapperStyle}>\n              <div className=\"w-full\">\n                <${subComp}${componentProps} />\n              </div>\n            </div>`);
+      
+      // Extract alignment from the target view to add appropriate classes to inner wrapper
+      const verticalAlign = (target.verticalAlign || '').toLowerCase();
+      const align = (target.align || '').toLowerCase();
+      
+      // Add flex classes to inner wrapper to ensure proper content alignment
+      const innerWrapperClasses = [
+        "w-full",
+        "h-full",
+        "flex",
+        "flex-col",
+        // Vertical alignment
+        verticalAlign === 'top' ? 'justify-start' :
+        verticalAlign === 'bottom' ? 'justify-end' : 'justify-center',
+        // Horizontal alignment
+        align === 'left' ? 'items-start' :
+        align === 'right' ? 'items-end' : 'items-center'
+      ].join(" ");
+      
+      blocks.push(`\n            <div className=\"${allClasses}\"${modifiedWrapperStyle}>\n              <div className=\"${innerWrapperClasses}\">\n                <${subComp}${componentProps} />\n              </div>\n            </div>`);
     }
 
     const { styleAttrs: containerStyle, cssClasses: containerCssClasses } = generateStyleProps(v, false);

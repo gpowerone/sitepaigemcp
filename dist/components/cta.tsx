@@ -72,7 +72,7 @@ const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate, isPaig
       {/* Headline */}
       {ctaData.headline && (
         <h1 
-          className="text-4xl font-bold mb-4"
+          className="mb-4"
           style={getStyle(ctaData.headlineStyle, { 
             fontSize: '2.5rem', 
             fontWeight: 'bold',
@@ -87,7 +87,7 @@ const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate, isPaig
       {/* Subheader */}
       {ctaData.subheader && (
         <h3 
-          className="text-xl font-semibold mb-3"
+          className="mb-3"
           style={getStyle(ctaData.subheaderStyle, {
             fontSize: '1.25rem',
             fontWeight: '600',
@@ -102,7 +102,7 @@ const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate, isPaig
       {/* Sub-subheader */}
       {ctaData.subsubheader && (
         <p 
-          className="text-lg mb-6"
+          className="mb-6"
           style={getStyle(ctaData.subsubheaderStyle, {
             fontSize: '1.125rem',
             marginBottom: '1.5rem',
@@ -127,7 +127,7 @@ const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate, isPaig
               <button
                 key={index}
                 onClick={() => handleButtonClick(button.page)}
-                className={`px-6 py-3 bg-[#516ab8] rounded-lg hover:bg-blue-700 transition-colors ${
+                className={`px-6 py-3 transition-colors ${
                   isPaigeLoading ? 'opacity-50 cursor-not-allowed' : ''
                 } ${!button.page ? 'opacity-75 cursor-not-allowed' : ''}`}
                 style={buttonStyles}

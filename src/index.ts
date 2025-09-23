@@ -7,6 +7,7 @@ import fsp from "node:fs/promises";
 import { JobRegistry } from "./jobRegistry.js";
 import {  write_site_by_project_id, fetch_project_by_id, initialize_site_generation, continue_site_generation, complete_backend, complete_backend_and_write } from "./sitepaige.js";
 export { generate_site, complete_backend } from "./sitepaige.js";
+export { writeProjectFromBlueprint } from "./blueprintWriter.js";
 
 const server = new McpServer({ name: "sitepaige-mcp-server", version: "0.1.0" });
 const transport = new StdioServerTransport();

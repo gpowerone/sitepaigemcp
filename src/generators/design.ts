@@ -3,6 +3,10 @@ import fs from 'fs';
 import fsp from 'fs/promises';
 import path from 'path';
 
+function isUuidV4Like(s: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
+}
+
 
 
 export function writeFavicon(targetDir: string, favicon: string): void {
@@ -71,19 +75,16 @@ function getTailwindFontSizeValue(twClass: string): string {
 
 // Function to convert button roundedness to CSS border-radius values
 function getButtonBorderRadius(roundedness: string): string {
-  const roundednessMap: Record<string, string> = {
-    'none': '0',
-    'square': '0',
-    'sm': '0.125rem',
-    'rounded': '0.375rem',
-    'md': '0.375rem',
-    'lg': '0.5rem',
-    'xl': '0.75rem',
-    '2xl': '1rem',
-    '3xl': '1.5rem',
-    'full': '9999px',
-  };
-  return roundednessMap[roundedness] || '0.375rem'; // Default to rounded
+  switch (roundedness) {
+    case 'rounded-full': return '9999px';
+    case 'rounded-lg': return '8px';
+    case 'rounded-md': return '6px';
+    case 'rounded-xl': return '12px';
+    case 'rounded-2xl': return '16px';
+    case 'rounded': return '4px';
+    case 'rounded-none': return '0px';
+    default: return '4px';
+  }
 }
 
 export async function updateGlobalCSS(targetDir: string, blueprint: Blueprint, viewStyles: string[] = []): Promise<void> {
@@ -103,30 +104,23 @@ export async function updateGlobalCSS(targetDir: string, blueprint: Blueprint, v
     fs.mkdirSync(publicDir, { recursive: true });
   }
   
-  // Write favicon if enabled and data exists
+  // Favicon is now handled during image processing in images.ts
+  // Only handle it here if it's base64 data (not a UUID reference)
   if (design.generatefavicon !== false && design.favicon && design.favicon.trim() !== '') {
-    try {
-      console.log('🎨 Writing favicon to public/favicon.ico...');
-      console.log('🔍 Favicon path will be:', path.join(publicDir, 'favicon.ico'));
-      writeFavicon(targetDir, design.favicon);
-      console.log('✅ Favicon written successfully');
-      
-      // Verify the file was written
-      const faviconPath = path.join(publicDir, 'favicon.ico');
-      if (fs.existsSync(faviconPath)) {
-        const stats = fs.statSync(faviconPath);
-        console.log('✅ Favicon file verified, size:', stats.size, 'bytes');
-      } else {
-        console.error('❌ Favicon file was not created!');
+    // Check if favicon is base64 data (not a UUID or image path)
+    if (!isUuidV4Like(design.favicon) && !design.favicon.startsWith('/images/') && !design.favicon.startsWith('images/')) {
+      if (design.favicon.includes('base64') || design.favicon.length > 1000) {
+        try {
+          console.log('🎨 Writing base64 favicon to public/favicon.ico...');
+          writeFavicon(targetDir, design.favicon);
+          console.log('✅ Favicon written successfully');
+        } catch (error) {
+          console.error('❌ Error writing favicon:', error);
+        }
       }
-    } catch (error) {
-      console.error('❌ Error writing favicon:', error);
+    } else {
+      console.log('📝 Favicon is handled during image processing (UUID or image path detected)');
     }
-  } else {
-    console.log('📭 No favicon data found or generation disabled');
-    console.log('  - generatefavicon:', design.generatefavicon);
-    console.log('  - favicon exists:', !!design.favicon);
-    console.log('  - favicon not empty:', design.favicon?.trim() !== '');
   }
   
   // Logo is now handled during logo view creation in pages.ts

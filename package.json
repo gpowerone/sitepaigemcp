@@ -1,6 +1,6 @@
 {
   "name": "sitepaige-mcp-server",
-  "version": "0.3.2",
+  "version": "0.3.6",
   "type": "module",
   "description": "MCP server for generating web applications using SitePaige AI. Generate frontend (FREE/12 credits) then optionally add backend (50 credits)",
   "keywords": [
@@ -29,6 +29,7 @@
     "dist/",
     "components/",
     "defaultapp/",
+    "transpiler/",
     "manifest.json",
     "README.md",
     "INSTALL.md",
@@ -48,14 +49,14 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.17.5",
-    "undici": "^6.19.8",
-    "zod": "^3.23.8"
-  },
-  "devDependencies": {
     "@babel/generator": "^7.28.3",
     "@babel/parser": "^7.28.4",
     "@babel/traverse": "^7.28.4",
     "@babel/types": "^7.28.4",
+    "undici": "^6.19.8",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
     "@types/node": "^22.7.7",
     "tsx": "^4.19.1",
     "typescript": "^5.6.3"

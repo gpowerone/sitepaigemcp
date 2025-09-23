@@ -9,6 +9,9 @@ export async function writeNextConfig(targetDir: string): Promise<void> {
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   typescript: { ignoreBuildErrors: true },
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async rewrites() {
     return [
       { source: '/files/:path*', destination: '/api/files/:path*' }

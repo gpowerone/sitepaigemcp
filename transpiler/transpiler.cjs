@@ -617,7 +617,7 @@ function transpileCode(code, pages, dictionary = {}) {
     
     // First handle template literals - these shouldn't be sent by frontend, so remove them entirely
     // Match window.processText with template literal first parameter and any optional second parameter
-    code = code.replace(/window\.processText\(\s*`[^`]*`\s*(?:,\s*[^)]+)?\s*\)/g, function(match) {
+    code = code.replace(/window\.processText\(\s*`[^]*?`\s*(?:,\s*[^)]+)?\s*\)/g, function(match) {
       // Frontend shouldn't send template literals, return empty string
       return '""';
     });
@@ -625,7 +625,8 @@ function transpileCode(code, pages, dictionary = {}) {
     // Then handle static strings - window.processText calls with actual text content from dictionary
     // Handle both single parameter: window.processText("key") 
     // and two parameter: window.processText("key", "default") formats
-    code = code.replace(/window\.processText\(\s*["'`]([^"'`]+)["'`]\s*(?:,\s*["'`]([^"'`]*)["'`])?\s*\)/g, function(match, dictionaryId, defaultText) {
+    // Updated regex to handle escaped quotes within strings
+    code = code.replace(/window\.processText\(\s*(['"`])([^]*?)\1\s*(?:,\s*(['"`])([^]*?)\3)?\s*\)/g, function(match, quote1, dictionaryId, quote2, defaultText) {
       // Skip if this contains template literal syntax (shouldn't happen after first pass, but be safe)
       if (dictionaryId.includes('${')) {
         return match;

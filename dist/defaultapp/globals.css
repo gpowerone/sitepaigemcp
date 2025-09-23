@@ -158,4 +158,19 @@ button:hover {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 1.5rem;
 }
+/* Heading color customization for views */
+.view-with-heading-color h1,
+.view-with-heading-color h2,
+.view-with-heading-color h3,
+.view-with-heading-color h4,
+.view-with-heading-color h5,
+.view-with-heading-color h6 {
+  color: var(--heading-color);
+}
+
+/* Text content alignment helper */
+.rtext-content {
+  width: 100%;
+}
+
 /* END CLAUDE CSS */

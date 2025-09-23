@@ -220,7 +220,7 @@ export async function writeApis(targetDir, blueprint, projectCode) {
             authCode = `
     const UserInfo = await check_auth(db, db_query);
     if (UserInfo.userid.length === 0) { return NextResponse.json({ error: "Forbidden" }, { status: 403 }); }
-    const user_id = UserInfo.userid;
+    user_id = UserInfo.userid;
 `;
             if (api.requires_auth === 'admin') {
                 authCode += `
