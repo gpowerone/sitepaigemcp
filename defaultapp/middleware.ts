@@ -86,9 +86,8 @@ export function middleware(request: NextRequest) {
 
   const csp = `${common} ${isProd ? prod : dev}`.trim()
 
-  // Start with Report-Only if you want to test without breaking loads:
-  // res.headers.set('Content-Security-Policy-Report-Only', csp)
-  response.headers.set('Content-Security-Policy', csp)
+  // Using Report-Only mode to monitor CSP violations without breaking functionality
+  response.headers.set('Content-Security-Policy-Report-Only', csp)
     
   // Add CSRF token generation for state-changing requests
   if (request.method !== 'GET' && request.method !== 'HEAD') {

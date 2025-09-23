@@ -5,6 +5,7 @@
 
 import { db_init, db_query, db_migrate } from './db';
 import type { DatabaseClient } from './db';
+import * as crypto from 'node:crypto';
 
 export interface User {
   userid: string;
