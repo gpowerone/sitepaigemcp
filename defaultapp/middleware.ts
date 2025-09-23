@@ -32,13 +32,14 @@ export function middleware(request: NextRequest) {
   
   // Add Content Security Policy with nonce for inline scripts
   // In development mode, allow 'unsafe-eval' for webpack HMR and source maps
+  /*
   const scriptSrc = process.env.NODE_ENV === 'development' 
     ? `'self' 'nonce-${nonce}' 'strict-dynamic' https: 'unsafe-inline' 'unsafe-eval'`
     : `'self' 'nonce-${nonce}' 'strict-dynamic' https: 'unsafe-inline'`;
-  
+  */
+
   const cspHeader = `
     default-src 'self';
-    script-src ${scriptSrc};
     style-src 'self' 'unsafe-inline' https:;
     img-src 'self' data: https: blob:;
     font-src 'self' https: data:;
