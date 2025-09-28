@@ -75,7 +75,7 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
   // Mobile detection with proper SSR handling
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      setIsMobile(window.innerWidth <= 800);
     };
     
     // Check on mount

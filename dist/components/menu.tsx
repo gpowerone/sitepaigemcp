@@ -56,6 +56,7 @@ const CloseIcon = () => (
 export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // Initialize with SSR-safe default based on CSS media query
   const [isMobile, setIsMobile] = useState(false);
 
   // Handle case where menu is undefined/null
@@ -75,7 +76,8 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
   // Mobile detection with proper SSR handling
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+      // Use 768px to match Tailwind's 'sm' breakpoint for better mobile detection
+      setIsMobile(window.innerWidth < 768);
     };
     
     // Check on mount
@@ -184,11 +186,12 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
     );
   };
 
-  return (
-    <>
-      {/* Hamburger menu for mobile horizontal menus */}
-      {isMobile && direction === 'horizontal' && (
-        <div className="relative">
+  // Use responsive classes for better SSR handling
+  if (isMobile && direction === 'horizontal') {
+    return (
+      <>
+        {/* Hamburger menu for mobile - always render but control visibility with CSS */}
+        <div className="sm:hidden relative">
           <button 
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             className="p-2 focus:outline-none hover:bg-gray-100 rounded-md transition-colors duration-200"
@@ -197,22 +200,27 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
             {mobileMenuOpen ? <CloseIcon /> : <HamburgerIcon />}
           </button>
           
-                     {mobileMenuOpen && (
-             <div className="absolute top-full right-0 bg-white shadow-lg rounded-lg mt-2 z-[9999] w-64 border border-gray-200">
-               <nav className="flex flex-col py-2">
-                 {menu.items?.map((item, index) => renderMenuItem(item, index)) || []}
-               </nav>
-             </div>
-           )}
+          {mobileMenuOpen && (
+            <div className="absolute top-full right-0 bg-white shadow-xl rounded-lg mt-2 z-[9999] w-72 border border-gray-200 max-h-[80vh] overflow-y-auto">
+              <nav className="flex flex-col py-2">
+                {menu.items?.map((item, index) => renderMenuItem(item, index)) || []}
+              </nav>
+            </div>
+          )}
         </div>
-      )}
-      
-      {/* Regular menu for desktop or vertical menus */}
-      {(!isMobile || direction === 'vertical') && (
-        <nav className={`${direction === 'horizontal' ? 'flex space-x-4' : 'flex flex-col'} ${menu.align === 'Left' ? 'justify-start' : menu.align === 'Center' ? 'justify-center' : menu.align === 'Right' ? 'justify-end' : ''}`}>
+        
+        {/* Desktop menu - hidden on mobile */}
+        <nav className={`hidden sm:flex ${direction === 'horizontal' ? 'space-x-4' : 'flex-col'} ${menu.align === 'Left' ? 'justify-start' : menu.align === 'Center' ? 'justify-center' : menu.align === 'Right' ? 'justify-end' : ''}`}>
           {menu.items?.filter(item => !item.hiddenOnDesktop).map((item, index) => renderMenuItem(item, index)) || []}
         </nav>
-      )}
-    </>
+      </>
+    );
+  }
+
+  // Vertical menus always show normally
+  return (
+    <nav className={`flex flex-col ${menu.align === 'Left' ? 'justify-start' : menu.align === 'Center' ? 'justify-center' : menu.align === 'Right' ? 'justify-end' : ''}`}>
+      {menu.items?.map((item, index) => renderMenuItem(item, index)) || []}
+    </nav>
   );
 }

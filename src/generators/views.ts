@@ -134,29 +134,30 @@ export function generateStyleProps(systemView: View, isContainer: boolean): { st
     const verticalAlign = (systemView.verticalAlign || '').toLowerCase();
     const align = (systemView.align || '').toLowerCase();
 
-    const placeItems = 
-        verticalAlign.toLowerCase() === 'top' && align.toLowerCase() === 'left' ? 'start start' :
-        verticalAlign.toLowerCase() === 'top' && align.toLowerCase() === 'center' ? 'start center' :
-        verticalAlign.toLowerCase() === 'top' && align.toLowerCase() === 'right' ? 'start end' :
-        verticalAlign.toLowerCase() === 'center' && align.toLowerCase() === 'left' ? 'center start' :
-        verticalAlign.toLowerCase() === 'center' && align.toLowerCase() === 'center' ? 'center center' :
-        verticalAlign.toLowerCase() === 'center' && align.toLowerCase() === 'right' ? 'center end' :
-        verticalAlign.toLowerCase() === 'bottom' && align.toLowerCase() === 'left' ? 'end start' :
-        verticalAlign.toLowerCase() === 'bottom' && align.toLowerCase() === 'center' ? 'end center' :
-        verticalAlign.toLowerCase() === 'bottom' && align.toLowerCase() === 'right' ? 'end end' : 'center center';
-
-    styleProps.push(`placeItems: '${placeItems}'`);
+   
+    if (verticalAlign === 'top') {
+      styleProps.push(`alignContent: 'start'`)
+    }
+    else if (verticalAlign === 'center') {
+      styleProps.push(`alignContent: 'center'`)
+    }
+    else if (verticalAlign === 'bottom') {
+      styleProps.push(`alignContent: 'end'`)
+    }
+  
 
     // Text alignment 
-    if (systemView.type!=="container") {
-      if (align.toLowerCase() === 'left') {
-          styleProps.push(`textAlign: 'left'`);
-      } else if (align.toLowerCase() === 'center') {
-          styleProps.push(`textAlign: 'center'`);
-      } else if (align.toLowerCase() === 'right') {
-          styleProps.push(`textAlign: 'right'`);
-      }
+    if (align.toLowerCase() === 'left') {
+        styleProps.push(`justifyContent: 'start'`)
+        styleProps.push(`textAlign: 'left'`);
+    } else if (align.toLowerCase() === 'center') {
+        styleProps.push(`textAlign: 'center'`);
+        styleProps.push(`justifyContent: 'center'`)
+    } else if (align.toLowerCase() === 'right') {
+        styleProps.push(`textAlign: 'right'`);
+        styleProps.push(`justifyContent: 'end'`)
     }
+    
     
     // Apply heading color via CSS custom property
     if (systemView.card_title_color && systemView.card_title_color !== '') {
@@ -342,7 +343,7 @@ export default function ${comp}(){
             minHeight: height ? \`\${height}px\` : '100px',
             fontSize: '1rem'
           }}>
-            {altText}
+            {altText.length > 15 ? altText.slice(0, 15) + '…' : altText}
           </div>
         )
       )}
@@ -494,7 +495,8 @@ export default function ${comp}() {
             className="!bg-transparent flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
               height: '40px',
-              width: '40px'
+              width: '40px',
+              color: '${blueprint.design?.textColor || '#666'}'
             }}
           >
             <div
@@ -509,19 +511,23 @@ export default function ${comp}() {
 }`;
     } else if (type === "loginbutton") {
       // Import the LoginSection component from headerlogin.tsx
+      const textColor = blueprint.design?.textColor || '#000000';
+      const websiteLanguage = blueprint.design?.websiteLanguage || 'English';
       code = `import React from 'react';
 import LoginSection from '../components/headerlogin';
 
 export default function ${comp}() {
-  return <LoginSection />;
+  return <LoginSection websiteLanguage="${websiteLanguage}" textColor="${textColor}" />;
 }`;
     } else if (type === "headerlogin") {
       // Import the LoginSection component from headerlogin.tsx
+      const textColor = blueprint.design?.textColor || '#000000';
+      const websiteLanguage = blueprint.design?.websiteLanguage || 'English';
       code = `import React from 'react';
 import LoginSection from '../components/headerlogin';
 
 export default function ${comp}() {
-  return <LoginSection />;
+  return <LoginSection websiteLanguage="${websiteLanguage}" textColor="${textColor}" />;
 }`;
     } else if (type === "logincallback") {
       // Import the LoginCallback component

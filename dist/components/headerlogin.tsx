@@ -35,7 +35,12 @@ const getLocalizedText = (text: string, language: string = 'English'): string =>
   return translations[text]?.[language] || text;
 };
 
-const LoginSection: React.FC = () => {
+interface LoginSectionProps {
+  websiteLanguage?: string;
+  textColor?: string;
+}
+
+const LoginSection: React.FC<LoginSectionProps> = ({ websiteLanguage = 'English', textColor = '#000000' }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,13 +48,9 @@ const LoginSection: React.FC = () => {
   const [profileMenuItems, setProfileMenuItems] = useState<MenuItem[]>([]);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
-  // Hardcoded defaults (no props)
+  // Hardcoded values
   const loginPage = '/login';
   const align = 'Right' as "Left" | "Center" | "Right";
-  const design = {
-    textFont: '',
-    websiteLanguage: 'English'
-  };
   const mobileViewMode = 'desktop' as 'desktop' | 'phone' | 'sm-tablet' | 'lg-tablet';
 
   // Load profile menu items from localStorage
@@ -207,9 +208,9 @@ const LoginSection: React.FC = () => {
         <div
           onClick={() => setShowUserMenu(!showUserMenu)}
           className="flex items-center focus:outline-none relative group cursor-pointer"
-          style={design.textFont ? { fontFamily: `${design.textFont}, sans-serif` } : {}}
+          style={{ color: textColor }}
         >
-          <span className="mr-2">{userData.UserName || getLocalizedText('Sample User', design.websiteLanguage || 'English')}</span>
+          <span className="mr-2" style={{ color: textColor }}>{userData.UserName || getLocalizedText('Sample User', websiteLanguage)}</span>
           <div className="relative">
             {userData.AvatarURL ? (
               <img
@@ -258,7 +259,7 @@ const LoginSection: React.FC = () => {
                 onClick={handleLogout}
                 className="text-lg px-6 py-2 mx-2 my-1 cursor-pointer text-gray-800 hover:text-red-600 hover:bg-gray-50 transition-colors duration-200"
               >
-                {getLocalizedText('Logout', design.websiteLanguage || 'English')}
+                {getLocalizedText('Logout', websiteLanguage)}
               </div>
             </div>
           </div>
@@ -275,10 +276,10 @@ const LoginSection: React.FC = () => {
           <button
             className={`px-2 py-2 !bg-transparent`}
             style={{
-              ...(design.textFont ? { fontFamily: `${design.textFont}, sans-serif` } : {})
+              color: textColor
             }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: textColor }}>
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
           </button>
