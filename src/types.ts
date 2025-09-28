@@ -156,6 +156,8 @@ export interface View {
     external_url: string | null;
     // APIs that this view should use
     apis: string[];
+    // Alt text for images (accessibility)
+    alttext?: string;
 }
 
 export interface SubComponent {

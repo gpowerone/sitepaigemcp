@@ -51,7 +51,9 @@ async function copyDirectoryWithExclusions(source: string, destination: string, 
 export async function writeDefaultApp(targetDir: string, databaseType: "sqlite" | "postgres" | "mysql" = "sqlite"): Promise<void> {
   // The defaultapp folder is at the root of the project
   const defaultAppPath = path.join(__dirname, "..", "..", "defaultapp");
+  const defaultPublicPath = path.join(__dirname, "..", "..", "defaultpublic");
   const appDir = path.join(targetDir, "src", "app");
+  const publicDir = path.join(targetDir, "public");
   
   // Ensure the app directory exists
   ensureDir(appDir);
@@ -59,6 +61,11 @@ export async function writeDefaultApp(targetDir: string, databaseType: "sqlite" 
   // Copy all contents from defaultapp to src/app, excluding database files we'll handle separately
   const excludeFiles = ['db.ts', 'db-sqlite.ts', 'db-postgres.ts', 'db-mysql.ts', 'db-users.ts', 'util.ts', 'middleware.ts', 'csrf.ts'];
   await copyDirectoryWithExclusions(defaultAppPath, appDir, excludeFiles);
+  
+  // Copy defaultpublic folder to public directory if it exists
+  if (fs.existsSync(defaultPublicPath)) {
+    await copyDirectory(defaultPublicPath, publicDir);
+  }
   
   // Copy database files based on selected database type
   const dbFiles = ['db-users.ts', 'util.ts', 'csrf.ts'];

@@ -139,15 +139,12 @@ export function generateStyleProps(systemView, isContainer) {
     if (systemView.type !== "container") {
         if (align.toLowerCase() === 'left') {
             styleProps.push(`textAlign: 'left'`);
-            styleProps.push(`justifyContent: 'start'`);
         }
         else if (align.toLowerCase() === 'center') {
             styleProps.push(`textAlign: 'center'`);
-            styleProps.push(`justifyContent: 'center'`);
         }
         else if (align.toLowerCase() === 'right') {
             styleProps.push(`textAlign: 'right'`);
-            styleProps.push(`justifyContent: 'end'`);
         }
     }
     // Apply heading color via CSS custom property
@@ -278,24 +275,47 @@ export default function ${comp}({ isContainer = false }: ${comp}Props){
             else if (type === "image") {
                 const src = v.custom_view_description || v.background_image || "";
                 const height = v.height;
+                const altText = v.alttext || 'Image';
+                const textColor = blueprint.design?.textColor || '#666';
                 code = `import React from 'react';
 
 export default function ${comp}(){
+  const imageSrc = ${JSON.stringify(src)};
+  const altText = ${JSON.stringify(altText)};
+  const textColor = ${JSON.stringify(textColor)};
+  const height = ${height ? height : 'null'};
+  
   return (
     <>
-      ${src ? `<img
-        src=${JSON.stringify(src)}
-        alt="image"
-        style={{ 
-          objectFit: 'cover',
-          objectPosition: 'center',
-          width: '100%',
-          height: ${height ? `'${height}px'` : "'auto'"},
-          display: 'block'
-        }}
-        crossOrigin="anonymous"
-        referrerPolicy="no-referrer"
-      />` : ''}
+      {imageSrc ? (
+        <img
+          src={imageSrc}
+          alt={altText || 'Image'}
+          style={{ 
+            objectFit: 'cover',
+            objectPosition: 'center',
+            width: '100%',
+            height: height ? \`\${height}px\` : 'auto',
+            display: 'block'
+          }}
+          crossOrigin="anonymous"
+          referrerPolicy="no-referrer"
+        />
+      ) : (
+        altText && (
+          <div style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: textColor || '#666',
+            textAlign: 'center',
+            minHeight: height ? \`\${height}px\` : '100px',
+            fontSize: '1rem'
+          }}>
+            {altText}
+          </div>
+        )
+      )}
     </>
   );
 }`;
@@ -304,13 +324,40 @@ export default function ${comp}(){
                 // Logo images are now saved directly as logo.png/logo.jpg by the image processor
                 const logoPath = v.background_image || v.custom_view_description || "";
                 let logoFileName = "logo.png";
+                const altText = v.alttext || 'Logo';
+                const textColor = blueprint.design?.textColor || '#666';
                 // Check if the logo path starts with /logo. (already processed)
                 if (logoPath.startsWith("/logo.")) {
                     logoFileName = logoPath.slice(1); // Remove leading slash
                 }
                 code = `import React from 'react';
 
-export default function ${comp}(){return <div className=\"logo\"><a href=\"/\"><img src=\"/${logoFileName}\" alt=\"Logo\" width=\"240\" height=\"80\" /></a></div>}`;
+export default function ${comp}(){
+  const logoSrc = "/${logoFileName}";
+  const altText = ${JSON.stringify(altText)};
+  const textColor = ${JSON.stringify(textColor)};
+  
+  return (
+    <div className="logo">
+      <a href="/">
+        {logoSrc && logoSrc !== "/logo.png" ? (
+          <img src={logoSrc} alt={altText} width="240" height="80" />
+        ) : (
+          <div className="text-3xl" style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: textColor || '#666',
+            textAlign: 'center',
+            minHeight: '80px'
+          }}>
+            {altText}
+          </div>
+        )}
+      </a>
+    </div>
+  );
+}`;
             }
             else if (type === "menu") {
                 const menuId = v.custom_view_description;

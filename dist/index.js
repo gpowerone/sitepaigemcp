@@ -48,10 +48,54 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
         // Continue generation asynchronously (don't await)
         continue_site_generation(projectId, {}, {
             onLog: (message) => jobs.appendLog(jobId, message)
-        }).then(() => {
-            jobs.appendLog(jobId, `Frontend generation complete for project ${projectId}. Use get_status to check when files can be written.`);
-            jobs.setStatus(jobId, { status: "completed", step: "done", progressPercent: 100 });
-            publishResourceListChanged();
+        }).then(async () => {
+            jobs.appendLog(jobId, `Frontend generation complete for project ${projectId}.`);
+            jobs.setStatus(jobId, { status: "completed", step: "writing", progressPercent: 90 });
+            // Write the generated files to the target directory
+            try {
+                // Check if target directory is empty first
+                const { readdirSync } = await import("fs");
+                const { resolve } = await import("path");
+                const targetPath = resolve(targetDir);
+                let dirEntries = [];
+                try {
+                    dirEntries = readdirSync(targetPath);
+                }
+                catch (e) {
+                    // Directory doesn't exist, that's fine
+                }
+                const hasFiles = dirEntries.some(entry => !entry.startsWith('.'));
+                if (hasFiles) {
+                    jobs.appendLog(jobId, `Target directory ${targetDir} is not empty. Skipping file write to avoid overwriting.`);
+                    jobs.setStatus(jobId, { status: "completed", step: "done", progressPercent: 100 });
+                    publishResourceListChanged();
+                    return;
+                }
+                // Fetch the project and write files
+                const { write_site_by_project_id } = await import("./sitepaige.js");
+                await write_site_by_project_id({
+                    projectId,
+                    targetDir,
+                    databaseType: databaseType || "sqlite"
+                }, {
+                    onLog: (message) => jobs.appendLog(jobId, message)
+                });
+                jobs.appendLog(jobId, `Project files written to ${targetDir}`);
+                jobs.setResult(jobId, {
+                    created: ["Project files written successfully"],
+                    updated: [],
+                    skipped: [],
+                    conflicts: [],
+                    backups: []
+                });
+                jobs.setStatus(jobId, { status: "completed", step: "done", progressPercent: 100 });
+                publishResourceListChanged();
+            }
+            catch (writeErr) {
+                jobs.appendLog(jobId, `Error writing files: ${writeErr?.message ?? String(writeErr)}`);
+                jobs.setStatus(jobId, { status: "completed", step: "done", progressPercent: 100 });
+                publishResourceListChanged();
+            }
         }).catch(err => {
             jobs.appendLog(jobId, `Error during generation: ${err?.message ?? String(err)}`);
             jobs.setStatus(jobId, { status: "failed", step: "error", progressPercent: 100, errorMessage: err?.message ?? String(err) });
@@ -205,7 +249,7 @@ server.tool("generate_site", {
                         resultUri: `${baseUri}/result`,
                         expectedDurationSeconds: 300,
                         recommendedPollingIntervalSeconds: 150,
-                        hint: "Frontend generation started in the background and typically takes 3-5 minutes. Use get_status with the projectId to check progress and write files when ready. To add backend functionality later, use complete_backend (50 credits)."
+                        hint: "Frontend generation started in the background and typically takes 5-7 minutes. Files will be written automatically to the target directory when generation completes. To add backend functionality later, use complete_backend (50 credits)."
                     })
                 }
             ]

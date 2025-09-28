@@ -1,6 +1,6 @@
 {
   "name": "sitepaige-mcp-server",
-  "version": "0.3.14",
+  "version": "0.3.15",
   "type": "module",
   "description": "MCP server for generating web applications using SitePaige AI. Generate frontend (FREE/12 credits) then optionally add backend (50 credits)",
   "keywords": [
@@ -29,6 +29,7 @@
     "dist/",
     "components/",
     "defaultapp/",
+    "defaultpublic/",
     "transpiler/",
     "manifest.json",
     "README.md",
@@ -37,10 +38,11 @@
   ],
   "scripts": {
     "build": "tsc -p tsconfig.json && npm run copy-assets",
-    "copy-assets": "npm run copy-components && npm run copy-templates && npm run copy-defaultapp",
+    "copy-assets": "npm run copy-components && npm run copy-templates && npm run copy-defaultapp && npm run copy-defaultpublic",
     "copy-components": "mkdir -p dist/components && cp -r components/* dist/components/",
     "copy-templates": "mkdir -p dist/generators && cp src/generators/*.txt src/generators/*.md dist/generators/ 2>/dev/null || true",
     "copy-defaultapp": "mkdir -p dist && cp -r defaultapp dist/",
+    "copy-defaultpublic": "mkdir -p dist && cp -r defaultpublic dist/",
     "start": "node dist/index.js",
     "dev": "tsx src/index.ts"
   },
