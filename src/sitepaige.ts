@@ -10,7 +10,8 @@ import {
   SitepaigeCompleteGenerationResponse,
   SitepaigeProject,
   GenerateSiteParams,
-  GenerateSiteResult
+  GenerateSiteResult,
+  LayoutOption
 } from "./types.js";
 
 export interface RequestOptions {
@@ -130,7 +131,14 @@ export async function generate_site(
     targetLocation,
     websiteLanguage,
     requiresAuth,
-    login_providers
+    login_providers,
+    designStyle,
+    generateImages,
+    imageGenerationStrategy,
+    generateLogo,
+    selectedLayout,
+    selectedColorScheme,
+    selectedFont
   } = params;
 
   // Parse login_providers into authProviders object
@@ -170,7 +178,14 @@ export async function generate_site(
     projectId,
     ...(targetLocation ? { targetLocation } : {}),
     ...(websiteLanguage ? { websiteLanguage } : {}),
-    ...(requiresAuth !== undefined ? { requiresAuth } : {})
+    ...(requiresAuth !== undefined ? { requiresAuth } : {}),
+    ...(designStyle ? { designStyle } : {}),
+    ...(generateImages !== undefined ? { generateImages } : {}),
+    ...(imageGenerationStrategy ? { imageGenerationStrategy } : {}),
+    ...(generateLogo !== undefined ? { generateLogo } : {}),
+    ...(selectedLayout ? { selectedLayout } : {}),
+    ...(selectedColorScheme ? { selectedColorScheme } : {}),
+    ...(selectedFont ? { selectedFont } : {})
   };
   await requestJson<SitepaigePagesFirstResponse>("POST", "/api/agentic/pages-first", pagesFirstBody, options);
 
@@ -219,7 +234,14 @@ export async function initialize_site_generation(
     targetLocation,
     websiteLanguage,
     requiresAuth,
-    login_providers
+    login_providers,
+    designStyle,
+    generateImages,
+    imageGenerationStrategy,
+    generateLogo,
+    selectedLayout,
+    selectedColorScheme,
+    selectedFont
   } = params;
 
   // Parse login_providers into authProviders object
@@ -267,7 +289,14 @@ export async function continue_site_generation(
   const {
     targetLocation,
     websiteLanguage,
-    requiresAuth
+    requiresAuth,
+    designStyle,
+    generateImages,
+    imageGenerationStrategy,
+    generateLogo,
+    selectedLayout,
+    selectedColorScheme,
+    selectedFont
   } = params;
 
   // Pages-first blueprint (FREE for first project, then 12 credits)
@@ -275,7 +304,14 @@ export async function continue_site_generation(
     projectId,
     ...(targetLocation ? { targetLocation } : {}),
     ...(websiteLanguage ? { websiteLanguage } : {}),
-    ...(requiresAuth !== undefined ? { requiresAuth } : {})
+    ...(requiresAuth !== undefined ? { requiresAuth } : {}),
+    ...(designStyle ? { designStyle } : {}),
+    ...(generateImages !== undefined ? { generateImages } : {}),
+    ...(imageGenerationStrategy ? { imageGenerationStrategy } : {}),
+    ...(generateLogo !== undefined ? { generateLogo } : {}),
+    ...(selectedLayout ? { selectedLayout } : {}),
+    ...(selectedColorScheme ? { selectedColorScheme } : {}),
+    ...(selectedFont ? { selectedFont } : {})
   };
   await requestJson<SitepaigePagesFirstResponse>("POST", "/api/agentic/pages-first", pagesFirstBody, options);
   

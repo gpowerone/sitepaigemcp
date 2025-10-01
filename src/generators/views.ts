@@ -1,4 +1,5 @@
 import fsp from "node:fs/promises";
+import fs from "node:fs";
 import path from "node:path";
 import { ensureDir, viewFileBaseName, clearGeneratedFileNames } from "./utils.js";
 import { generateMenuViewCode } from "./menus.js";
@@ -121,6 +122,27 @@ export function generateStyleProps(systemView: View, isContainer: boolean): { st
     if (systemView.minWidth) styleProps.push(`minWidth: '${systemView.minWidth}px'`);
     if (systemView.maxHeight) styleProps.push(`maxHeight: '${systemView.maxHeight}px'`);
     if (systemView.maxWidth) styleProps.push(`maxWidth: '${systemView.maxWidth}px'`);
+
+    // Border styles - using conditional checks
+    if (systemView.borderTop !== null && systemView.borderTop !== undefined) {
+        styleProps.push(`borderTopWidth: '${systemView.borderTop}px'`);
+        styleProps.push(`borderTopStyle: 'solid'`);
+    }
+    if (systemView.borderBottom !== null && systemView.borderBottom !== undefined) {
+        styleProps.push(`borderBottomWidth: '${systemView.borderBottom}px'`);
+        styleProps.push(`borderBottomStyle: 'solid'`);
+    }
+    if (systemView.borderLeft !== null && systemView.borderLeft !== undefined) {
+        styleProps.push(`borderLeftWidth: '${systemView.borderLeft}px'`);
+        styleProps.push(`borderLeftStyle: 'solid'`);
+    }
+    if (systemView.borderRight !== null && systemView.borderRight !== undefined) {
+        styleProps.push(`borderRightWidth: '${systemView.borderRight}px'`);
+        styleProps.push(`borderRightStyle: 'solid'`);
+    }
+    if (systemView.borderColor && systemView.borderColor !== '') {
+        styleProps.push(`borderColor: '${systemView.borderColor}'`);
+    }
     
     // Layout system - using grid layout like in rview.tsx
     styleProps.push(`display: 'grid'`);
@@ -147,17 +169,26 @@ export function generateStyleProps(systemView: View, isContainer: boolean): { st
   
 
     // Text alignment 
-    if (align.toLowerCase() === 'left') {
-        styleProps.push(`justifyContent: 'start'`)
+    if (systemView.type === 'container') {
+      if (align.toLowerCase() === 'left') {
+          styleProps.push(`justifyContent: 'start'`)
+          styleProps.push(`textAlign: 'left'`);
+      } else if (align.toLowerCase() === 'center') {
+          styleProps.push(`textAlign: 'center'`);
+          styleProps.push(`justifyContent: 'center'`)
+      } else if (align.toLowerCase() === 'right') {
+          styleProps.push(`textAlign: 'right'`);
+          styleProps.push(`justifyContent: 'end'`)
+      }
+    } else {
+      if (align.toLowerCase() === 'left') {
         styleProps.push(`textAlign: 'left'`);
-    } else if (align.toLowerCase() === 'center') {
-        styleProps.push(`textAlign: 'center'`);
-        styleProps.push(`justifyContent: 'center'`)
-    } else if (align.toLowerCase() === 'right') {
-        styleProps.push(`textAlign: 'right'`);
-        styleProps.push(`justifyContent: 'end'`)
+      } else if (align.toLowerCase() === 'center') {
+          styleProps.push(`textAlign: 'center'`);
+      } else if (align.toLowerCase() === 'right') {
+          styleProps.push(`textAlign: 'right'`);
+      }
     }
-    
     
     // Apply heading color via CSS custom property
     if (systemView.card_title_color && systemView.card_title_color !== '') {
@@ -353,14 +384,14 @@ export default function ${comp}(){
     } else if (type === "logo") {
       // Logo images are now saved directly as logo.png/logo.jpg by the image processor
       const logoPath = v.background_image || v.custom_view_description || "";
-      let logoFileName = "logo.png";
+      let logoFileName = "";
       const altText = v.alttext || 'Logo';
       const textColor = blueprint.design?.textColor || '#666';
       
-      // Check if the logo path starts with /logo. (already processed)
-      if (logoPath.startsWith("/logo.")) {
-        logoFileName = logoPath.slice(1); // Remove leading slash
-      }
+       // if (public/logo.png exists, use it
+       if (fs.existsSync(path.join(targetDir, 'public', 'logo.png'))) {
+        logoFileName = "/logo.png";
+       }
       
       code = `import React from 'react';
 
@@ -372,7 +403,7 @@ export default function ${comp}(){
   return (
     <div className="logo">
       <a href="/">
-        {logoSrc && logoSrc !== "/logo.png" ? (
+        {logoSrc && logoSrc === "/logo.png" ? (
           <img src={logoSrc} alt={altText} width="240" height="80" />
         ) : (
           <div className="text-3xl" style={{

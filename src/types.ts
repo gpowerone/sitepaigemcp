@@ -141,6 +141,12 @@ export interface View {
     align: string | null;
     verticalAlign: string | null;
     opacity: number | null;
+    // Border properties
+    borderTop: number | null;
+    borderBottom: number | null;
+    borderLeft: number | null;
+    borderRight: number | null;
+    borderColor: string | null;
     // Cache busting for background images
     background_image_updated?: number;
     // Background image dimensions
@@ -548,6 +554,13 @@ export interface SitepaigePagesFirstBody {
   targetLocation?: string;
   websiteLanguage?: string;
   requiresAuth?: boolean;
+  designStyle?: string;
+  generateImages?: boolean;
+  imageGenerationStrategy?: 'AI' | 'Unsplash' | 'None';
+  generateLogo?: boolean;
+  selectedLayout?: LayoutOption;
+  selectedColorScheme?: string; // JSON stringified FullColorScheme
+  selectedFont?: string; // JSON stringified FontScheme
 }
 
 export interface SitepaigePagesFirstResponse {
@@ -580,6 +593,49 @@ export type SitepaigeProject = Record<string, unknown> & {
   hasHosting?: boolean;
 };
 
+// Layout, color and font interfaces for design system
+export interface ColorScheme {
+  background: string;
+  text: string;
+  header: string;
+  button: string;
+  buttonText: string;
+}
+
+export interface FullColorScheme {
+  website: ColorScheme;
+  hero: ColorScheme;
+}
+
+export interface WebsiteFonts {
+  headerFont: string;
+  menuFont: string;
+  buttonFont: string;
+  textFont: string;
+}
+
+export interface HeroFonts {
+  headerFont: string;
+  buttonFont: string;
+  textFont: string;
+}
+
+export interface FontScheme {
+  website: WebsiteFonts;
+  hero: HeroFonts;
+}
+
+// Layout options from layoutselection.tsx
+export type LayoutOption = 
+  | 'classic-hero'
+  | 'split-hero'
+  | 'full-height-hero'
+  | 'centered-simple'
+  | 'navigation-heavy'
+  | 'compact-hero'
+  | 'asymmetric-hero'
+  | 'gradient-hero';
+
 export interface GenerateSiteParams {
   projectName: string;
   requirements: string;
@@ -588,6 +644,13 @@ export interface GenerateSiteParams {
   requiresAuth?: boolean; // default true
   databaseType?: "sqlite" | "postgres" | "mysql";
   login_providers?: string; // default 'google'
+  designStyle?: string;
+  generateImages?: boolean;
+  imageGenerationStrategy?: 'AI' | 'Unsplash' | 'None';
+  generateLogo?: boolean;
+  selectedLayout?: LayoutOption;
+  selectedColorScheme?: string; // JSON stringified FullColorScheme
+  selectedFont?: string; // JSON stringified FontScheme
 }
 
 export interface GenerateSiteResult {

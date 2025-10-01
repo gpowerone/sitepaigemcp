@@ -86,7 +86,7 @@ async function requestJson(method, pathname, body, opts) {
 }
 // Generate new Sitepaige project (pages-first only, no backend)
 export async function generate_site(params, options) {
-    const { projectName, requirements, targetLocation, websiteLanguage, requiresAuth, login_providers } = params;
+    const { projectName, requirements, targetLocation, websiteLanguage, requiresAuth, login_providers, designStyle, generateImages, imageGenerationStrategy, generateLogo, selectedLayout, selectedColorScheme, selectedFont } = params;
     // Parse login_providers into authProviders object
     const loginProvidersStr = login_providers || 'google';
     const providersArray = loginProvidersStr.split(',').map(p => p.trim().toLowerCase());
@@ -121,7 +121,14 @@ export async function generate_site(params, options) {
         projectId,
         ...(targetLocation ? { targetLocation } : {}),
         ...(websiteLanguage ? { websiteLanguage } : {}),
-        ...(requiresAuth !== undefined ? { requiresAuth } : {})
+        ...(requiresAuth !== undefined ? { requiresAuth } : {}),
+        ...(designStyle ? { designStyle } : {}),
+        ...(generateImages !== undefined ? { generateImages } : {}),
+        ...(imageGenerationStrategy ? { imageGenerationStrategy } : {}),
+        ...(generateLogo !== undefined ? { generateLogo } : {}),
+        ...(selectedLayout ? { selectedLayout } : {}),
+        ...(selectedColorScheme ? { selectedColorScheme } : {}),
+        ...(selectedFont ? { selectedFont } : {})
     };
     await requestJson("POST", "/api/agentic/pages-first", pagesFirstBody, options);
     // 3) Fetch project details (which will only have frontend parts)
@@ -151,7 +158,7 @@ export function buildUrl(pathname) {
 }
 // Initialize a site generation and return immediately with projectId
 export async function initialize_site_generation(params, options) {
-    const { projectName, requirements, targetLocation, websiteLanguage, requiresAuth, login_providers } = params;
+    const { projectName, requirements, targetLocation, websiteLanguage, requiresAuth, login_providers, designStyle, generateImages, imageGenerationStrategy, generateLogo, selectedLayout, selectedColorScheme, selectedFont } = params;
     // Parse login_providers into authProviders object
     const loginProvidersStr = login_providers || 'google';
     const providersArray = loginProvidersStr.split(',').map(p => p.trim().toLowerCase());
@@ -187,13 +194,20 @@ export async function initialize_site_generation(params, options) {
 }
 // Continue site generation after initialization (pages-first only)
 export async function continue_site_generation(projectId, params, options) {
-    const { targetLocation, websiteLanguage, requiresAuth } = params;
+    const { targetLocation, websiteLanguage, requiresAuth, designStyle, generateImages, imageGenerationStrategy, generateLogo, selectedLayout, selectedColorScheme, selectedFont } = params;
     // Pages-first blueprint (FREE for first project, then 12 credits)
     const pagesFirstBody = {
         projectId,
         ...(targetLocation ? { targetLocation } : {}),
         ...(websiteLanguage ? { websiteLanguage } : {}),
-        ...(requiresAuth !== undefined ? { requiresAuth } : {})
+        ...(requiresAuth !== undefined ? { requiresAuth } : {}),
+        ...(designStyle ? { designStyle } : {}),
+        ...(generateImages !== undefined ? { generateImages } : {}),
+        ...(imageGenerationStrategy ? { imageGenerationStrategy } : {}),
+        ...(generateLogo !== undefined ? { generateLogo } : {}),
+        ...(selectedLayout ? { selectedLayout } : {}),
+        ...(selectedColorScheme ? { selectedColorScheme } : {}),
+        ...(selectedFont ? { selectedFont } : {})
     };
     await requestJson("POST", "/api/agentic/pages-first", pagesFirstBody, options);
     // No longer calling complete-generation here - that's a separate paid operation

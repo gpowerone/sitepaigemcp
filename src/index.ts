@@ -6,6 +6,7 @@ import path from "node:path";
 import fsp from "node:fs/promises";
 import { JobRegistry } from "./jobRegistry.js";
 import {  write_site_by_project_id, fetch_project_by_id, initialize_site_generation, continue_site_generation, complete_backend, complete_backend_and_write } from "./sitepaige.js";
+import type { ColorScheme, FullColorScheme, WebsiteFonts, HeroFonts, FontScheme } from "./types.js";
 export { generate_site, complete_backend } from "./sitepaige.js";
 export { writeProjectFromBlueprint } from "./blueprintWriter.js";
 
@@ -30,7 +31,14 @@ async function runGenerateJob(
   targetDir: string,
   projectNameArg?: string,
   databaseType?: "sqlite" | "postgres" | "mysql",
-  login_providers?: string
+  login_providers?: string,
+  designStyle?: string,
+  generateImages?: boolean,
+  imageGenerationStrategy?: 'AI' | 'Unsplash' | 'None',
+  generateLogo?: boolean,
+  selectedLayout?: string,
+  selectedColorScheme?: string,
+  selectedFont?: string
 ): Promise<string> { // Now returns projectId
   try {
     jobs.setStatus(jobId, { status: "running", step: "generate", progressPercent: 5 });
@@ -46,7 +54,14 @@ async function runGenerateJob(
       projectName, 
       requirements: prompt, 
       databaseType: databaseType || "sqlite",
-      login_providers: login_providers || "google"
+      login_providers: login_providers || "google",
+      designStyle,
+      generateImages,
+      imageGenerationStrategy,
+      generateLogo,
+      selectedLayout: selectedLayout as any,
+      selectedColorScheme,
+      selectedFont
     }, {
       onLog: (message: string) => jobs.appendLog(jobId, message)
     });
@@ -60,6 +75,13 @@ async function runGenerateJob(
     
     // Continue generation asynchronously (don't await)
     continue_site_generation(projectId, {
+      designStyle,
+      generateImages,
+      imageGenerationStrategy,
+      generateLogo,
+      selectedLayout: selectedLayout as any,
+      selectedColorScheme,
+      selectedFont
     }, {
       onLog: (message: string) => jobs.appendLog(jobId, message)
     }).then(async () => {
@@ -255,9 +277,90 @@ server.tool(
     targetDir: z.string().min(1),
     projectName: z.string().optional(),
     databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("sqlite"),
-    login_providers: z.string().optional().default("google")
+    login_providers: z.string().optional().default("google"),
+    designStyle: z.string().optional(),
+    generateImages: z.boolean().optional(),
+    imageGenerationStrategy: z.enum(["AI", "Unsplash", "None"]).optional(),
+    generateLogo: z.boolean().optional(),
+    selectedLayout: z.enum([
+      "classic-hero",
+      "split-hero",
+      "full-height-hero",
+      "centered-simple",
+      "navigation-heavy",
+      "compact-hero",
+      "asymmetric-hero",
+      "gradient-hero"
+    ]).optional(),
+    // Website color scheme parameters
+    websiteBackgroundColor: z.string().optional().default("#ffffff"),
+    websiteTextColor: z.string().optional().default("#333333"),
+    websiteHeaderColor: z.string().optional().default("#000000"),
+    websiteButtonColor: z.string().optional().default("#516ab8"),
+    websiteButtonTextColor: z.string().optional().default("#ffffff"),
+    // Hero color scheme parameters
+    heroBackgroundColor: z.string().optional().default("#f0f0f0"),
+    heroTextColor: z.string().optional().default("#333333"),
+    heroHeaderColor: z.string().optional().default("#000000"),
+    heroButtonColor: z.string().optional().default("#516ab8"),
+    heroButtonTextColor: z.string().optional().default("#ffffff"),
+    // Website font parameters
+    websiteHeaderFont: z.string().optional().default("Roboto"),
+    websiteMenuFont: z.string().optional().default("Roboto"),
+    websiteButtonFont: z.string().optional().default("Roboto"),
+    websiteTextFont: z.string().optional().default("Roboto"),
+    // Hero font parameters
+    heroHeaderFont: z.string().optional().default("Roboto"),
+    heroButtonFont: z.string().optional().default("Roboto"),
+    heroTextFont: z.string().optional().default("Roboto")
   },
-  async ({ prompt, targetDir, projectName, databaseType, login_providers }) => {
+  async ({ 
+    prompt, targetDir, projectName, databaseType, login_providers, designStyle, 
+    generateImages, imageGenerationStrategy, generateLogo, selectedLayout,
+    // Website colors
+    websiteBackgroundColor, websiteTextColor, websiteHeaderColor, websiteButtonColor, websiteButtonTextColor,
+    // Hero colors
+    heroBackgroundColor, heroTextColor, heroHeaderColor, heroButtonColor, heroButtonTextColor,
+    // Website fonts
+    websiteHeaderFont, websiteMenuFont, websiteButtonFont, websiteTextFont,
+    // Hero fonts
+    heroHeaderFont, heroButtonFont, heroTextFont
+  }) => {
+    // Construct the color scheme JSON from individual parameters
+    const colorScheme: FullColorScheme = {
+      website: {
+        background: websiteBackgroundColor,
+        text: websiteTextColor,
+        header: websiteHeaderColor,
+        button: websiteButtonColor,
+        buttonText: websiteButtonTextColor
+      },
+      hero: {
+        background: heroBackgroundColor,
+        text: heroTextColor,
+        header: heroHeaderColor,
+        button: heroButtonColor,
+        buttonText: heroButtonTextColor
+      }
+    };
+    const selectedColorScheme = JSON.stringify(colorScheme);
+
+    // Construct the font scheme JSON from individual parameters
+    const fontScheme: FontScheme = {
+      website: {
+        headerFont: websiteHeaderFont,
+        menuFont: websiteMenuFont,
+        buttonFont: websiteButtonFont,
+        textFont: websiteTextFont
+      },
+      hero: {
+        headerFont: heroHeaderFont,
+        buttonFont: heroButtonFont,
+        textFont: heroTextFont
+      }
+    };
+    const selectedFont = JSON.stringify(fontScheme);
+
     // Site generation typically takes around 5 minutes
     const job = jobs.createJob(300, 150); // 5 minutes expected, poll every 2.5 minutes
     const baseUri = `mem://jobs/${job.id}`;
@@ -265,7 +368,7 @@ server.tool(
 
     try {
       // Wait for the projectId from the initial API call
-      const projectId = await runGenerateJob(job.id, prompt, targetDir, projectName, databaseType, login_providers);
+      const projectId = await runGenerateJob(job.id, prompt, targetDir, projectName, databaseType, login_providers, designStyle, generateImages, imageGenerationStrategy, generateLogo, selectedLayout, selectedColorScheme, selectedFont);
       
     return {
       content: [
