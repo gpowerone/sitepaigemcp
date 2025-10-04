@@ -39,6 +39,22 @@ function collectImageUuidsFromBlueprint(blueprint: Blueprint): Map<string, { uui
     add(v.background_image || "", isLogoView, false);
     if (type === "image") add(v.custom_view_description || v.background_image || "", false, false);
     if (isLogoView) add(v.custom_view_description || v.background_image || "", true, false);
+    
+    // Handle slideshow views
+    if (type === "slideshow" && v.custom_view_description) {
+      try {
+        const imageIds = JSON.parse(v.custom_view_description);
+        if (Array.isArray(imageIds)) {
+          for (const imageId of imageIds) {
+            if (typeof imageId === 'string') {
+              add(imageId, false, false);
+            }
+          }
+        }
+      } catch {
+        // Ignore parsing errors
+      }
+    }
   }
 
   // SQL sample data pattern: 'image|uuid' or ="image|uuid"

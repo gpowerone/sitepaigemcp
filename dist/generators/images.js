@@ -38,6 +38,22 @@ function collectImageUuidsFromBlueprint(blueprint) {
             add(v.custom_view_description || v.background_image || "", false, false);
         if (isLogoView)
             add(v.custom_view_description || v.background_image || "", true, false);
+        // Handle slideshow views
+        if (type === "slideshow" && v.custom_view_description) {
+            try {
+                const imageIds = JSON.parse(v.custom_view_description);
+                if (Array.isArray(imageIds)) {
+                    for (const imageId of imageIds) {
+                        if (typeof imageId === 'string') {
+                            add(imageId, false, false);
+                        }
+                    }
+                }
+            }
+            catch {
+                // Ignore parsing errors
+            }
+        }
     }
     // SQL sample data pattern: 'image|uuid' or ="image|uuid"
     const sample = blueprint.sample_data || [];

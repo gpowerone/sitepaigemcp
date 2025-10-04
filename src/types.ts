@@ -147,6 +147,19 @@ export interface View {
     borderLeft: number | null;
     borderRight: number | null;
     borderColor: string | null;
+    // Border radius properties
+    borderRadius: number | null;
+    borderTopLeftRadius: number | null;
+    borderTopRightRadius: number | null;
+    borderBottomLeftRadius: number | null;
+    borderBottomRightRadius: number | null;
+    // Position properties
+    position: 'none' | 'relative' | 'absolute' | null;
+    zIndex: number | null;
+    top: number | null;
+    bottom: number | null;
+    left: number | null;
+    right: number | null;
     // Cache busting for background images
     background_image_updated?: number;
     // Background image dimensions

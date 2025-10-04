@@ -209,7 +209,7 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
       
       {/* Regular menu for desktop or vertical menus */}
       {(!isMobile || direction === 'vertical') && (
-        <nav className={`${direction === 'horizontal' ? 'flex space-x-4' : 'flex flex-col'} ${menu.align === 'Left' ? 'justify-start' : menu.align === 'Center' ? 'justify-center' : menu.align === 'Right' ? 'justify-end' : ''}`}>
+        <nav className={`${direction === 'horizontal' ? 'space-x-4' : 'flex flex-col'} ${menu.align === 'Left' ? 'justify-start' : menu.align === 'Center' ? 'justify-center' : menu.align === 'Right' ? 'justify-end' : ''}`}>
           {menu.items?.filter(item => !item.hiddenOnDesktop).map((item, index) => renderMenuItem(item, index)) || []}
         </nav>
       )}

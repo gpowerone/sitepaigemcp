@@ -137,12 +137,27 @@ export function generateStyleProps(systemView, isContainer) {
     if (systemView.borderColor && systemView.borderColor !== '') {
         styleProps.push(`borderColor: '${systemView.borderColor}'`);
     }
+    // Border radius styles
+    if (systemView.borderRadius !== null && systemView.borderRadius !== undefined) {
+        styleProps.push(`borderRadius: '${systemView.borderRadius}px'`);
+    }
+    else {
+        // Apply individual corner radii if set
+        if (systemView.borderTopLeftRadius !== null && systemView.borderTopLeftRadius !== undefined) {
+            styleProps.push(`borderTopLeftRadius: '${systemView.borderTopLeftRadius}px'`);
+        }
+        if (systemView.borderTopRightRadius !== null && systemView.borderTopRightRadius !== undefined) {
+            styleProps.push(`borderTopRightRadius: '${systemView.borderTopRightRadius}px'`);
+        }
+        if (systemView.borderBottomLeftRadius !== null && systemView.borderBottomLeftRadius !== undefined) {
+            styleProps.push(`borderBottomLeftRadius: '${systemView.borderBottomLeftRadius}px'`);
+        }
+        if (systemView.borderBottomRightRadius !== null && systemView.borderBottomRightRadius !== undefined) {
+            styleProps.push(`borderBottomRightRadius: '${systemView.borderBottomRightRadius}px'`);
+        }
+    }
     // Layout system - using grid layout like in rview.tsx
     styleProps.push(`display: 'grid'`);
-    // Opacity
-    if (systemView.opacity !== null && systemView.opacity !== undefined) {
-        styleProps.push(`opacity: ${systemView.opacity}`);
-    }
     // Combined alignment using placeItems (matches rview.tsx exactly)
     const verticalAlign = (systemView.verticalAlign || '').toLowerCase();
     const align = (systemView.align || '').toLowerCase();
@@ -179,6 +194,29 @@ export function generateStyleProps(systemView, isContainer) {
         }
         else if (align.toLowerCase() === 'right') {
             styleProps.push(`textAlign: 'right'`);
+        }
+    }
+    // Position styles
+    if (systemView.position && systemView.position !== 'none') {
+        styleProps.push(`position: '${systemView.position}'`);
+    }
+    // Z-index (only apply if position is absolute)
+    if (systemView.position === 'absolute' && systemView.zIndex !== null && systemView.zIndex !== undefined) {
+        styleProps.push(`zIndex: ${systemView.zIndex}`);
+    }
+    // Position offsets (only apply when position is absolute or relative)
+    if (systemView.position === 'absolute' || systemView.position === 'relative') {
+        if (systemView.top !== null && systemView.top !== undefined) {
+            styleProps.push(`top: '${systemView.top}px'`);
+        }
+        if (systemView.bottom !== null && systemView.bottom !== undefined) {
+            styleProps.push(`bottom: '${systemView.bottom}px'`);
+        }
+        if (systemView.left !== null && systemView.left !== undefined) {
+            styleProps.push(`left: '${systemView.left}px'`);
+        }
+        if (systemView.right !== null && systemView.right !== undefined) {
+            styleProps.push(`right: '${systemView.right}px'`);
         }
     }
     // Apply heading color via CSS custom property
@@ -367,7 +405,7 @@ export default function ${comp}(){
                 code = `import React from 'react';
 
 export default function ${comp}(){
-  const logoSrc = "/${logoFileName}";
+  const logoSrc = "${logoFileName}";
   const altText = ${JSON.stringify(altText)};
   const textColor = ${JSON.stringify(textColor)};
   
@@ -656,6 +694,45 @@ export default function ${comp}() {
     <span>
       {/* Integration Placeholder: ${promptText} */}
     </span>
+  );
+}`;
+            }
+            else if (type === "slideshow") {
+                // Import the Slideshow component
+                // imageIds come from custom_view_description directly
+                const imageIds = v.custom_view_description || '[]';
+                const height = v.height || 600;
+                const projectId = ''; // Project ID can be set at runtime if needed
+                // Parse slideshow settings from prompt field
+                let slideshowSettings = {
+                    slideType: 'automatic',
+                    slideTime: 10,
+                    animationType: 'slide'
+                };
+                try {
+                    if (v.prompt) {
+                        const parsed = JSON.parse(v.prompt);
+                        slideshowSettings = { ...slideshowSettings, ...parsed };
+                    }
+                }
+                catch {
+                    // Use default settings
+                }
+                const textColor = blueprint.design?.textColor || '#000000';
+                code = `import React from 'react';
+import Slideshow from '../components/slideshow';
+
+export default function ${comp}() {
+  return (
+    <Slideshow 
+      imageIds={${JSON.stringify(imageIds)}}
+      height={${height}}
+      projectId="${projectId}"
+      slideType="${slideshowSettings.slideType}"
+      slideTime={${slideshowSettings.slideTime}}
+      animationType="${slideshowSettings.animationType}"
+      textColor="${textColor}"
+    />
   );
 }`;
             }

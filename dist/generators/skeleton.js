@@ -106,6 +106,7 @@ export async function writePackageJson(targetDir, projectName, databaseType = "s
         next: pkg.dependencies?.next ?? "latest",
         react: pkg.dependencies?.react ?? "latest",
         "react-dom": pkg.dependencies?.["react-dom"] ?? "latest",
+        "lucide-react": pkg.dependencies?.["lucide-react"] ?? "latest",
         "mime-types": pkg.dependencies?.["mime-types"] ?? "^3.0.0",
         tsx: pkg.dependencies?.tsx ?? "4.20.6"
     };

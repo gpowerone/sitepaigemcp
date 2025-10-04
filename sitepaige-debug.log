@@ -4552,3 +4552,297 @@
 [2025-09-28T14:08:42.465Z] [writeViews] Processing view: cf28e9d4-9cdc-4dfa-a066-7b08dd97139f, type: login, name: LoginView
 [2025-09-28T14:08:42.465Z] [writeViews] Looking for code for view cf28e9d4-9cdc-4dfa-a066-7b08dd97139f, found: no
 [2025-09-28T14:08:42.480Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-04T15:24:14.513Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-04T15:24:14.515Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-04T15:24:14.516Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":9}
+[2025-10-04T15:24:14.560Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-04T15:24:15.383Z] [writeViews] projectCode: exists
+[2025-10-04T15:24:15.383Z] [writeViews] projectCode.views count: 9
+[2025-10-04T15:24:15.384Z] [writeViews] View code available for ID: home_featured, code length: 2854
+[2025-10-04T15:24:15.384Z] [writeViews] View code available for ID: home_map, code length: 3471
+[2025-10-04T15:24:15.384Z] [writeViews] View code available for ID: reports_browser, code length: 6414
+[2025-10-04T15:24:15.384Z] [writeViews] View code available for ID: report_content, code length: 5961
+[2025-10-04T15:24:15.384Z] [writeViews] View code available for ID: teams_directory, code length: 6231
+[2025-10-04T15:24:15.384Z] [writeViews] View code available for ID: profile_content, code length: 5548
+[2025-10-04T15:24:15.384Z] [writeViews] View code available for ID: weather_dashboard, code length: 7948
+[2025-10-04T15:24:15.385Z] [writeViews] View code available for ID: education_hub, code length: 4592
+[2025-10-04T15:24:15.385Z] [writeViews] View code available for ID: contact_form, code length: 3828
+[2025-10-04T15:24:15.385Z] [writeViews] Processing view: 8c9c5d4a-08a4-4791-9c56-ddeb99b78eb0, type: logo, name: Logo
+[2025-10-04T15:24:15.385Z] [writeViews] Looking for code for view 8c9c5d4a-08a4-4791-9c56-ddeb99b78eb0, found: no
+[2025-10-04T15:24:15.386Z] [writeViews] Processing view: 9da91075-dbe1-4026-9f81-71cee02e2bf7, type: menu, name: Header Menu
+[2025-10-04T15:24:15.386Z] [writeViews] Looking for code for view 9da91075-dbe1-4026-9f81-71cee02e2bf7, found: no
+[2025-10-04T15:24:15.387Z] [writeViews] Processing view: 9b153b85-1c7c-48f9-b76f-a813c1443e7a, type: loginbutton, name: Header Login
+[2025-10-04T15:24:15.387Z] [writeViews] Looking for code for view 9b153b85-1c7c-48f9-b76f-a813c1443e7a, found: no
+[2025-10-04T15:24:15.387Z] [writeViews] Processing view: 9ddcc1d9-d0bf-48db-bc5e-37ca3f2b7fa5, type: iconbar, name: Header Icon Bar
+[2025-10-04T15:24:15.387Z] [writeViews] Looking for code for view 9ddcc1d9-d0bf-48db-bc5e-37ca3f2b7fa5, found: no
+[2025-10-04T15:24:15.388Z] [writeViews] Processing view: e498e7ab-d943-4046-9f5e-3f7ec8e64136, type: menu, name: Header (Logged In)
+[2025-10-04T15:24:15.388Z] [writeViews] Looking for code for view e498e7ab-d943-4046-9f5e-3f7ec8e64136, found: no
+[2025-10-04T15:24:15.389Z] [writeViews] Processing view: a0a1a9d7-76cb-4c90-a402-a192e14ad638, type: iconbar, name: Header Icon Bar (Logged In)
+[2025-10-04T15:24:15.389Z] [writeViews] Looking for code for view a0a1a9d7-76cb-4c90-a402-a192e14ad638, found: no
+[2025-10-04T15:24:15.390Z] [writeViews] Processing view: cfcc9d7a-45e2-4fc5-9bce-bb8d6a917f5d, type: menu, name: Header (Admin)
+[2025-10-04T15:24:15.390Z] [writeViews] Looking for code for view cfcc9d7a-45e2-4fc5-9bce-bb8d6a917f5d, found: no
+[2025-10-04T15:24:15.390Z] [writeViews] Processing view: 0c3b9d0a-1225-46e0-99aa-be58d4cad7e1, type: iconbar, name: Header Icon Bar (Admin)
+[2025-10-04T15:24:15.390Z] [writeViews] Looking for code for view 0c3b9d0a-1225-46e0-99aa-be58d4cad7e1, found: no
+[2025-10-04T15:24:15.391Z] [writeViews] Processing view: a788e1e9-8583-409f-9ab2-ff8e4a849be1, type: menu, name: Footer Menu
+[2025-10-04T15:24:15.391Z] [writeViews] Looking for code for view a788e1e9-8583-409f-9ab2-ff8e4a849be1, found: no
+[2025-10-04T15:24:15.392Z] [writeViews] Processing view: 299bd193-c231-4cfb-bf80-83d221eedd37, type: text, name: Copyright
+[2025-10-04T15:24:15.393Z] [writeViews] Looking for code for view 299bd193-c231-4cfb-bf80-83d221eedd37, found: no
+[2025-10-04T15:24:15.393Z] [writeViews] Processing view: b71e51c3-1ab8-4cb9-a2f6-04d85db1ba52, type: generatedintegration, name: Analytics Tracking
+[2025-10-04T15:24:15.393Z] [writeViews] Looking for code for view b71e51c3-1ab8-4cb9-a2f6-04d85db1ba52, found: no
+[2025-10-04T15:24:15.394Z] [writeViews] Processing view: 3c8e6b0b-d9eb-4f54-952b-866f90454ed5, type: loggedinmenu, name: DashboardMenuView
+[2025-10-04T15:24:15.394Z] [writeViews] Looking for code for view 3c8e6b0b-d9eb-4f54-952b-866f90454ed5, found: no
+[2025-10-04T15:24:15.394Z] [writeViews] Processing view: 36712372-2ba2-4482-b8f0-879a5d7ab3a7, type: useradmin, name: UserAdminView
+[2025-10-04T15:24:15.394Z] [writeViews] Looking for code for view 36712372-2ba2-4482-b8f0-879a5d7ab3a7, found: no
+[2025-10-04T15:24:15.395Z] [writeViews] Processing view: 39a3d0c3-e4c1-4337-aea2-22554560975b, type: adminmenu, name: AdminMenuView
+[2025-10-04T15:24:15.395Z] [writeViews] Looking for code for view 39a3d0c3-e4c1-4337-aea2-22554560975b, found: no
+[2025-10-04T15:24:15.396Z] [writeViews] Processing view: home_featured, type: component, name: Featured Storms
+[2025-10-04T15:24:15.396Z] [writeViews] Looking for code for view home_featured, found: yes
+[2025-10-04T15:24:15.585Z] [writeViews] Processing view: home_map, type: component, name: Active Storms Map
+[2025-10-04T15:24:15.585Z] [writeViews] Looking for code for view home_map, found: yes
+[2025-10-04T15:24:15.605Z] [writeViews] Processing view: reports_browser, type: component, name: Reports Browser
+[2025-10-04T15:24:15.605Z] [writeViews] Looking for code for view reports_browser, found: yes
+[2025-10-04T15:24:15.621Z] [writeViews] Processing view: report_content, type: component, name: Report Details
+[2025-10-04T15:24:15.621Z] [writeViews] Looking for code for view report_content, found: yes
+[2025-10-04T15:24:15.631Z] [writeViews] Processing view: live_map, type: generatedcomponent, name: Live Tracking Map
+[2025-10-04T15:24:15.631Z] [writeViews] Looking for code for view live_map, found: no
+[2025-10-04T15:24:15.631Z] [writeViews] Processing view: teams_directory, type: component, name: Teams Directory
+[2025-10-04T15:24:15.631Z] [writeViews] Looking for code for view teams_directory, found: yes
+[2025-10-04T15:24:15.642Z] [writeViews] Processing view: profile_content, type: component, name: Profile Information
+[2025-10-04T15:24:15.643Z] [writeViews] Looking for code for view profile_content, found: yes
+[2025-10-04T15:24:15.651Z] [writeViews] Processing view: weather_dashboard, type: component, name: Weather Dashboard
+[2025-10-04T15:24:15.651Z] [writeViews] Looking for code for view weather_dashboard, found: yes
+[2025-10-04T15:24:15.662Z] [writeViews] Processing view: models_viewer, type: generatedcomponent, name: Forecast Models
+[2025-10-04T15:24:15.662Z] [writeViews] Looking for code for view models_viewer, found: no
+[2025-10-04T15:24:15.663Z] [writeViews] Processing view: equipment_content, type: text, name: Equipment Guides
+[2025-10-04T15:24:15.663Z] [writeViews] Looking for code for view equipment_content, found: no
+[2025-10-04T15:24:15.664Z] [writeViews] Processing view: safety_content, type: text, name: Safety Guidelines
+[2025-10-04T15:24:15.664Z] [writeViews] Looking for code for view safety_content, found: no
+[2025-10-04T15:24:15.664Z] [writeViews] Processing view: education_hub, type: component, name: Learning Resources
+[2025-10-04T15:24:15.664Z] [writeViews] Looking for code for view education_hub, found: yes
+[2025-10-04T15:24:15.670Z] [writeViews] Processing view: forum_interface, type: generatedcomponent, name: Forum Discussions
+[2025-10-04T15:24:15.671Z] [writeViews] Looking for code for view forum_interface, found: no
+[2025-10-04T15:24:15.671Z] [writeViews] Processing view: thread_content, type: generatedcomponent, name: Thread Discussion
+[2025-10-04T15:24:15.671Z] [writeViews] Looking for code for view thread_content, found: no
+[2025-10-04T15:24:15.672Z] [writeViews] Processing view: chase_log, type: generatedcomponent, name: Chase Log
+[2025-10-04T15:24:15.672Z] [writeViews] Looking for code for view chase_log, found: no
+[2025-10-04T15:24:15.672Z] [writeViews] Processing view: report_form, type: generatedcomponent, name: Report Form
+[2025-10-04T15:24:15.673Z] [writeViews] Looking for code for view report_form, found: no
+[2025-10-04T15:24:15.673Z] [writeViews] Processing view: alerts_center, type: generatedcomponent, name: Alerts Center
+[2025-10-04T15:24:15.673Z] [writeViews] Looking for code for view alerts_center, found: no
+[2025-10-04T15:24:15.674Z] [writeViews] Processing view: about_content, type: text, name: About Us
+[2025-10-04T15:24:15.674Z] [writeViews] Looking for code for view about_content, found: no
+[2025-10-04T15:24:15.675Z] [writeViews] Processing view: contact_form, type: component, name: Contact Form
+[2025-10-04T15:24:15.675Z] [writeViews] Looking for code for view contact_form, found: yes
+[2025-10-04T15:24:15.685Z] [writeViews] Processing view: admin_reports_table, type: generatedcomponent, name: Reports Management
+[2025-10-04T15:24:15.685Z] [writeViews] Looking for code for view admin_reports_table, found: no
+[2025-10-04T15:24:15.686Z] [writeViews] Processing view: admin_users_table, type: generatedcomponent, name: User Management
+[2025-10-04T15:24:15.686Z] [writeViews] Looking for code for view admin_users_table, found: no
+[2025-10-04T15:24:15.686Z] [writeViews] Processing view: admin_alerts_panel, type: generatedcomponent, name: Alerts Management
+[2025-10-04T15:24:15.687Z] [writeViews] Looking for code for view admin_alerts_panel, found: no
+[2025-10-04T15:24:15.687Z] [writeViews] Processing view: admin_content_table, type: generatedcomponent, name: Content Management
+[2025-10-04T15:24:15.687Z] [writeViews] Looking for code for view admin_content_table, found: no
+[2025-10-04T15:24:15.688Z] [writeViews] Processing view: c5c13f63-4f1c-4d29-84bd-b7c9de6028bc, type: text, name: Terms of Service
+[2025-10-04T15:24:15.688Z] [writeViews] Looking for code for view c5c13f63-4f1c-4d29-84bd-b7c9de6028bc, found: no
+[2025-10-04T15:24:15.688Z] [writeViews] Processing view: c47c0b4b-7099-426f-a9d4-962b6875378b, type: text, name: Privacy Policy
+[2025-10-04T15:24:15.689Z] [writeViews] Looking for code for view c47c0b4b-7099-426f-a9d4-962b6875378b, found: no
+[2025-10-04T15:24:15.689Z] [writeViews] Processing view: 435cc400-0b83-4530-af67-fa20f7fe5589, type: slideshow, name: Hero Banner
+[2025-10-04T15:24:15.689Z] [writeViews] Looking for code for view 435cc400-0b83-4530-af67-fa20f7fe5589, found: no
+[2025-10-04T15:24:15.690Z] [writeViews] Processing view: 22bcb3c5-8607-42eb-8367-3b0e3b32feb3, type: login, name: LoginView
+[2025-10-04T15:24:15.690Z] [writeViews] Looking for code for view 22bcb3c5-8607-42eb-8367-3b0e3b32feb3, found: no
+[2025-10-04T15:24:15.707Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-04T16:06:21.786Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-04T16:06:21.788Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-04T16:06:21.788Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":9}
+[2025-10-04T16:06:21.831Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-04T16:06:22.530Z] [writeViews] projectCode: exists
+[2025-10-04T16:06:22.531Z] [writeViews] projectCode.views count: 9
+[2025-10-04T16:06:22.531Z] [writeViews] View code available for ID: home_featured, code length: 2854
+[2025-10-04T16:06:22.531Z] [writeViews] View code available for ID: home_map, code length: 3471
+[2025-10-04T16:06:22.531Z] [writeViews] View code available for ID: reports_browser, code length: 6414
+[2025-10-04T16:06:22.531Z] [writeViews] View code available for ID: report_content, code length: 5961
+[2025-10-04T16:06:22.531Z] [writeViews] View code available for ID: teams_directory, code length: 6231
+[2025-10-04T16:06:22.532Z] [writeViews] View code available for ID: profile_content, code length: 5548
+[2025-10-04T16:06:22.532Z] [writeViews] View code available for ID: weather_dashboard, code length: 7948
+[2025-10-04T16:06:22.532Z] [writeViews] View code available for ID: education_hub, code length: 4592
+[2025-10-04T16:06:22.532Z] [writeViews] View code available for ID: contact_form, code length: 3828
+[2025-10-04T16:06:22.533Z] [writeViews] Processing view: 8c9c5d4a-08a4-4791-9c56-ddeb99b78eb0, type: logo, name: Logo
+[2025-10-04T16:06:22.533Z] [writeViews] Looking for code for view 8c9c5d4a-08a4-4791-9c56-ddeb99b78eb0, found: no
+[2025-10-04T16:06:22.534Z] [writeViews] Processing view: 9da91075-dbe1-4026-9f81-71cee02e2bf7, type: menu, name: Header Menu
+[2025-10-04T16:06:22.534Z] [writeViews] Looking for code for view 9da91075-dbe1-4026-9f81-71cee02e2bf7, found: no
+[2025-10-04T16:06:22.534Z] [writeViews] Processing view: 9b153b85-1c7c-48f9-b76f-a813c1443e7a, type: loginbutton, name: Header Login
+[2025-10-04T16:06:22.535Z] [writeViews] Looking for code for view 9b153b85-1c7c-48f9-b76f-a813c1443e7a, found: no
+[2025-10-04T16:06:22.535Z] [writeViews] Processing view: 9ddcc1d9-d0bf-48db-bc5e-37ca3f2b7fa5, type: iconbar, name: Header Icon Bar
+[2025-10-04T16:06:22.535Z] [writeViews] Looking for code for view 9ddcc1d9-d0bf-48db-bc5e-37ca3f2b7fa5, found: no
+[2025-10-04T16:06:22.536Z] [writeViews] Processing view: e498e7ab-d943-4046-9f5e-3f7ec8e64136, type: menu, name: Header (Logged In)
+[2025-10-04T16:06:22.536Z] [writeViews] Looking for code for view e498e7ab-d943-4046-9f5e-3f7ec8e64136, found: no
+[2025-10-04T16:06:22.536Z] [writeViews] Processing view: a0a1a9d7-76cb-4c90-a402-a192e14ad638, type: iconbar, name: Header Icon Bar (Logged In)
+[2025-10-04T16:06:22.536Z] [writeViews] Looking for code for view a0a1a9d7-76cb-4c90-a402-a192e14ad638, found: no
+[2025-10-04T16:06:22.537Z] [writeViews] Processing view: cfcc9d7a-45e2-4fc5-9bce-bb8d6a917f5d, type: menu, name: Header (Admin)
+[2025-10-04T16:06:22.537Z] [writeViews] Looking for code for view cfcc9d7a-45e2-4fc5-9bce-bb8d6a917f5d, found: no
+[2025-10-04T16:06:22.538Z] [writeViews] Processing view: 0c3b9d0a-1225-46e0-99aa-be58d4cad7e1, type: iconbar, name: Header Icon Bar (Admin)
+[2025-10-04T16:06:22.539Z] [writeViews] Looking for code for view 0c3b9d0a-1225-46e0-99aa-be58d4cad7e1, found: no
+[2025-10-04T16:06:22.539Z] [writeViews] Processing view: a788e1e9-8583-409f-9ab2-ff8e4a849be1, type: menu, name: Footer Menu
+[2025-10-04T16:06:22.540Z] [writeViews] Looking for code for view a788e1e9-8583-409f-9ab2-ff8e4a849be1, found: no
+[2025-10-04T16:06:22.540Z] [writeViews] Processing view: 299bd193-c231-4cfb-bf80-83d221eedd37, type: text, name: Copyright
+[2025-10-04T16:06:22.540Z] [writeViews] Looking for code for view 299bd193-c231-4cfb-bf80-83d221eedd37, found: no
+[2025-10-04T16:06:22.541Z] [writeViews] Processing view: b71e51c3-1ab8-4cb9-a2f6-04d85db1ba52, type: generatedintegration, name: Analytics Tracking
+[2025-10-04T16:06:22.541Z] [writeViews] Looking for code for view b71e51c3-1ab8-4cb9-a2f6-04d85db1ba52, found: no
+[2025-10-04T16:06:22.542Z] [writeViews] Processing view: 3c8e6b0b-d9eb-4f54-952b-866f90454ed5, type: loggedinmenu, name: DashboardMenuView
+[2025-10-04T16:06:22.542Z] [writeViews] Looking for code for view 3c8e6b0b-d9eb-4f54-952b-866f90454ed5, found: no
+[2025-10-04T16:06:22.542Z] [writeViews] Processing view: 36712372-2ba2-4482-b8f0-879a5d7ab3a7, type: useradmin, name: UserAdminView
+[2025-10-04T16:06:22.542Z] [writeViews] Looking for code for view 36712372-2ba2-4482-b8f0-879a5d7ab3a7, found: no
+[2025-10-04T16:06:22.543Z] [writeViews] Processing view: 39a3d0c3-e4c1-4337-aea2-22554560975b, type: adminmenu, name: AdminMenuView
+[2025-10-04T16:06:22.543Z] [writeViews] Looking for code for view 39a3d0c3-e4c1-4337-aea2-22554560975b, found: no
+[2025-10-04T16:06:22.543Z] [writeViews] Processing view: home_featured, type: component, name: Featured Storms
+[2025-10-04T16:06:22.544Z] [writeViews] Looking for code for view home_featured, found: yes
+[2025-10-04T16:06:22.729Z] [writeViews] Processing view: home_map, type: component, name: Active Storms Map
+[2025-10-04T16:06:22.729Z] [writeViews] Looking for code for view home_map, found: yes
+[2025-10-04T16:06:22.750Z] [writeViews] Processing view: reports_browser, type: component, name: Reports Browser
+[2025-10-04T16:06:22.750Z] [writeViews] Looking for code for view reports_browser, found: yes
+[2025-10-04T16:06:22.766Z] [writeViews] Processing view: report_content, type: component, name: Report Details
+[2025-10-04T16:06:22.767Z] [writeViews] Looking for code for view report_content, found: yes
+[2025-10-04T16:06:22.776Z] [writeViews] Processing view: live_map, type: generatedcomponent, name: Live Tracking Map
+[2025-10-04T16:06:22.776Z] [writeViews] Looking for code for view live_map, found: no
+[2025-10-04T16:06:22.777Z] [writeViews] Processing view: teams_directory, type: component, name: Teams Directory
+[2025-10-04T16:06:22.777Z] [writeViews] Looking for code for view teams_directory, found: yes
+[2025-10-04T16:06:22.788Z] [writeViews] Processing view: profile_content, type: component, name: Profile Information
+[2025-10-04T16:06:22.788Z] [writeViews] Looking for code for view profile_content, found: yes
+[2025-10-04T16:06:22.796Z] [writeViews] Processing view: weather_dashboard, type: component, name: Weather Dashboard
+[2025-10-04T16:06:22.796Z] [writeViews] Looking for code for view weather_dashboard, found: yes
+[2025-10-04T16:06:22.810Z] [writeViews] Processing view: models_viewer, type: generatedcomponent, name: Forecast Models
+[2025-10-04T16:06:22.811Z] [writeViews] Looking for code for view models_viewer, found: no
+[2025-10-04T16:06:22.812Z] [writeViews] Processing view: equipment_content, type: text, name: Equipment Guides
+[2025-10-04T16:06:22.812Z] [writeViews] Looking for code for view equipment_content, found: no
+[2025-10-04T16:06:22.813Z] [writeViews] Processing view: safety_content, type: text, name: Safety Guidelines
+[2025-10-04T16:06:22.813Z] [writeViews] Looking for code for view safety_content, found: no
+[2025-10-04T16:06:22.814Z] [writeViews] Processing view: education_hub, type: component, name: Learning Resources
+[2025-10-04T16:06:22.815Z] [writeViews] Looking for code for view education_hub, found: yes
+[2025-10-04T16:06:22.830Z] [writeViews] Processing view: forum_interface, type: generatedcomponent, name: Forum Discussions
+[2025-10-04T16:06:22.830Z] [writeViews] Looking for code for view forum_interface, found: no
+[2025-10-04T16:06:22.831Z] [writeViews] Processing view: thread_content, type: generatedcomponent, name: Thread Discussion
+[2025-10-04T16:06:22.831Z] [writeViews] Looking for code for view thread_content, found: no
+[2025-10-04T16:06:22.831Z] [writeViews] Processing view: chase_log, type: generatedcomponent, name: Chase Log
+[2025-10-04T16:06:22.832Z] [writeViews] Looking for code for view chase_log, found: no
+[2025-10-04T16:06:22.832Z] [writeViews] Processing view: report_form, type: generatedcomponent, name: Report Form
+[2025-10-04T16:06:22.832Z] [writeViews] Looking for code for view report_form, found: no
+[2025-10-04T16:06:22.832Z] [writeViews] Processing view: alerts_center, type: generatedcomponent, name: Alerts Center
+[2025-10-04T16:06:22.833Z] [writeViews] Looking for code for view alerts_center, found: no
+[2025-10-04T16:06:22.833Z] [writeViews] Processing view: about_content, type: text, name: About Us
+[2025-10-04T16:06:22.833Z] [writeViews] Looking for code for view about_content, found: no
+[2025-10-04T16:06:22.834Z] [writeViews] Processing view: contact_form, type: component, name: Contact Form
+[2025-10-04T16:06:22.834Z] [writeViews] Looking for code for view contact_form, found: yes
+[2025-10-04T16:06:22.840Z] [writeViews] Processing view: admin_reports_table, type: generatedcomponent, name: Reports Management
+[2025-10-04T16:06:22.840Z] [writeViews] Looking for code for view admin_reports_table, found: no
+[2025-10-04T16:06:22.841Z] [writeViews] Processing view: admin_users_table, type: generatedcomponent, name: User Management
+[2025-10-04T16:06:22.841Z] [writeViews] Looking for code for view admin_users_table, found: no
+[2025-10-04T16:06:22.842Z] [writeViews] Processing view: admin_alerts_panel, type: generatedcomponent, name: Alerts Management
+[2025-10-04T16:06:22.842Z] [writeViews] Looking for code for view admin_alerts_panel, found: no
+[2025-10-04T16:06:22.843Z] [writeViews] Processing view: admin_content_table, type: generatedcomponent, name: Content Management
+[2025-10-04T16:06:22.843Z] [writeViews] Looking for code for view admin_content_table, found: no
+[2025-10-04T16:06:22.844Z] [writeViews] Processing view: c5c13f63-4f1c-4d29-84bd-b7c9de6028bc, type: text, name: Terms of Service
+[2025-10-04T16:06:22.844Z] [writeViews] Looking for code for view c5c13f63-4f1c-4d29-84bd-b7c9de6028bc, found: no
+[2025-10-04T16:06:22.844Z] [writeViews] Processing view: c47c0b4b-7099-426f-a9d4-962b6875378b, type: text, name: Privacy Policy
+[2025-10-04T16:06:22.845Z] [writeViews] Looking for code for view c47c0b4b-7099-426f-a9d4-962b6875378b, found: no
+[2025-10-04T16:06:22.845Z] [writeViews] Processing view: 435cc400-0b83-4530-af67-fa20f7fe5589, type: slideshow, name: Hero Banner
+[2025-10-04T16:06:22.845Z] [writeViews] Looking for code for view 435cc400-0b83-4530-af67-fa20f7fe5589, found: no
+[2025-10-04T16:06:22.846Z] [writeViews] Processing view: 22bcb3c5-8607-42eb-8367-3b0e3b32feb3, type: login, name: LoginView
+[2025-10-04T16:06:22.846Z] [writeViews] Looking for code for view 22bcb3c5-8607-42eb-8367-3b0e3b32feb3, found: no
+[2025-10-04T16:06:22.863Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-04T16:16:50.736Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-04T16:16:50.737Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-04T16:16:50.737Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":9}
+[2025-10-04T16:16:50.784Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-04T16:16:51.637Z] [writeViews] projectCode: exists
+[2025-10-04T16:16:51.638Z] [writeViews] projectCode.views count: 9
+[2025-10-04T16:16:51.638Z] [writeViews] View code available for ID: home_featured, code length: 2854
+[2025-10-04T16:16:51.638Z] [writeViews] View code available for ID: home_map, code length: 3471
+[2025-10-04T16:16:51.638Z] [writeViews] View code available for ID: reports_browser, code length: 6414
+[2025-10-04T16:16:51.638Z] [writeViews] View code available for ID: report_content, code length: 5961
+[2025-10-04T16:16:51.638Z] [writeViews] View code available for ID: teams_directory, code length: 6231
+[2025-10-04T16:16:51.639Z] [writeViews] View code available for ID: profile_content, code length: 5548
+[2025-10-04T16:16:51.639Z] [writeViews] View code available for ID: weather_dashboard, code length: 7948
+[2025-10-04T16:16:51.639Z] [writeViews] View code available for ID: education_hub, code length: 4592
+[2025-10-04T16:16:51.639Z] [writeViews] View code available for ID: contact_form, code length: 3828
+[2025-10-04T16:16:51.640Z] [writeViews] Processing view: 8c9c5d4a-08a4-4791-9c56-ddeb99b78eb0, type: logo, name: Logo
+[2025-10-04T16:16:51.640Z] [writeViews] Looking for code for view 8c9c5d4a-08a4-4791-9c56-ddeb99b78eb0, found: no
+[2025-10-04T16:16:51.641Z] [writeViews] Processing view: 9da91075-dbe1-4026-9f81-71cee02e2bf7, type: menu, name: Header Menu
+[2025-10-04T16:16:51.641Z] [writeViews] Looking for code for view 9da91075-dbe1-4026-9f81-71cee02e2bf7, found: no
+[2025-10-04T16:16:51.642Z] [writeViews] Processing view: 9b153b85-1c7c-48f9-b76f-a813c1443e7a, type: loginbutton, name: Header Login
+[2025-10-04T16:16:51.642Z] [writeViews] Looking for code for view 9b153b85-1c7c-48f9-b76f-a813c1443e7a, found: no
+[2025-10-04T16:16:51.642Z] [writeViews] Processing view: 9ddcc1d9-d0bf-48db-bc5e-37ca3f2b7fa5, type: iconbar, name: Header Icon Bar
+[2025-10-04T16:16:51.642Z] [writeViews] Looking for code for view 9ddcc1d9-d0bf-48db-bc5e-37ca3f2b7fa5, found: no
+[2025-10-04T16:16:51.643Z] [writeViews] Processing view: e498e7ab-d943-4046-9f5e-3f7ec8e64136, type: menu, name: Header (Logged In)
+[2025-10-04T16:16:51.643Z] [writeViews] Looking for code for view e498e7ab-d943-4046-9f5e-3f7ec8e64136, found: no
+[2025-10-04T16:16:51.643Z] [writeViews] Processing view: a0a1a9d7-76cb-4c90-a402-a192e14ad638, type: iconbar, name: Header Icon Bar (Logged In)
+[2025-10-04T16:16:51.643Z] [writeViews] Looking for code for view a0a1a9d7-76cb-4c90-a402-a192e14ad638, found: no
+[2025-10-04T16:16:51.644Z] [writeViews] Processing view: cfcc9d7a-45e2-4fc5-9bce-bb8d6a917f5d, type: menu, name: Header (Admin)
+[2025-10-04T16:16:51.644Z] [writeViews] Looking for code for view cfcc9d7a-45e2-4fc5-9bce-bb8d6a917f5d, found: no
+[2025-10-04T16:16:51.645Z] [writeViews] Processing view: 0c3b9d0a-1225-46e0-99aa-be58d4cad7e1, type: iconbar, name: Header Icon Bar (Admin)
+[2025-10-04T16:16:51.645Z] [writeViews] Looking for code for view 0c3b9d0a-1225-46e0-99aa-be58d4cad7e1, found: no
+[2025-10-04T16:16:51.645Z] [writeViews] Processing view: a788e1e9-8583-409f-9ab2-ff8e4a849be1, type: menu, name: Footer Menu
+[2025-10-04T16:16:51.645Z] [writeViews] Looking for code for view a788e1e9-8583-409f-9ab2-ff8e4a849be1, found: no
+[2025-10-04T16:16:51.646Z] [writeViews] Processing view: 299bd193-c231-4cfb-bf80-83d221eedd37, type: text, name: Copyright
+[2025-10-04T16:16:51.646Z] [writeViews] Looking for code for view 299bd193-c231-4cfb-bf80-83d221eedd37, found: no
+[2025-10-04T16:16:51.646Z] [writeViews] Processing view: b71e51c3-1ab8-4cb9-a2f6-04d85db1ba52, type: generatedintegration, name: Analytics Tracking
+[2025-10-04T16:16:51.647Z] [writeViews] Looking for code for view b71e51c3-1ab8-4cb9-a2f6-04d85db1ba52, found: no
+[2025-10-04T16:16:51.647Z] [writeViews] Processing view: 3c8e6b0b-d9eb-4f54-952b-866f90454ed5, type: loggedinmenu, name: DashboardMenuView
+[2025-10-04T16:16:51.647Z] [writeViews] Looking for code for view 3c8e6b0b-d9eb-4f54-952b-866f90454ed5, found: no
+[2025-10-04T16:16:51.648Z] [writeViews] Processing view: 36712372-2ba2-4482-b8f0-879a5d7ab3a7, type: useradmin, name: UserAdminView
+[2025-10-04T16:16:51.648Z] [writeViews] Looking for code for view 36712372-2ba2-4482-b8f0-879a5d7ab3a7, found: no
+[2025-10-04T16:16:51.648Z] [writeViews] Processing view: 39a3d0c3-e4c1-4337-aea2-22554560975b, type: adminmenu, name: AdminMenuView
+[2025-10-04T16:16:51.648Z] [writeViews] Looking for code for view 39a3d0c3-e4c1-4337-aea2-22554560975b, found: no
+[2025-10-04T16:16:51.649Z] [writeViews] Processing view: home_featured, type: component, name: Featured Storms
+[2025-10-04T16:16:51.649Z] [writeViews] Looking for code for view home_featured, found: yes
+[2025-10-04T16:16:51.841Z] [writeViews] Processing view: home_map, type: component, name: Active Storms Map
+[2025-10-04T16:16:51.842Z] [writeViews] Looking for code for view home_map, found: yes
+[2025-10-04T16:16:51.857Z] [writeViews] Processing view: reports_browser, type: component, name: Reports Browser
+[2025-10-04T16:16:51.858Z] [writeViews] Looking for code for view reports_browser, found: yes
+[2025-10-04T16:16:51.880Z] [writeViews] Processing view: report_content, type: component, name: Report Details
+[2025-10-04T16:16:51.880Z] [writeViews] Looking for code for view report_content, found: yes
+[2025-10-04T16:16:51.890Z] [writeViews] Processing view: live_map, type: generatedcomponent, name: Live Tracking Map
+[2025-10-04T16:16:51.890Z] [writeViews] Looking for code for view live_map, found: no
+[2025-10-04T16:16:51.890Z] [writeViews] Processing view: teams_directory, type: component, name: Teams Directory
+[2025-10-04T16:16:51.891Z] [writeViews] Looking for code for view teams_directory, found: yes
+[2025-10-04T16:16:51.900Z] [writeViews] Processing view: profile_content, type: component, name: Profile Information
+[2025-10-04T16:16:51.901Z] [writeViews] Looking for code for view profile_content, found: yes
+[2025-10-04T16:16:51.907Z] [writeViews] Processing view: weather_dashboard, type: component, name: Weather Dashboard
+[2025-10-04T16:16:51.907Z] [writeViews] Looking for code for view weather_dashboard, found: yes
+[2025-10-04T16:16:51.924Z] [writeViews] Processing view: models_viewer, type: generatedcomponent, name: Forecast Models
+[2025-10-04T16:16:51.924Z] [writeViews] Looking for code for view models_viewer, found: no
+[2025-10-04T16:16:51.925Z] [writeViews] Processing view: equipment_content, type: text, name: Equipment Guides
+[2025-10-04T16:16:51.926Z] [writeViews] Looking for code for view equipment_content, found: no
+[2025-10-04T16:16:51.927Z] [writeViews] Processing view: safety_content, type: text, name: Safety Guidelines
+[2025-10-04T16:16:51.927Z] [writeViews] Looking for code for view safety_content, found: no
+[2025-10-04T16:16:51.928Z] [writeViews] Processing view: education_hub, type: component, name: Learning Resources
+[2025-10-04T16:16:51.928Z] [writeViews] Looking for code for view education_hub, found: yes
+[2025-10-04T16:16:51.946Z] [writeViews] Processing view: forum_interface, type: generatedcomponent, name: Forum Discussions
+[2025-10-04T16:16:51.946Z] [writeViews] Looking for code for view forum_interface, found: no
+[2025-10-04T16:16:51.947Z] [writeViews] Processing view: thread_content, type: generatedcomponent, name: Thread Discussion
+[2025-10-04T16:16:51.948Z] [writeViews] Looking for code for view thread_content, found: no
+[2025-10-04T16:16:51.948Z] [writeViews] Processing view: chase_log, type: generatedcomponent, name: Chase Log
+[2025-10-04T16:16:51.949Z] [writeViews] Looking for code for view chase_log, found: no
+[2025-10-04T16:16:51.949Z] [writeViews] Processing view: report_form, type: generatedcomponent, name: Report Form
+[2025-10-04T16:16:51.950Z] [writeViews] Looking for code for view report_form, found: no
+[2025-10-04T16:16:51.950Z] [writeViews] Processing view: alerts_center, type: generatedcomponent, name: Alerts Center
+[2025-10-04T16:16:51.951Z] [writeViews] Looking for code for view alerts_center, found: no
+[2025-10-04T16:16:51.951Z] [writeViews] Processing view: about_content, type: text, name: About Us
+[2025-10-04T16:16:51.952Z] [writeViews] Looking for code for view about_content, found: no
+[2025-10-04T16:16:51.953Z] [writeViews] Processing view: contact_form, type: component, name: Contact Form
+[2025-10-04T16:16:51.953Z] [writeViews] Looking for code for view contact_form, found: yes
+[2025-10-04T16:16:51.959Z] [writeViews] Processing view: admin_reports_table, type: generatedcomponent, name: Reports Management
+[2025-10-04T16:16:51.959Z] [writeViews] Looking for code for view admin_reports_table, found: no
+[2025-10-04T16:16:51.960Z] [writeViews] Processing view: admin_users_table, type: generatedcomponent, name: User Management
+[2025-10-04T16:16:51.961Z] [writeViews] Looking for code for view admin_users_table, found: no
+[2025-10-04T16:16:51.961Z] [writeViews] Processing view: admin_alerts_panel, type: generatedcomponent, name: Alerts Management
+[2025-10-04T16:16:51.962Z] [writeViews] Looking for code for view admin_alerts_panel, found: no
+[2025-10-04T16:16:51.962Z] [writeViews] Processing view: admin_content_table, type: generatedcomponent, name: Content Management
+[2025-10-04T16:16:51.963Z] [writeViews] Looking for code for view admin_content_table, found: no
+[2025-10-04T16:16:51.963Z] [writeViews] Processing view: c5c13f63-4f1c-4d29-84bd-b7c9de6028bc, type: text, name: Terms of Service
+[2025-10-04T16:16:51.964Z] [writeViews] Looking for code for view c5c13f63-4f1c-4d29-84bd-b7c9de6028bc, found: no
+[2025-10-04T16:16:51.965Z] [writeViews] Processing view: c47c0b4b-7099-426f-a9d4-962b6875378b, type: text, name: Privacy Policy
+[2025-10-04T16:16:51.965Z] [writeViews] Looking for code for view c47c0b4b-7099-426f-a9d4-962b6875378b, found: no
+[2025-10-04T16:16:51.966Z] [writeViews] Processing view: 435cc400-0b83-4530-af67-fa20f7fe5589, type: slideshow, name: Hero Banner
+[2025-10-04T16:16:51.967Z] [writeViews] Looking for code for view 435cc400-0b83-4530-af67-fa20f7fe5589, found: no
+[2025-10-04T16:16:51.968Z] [writeViews] Processing view: 22bcb3c5-8607-42eb-8367-3b0e3b32feb3, type: login, name: LoginView
+[2025-10-04T16:16:51.968Z] [writeViews] Looking for code for view 22bcb3c5-8607-42eb-8367-3b0e3b32feb3, found: no
+[2025-10-04T16:16:51.989Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)

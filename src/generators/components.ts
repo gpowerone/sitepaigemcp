@@ -19,6 +19,7 @@ const COMPONENT_FILES = [
   "menu.tsx",
   "profile.tsx",
   "SecureContent.tsx",
+  "slideshow.tsx",
   "upgrade.tsx",
   "wrapped_menu.tsx"
 ];
