@@ -27,18 +27,6 @@ export function writeFavicon(targetDir, favicon) {
         fs.writeFileSync(faviconPath, buffer);
     }
 }
-export function writeLogo(targetDir, logo) {
-    const publicDir = path.join(targetDir, 'public');
-    // Ensure public directory exists
-    if (!fs.existsSync(publicDir)) {
-        fs.mkdirSync(publicDir, { recursive: true });
-    }
-    const logoPath = path.join(publicDir, 'logo.png');
-    // CRITICAL FIX: Remove data:image prefix if present before converting to buffer
-    const cleanedLogo = logo.replace(/data:image\/[^;]+;base64,/g, '');
-    const buffer = Buffer.from(cleanedLogo, 'base64');
-    fs.writeFileSync(logoPath, buffer);
-}
 // Function to convert Tailwind font size classes to CSS values
 function getTailwindFontSizeValue(twClass) {
     const fontSizeMap = {
@@ -71,6 +59,18 @@ function getButtonBorderRadius(roundedness) {
         default: return '4px';
     }
 }
+function getInputBorderRadius(roundedness) {
+    switch (roundedness) {
+        case 'rounded-full': return '9999px';
+        case 'rounded-lg': return '8px';
+        case 'rounded-md': return '6px';
+        case 'rounded-xl': return '12px';
+        case 'rounded-2xl': return '16px';
+        case 'rounded': return '4px';
+        case 'rounded-none': return '0px';
+        default: return '6px';
+    }
+}
 export async function updateGlobalCSS(targetDir, blueprint, viewStyles = []) {
     const design = getDesign(blueprint);
     // Convert Tailwind font sizes to CSS values
@@ -78,6 +78,8 @@ export async function updateGlobalCSS(targetDir, blueprint, viewStyles = []) {
     const textFontSizeValue = getTailwindFontSizeValue(design.textFontSize || 'text-base');
     // Convert button roundedness to CSS border-radius
     const buttonBorderRadius = getButtonBorderRadius(design.buttonRoundedness || 'rounded');
+    // Convert input roundedness to CSS border-radius
+    const inputBorderRadius = getInputBorderRadius(design.inputBorderRadius || 'rounded-md');
     // Ensure public directory exists
     const publicDir = path.join(targetDir, 'public');
     if (!fs.existsSync(publicDir)) {
@@ -144,6 +146,37 @@ button {
   color: ${design.accentTextColor || 'white'};
   font-family: ${design.titleFont || 'Roboto'}, sans-serif;
   border-radius: ${buttonBorderRadius};
+}
+
+input, select, textarea {
+  background-color: ${design.inputBackgroundColor || '#ffffff'};
+  color: ${design.inputTextColor || '#333333'};
+  border-radius: ${inputBorderRadius};
+  border: 1px solid #e5e7eb;
+  font-family: ${design.textFont || 'Roboto'}, sans-serif;
+  font-size: ${textFontSizeValue};
+  padding: 0.5rem 0.75rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: ${design.accentColor || '#516ab8'};
+  box-shadow: 0 0 0 3px ${design.accentColor || '#516ab8'}20;
+}
+
+input::placeholder, textarea::placeholder {
+  color: ${design.inputTextColor || '#333333'}80;
+  opacity: 1;
+}
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.5rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
 }
 
 ${viewStylesContent}

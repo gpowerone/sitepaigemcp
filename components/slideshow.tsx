@@ -93,6 +93,12 @@ export default function Slideshow({
   const currentImageId = images[currentIndex];
   const hasError = imageLoadErrors[currentImageId];
 
+  // Helper function to get image source URL
+  const getImageSrc = (imageId: string) => {
+    // Default to .jpg since all current images are JPG
+    return `/images/${imageId}.jpg`;
+  };
+
   return (
     <div 
       className="relative w-full overflow-hidden rounded-lg bg-black"
@@ -120,32 +126,11 @@ export default function Slideshow({
                 </div>
               ) : (
                 <img
-                  src={`/images/${imageId}.png`}
+                  src={getImageSrc(imageId)}
                   alt={`Slide ${index + 1}`}
                   className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Try other common extensions if .png fails
-                    const img = e.target as HTMLImageElement;
-                    const extensions = ['.jpg', '.jpeg', '.webp', '.gif'];
-                    const currentSrc = img.src;
-                    
-                    // Extract base URL without extension
-                    const baseUrl = currentSrc.replace(/\.(png|jpg|jpeg|webp|gif)$/, '');
-                    
-                    // Find next extension to try
-                    let nextExt = '';
-                    for (let i = 0; i < extensions.length; i++) {
-                      if (!currentSrc.includes(extensions[i])) {
-                        nextExt = extensions[i];
-                        break;
-                      }
-                    }
-                    
-                    if (nextExt) {
-                      img.src = `${baseUrl}${nextExt}`;
-                    } else {
-                      setImageLoadErrors(prev => ({ ...prev, [imageId]: true }));
-                    }
+                  onError={() => {
+                    setImageLoadErrors(prev => ({ ...prev, [imageId]: true }));
                   }}
                 />
               )}
@@ -159,32 +144,11 @@ export default function Slideshow({
             </div>
           ) : (
             <img
-              src={`/images/${currentImageId}.png`}
+              src={getImageSrc(currentImageId)}
               alt={`Slide ${currentIndex + 1}`}
               className="w-full h-full object-cover"
-              onError={(e) => {
-                // Try other common extensions if .png fails
-                const img = e.target as HTMLImageElement;
-                const extensions = ['.jpg', '.jpeg', '.webp', '.gif'];
-                const currentSrc = img.src;
-                
-                // Extract base URL without extension
-                const baseUrl = currentSrc.replace(/\.(png|jpg|jpeg|webp|gif)$/, '');
-                
-                // Find next extension to try
-                let nextExt = '';
-                for (let i = 0; i < extensions.length; i++) {
-                  if (!currentSrc.includes(extensions[i])) {
-                    nextExt = extensions[i];
-                    break;
-                  }
-                }
-                
-                if (nextExt) {
-                  img.src = `${baseUrl}${nextExt}`;
-                } else {
-                  setImageLoadErrors(prev => ({ ...prev, [currentImageId]: true }));
-                }
+              onError={() => {
+                setImageLoadErrors(prev => ({ ...prev, [currentImageId]: true }));
               }}
             />
           )

@@ -91,6 +91,10 @@ export interface Design {
     menuFont: string;
     menuFontSize: string;
     authenticationType?: string;
+    // Input and select styling
+    inputBackgroundColor: string;
+    inputBorderRadius: string;
+    inputTextColor: string;
 }
 
 export interface ErDiagram {
@@ -212,7 +216,13 @@ export const viewTypes = [
   { value: 'iconbar', label: 'Icon Bar', hasauthoption:null, sectiontype: 'commoncontent' },
   { value: 'useradmin', label: 'User Admin', hasauthoption:false, sectiontype: 'internal' },
   { value: 'loggedinmenu', label: 'Logged In Menu', hasauthoption:false, sectiontype: 'internal' },
-  { value: 'adminmenu', label: 'Admin Menu', hasauthoption:false, sectiontype: 'internal' }
+  { value: 'adminmenu', label: 'Admin Menu', hasauthoption:false, sectiontype: 'internal' },
+  { value: 'slideshow', label: 'Slideshow', disabled: false, sectiontype: 'commoncontent' },
+  { value: 'form', label: 'Form', disabled: false, sectiontype: 'commoncontent' },
+  { value: 'socialbar', label: 'Social Bar', disabled: false, sectiontype: 'commoncontent' },
+  { value: 'testimonial', label: 'Testimonial', disabled: false, sectiontype: 'commoncontent' },
+  { value: 'map', label: 'Map', disabled: false, sectiontype: 'commoncontent' },
+  { value: 'photogallery', label: 'Photo Gallery', disabled: false, sectiontype: 'commoncontent' }
 ];
 
 // Legacy interface - kept for migration compatibility
@@ -440,7 +450,11 @@ export function getDesign(blueprint: Blueprint): Design {
     websiteLanguage: 'English',
     buttonRoundedness: 'rounded',
     titleFontSize: 'text-3xl',
-    textFontSize: 'text-base'
+    textFontSize: 'text-base',
+    // Input and select styling defaults
+    inputBackgroundColor: '#ffffff',
+    inputBorderRadius: 'rounded-md',
+    inputTextColor: '#333333'
   };
 
   if (!blueprint.design) {
@@ -476,7 +490,11 @@ export function getDesign(blueprint: Blueprint): Design {
     titleFontSize: blueprint.design.titleFontSize ?? defaultDesign.titleFontSize,
     textFontSize: blueprint.design.textFontSize ?? defaultDesign.textFontSize,
     menuFont: blueprint.design.menuFont ?? defaultDesign.menuFont,
-    menuFontSize: blueprint.design.menuFontSize ?? defaultDesign.menuFontSize
+    menuFontSize: blueprint.design.menuFontSize ?? defaultDesign.menuFontSize,
+    // Input and select styling
+    inputBackgroundColor: blueprint.design.inputBackgroundColor ?? defaultDesign.inputBackgroundColor,
+    inputBorderRadius: blueprint.design.inputBorderRadius ?? defaultDesign.inputBorderRadius,
+    inputTextColor: blueprint.design.inputTextColor ?? defaultDesign.inputTextColor
   };
 }
 

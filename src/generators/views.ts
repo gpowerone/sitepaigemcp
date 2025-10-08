@@ -422,7 +422,7 @@ export default function ${comp}(){
   );
 }`;
     } else if (type === "logo") {
-      // Logo images are now saved directly as logo.png/logo.jpg by the image processor
+      // Logo images are now saved directly as logo.png
       const logoPath = v.background_image || v.custom_view_description || "";
       let logoFileName = "";
       const altText = v.alttext || 'Logo';
@@ -565,8 +565,8 @@ export default function ${comp}() {
             disabled={!item.pageId}
             className="!bg-transparent flex-shrink-0 flex items-center justify-center rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             style={{
-              height: '40px',
-              width: '40px',
+              height: '50px',
+              width: '50px',
               color: '${blueprint.design?.textColor || '#666'}'
             }}
           >
@@ -749,6 +749,99 @@ export default function ${comp}() {
       slideTime={${slideshowSettings.slideTime}}
       animationType="${slideshowSettings.animationType}"
       textColor="${textColor}"
+    />
+  );
+}`;
+    } else if (type === "form") {
+      // Import the Form component
+      const customViewDescription = v.custom_view_description || '{}';
+      const name = v.name || 'Form';
+      
+      code = `import React from 'react';
+import RForm from '../components/form';
+
+export default function ${comp}() {
+  const design = ${JSON.stringify(blueprint.design || {})};
+  
+  return (
+    <RForm 
+      name="${name}"
+      custom_view_description={${JSON.stringify(customViewDescription)}}
+      design={design}
+    />
+  );
+}`;
+    } else if (type === "socialbar") {
+      // Import the SocialBar component
+      const textColor = blueprint.design?.textColor || '#000000';
+      const accentColor = blueprint.design?.accentColor || '#516ab8';
+      const backgroundColor = blueprint.design?.backgroundColor || '#ffffff';
+      
+      code = `import React from 'react';
+import RSocialBar from '../components/socialbar';
+
+export default function ${comp}() {
+  const viewData = ${JSON.stringify(v)};
+  
+  return (
+    <RSocialBar
+      viewData={viewData}
+      views={[]}
+      projectId=""
+      textColor="${textColor}"
+      accentColor="${accentColor}"
+      backgroundColor="${backgroundColor}"
+    />
+  );
+}`;
+    } else if (type === "testimonial") {
+      // Import the Testimonial component
+      const customViewDescription = v.custom_view_description || '{}';
+      const name = v.name || 'Testimonials';
+      
+      code = `import React from 'react';
+import RTestimonial from '../components/testimonial';
+
+export default function ${comp}() {
+  const design = ${JSON.stringify(blueprint.design || {})};
+  
+  return (
+    <RTestimonial 
+      name="${name}"
+      custom_view_description={${JSON.stringify(customViewDescription)}}
+      design={design}
+    />
+  );
+}`;
+    } else if (type === "map") {
+      // Import the Map component
+      const location = v.custom_view_description || '';
+      const name = v.name || 'Map';
+      
+      code = `import React from 'react';
+import Map from '../components/map';
+
+export default function ${comp}() {
+  return (
+    <Map 
+      location="${location}"
+      name="${name}"
+    />
+  );
+}`;
+    } else if (type === "photogallery") {
+      // Import the PhotoGallery component
+      const config = v.custom_view_description || '{}';
+      const name = v.name || 'Photo Gallery';
+      
+      code = `import React from 'react';
+import RPhotoGallery from '../components/photogallery';
+
+export default function ${comp}() {
+  return (
+    <RPhotoGallery 
+      config={${JSON.stringify(config)}}
+      name="${name}"
     />
   );
 }`;

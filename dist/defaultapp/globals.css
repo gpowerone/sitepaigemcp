@@ -26,69 +26,6 @@ h1, h2 {
   font-weight: 600;
 }
 
-/* Enhanced input and textarea styles */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-input[type="url"],
-input[type="tel"],
-input[type="search"],
-select {
-  @apply px-4 py-3 border-2 border-gray-200 rounded-lg transition-all duration-200 ease-in-out;
-  @apply focus:border-blue-500 focus:ring-4 focus:ring-blue-100 focus:outline-none;
-  @apply hover:border-gray-300;
-  @apply bg-white text-gray-800 placeholder-gray-400;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-/* Enhanced focus states with better visual feedback */
-input[type="text"]:focus,
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="number"]:focus,
-input[type="url"]:focus,
-input[type="tel"]:focus,
-input[type="search"]:focus,
-select:focus {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
-}
-
-/* Disabled state styling */
-input:disabled,
-textarea:disabled,
-select:disabled {
-  @apply bg-gray-50 border-gray-200 text-gray-500 cursor-not-allowed;
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-/* Error state styling */
-input.error,
-textarea.error,
-select.error {
-  @apply border-red-400 focus:border-red-500 focus:ring-red-100;
-}
-
-/* Textarea specific enhancements */
-textarea {
-  border-radius: 12px;
-  transition: all 0.3s ease;
-}
-
-
-/* Select dropdown styling */
-select {
-  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6,9 12,15 18,9'%3e%3c/polyline%3e%3c/svg%3e");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 40px;
-  appearance: none;
-}
-
 .rtext-content p {
   margin: 10px 0 !important;
 }

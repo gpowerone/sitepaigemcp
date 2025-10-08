@@ -155,11 +155,13 @@ export async function downloadImagesToPublic(targetDir: string, imageInfoMap: Ma
       let filePath: string;
       
       if (info.isLogo) {
-        // Save logo as "logo.png" in the public root directory
-        fileName = `logo${ext}`;
+        console.warn("isLogo");
+        console.warn(info.isLogo);
+        // Always save logo as "logo.png" in the public root directory
+        fileName = `logo.png`;
         const abs = path.join(publicRoot, fileName);
         await fsp.writeFile(abs, buf);
-        filePath = `/${fileName}`;
+        filePath = `/logo.png`;
       } else if (info.isFavicon) {
         // Save favicon as "favicon.ico" in the public root directory
         fileName = `favicon.ico`;
