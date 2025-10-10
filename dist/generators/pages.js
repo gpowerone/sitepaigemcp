@@ -58,17 +58,8 @@ export async function writePages(targetDir, blueprint, viewMap) {
                 // Extract alignment from the system view to add appropriate classes to inner wrapper
                 const verticalAlign = (sys?.verticalAlign || '').toLowerCase();
                 const align = (sys?.align || '').toLowerCase();
-                // Add flex classes to inner wrapper to ensure proper content alignment
-                const innerWrapperClasses = [
-                    "w-full",
-                    "h-full",
-                    "flex",
-                    "flex-col"
-                ].join(" ");
                 rowCode += `\n                        <div className="${allClasses}"${styleAttrs}>`;
-                rowCode += `\n                          <div className="${innerWrapperClasses}">`;
                 rowCode += `\n                            <${info.componentName}${componentProps} />`;
-                rowCode += `\n                          </div>`;
                 rowCode += `\n                        </div>`;
             }
             rowCode += `\n                    </div>`;

@@ -550,6 +550,53 @@ server.tool(
               writeApis: shouldWriteBackend // Only write backend stuff if it exists
             });
             
+            // Fetch and write library files
+            if (job && jobId) {
+              jobs.appendLog(jobId, `Fetching library files for project: ${actualProjectId}`);
+            }
+            
+            try {
+              const { fetch_all_library_files, write_library_files_and_update_blueprint } = await import("./sitepaige.js");
+              const libraryFiles = await fetch_all_library_files(actualProjectId, {
+                onLog: job && jobId ? (msg: string) => jobs.appendLog(jobId, msg) : undefined
+              });
+              
+              if (job && jobId) {
+                jobs.appendLog(jobId, `Found library files - Images: ${libraryFiles.images.length}, Files: ${libraryFiles.files.length}, Videos: ${libraryFiles.videos.length}`);
+              }
+              
+              // Write library files and update blueprint in one step
+              if (project.blueprint) {
+                await write_library_files_and_update_blueprint(actualTargetDir, libraryFiles, project.blueprint, {
+                  onLog: job && jobId ? (msg: string) => jobs.appendLog(jobId, msg) : undefined
+                });
+                
+                if (job && jobId) {
+                  jobs.appendLog(jobId, `Successfully wrote library files and updated views`);
+                }
+                
+                // Re-write views with updated blueprint
+                const { writeViews, getViewStyles } = await import("./generators/views.js");
+                const { updateGlobalCSS } = await import("./generators/design.js");
+                const { processBlueprintImages } = await import("./generators/images.js");
+                
+                const bpWithImages = await processBlueprintImages(actualTargetDir, project.blueprint as any);
+                const viewMap = await writeViews(actualTargetDir, bpWithImages, project.code as any, (project as any).AuthProviders);
+                const viewStyles = getViewStyles();
+                await updateGlobalCSS(actualTargetDir, bpWithImages, viewStyles);
+                
+                if (job && jobId) {
+                  jobs.appendLog(jobId, `Views updated with library files`);
+                }
+              }
+            } catch (libError) {
+              const errorMsg = `Warning: Failed to fetch/write library files: ${libError}`;
+              if (job && jobId) {
+                jobs.appendLog(jobId, errorMsg);
+              }
+              await debugLog(errorMsg);
+            }
+            
             // Update job status if we have a job
             if (job && jobId) {
               jobs.setResult(jobId, { 

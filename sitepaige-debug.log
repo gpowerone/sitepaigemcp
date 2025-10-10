@@ -5833,3 +5833,624 @@
 [2025-10-08T14:59:50.510Z] [writeViews] Processing view: 7d350a50-35c3-42c2-8683-99d1acd67c9d, type: slideshow, name: Hero Slideshow
 [2025-10-08T14:59:50.510Z] [writeViews] Looking for code for view 7d350a50-35c3-42c2-8683-99d1acd67c9d, found: no
 [2025-10-08T14:59:50.523Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T15:37:54.672Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-10T15:37:54.674Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-10T15:37:54.674Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":0}
+[2025-10-10T15:37:54.720Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-10T15:37:55.448Z] [writeViews] projectCode: exists
+[2025-10-10T15:37:55.449Z] [writeViews] projectCode.views count: 0
+[2025-10-10T15:37:55.449Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T15:37:55.449Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T15:37:55.450Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T15:37:55.450Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T15:37:55.451Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T15:37:55.451Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T15:37:55.451Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T15:37:55.451Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T15:37:55.452Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T15:37:55.452Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T15:37:55.453Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T15:37:55.453Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T15:37:55.453Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T15:37:55.454Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T15:37:55.454Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T15:37:55.454Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T15:37:55.455Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T15:37:55.455Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T15:37:55.455Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T15:37:55.455Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T15:37:55.456Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T15:37:55.456Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T15:37:55.456Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T15:37:55.456Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T15:37:55.457Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T15:37:55.457Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T15:37:55.457Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T15:37:55.458Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T15:37:55.458Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T15:37:55.458Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T15:37:55.459Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T15:37:55.459Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T15:37:55.460Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T15:37:55.460Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T15:37:55.461Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T15:37:55.461Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T15:37:55.461Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T15:37:55.461Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T15:37:55.462Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T15:37:55.462Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T15:37:55.463Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T15:37:55.463Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T15:37:55.463Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T15:37:55.463Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T15:37:55.464Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T15:37:55.464Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T15:37:55.465Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T15:37:55.465Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T15:37:55.465Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T15:37:55.465Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T15:37:55.466Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T15:37:55.466Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T15:37:55.467Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T15:37:55.467Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T15:37:55.467Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T15:37:55.467Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T15:37:55.468Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T15:37:55.468Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T15:37:55.468Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T15:37:55.468Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T15:37:55.469Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T15:37:55.469Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T15:37:55.469Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T15:37:55.470Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T15:37:55.470Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T15:37:55.470Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T15:37:55.471Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T15:37:55.471Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T15:37:55.471Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T15:37:55.472Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no
+[2025-10-10T15:37:55.479Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T15:47:01.084Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-10T15:47:01.086Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-10T15:47:01.086Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":0}
+[2025-10-10T15:47:01.127Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-10T15:47:01.726Z] [writeViews] projectCode: exists
+[2025-10-10T15:47:01.727Z] [writeViews] projectCode.views count: 0
+[2025-10-10T15:47:01.727Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T15:47:01.728Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T15:47:01.728Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T15:47:01.728Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T15:47:01.729Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T15:47:01.729Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T15:47:01.729Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T15:47:01.729Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T15:47:01.730Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T15:47:01.730Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T15:47:01.731Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T15:47:01.731Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T15:47:01.731Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T15:47:01.731Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T15:47:01.732Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T15:47:01.732Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T15:47:01.732Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T15:47:01.733Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T15:47:01.733Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T15:47:01.733Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T15:47:01.733Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T15:47:01.734Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T15:47:01.734Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T15:47:01.734Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T15:47:01.735Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T15:47:01.735Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T15:47:01.735Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T15:47:01.735Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T15:47:01.736Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T15:47:01.736Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T15:47:01.737Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T15:47:01.737Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T15:47:01.737Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T15:47:01.738Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T15:47:01.738Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T15:47:01.739Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T15:47:01.739Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T15:47:01.739Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T15:47:01.740Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T15:47:01.740Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T15:47:01.741Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T15:47:01.741Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T15:47:01.741Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T15:47:01.742Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T15:47:01.742Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T15:47:01.742Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T15:47:01.743Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T15:47:01.743Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T15:47:01.743Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T15:47:01.744Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T15:47:01.744Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T15:47:01.745Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T15:47:01.745Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T15:47:01.746Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T15:47:01.746Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T15:47:01.747Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T15:47:01.747Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T15:47:01.747Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T15:47:01.748Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T15:47:01.748Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T15:47:01.749Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T15:47:01.749Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T15:47:01.750Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T15:47:01.750Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T15:47:01.751Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T15:47:01.751Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T15:47:01.751Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T15:47:01.752Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T15:47:01.752Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T15:47:01.753Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no
+[2025-10-10T15:47:01.763Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T16:03:43.149Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-10T16:03:43.150Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-10T16:03:43.151Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":0}
+[2025-10-10T16:03:43.198Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-10T16:03:43.771Z] [writeViews] projectCode: exists
+[2025-10-10T16:03:43.771Z] [writeViews] projectCode.views count: 0
+[2025-10-10T16:03:43.772Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T16:03:43.772Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T16:03:43.772Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T16:03:43.773Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T16:03:43.773Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T16:03:43.773Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T16:03:43.774Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T16:03:43.774Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T16:03:43.775Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T16:03:43.775Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T16:03:43.776Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T16:03:43.776Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T16:03:43.776Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T16:03:43.776Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T16:03:43.777Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T16:03:43.777Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T16:03:43.777Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T16:03:43.777Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T16:03:43.778Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T16:03:43.778Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T16:03:43.778Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T16:03:43.779Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T16:03:43.779Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T16:03:43.779Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T16:03:43.779Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T16:03:43.780Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T16:03:43.780Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T16:03:43.780Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T16:03:43.781Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T16:03:43.781Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T16:03:43.782Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T16:03:43.782Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T16:03:43.782Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T16:03:43.783Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T16:03:43.783Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T16:03:43.783Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T16:03:43.784Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T16:03:43.784Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T16:03:43.784Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T16:03:43.785Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T16:03:43.785Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T16:03:43.785Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T16:03:43.786Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T16:03:43.786Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T16:03:43.787Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T16:03:43.787Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T16:03:43.787Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T16:03:43.787Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T16:03:43.788Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T16:03:43.788Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T16:03:43.788Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T16:03:43.789Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T16:03:43.789Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T16:03:43.789Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T16:03:43.789Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T16:03:43.790Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T16:03:43.790Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T16:03:43.790Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T16:03:43.791Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T16:03:43.791Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T16:03:43.791Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T16:03:43.791Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T16:03:43.792Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T16:03:43.793Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T16:03:43.793Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T16:03:43.793Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T16:03:43.794Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T16:03:43.794Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T16:03:43.795Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T16:03:43.795Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no
+[2025-10-10T16:03:43.803Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T16:38:14.004Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-10T16:38:14.006Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-10T16:38:14.007Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":0}
+[2025-10-10T16:38:14.049Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-10T16:38:14.729Z] [writeViews] projectCode: exists
+[2025-10-10T16:38:14.730Z] [writeViews] projectCode.views count: 0
+[2025-10-10T16:38:14.731Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T16:38:14.731Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T16:38:14.732Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T16:38:14.732Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T16:38:14.733Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T16:38:14.733Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T16:38:14.733Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T16:38:14.734Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T16:38:14.734Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T16:38:14.734Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T16:38:14.735Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T16:38:14.735Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T16:38:14.736Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T16:38:14.736Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T16:38:14.736Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T16:38:14.736Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T16:38:14.737Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T16:38:14.737Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T16:38:14.738Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T16:38:14.738Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T16:38:14.739Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T16:38:14.739Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T16:38:14.739Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T16:38:14.739Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T16:38:14.740Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T16:38:14.740Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T16:38:14.741Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T16:38:14.741Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T16:38:14.742Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T16:38:14.742Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T16:38:14.742Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T16:38:14.743Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T16:38:14.743Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T16:38:14.744Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T16:38:14.744Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T16:38:14.744Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T16:38:14.745Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T16:38:14.745Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T16:38:14.746Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T16:38:14.746Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T16:38:14.747Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T16:38:14.747Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T16:38:14.748Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T16:38:14.748Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T16:38:14.749Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T16:38:14.749Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T16:38:14.750Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T16:38:14.750Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T16:38:14.750Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T16:38:14.751Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T16:38:14.751Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T16:38:14.752Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T16:38:14.752Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T16:38:14.752Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T16:38:14.753Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T16:38:14.753Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T16:38:14.754Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T16:38:14.755Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T16:38:14.755Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T16:38:14.755Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T16:38:14.756Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T16:38:14.756Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T16:38:14.757Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T16:38:14.758Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T16:38:14.758Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T16:38:14.759Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T16:38:14.759Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T16:38:14.760Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T16:38:14.761Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T16:38:14.761Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no
+[2025-10-10T16:38:14.770Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T16:52:31.062Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-10T16:52:31.063Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-10T16:52:31.064Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":0}
+[2025-10-10T16:52:31.107Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-10T16:52:31.698Z] [writeViews] projectCode: exists
+[2025-10-10T16:52:31.699Z] [writeViews] projectCode.views count: 0
+[2025-10-10T16:52:31.699Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T16:52:31.700Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T16:52:31.700Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T16:52:31.700Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T16:52:31.701Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T16:52:31.701Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T16:52:31.701Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T16:52:31.702Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T16:52:31.702Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T16:52:31.702Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T16:52:31.703Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T16:52:31.703Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T16:52:31.703Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T16:52:31.704Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T16:52:31.704Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T16:52:31.704Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T16:52:31.705Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T16:52:31.705Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T16:52:31.705Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T16:52:31.705Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T16:52:31.706Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T16:52:31.706Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T16:52:31.706Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T16:52:31.707Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T16:52:31.707Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T16:52:31.707Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T16:52:31.708Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T16:52:31.708Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T16:52:31.709Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T16:52:31.709Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T16:52:31.709Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T16:52:31.710Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T16:52:31.710Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T16:52:31.710Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T16:52:31.711Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T16:52:31.711Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T16:52:31.712Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T16:52:31.712Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T16:52:31.712Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T16:52:31.713Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T16:52:31.713Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T16:52:31.713Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T16:52:31.714Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T16:52:31.714Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T16:52:31.715Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T16:52:31.715Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T16:52:31.716Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T16:52:31.716Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T16:52:31.716Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T16:52:31.717Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T16:52:31.717Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T16:52:31.717Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T16:52:31.718Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T16:52:31.718Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T16:52:31.719Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T16:52:31.719Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T16:52:31.720Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T16:52:31.720Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T16:52:31.721Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T16:52:31.721Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T16:52:31.721Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T16:52:31.722Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T16:52:31.722Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T16:52:31.723Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T16:52:31.723Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T16:52:31.723Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T16:52:31.724Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T16:52:31.724Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T16:52:31.725Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T16:52:31.725Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no
+[2025-10-10T16:52:31.733Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T16:58:49.824Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-10T16:58:49.825Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-10T16:58:49.826Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":0}
+[2025-10-10T16:58:49.864Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-10T16:58:50.432Z] [writeViews] projectCode: exists
+[2025-10-10T16:58:50.432Z] [writeViews] projectCode.views count: 0
+[2025-10-10T16:58:50.433Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T16:58:50.433Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T16:58:50.434Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T16:58:50.435Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T16:58:50.435Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T16:58:50.436Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T16:58:50.436Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T16:58:50.437Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T16:58:50.437Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T16:58:50.438Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T16:58:50.438Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T16:58:50.438Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T16:58:50.439Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T16:58:50.439Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T16:58:50.439Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T16:58:50.439Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T16:58:50.440Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T16:58:50.440Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T16:58:50.440Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T16:58:50.441Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T16:58:50.441Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T16:58:50.441Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T16:58:50.442Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T16:58:50.442Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T16:58:50.442Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T16:58:50.442Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T16:58:50.443Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T16:58:50.443Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T16:58:50.444Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T16:58:50.444Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T16:58:50.444Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T16:58:50.444Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T16:58:50.444Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T16:58:50.445Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T16:58:50.445Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T16:58:50.445Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T16:58:50.446Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T16:58:50.446Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T16:58:50.446Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T16:58:50.447Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T16:58:50.447Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T16:58:50.448Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T16:58:50.448Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T16:58:50.448Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T16:58:50.449Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T16:58:50.449Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T16:58:50.449Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T16:58:50.449Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T16:58:50.450Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T16:58:50.450Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T16:58:50.451Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T16:58:50.451Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T16:58:50.452Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T16:58:50.452Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T16:58:50.452Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T16:58:50.453Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T16:58:50.453Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T16:58:50.453Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T16:58:50.454Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T16:58:50.454Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T16:58:50.455Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T16:58:50.455Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T16:58:50.456Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T16:58:50.456Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T16:58:50.457Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T16:58:50.457Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T16:58:50.457Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T16:58:50.458Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T16:58:50.459Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T16:58:50.459Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no
+[2025-10-10T16:58:50.468Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T16:58:52.146Z] [writeLibraryFile] Wrote file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/IMG_0573.png
+[2025-10-10T16:58:52.611Z] [writeLibraryFile] Wrote file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/backknock.png
+[2025-10-10T16:58:53.331Z] [writeLibraryFile] Wrote file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/selfie.png
+[2025-10-10T16:58:53.691Z] [writeLibraryFile] Wrote file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated: A professional videographer filming a wedding cere...
+[2025-10-10T16:58:54.627Z] [writeLibraryFile] Wrote file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/videos/sitepaige_intro.mp4
+[2025-10-10T17:19:06.606Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"sqlite","writeApis":false}
+[2025-10-10T17:19:06.608Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-10-10T17:19:06.608Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":0,"hasViews":true,"viewsCount":0}
+[2025-10-10T17:19:06.649Z] [writeProjectPagesOnly] Skipping models/migrations (writeApis=false, hasModels=false)
+[2025-10-10T17:19:07.237Z] [writeViews] projectCode: exists
+[2025-10-10T17:19:07.238Z] [writeViews] projectCode.views count: 0
+[2025-10-10T17:19:07.239Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T17:19:07.239Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T17:19:07.239Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T17:19:07.240Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T17:19:07.240Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T17:19:07.240Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T17:19:07.241Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T17:19:07.241Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T17:19:07.242Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T17:19:07.242Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T17:19:07.242Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T17:19:07.243Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T17:19:07.243Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T17:19:07.243Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T17:19:07.244Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T17:19:07.244Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T17:19:07.245Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T17:19:07.245Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T17:19:07.245Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T17:19:07.245Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T17:19:07.246Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T17:19:07.246Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T17:19:07.246Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T17:19:07.247Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T17:19:07.247Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T17:19:07.247Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T17:19:07.247Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T17:19:07.248Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T17:19:07.248Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T17:19:07.248Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T17:19:07.249Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T17:19:07.249Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T17:19:07.250Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T17:19:07.250Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T17:19:07.251Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T17:19:07.251Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T17:19:07.251Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T17:19:07.251Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T17:19:07.252Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T17:19:07.252Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T17:19:07.253Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T17:19:07.253Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T17:19:07.253Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T17:19:07.254Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T17:19:07.254Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T17:19:07.254Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T17:19:07.255Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T17:19:07.255Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T17:19:07.256Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T17:19:07.256Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T17:19:07.256Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T17:19:07.257Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T17:19:07.257Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T17:19:07.257Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T17:19:07.258Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T17:19:07.258Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T17:19:07.258Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T17:19:07.259Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T17:19:07.259Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T17:19:07.259Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T17:19:07.260Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T17:19:07.260Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T17:19:07.261Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T17:19:07.261Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T17:19:07.262Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T17:19:07.262Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T17:19:07.262Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T17:19:07.263Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T17:19:07.263Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T17:19:07.264Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no
+[2025-10-10T17:19:07.272Z] [writeProjectPagesOnly] Skipping APIs (writeApis=false, hasApis=false)
+[2025-10-10T17:19:09.072Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/IMG_0573.png
+[2025-10-10T17:19:09.526Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/backknock.png
+[2025-10-10T17:19:10.358Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/selfie.png
+[2025-10-10T17:19:10.756Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__A_professional_videographer_filming_a_wedding_cere...
+[2025-10-10T17:19:11.749Z] [writeLibraryFile] Wrote video file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/videos/sitepaige_intro.mp4
+[2025-10-10T17:19:12.148Z] [writeViews] projectCode: exists
+[2025-10-10T17:19:12.148Z] [writeViews] projectCode.views count: 0
+[2025-10-10T17:19:12.148Z] [writeViews] Processing view: b9b7c363-023c-47f3-ab5e-b29a691ea5fb, type: logo, name: Logo
+[2025-10-10T17:19:12.149Z] [writeViews] Looking for code for view b9b7c363-023c-47f3-ab5e-b29a691ea5fb, found: no
+[2025-10-10T17:19:12.150Z] [writeViews] Processing view: be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, type: menu, name: Header Menu
+[2025-10-10T17:19:12.150Z] [writeViews] Looking for code for view be40c2b0-e1e6-4011-8ae0-0ba2b0fbfc22, found: no
+[2025-10-10T17:19:12.151Z] [writeViews] Processing view: 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, type: text, name: Header Blank
+[2025-10-10T17:19:12.155Z] [writeViews] Looking for code for view 9b9cf8fd-5ba2-4fa1-b15e-a4a93ef3757a, found: no
+[2025-10-10T17:19:12.156Z] [writeViews] Processing view: 609e85a7-d464-4e96-9813-7783178cef0c, type: iconbar, name: Header Icon Bar
+[2025-10-10T17:19:12.156Z] [writeViews] Looking for code for view 609e85a7-d464-4e96-9813-7783178cef0c, found: no
+[2025-10-10T17:19:12.156Z] [writeViews] Processing view: 012b7f74-3b05-45a7-834e-5f975ab64d39, type: menu, name: Footer Menu
+[2025-10-10T17:19:12.157Z] [writeViews] Looking for code for view 012b7f74-3b05-45a7-834e-5f975ab64d39, found: no
+[2025-10-10T17:19:12.157Z] [writeViews] Processing view: 33cdc637-d9e9-44e9-88cb-652714c1503f, type: socialbar, name: Social Media Bar
+[2025-10-10T17:19:12.157Z] [writeViews] Looking for code for view 33cdc637-d9e9-44e9-88cb-652714c1503f, found: no
+[2025-10-10T17:19:12.157Z] [writeViews] Processing view: 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, type: text, name: Copyright
+[2025-10-10T17:19:12.158Z] [writeViews] Looking for code for view 9ab58750-ae00-4e85-93ab-ab0f5d9e75fb, found: no
+[2025-10-10T17:19:12.158Z] [writeViews] Processing view: 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, type: generatedintegration, name: Analytics
+[2025-10-10T17:19:12.158Z] [writeViews] Looking for code for view 7ae19be7-2b88-418e-bb84-496bc6aa9f3f, found: no
+[2025-10-10T17:19:12.159Z] [writeViews] Processing view: home-intro, type: text, name: Introduction
+[2025-10-10T17:19:12.159Z] [writeViews] Looking for code for view home-intro, found: no
+[2025-10-10T17:19:12.159Z] [writeViews] Processing view: home-featured-image, type: image, name: Featured Work
+[2025-10-10T17:19:12.159Z] [writeViews] Looking for code for view home-featured-image, found: no
+[2025-10-10T17:19:12.160Z] [writeViews] Processing view: portfolio-intro, type: text, name: Portfolio Introduction
+[2025-10-10T17:19:12.160Z] [writeViews] Looking for code for view portfolio-intro, found: no
+[2025-10-10T17:19:12.160Z] [writeViews] Processing view: portfolio-gallery, type: videogallery, name: Video Showcase
+[2025-10-10T17:19:12.161Z] [writeViews] Looking for code for view portfolio-gallery, found: no
+[2025-10-10T17:19:12.161Z] [writeViews] Processing view: services-intro, type: text, name: Services Overview
+[2025-10-10T17:19:12.161Z] [writeViews] Looking for code for view services-intro, found: no
+[2025-10-10T17:19:12.162Z] [writeViews] Processing view: service-wedding, type: text, name: Wedding Films
+[2025-10-10T17:19:12.162Z] [writeViews] Looking for code for view service-wedding, found: no
+[2025-10-10T17:19:12.163Z] [writeViews] Processing view: service-corporate, type: text, name: Corporate Videos
+[2025-10-10T17:19:12.163Z] [writeViews] Looking for code for view service-corporate, found: no
+[2025-10-10T17:19:12.163Z] [writeViews] Processing view: service-commercial, type: text, name: Commercials
+[2025-10-10T17:19:12.163Z] [writeViews] Looking for code for view service-commercial, found: no
+[2025-10-10T17:19:12.164Z] [writeViews] Processing view: about-story, type: text, name: My Story
+[2025-10-10T17:19:12.164Z] [writeViews] Looking for code for view about-story, found: no
+[2025-10-10T17:19:12.165Z] [writeViews] Processing view: about-approach, type: text, name: My Approach
+[2025-10-10T17:19:12.165Z] [writeViews] Looking for code for view about-approach, found: no
+[2025-10-10T17:19:12.165Z] [writeViews] Processing view: about-equipment, type: text, name: Equipment & Tools
+[2025-10-10T17:19:12.165Z] [writeViews] Looking for code for view about-equipment, found: no
+[2025-10-10T17:19:12.165Z] [writeViews] Processing view: testimonials-intro, type: text, name: Client Feedback
+[2025-10-10T17:19:12.166Z] [writeViews] Looking for code for view testimonials-intro, found: no
+[2025-10-10T17:19:12.166Z] [writeViews] Processing view: client-testimonials, type: testimonial, name: What Clients Say
+[2025-10-10T17:19:12.166Z] [writeViews] Looking for code for view client-testimonials, found: no
+[2025-10-10T17:19:12.167Z] [writeViews] Processing view: pricing-intro, type: text, name: Pricing Overview
+[2025-10-10T17:19:12.167Z] [writeViews] Looking for code for view pricing-intro, found: no
+[2025-10-10T17:19:12.167Z] [writeViews] Processing view: pricing-wedding, type: text, name: Wedding Packages
+[2025-10-10T17:19:12.168Z] [writeViews] Looking for code for view pricing-wedding, found: no
+[2025-10-10T17:19:12.168Z] [writeViews] Processing view: pricing-corporate, type: text, name: Corporate Rates
+[2025-10-10T17:19:12.169Z] [writeViews] Looking for code for view pricing-corporate, found: no
+[2025-10-10T17:19:12.169Z] [writeViews] Processing view: pricing-addons, type: text, name: Add-on Services
+[2025-10-10T17:19:12.170Z] [writeViews] Looking for code for view pricing-addons, found: no
+[2025-10-10T17:19:12.171Z] [writeViews] Processing view: contact-intro, type: text, name: Get in Touch
+[2025-10-10T17:19:12.171Z] [writeViews] Looking for code for view contact-intro, found: no
+[2025-10-10T17:19:12.171Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-10-10T17:19:12.172Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-10-10T17:19:12.172Z] [writeViews] Processing view: faq-intro, type: text, name: Common Questions
+[2025-10-10T17:19:12.173Z] [writeViews] Looking for code for view faq-intro, found: no
+[2025-10-10T17:19:12.173Z] [writeViews] Processing view: faq-booking, type: text, name: Booking & Availability
+[2025-10-10T17:19:12.174Z] [writeViews] Looking for code for view faq-booking, found: no
+[2025-10-10T17:19:12.175Z] [writeViews] Processing view: faq-deliverables, type: text, name: Deliverables & Timeline
+[2025-10-10T17:19:12.175Z] [writeViews] Looking for code for view faq-deliverables, found: no
+[2025-10-10T17:19:12.176Z] [writeViews] Processing view: faq-technical, type: text, name: Technical Questions
+[2025-10-10T17:19:12.176Z] [writeViews] Looking for code for view faq-technical, found: no
+[2025-10-10T17:19:12.177Z] [writeViews] Processing view: 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, type: text, name: Terms of Service
+[2025-10-10T17:19:12.177Z] [writeViews] Looking for code for view 0cd9e535-cbb2-43ed-acaf-38a1cc67d833, found: no
+[2025-10-10T17:19:12.178Z] [writeViews] Processing view: 8cfec6fc-02ea-4288-9eba-4823663276c5, type: text, name: Privacy Policy
+[2025-10-10T17:19:12.178Z] [writeViews] Looking for code for view 8cfec6fc-02ea-4288-9eba-4823663276c5, found: no
+[2025-10-10T17:19:12.179Z] [writeViews] Processing view: d2d83717-cb0f-4f50-a0a0-760b3acf2d72, type: cta, name: Hero Banner
+[2025-10-10T17:19:12.179Z] [writeViews] Looking for code for view d2d83717-cb0f-4f50-a0a0-760b3acf2d72, found: no
+[2025-10-10T17:19:12.180Z] [writeViews] Processing view: 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, type: photogallery, name: New View
+[2025-10-10T17:19:12.180Z] [writeViews] Looking for code for view 08cbe9f8-5bc8-4e21-b0bd-31a1a252bd03, found: no

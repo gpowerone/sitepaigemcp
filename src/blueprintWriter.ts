@@ -196,4 +196,44 @@ export async function writeProjectBackendOnly(project: ProjectInput, options: Wr
   await writeArchitectureDoc(targetDir, blueprint);
 }
 
+// Write a library file (image, document, video) to the public/library directory
+export async function writeLibraryFile(
+  targetDir: string,
+  fileType: 'image' | 'video' | 'file',
+  fileName: string,
+  base64Data: string
+): Promise<string> { // Returns the actual filename written
+  // Determine the library path based on file type
+  const libraryPaths = {
+    'image': 'library/images',
+    'video': 'library/videos', 
+    'file': 'library/files'
+  };
+  
+  const libraryPath = libraryPaths[fileType];
+  const fullPath = path.join(targetDir, 'public', libraryPath);
+  ensureDir(fullPath);
+  
+  // Ensure filename is safe and unique
+  const safeFileName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const filePath = path.join(fullPath, safeFileName);
+  
+  try {
+    // Remove data URL prefix if present
+    const base64Clean = base64Data.replace(/^data:[^;]+;base64,/, '');
+    
+    // Convert base64 to buffer and write file
+    const buffer = Buffer.from(base64Clean, 'base64');
+    await fsp.writeFile(filePath, buffer);
+    
+    await debugLog(`[writeLibraryFile] Wrote ${fileType} file: ${filePath}`);
+    
+    // Return the actual filename that was written
+    return safeFileName;
+  } catch (error) {
+    await debugLog(`[writeLibraryFile] Error writing ${fileType} file ${filePath}: ${error}`);
+    throw error;
+  }
+}
+
 

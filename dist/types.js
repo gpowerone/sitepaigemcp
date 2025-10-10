@@ -30,7 +30,8 @@ export const viewTypes = [
     { value: 'socialbar', label: 'Social Bar', disabled: false, sectiontype: 'commoncontent' },
     { value: 'testimonial', label: 'Testimonial', disabled: false, sectiontype: 'commoncontent' },
     { value: 'map', label: 'Map', disabled: false, sectiontype: 'commoncontent' },
-    { value: 'photogallery', label: 'Photo Gallery', disabled: false, sectiontype: 'commoncontent' }
+    { value: 'photogallery', label: 'Photo Gallery', disabled: false, sectiontype: 'commoncontent' },
+    { value: 'videogallery', label: 'Video Gallery', disabled: false, sectiontype: 'commoncontent' }
 ];
 export function getDesign(blueprint) {
     const defaultDesign = {

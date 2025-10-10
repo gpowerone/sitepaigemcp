@@ -4,14 +4,13 @@ import React from 'react';
 
 export interface PhotoGalleryData {
   photos: Array<{
-    id: string;
-    imageId: string;
-    label: string;
+    fileName: string; // Required: filename in library/images
+    label?: string; // Optional label/caption
   }>;
-  gridConfig: {
-    columns: number;
-    rows?: number; // Optional: if not set, rows are dynamic based on photo count
-    gap: number; // Gap between photos in pixels
+  gridConfig?: {
+    columns?: number;
+    rows?: number;
+    gap?: number;
   };
 }
 
@@ -36,7 +35,12 @@ export default function RPhotoGallery({
     galleryData = { photos: [], gridConfig: { columns: 3, gap: 16 } };
   }
 
-  const { photos = [], gridConfig = { columns: 3, gap: 16 } } = galleryData;
+  const { photos = [], gridConfig = {} } = galleryData;
+  
+  // Default grid config
+  const columns = gridConfig.columns || 3;
+  const gap = gridConfig.gap || 16;
+  const rows = gridConfig.rows;
   
   // If no photos, show placeholder
   if (!photos || photos.length === 0) {
@@ -62,24 +66,24 @@ export default function RPhotoGallery({
       <div 
         className="grid w-full"
         style={{
-          gridTemplateColumns: `repeat(${gridConfig.columns}, minmax(0, 1fr))`,
-          gap: `${gridConfig.gap}px`,
-          ...(gridConfig.rows && {
-            gridTemplateRows: `repeat(${gridConfig.rows}, minmax(0, 1fr))`
+          gridTemplateColumns: `repeat(${columns}, minmax(0, 1fr))`,
+          gap: `${gap}px`,
+          ...(rows && {
+            gridTemplateRows: `repeat(${rows}, minmax(0, 1fr))`
           })
         }}
       >
         {photos.map((photo, index) => (
-          <div key={photo.id || index} className="relative group">
+          <div key={index} className="relative group">
             <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
               <img
-                src={`/api/image?imageid=${photo.imageId}`}
+                src={`/library/images/${photo.fileName}`}
                 alt={photo.label || `Photo ${index + 1}`}
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 loading="lazy"
                 onError={(e) => {
-                  console.error('Error loading image:', photo.imageId);
-                  (e.target as HTMLImageElement).src = '/placeholder-gray.png';
+                  console.error('Error loading image:', photo.fileName);
+                  (e.target as HTMLImageElement).src = '/placeholder.png';
                 }}
               />
             </div>

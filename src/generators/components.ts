@@ -26,6 +26,7 @@ const COMPONENT_FILES = [
   "socialbar.tsx",
   "testimonial.tsx",
   "upgrade.tsx",
+  "videogallery.tsx",
   "wrapped_menu.tsx"
 ];
 

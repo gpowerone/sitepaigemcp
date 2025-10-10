@@ -27,8 +27,10 @@ interface MenuItem {
   page: string | null;
   menu: string | null;
   untouchable: boolean;
-  link_type?: 'page' | 'external';
+  link_type?: 'page' | 'external' | 'file';
   external_url?: string | null;
+  file_id?: string | null;
+  file_name?: string | null;
   hiddenOnDesktop?: boolean; // New field to hide item on desktop (shows in icon bar instead)
 }
 

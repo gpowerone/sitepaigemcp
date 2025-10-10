@@ -222,6 +222,27 @@ export async function generate_site_and_write(params, options) {
             databaseType: params.databaseType,
             writeApis: false // pages-first generation should never write database or APIs
         });
+        // Fetch and write library files
+        try {
+            const libraryFiles = await fetch_all_library_files(res.projectId, options);
+            // Write library files and update blueprint in one step
+            if (res.project.blueprint) {
+                await write_library_files_and_update_blueprint(params.targetDir, libraryFiles, res.project.blueprint, options);
+                // Re-write views with updated blueprint
+                const { writeViews, getViewStyles } = await import("./generators/views.js");
+                const { updateGlobalCSS } = await import("./generators/design.js");
+                const { processBlueprintImages } = await import("./generators/images.js");
+                const bpWithImages = await processBlueprintImages(params.targetDir, res.project.blueprint);
+                const viewMap = await writeViews(params.targetDir, bpWithImages, res.project.code, res.project.AuthProviders);
+                const viewStyles = getViewStyles();
+                await updateGlobalCSS(params.targetDir, bpWithImages, viewStyles);
+            }
+        }
+        catch (libError) {
+            if (options?.onLog) {
+                options.onLog(`[generate_site_and_write] Warning: Failed to fetch/write library files: ${libError}`);
+            }
+        }
         return { ...res, wroteTo: params.targetDir };
     }
     catch (err) {
@@ -260,6 +281,35 @@ export async function write_site_by_project_id(params, options) {
             databaseType: params.databaseType || "sqlite",
             writeApis: true // write_site_by_project_id will conditionally write APIs/models if they exist
         });
+        // Fetch and write library files
+        await debugLog(`[write_site_by_project_id] About to fetch library files for project: ${params.projectId}`);
+        if (options?.onLog) {
+            options.onLog(`[write_site_by_project_id] About to fetch library files for project: ${params.projectId}`);
+        }
+        try {
+            const libraryFiles = await fetch_all_library_files(params.projectId, options);
+            await debugLog(`[write_site_by_project_id] Successfully fetched library files`);
+            // Write library files and update blueprint
+            if (project.blueprint) {
+                await write_library_files_and_update_blueprint(params.targetDir, libraryFiles, project.blueprint, options);
+                await debugLog(`[write_site_by_project_id] Successfully wrote library files and updated blueprint`);
+                // Re-write views with updated blueprint
+                const { writeViews, getViewStyles } = await import("./generators/views.js");
+                const { updateGlobalCSS } = await import("./generators/design.js");
+                const { processBlueprintImages } = await import("./generators/images.js");
+                const bpWithImages = await processBlueprintImages(params.targetDir, project.blueprint);
+                const viewMap = await writeViews(params.targetDir, bpWithImages, project.code, project.AuthProviders);
+                const viewStyles = getViewStyles();
+                await updateGlobalCSS(params.targetDir, bpWithImages, viewStyles);
+            }
+        }
+        catch (libError) {
+            const errorMsg = `[write_site_by_project_id] Failed to fetch/write library files: ${libError}`;
+            await debugLog(errorMsg);
+            if (options?.onLog) {
+                options.onLog(`Warning: ${errorMsg}`);
+            }
+        }
     }
     catch (error) {
         if (options?.onLog) {
@@ -294,6 +344,73 @@ export async function complete_backend_and_write(params, options) {
             targetDir: params.targetDir,
             databaseType: params.databaseType || "sqlite"
         });
+        // Fetch and write library files (they might have been updated with the backend)
+        await debugLog(`[complete_backend_and_write] About to fetch library files for project: ${params.projectId}`);
+        if (options?.onLog) {
+            options.onLog(`[complete_backend_and_write] About to fetch library files for project: ${params.projectId}`);
+        }
+        try {
+            const libraryFiles = await fetch_all_library_files(params.projectId, options);
+            await debugLog(`[complete_backend_and_write] Successfully fetched library files`);
+            // Just write the library files without updating views
+            // We create a minimal writer that doesn't update blueprint
+            const { writeLibraryFile } = await import("./blueprintWriter.js");
+            for (const image of libraryFiles.images) {
+                try {
+                    const base64Data = await fetchBinaryAsBase64(`/api/image?imageid=${encodeURIComponent(image.ImageID)}`, options);
+                    await writeLibraryFile(params.targetDir, 'image', image.Name, base64Data);
+                }
+                catch (error) {
+                    if (options?.onLog) {
+                        options.onLog(`[complete_backend_and_write] Error downloading image ${image.Name}: ${error}`);
+                    }
+                }
+            }
+            for (const file of libraryFiles.files) {
+                try {
+                    const base64Data = await fetchBinaryAsBase64(`/api/files?fileid=${encodeURIComponent(file.FileID)}`, options);
+                    await writeLibraryFile(params.targetDir, 'file', file.Name, base64Data);
+                }
+                catch (error) {
+                    if (options?.onLog) {
+                        options.onLog(`[complete_backend_and_write] Error downloading file ${file.Name}: ${error}`);
+                    }
+                }
+            }
+            for (const video of libraryFiles.videos) {
+                try {
+                    const base64Data = await fetchBinaryAsBase64(`/api/video?videoid=${encodeURIComponent(video.VideoID)}`, options);
+                    await writeLibraryFile(params.targetDir, 'video', video.Name, base64Data);
+                    if (video.ThumbnailID) {
+                        try {
+                            const thumbBase64 = await fetchBinaryAsBase64(`/api/image?imageid=${encodeURIComponent(video.ThumbnailID)}`, options);
+                            const thumbName = `${video.Name.replace(/\.[^.]+$/, '')}_thumb.jpg`;
+                            await writeLibraryFile(params.targetDir, 'image', thumbName, thumbBase64);
+                        }
+                        catch (error) {
+                            if (options?.onLog) {
+                                options.onLog(`[complete_backend_and_write] Error downloading video thumbnail: ${error}`);
+                            }
+                        }
+                    }
+                }
+                catch (error) {
+                    if (options?.onLog) {
+                        options.onLog(`[complete_backend_and_write] Error downloading video ${video.Name}: ${error}`);
+                    }
+                }
+            }
+            await debugLog(`[complete_backend_and_write] Successfully wrote library files`);
+            // Note: We don't update blueprint or re-write views here since complete_backend_and_write only writes backend files
+            // The frontend views should already have been written with library mappings from initial generation
+        }
+        catch (libError) {
+            const errorMsg = `[complete_backend_and_write] Failed to fetch/write library files: ${libError}`;
+            await debugLog(errorMsg);
+            if (options?.onLog) {
+                options.onLog(`Warning: ${errorMsg}`);
+            }
+        }
     }
     catch (error) {
         if (options?.onLog) {
@@ -302,5 +419,231 @@ export async function complete_backend_and_write(params, options) {
         throw error;
     }
     return { project, wroteTo: params.targetDir };
+}
+// Fetch library images for a project
+export async function fetch_library_images(projectId, options) {
+    try {
+        await debugLog(`[fetch_library_images] Fetching images for project: ${projectId}`);
+        const response = await requestJson("GET", `/api/image/library/list?projectId=${encodeURIComponent(projectId)}`, undefined, options);
+        const images = response.images || [];
+        await debugLog(`[fetch_library_images] Found ${images.length} images`);
+        return images;
+    }
+    catch (error) {
+        await debugLog(`[fetch_library_images] Error: ${error}`);
+        return [];
+    }
+}
+// Fetch library files for a project
+export async function fetch_library_files(projectId, options) {
+    try {
+        await debugLog(`[fetch_library_files] Fetching files for project: ${projectId}`);
+        const response = await requestJson("GET", `/api/files/list?projectId=${encodeURIComponent(projectId)}`, undefined, options);
+        const files = response.files || [];
+        await debugLog(`[fetch_library_files] Found ${files.length} files`);
+        return files;
+    }
+    catch (error) {
+        await debugLog(`[fetch_library_files] Error: ${error}`);
+        return [];
+    }
+}
+// Fetch library videos for a project
+export async function fetch_library_videos(projectId, options) {
+    try {
+        await debugLog(`[fetch_library_videos] Fetching videos for project: ${projectId}`);
+        const response = await requestJson("GET", `/api/video/list?projectId=${encodeURIComponent(projectId)}`, undefined, options);
+        const videos = response.videos || [];
+        await debugLog(`[fetch_library_videos] Found ${videos.length} videos`);
+        return videos;
+    }
+    catch (error) {
+        await debugLog(`[fetch_library_videos] Error: ${error}`);
+        return [];
+    }
+}
+// Fetch all library files for a project
+export async function fetch_all_library_files(projectId, options) {
+    await debugLog(`[fetch_all_library_files] Fetching library files for project: ${projectId}`);
+    const [images, files, videos] = await Promise.all([
+        fetch_library_images(projectId, options),
+        fetch_library_files(projectId, options),
+        fetch_library_videos(projectId, options)
+    ]);
+    await debugLog(`[fetch_all_library_files] Fetched - Images: ${images.length}, Files: ${files.length}, Videos: ${videos.length}`);
+    return { images, files, videos };
+}
+// Helper to fetch binary data and convert to base64
+async function fetchBinaryAsBase64(url, options) {
+    const fullUrl = `${BASE_URL}${url}`;
+    const headers = {
+        "Authorization": `Bearer ${API_KEY}`
+    };
+    if (options?.onLog) {
+        options.onLog(`Fetching binary from: ${url}`);
+    }
+    const resp = await fetch(fullUrl, { headers });
+    if (!resp.ok) {
+        throw new Error(`Failed to fetch ${url}: ${resp.status} ${resp.statusText}`);
+    }
+    const arrayBuffer = await resp.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    return buffer.toString('base64');
+}
+// Download and write library files to disk
+export async function write_library_files_and_update_blueprint(targetDir, libraryFiles, blueprint, options) {
+    await debugLog(`[write_library_files_and_update_blueprint] Starting - targetDir: ${targetDir}`);
+    const { writeLibraryFile } = await import("./blueprintWriter.js");
+    if (!writeLibraryFile) {
+        throw new Error("writeLibraryFile function not found in blueprintWriter");
+    }
+    if (options?.onLog) {
+        options.onLog(`[write_library_files_and_update_blueprint] Writing library files - Images: ${libraryFiles.images.length}, Files: ${libraryFiles.files.length}, Videos: ${libraryFiles.videos.length}`);
+    }
+    // Create mappings for gallery updates
+    const imageIdToFilename = new Map();
+    const videoIdToFilename = new Map();
+    const fileIdToFilename = new Map();
+    // Write images
+    for (const image of libraryFiles.images) {
+        try {
+            if (options?.onLog) {
+                options.onLog(`[write_library_files_and_update_blueprint] Downloading image: ${image.Name} (${image.ImageID})`);
+            }
+            const base64Data = await fetchBinaryAsBase64(`/api/image?imageid=${encodeURIComponent(image.ImageID)}`, options);
+            const actualFilename = await writeLibraryFile(targetDir, 'image', image.Name, base64Data);
+            imageIdToFilename.set(image.ImageID, actualFilename);
+            await debugLog(`[write_library_files_and_update_blueprint] Successfully wrote image: ${actualFilename}`);
+        }
+        catch (error) {
+            const errorMsg = `[write_library_files_and_update_blueprint] Error downloading image ${image.Name}: ${error}`;
+            await debugLog(errorMsg);
+            if (options?.onLog) {
+                options.onLog(errorMsg);
+            }
+        }
+    }
+    // Write files
+    for (const file of libraryFiles.files) {
+        try {
+            if (options?.onLog) {
+                options.onLog(`[write_library_files_and_update_blueprint] Downloading file: ${file.Name} (${file.FileID})`);
+            }
+            const base64Data = await fetchBinaryAsBase64(`/api/files?fileid=${encodeURIComponent(file.FileID)}`, options);
+            const actualFilename = await writeLibraryFile(targetDir, 'file', file.Name, base64Data);
+            fileIdToFilename.set(file.FileID, actualFilename);
+            await debugLog(`[write_library_files_and_update_blueprint] Successfully wrote file: ${actualFilename}`);
+        }
+        catch (error) {
+            const errorMsg = `[write_library_files_and_update_blueprint] Error downloading file ${file.Name}: ${error}`;
+            await debugLog(errorMsg);
+            if (options?.onLog) {
+                options.onLog(errorMsg);
+            }
+        }
+    }
+    // Write videos
+    for (const video of libraryFiles.videos) {
+        try {
+            if (options?.onLog) {
+                options.onLog(`[write_library_files_and_update_blueprint] Downloading video: ${video.Name} (${video.VideoID})`);
+            }
+            const base64Data = await fetchBinaryAsBase64(`/api/video?videoid=${encodeURIComponent(video.VideoID)}`, options);
+            const actualFilename = await writeLibraryFile(targetDir, 'video', video.Name, base64Data);
+            videoIdToFilename.set(video.VideoID, actualFilename);
+            await debugLog(`[write_library_files_and_update_blueprint] Successfully wrote video: ${actualFilename}`);
+            // Download thumbnail if exists
+            if (video.ThumbnailID) {
+                try {
+                    if (options?.onLog) {
+                        options.onLog(`[write_library_files_and_update_blueprint] Downloading thumbnail for video: ${video.Name}`);
+                    }
+                    const thumbBase64 = await fetchBinaryAsBase64(`/api/image?imageid=${encodeURIComponent(video.ThumbnailID)}`, options);
+                    const thumbName = `${video.Name.replace(/\.[^.]+$/, '')}_thumb.jpg`;
+                    const actualThumbName = await writeLibraryFile(targetDir, 'image', thumbName, thumbBase64);
+                    imageIdToFilename.set(video.ThumbnailID, actualThumbName);
+                    await debugLog(`[write_library_files_and_update_blueprint] Successfully wrote video thumbnail: ${actualThumbName}`);
+                }
+                catch (error) {
+                    const errorMsg = `[write_library_files_and_update_blueprint] Error downloading video thumbnail for ${video.Name}: ${error}`;
+                    await debugLog(errorMsg);
+                    if (options?.onLog) {
+                        options.onLog(errorMsg);
+                    }
+                }
+            }
+        }
+        catch (error) {
+            const errorMsg = `[write_library_files_and_update_blueprint] Error downloading video ${video.Name}: ${error}`;
+            await debugLog(errorMsg);
+            if (options?.onLog) {
+                options.onLog(errorMsg);
+            }
+        }
+    }
+    // Now update blueprint views with the simplified gallery configurations
+    if (blueprint?.views && Array.isArray(blueprint.views)) {
+        for (const view of blueprint.views) {
+            if (view.type === 'photogallery' && view.custom_view_description) {
+                try {
+                    const oldConfig = typeof view.custom_view_description === 'string'
+                        ? JSON.parse(view.custom_view_description)
+                        : view.custom_view_description;
+                    // Create new simplified config
+                    const newConfig = {
+                        photos: oldConfig.photos?.map((photo) => ({
+                            fileName: imageIdToFilename.get(photo.imageId) || 'placeholder.png',
+                            label: photo.label
+                        })) || [],
+                        gridConfig: oldConfig.gridConfig
+                    };
+                    view.custom_view_description = JSON.stringify(newConfig);
+                    await debugLog(`[write_library_files_and_update_blueprint] Updated photogallery ${view.name} with ${newConfig.photos.length} photos`);
+                }
+                catch (e) {
+                    console.error('Error updating photogallery config:', e);
+                }
+            }
+            else if (view.type === 'videogallery' && view.custom_view_description) {
+                try {
+                    const oldConfig = typeof view.custom_view_description === 'string'
+                        ? JSON.parse(view.custom_view_description)
+                        : view.custom_view_description;
+                    // Create new simplified config
+                    const newConfig = {
+                        videos: oldConfig.videos?.map((video) => {
+                            if (video.type === 'upload' && video.videoId) {
+                                return {
+                                    type: 'upload',
+                                    fileName: videoIdToFilename.get(video.videoId),
+                                    title: video.title,
+                                    description: video.description,
+                                    thumbnailFileName: video.thumbnail ? imageIdToFilename.get(video.thumbnail) : undefined
+                                };
+                            }
+                            else {
+                                // Keep YouTube/Vimeo/external videos as-is
+                                return {
+                                    type: video.type,
+                                    url: video.url,
+                                    title: video.title,
+                                    description: video.description
+                                };
+                            }
+                        }) || [],
+                        gridConfig: oldConfig.gridConfig,
+                        playerConfig: oldConfig.playerConfig,
+                        displayConfig: oldConfig.displayConfig
+                    };
+                    view.custom_view_description = JSON.stringify(newConfig);
+                    await debugLog(`[write_library_files_and_update_blueprint] Updated videogallery ${view.name} with ${newConfig.videos.length} videos`);
+                }
+                catch (e) {
+                    console.error('Error updating videogallery config:', e);
+                }
+            }
+        }
+    }
+    await debugLog(`[write_library_files_and_update_blueprint] Completed writing library files and updating blueprint`);
 }
 //# sourceMappingURL=sitepaige.js.map

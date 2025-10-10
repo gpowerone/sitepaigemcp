@@ -162,9 +162,6 @@ export function generateStyleProps(systemView: View, isContainer: boolean): { st
             styleProps.push(`borderBottomRightRadius: '${systemView.borderBottomRightRadius}px'`);
         }
     }
-
-    // Layout system - using grid layout like in rview.tsx
-    styleProps.push(`display: 'grid'`);
     
     // Combined alignment using placeItems (matches rview.tsx exactly)
     const verticalAlign = (systemView.verticalAlign || '').toLowerCase();
@@ -396,7 +393,6 @@ export default function ${comp}(){
           style={{ 
             objectFit: 'cover',
             objectPosition: 'center',
-            width: '100%',
             height: height ? \`\${height}px\` : 'auto',
             display: 'block'
           }}
@@ -840,6 +836,22 @@ import RPhotoGallery from '../components/photogallery';
 export default function ${comp}() {
   return (
     <RPhotoGallery 
+      config={${JSON.stringify(config)}}
+      name="${name}"
+    />
+  );
+}`;
+    } else if (type === "videogallery") {
+      // Import the VideoGallery component
+      const config = v.custom_view_description || '{}';
+      const name = v.name || 'Video Gallery';
+      
+      code = `import React from 'react';
+import RVideoGallery from '../components/videogallery';
+
+export default function ${comp}() {
+  return (
+    <RVideoGallery 
       config={${JSON.stringify(config)}}
       name="${name}"
     />

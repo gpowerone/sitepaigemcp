@@ -222,7 +222,8 @@ export const viewTypes = [
   { value: 'socialbar', label: 'Social Bar', disabled: false, sectiontype: 'commoncontent' },
   { value: 'testimonial', label: 'Testimonial', disabled: false, sectiontype: 'commoncontent' },
   { value: 'map', label: 'Map', disabled: false, sectiontype: 'commoncontent' },
-  { value: 'photogallery', label: 'Photo Gallery', disabled: false, sectiontype: 'commoncontent' }
+  { value: 'photogallery', label: 'Photo Gallery', disabled: false, sectiontype: 'commoncontent' },
+  { value: 'videogallery', label: 'Video Gallery', disabled: false, sectiontype: 'commoncontent' }
 ];
 
 // Legacy interface - kept for migration compatibility
@@ -308,8 +309,10 @@ export interface MenuItem {
   page: string | null;
   menu: string | null;
   untouchable: boolean;
-  link_type?: 'page' | 'external'; // New field to distinguish between internal pages and external URLs
+  link_type?: 'page' | 'external' | 'file'; // New field to distinguish between internal pages, external URLs, and files
   external_url?: string | null; // New field for external URLs
+  file_id?: string | null; // New field for file ID
+  file_name?: string | null; // New field for file name
   iconType?: 'cart' | 'search' | 'user' | 'home' | 'settings' | 'bell' | 'menu'; // New field for icon type
   hiddenOnDesktop?: boolean; // New field to hide item on desktop (shows in icon bar instead)
 }

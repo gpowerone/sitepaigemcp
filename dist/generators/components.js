@@ -24,6 +24,7 @@ const COMPONENT_FILES = [
     "socialbar.tsx",
     "testimonial.tsx",
     "upgrade.tsx",
+    "videogallery.tsx",
     "wrapped_menu.tsx"
 ];
 export async function writeComponents(targetDir, _blueprint) {

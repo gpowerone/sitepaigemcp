@@ -106,6 +106,9 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
     if (item.link_type === 'external' && item.external_url) {
       linkUrl = item.external_url;
       isExternal = true;
+    } else if (item.link_type === 'file' && item.file_name) {
+      linkUrl = `/library/files/${item.file_name}`;
+      isExternal = false;
     } else if (item.page && pages.length > 0) {
       const page = pages.find(p => p.id === item.page);
       if (page) {
