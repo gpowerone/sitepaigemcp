@@ -49,14 +49,14 @@ export async function writeProjectFromBlueprint(project, options) {
     }));
     // package.json first to allow immediate npm install
     const projectName = project.name || undefined;
-    await writePackageJson(targetDir, projectName, options.databaseType || "sqlite");
+    await writePackageJson(targetDir, projectName, options.databaseType || "postgres");
     await writeNextConfig(targetDir);
     await writeBaseAppSkeleton(targetDir);
     // Copy default app files after base skeleton
-    await writeDefaultApp(targetDir, options.databaseType || "sqlite");
+    await writeDefaultApp(targetDir, options.databaseType || "postgres");
     await writeComponents(targetDir, blueprint);
-    await writeModelsSql(targetDir, blueprint, options.databaseType || "sqlite");
-    await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "sqlite");
+    await writeModelsSql(targetDir, blueprint, options.databaseType || "postgres");
+    await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "postgres");
     // Process images: download to public/images and replace refs in blueprint before views/pages
     const bpWithImages = await processBlueprintImages(targetDir, blueprint);
     const viewMap = await writeViews(targetDir, bpWithImages, projectCode, project.AuthProviders);
@@ -99,18 +99,18 @@ export async function writeProjectPagesOnly(project, options) {
     }
     // package.json first to allow immediate npm install
     const projectName = project.name || undefined;
-    await writePackageJson(targetDir, projectName, options.databaseType || "sqlite");
+    await writePackageJson(targetDir, projectName, options.databaseType || "postgres");
     await writeNextConfig(targetDir);
     await writeBaseAppSkeleton(targetDir);
     // Copy default app files after base skeleton
-    await writeDefaultApp(targetDir, options.databaseType || "sqlite");
+    await writeDefaultApp(targetDir, options.databaseType || "postgres");
     await writeComponents(targetDir, blueprint);
     // Write database/models if requested and they exist in blueprint
     const hasModels = blueprint.models && blueprint.models.length > 0;
     if (options.writeApis && hasModels) {
         await debugLog('[writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)');
-        await writeModelsSql(targetDir, blueprint, options.databaseType || "sqlite");
-        await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "sqlite");
+        await writeModelsSql(targetDir, blueprint, options.databaseType || "postgres");
+        await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "postgres");
     }
     else {
         await debugLog('[writeProjectPagesOnly] Skipping models/migrations (writeApis=' + options.writeApis + ', hasModels=' + hasModels + ')');
@@ -145,8 +145,8 @@ export async function writeProjectBackendOnly(project, options) {
         throw new Error("No code found in project data");
     }
     // Only write backend-specific files
-    await writeModelsSql(targetDir, blueprint, options.databaseType || "sqlite");
-    await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "sqlite");
+    await writeModelsSql(targetDir, blueprint, options.databaseType || "postgres");
+    await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "postgres");
     await writeApis(targetDir, blueprint, projectCode);
     // Write architecture documentation (now includes backend)
     await writeArchitectureDoc(targetDir, blueprint);

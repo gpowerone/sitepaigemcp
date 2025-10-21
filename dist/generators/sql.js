@@ -75,7 +75,7 @@ export async function writeModelsSql(targetDir, blueprint, databaseType = "sqlit
             'BOOLEAN': 'BOOLEAN'
         }
     };
-    const dbTypeMap = typeMap[databaseType] || typeMap.sqlite;
+    const dbTypeMap = typeMap[databaseType] || typeMap.postgres;
     const quoteChar = databaseType === 'mysql' ? '`' : '"';
     for (const model of models) {
         const tableName = model.name || model.id || "table";
@@ -106,7 +106,7 @@ export async function writeModelsSql(targetDir, blueprint, databaseType = "sqlit
     lines.push("");
     await fsp.writeFile(basePath, lines.join("\n"), "utf8");
 }
-export function generateSQLFromMigrations(migrations, databaseType = "sqlite") {
+export function generateSQLFromMigrations(migrations, databaseType = "postgres") {
     // Database-specific type mappings
     const typeMap = {
         sqlite: {
@@ -158,7 +158,7 @@ export function generateSQLFromMigrations(migrations, databaseType = "sqlite") {
             'BOOLEAN': 'BOOLEAN'
         }
     };
-    const dbTypeMap = typeMap[databaseType] || typeMap.sqlite;
+    const dbTypeMap = typeMap[databaseType] || typeMap.postgres;
     const quoteChar = databaseType === 'mysql' ? '`' : '"';
     const sql = [];
     for (const m of migrations) {

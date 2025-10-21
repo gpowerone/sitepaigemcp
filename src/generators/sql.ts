@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-export async function writeModelsSql(targetDir: string, blueprint: Blueprint, databaseType: "sqlite" | "postgres" | "mysql" = "sqlite"): Promise<void> {
+export async function writeModelsSql(targetDir: string, blueprint: Blueprint, databaseType: "postgres" | "sqlite" | "mysql" = "postgres"): Promise<void> {
   const migrationsDir = path.join(targetDir, "migrations");
   ensureDir(migrationsDir);
   const basePath = path.join(migrationsDir, "000_base.sql");
@@ -118,7 +118,7 @@ export async function writeModelsSql(targetDir: string, blueprint: Blueprint, da
   await fsp.writeFile(basePath, lines.join("\n"), "utf8");
 }
 
-export function generateSQLFromMigrations(migrations: Migration[], databaseType: "sqlite" | "postgres" | "mysql" = "sqlite"): string[] {
+export function generateSQLFromMigrations(migrations: Migration[], databaseType: "postgres" | "sqlite" | "mysql" = "postgres"): string[] {
   // Database-specific type mappings
   const typeMap: Record<string, Record<string, string>> = {
     sqlite: {

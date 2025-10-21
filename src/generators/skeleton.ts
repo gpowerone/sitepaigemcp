@@ -82,7 +82,7 @@ module.exports = {
 }
 
 
-export async function writePackageJson(targetDir: string, projectName?: string, databaseType: "sqlite" | "postgres" | "mysql" = "sqlite"): Promise<void> {
+export async function writePackageJson(targetDir: string, projectName?: string, databaseType: "postgres" | "sqlite" | "mysql" = "postgres"): Promise<void> {
   const pkgPath = path.join(targetDir, "package.json");
   let pkg: any = {};
 

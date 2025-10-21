@@ -61,8 +61,8 @@
             },
             "databaseType": {
               "type": "string",
-              "enum": ["sqlite", "postgres", "mysql"],
-              "description": "Database type to use (defaults to sqlite)"
+              "enum": ["postgres", "sqlite", "mysql"],
+              "description": "Database type to use (defaults to postgres)"
             }
           },
           "required": ["projectId", "targetDir"]

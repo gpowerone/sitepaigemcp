@@ -53,7 +53,7 @@ async function runGenerateJob(
     const { projectId, mode } = await initialize_site_generation({ 
       projectName, 
       requirements: prompt, 
-      databaseType: databaseType || "sqlite",
+      databaseType: databaseType || "postgres",
       login_providers: login_providers || "google",
       designStyle,
       generateImages,
@@ -69,7 +69,7 @@ async function runGenerateJob(
     // Store the projectId, targetDir, and databaseType in the job
     jobs.setProjectId(jobId, projectId);
     jobs.setTargetDir(jobId, targetDir);
-    jobs.setDatabaseType(jobId, databaseType || "sqlite");
+    jobs.setDatabaseType(jobId, databaseType || "postgres");
     jobs.appendLog(jobId, `Project initialized with ID: ${projectId}, mode: ${mode}`);
     jobs.setStatus(jobId, { step: "generating", progressPercent: 20 });
     
@@ -115,7 +115,7 @@ async function runGenerateJob(
         await write_site_by_project_id({
           projectId,
           targetDir,
-          databaseType: databaseType || "sqlite"
+          databaseType: databaseType || "postgres"
         }, {
           onLog: (message: string) => jobs.appendLog(jobId, message)
         });
@@ -221,7 +221,7 @@ async function runCompleteBackendJob(
     try {
       jobs.setStatus(jobId, { step: "generating_backend", progressPercent: 30 });
       const result = await complete_backend_and_write(
-        { projectId, targetDir, databaseType: databaseType || "sqlite" }, 
+        { projectId, targetDir, databaseType: databaseType || "postgres" }, 
         { 
           onLog: (message: string) => jobs.appendLog(jobId, message) 
         }
@@ -276,7 +276,7 @@ server.tool(
     prompt: z.string().min(1),
     targetDir: z.string().min(1),
     projectName: z.string().optional(),
-    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("sqlite"),
+    databaseType: z.enum(["postgres", "sqlite", "mysql"]).optional().default("postgres"),
     login_providers: z.string().optional().default("google"),
     designStyle: z.string().optional(),
     generateImages: z.boolean().optional(),
@@ -546,7 +546,7 @@ server.tool(
             const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
             await writeProjectPagesOnly(project as any, { 
               targetDir: actualTargetDir,
-              databaseType: actualDatabaseType || "sqlite",
+              databaseType: actualDatabaseType || "postgres",
               writeApis: shouldWriteBackend // Only write backend stuff if it exists
             });
             
@@ -705,7 +705,7 @@ server.tool(
   {
     projectId: z.string().min(1),
     targetDir: z.string().min(1),
-    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("sqlite")
+    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("postgres")
   },
   async ({ projectId, targetDir, databaseType }) => {
     // Backend completion typically takes 2-3 minutes
@@ -716,7 +716,7 @@ server.tool(
     // Store project info in the job for status checking
     jobs.setProjectId(job.id, projectId);
     jobs.setTargetDir(job.id, targetDir);
-    jobs.setDatabaseType(job.id, databaseType || "sqlite");
+    jobs.setDatabaseType(job.id, databaseType || "postgres");
     
     // Start the backend completion job asynchronously
     void runCompleteBackendJob(job.id, projectId, targetDir, databaseType);

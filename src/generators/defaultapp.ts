@@ -48,7 +48,7 @@ async function copyDirectoryWithExclusions(source: string, destination: string, 
   }
 }
 
-export async function writeDefaultApp(targetDir: string, databaseType: "sqlite" | "postgres" | "mysql" = "sqlite"): Promise<void> {
+export async function writeDefaultApp(targetDir: string, databaseType: "sqlite" | "postgres" | "mysql" = "postgres"): Promise<void> {
   // The defaultapp folder is at the root of the project
   const defaultAppPath = path.join(__dirname, "..", "..", "defaultapp");
   const defaultPublicPath = path.join(__dirname, "..", "..", "defaultpublic");

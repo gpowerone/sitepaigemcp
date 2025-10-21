@@ -44,7 +44,7 @@ export interface DatabaseConfig {
 
 // Get database configuration from environment
 export function getDatabaseConfig(): DatabaseConfig {
-  const dbType = (process.env.DATABASE_TYPE || 'sqlite').toLowerCase() as DatabaseType;
+  const dbType = (process.env.DATABASE_TYPE || 'postgres').toLowerCase() as DatabaseType;
   
   switch (dbType) {
     case 'postgres':
