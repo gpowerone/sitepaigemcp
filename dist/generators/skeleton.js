@@ -75,7 +75,7 @@ module.exports = {
     // Note: globals.css and layout.tsx are now provided by the defaultapp folder
     // so we don't create them here anymore
 }
-export async function writePackageJson(targetDir, projectName, databaseType = "sqlite") {
+export async function writePackageJson(targetDir, projectName, databaseType = "postgres") {
     const pkgPath = path.join(targetDir, "package.json");
     let pkg = {};
     if (fs.existsSync(pkgPath)) {
@@ -97,9 +97,10 @@ export async function writePackageJson(targetDir, projectName, databaseType = "s
     pkg.scripts = {
         ...(pkg.scripts ?? {}),
         dev: pkg.scripts?.dev ?? "npx tsx src/app/migrate.ts && next dev",
-        build: pkg.scripts?.build ?? "next build",
-        start: pkg.scripts?.start ?? "npx tsx src/app/migrate.ts && next start",
-        migrate: pkg.scripts?.migrate ?? "npx tsx src/app/migrate.ts"
+        build: pkg.scripts?.build ?? "npx tsx src/app/migrate.ts && next build",
+        start: pkg.scripts?.start ?? "next start",
+        migrate: pkg.scripts?.migrate ?? "npx tsx src/app/migrate.ts",
+        postinstall: pkg.scripts?.postinstall ?? "npx tsx src/app/migrate.ts"
     };
     pkg.dependencies = {
         ...(pkg.dependencies ?? {}),
@@ -108,7 +109,16 @@ export async function writePackageJson(targetDir, projectName, databaseType = "s
         "react-dom": pkg.dependencies?.["react-dom"] ?? "latest",
         "lucide-react": pkg.dependencies?.["lucide-react"] ?? "latest",
         "mime-types": pkg.dependencies?.["mime-types"] ?? "^3.0.0",
-        tsx: pkg.dependencies?.tsx ?? "4.20.6"
+        tsx: pkg.dependencies?.tsx ?? "4.20.6",
+        tailwindcss: pkg.dependencies?.tailwindcss ?? "^3.4.1",
+        postcss: pkg.dependencies?.postcss ?? "latest",
+        autoprefixer: pkg.dependencies?.autoprefixer ?? "latest",
+        // TypeScript and types need to be in dependencies for Vercel
+        typescript: pkg.dependencies?.typescript ?? "latest",
+        "@types/node": pkg.dependencies?.["@types/node"] ?? "latest",
+        "@types/react": pkg.dependencies?.["@types/react"] ?? "latest",
+        "@types/react-dom": pkg.dependencies?.["@types/react-dom"] ?? "latest",
+        "@types/mime-types": pkg.dependencies?.["@types/mime-types"] ?? "^2.1.4"
     };
     // Add database-specific dependencies
     switch (databaseType) {
@@ -123,17 +133,8 @@ export async function writePackageJson(targetDir, projectName, databaseType = "s
             pkg.dependencies["better-sqlite3"] = pkg.dependencies?.["better-sqlite3"] ?? "^9.2.2";
             break;
     }
-    pkg.devDependencies = {
-        ...(pkg.devDependencies ?? {}),
-        typescript: pkg.devDependencies?.typescript ?? "latest",
-        "@types/node": pkg.devDependencies?.["@types/node"] ?? "latest",
-        "@types/react": pkg.devDependencies?.["@types/react"] ?? "latest",
-        "@types/react-dom": pkg.devDependencies?.["@types/react-dom"] ?? "latest",
-        "@types/mime-types": pkg.devDependencies?.["@types/mime-types"] ?? "^2.1.4",
-        tailwindcss: pkg.devDependencies?.tailwindcss ?? "^3.4.1",
-        postcss: pkg.devDependencies?.postcss ?? "latest",
-        autoprefixer: pkg.devDependencies?.autoprefixer ?? "latest"
-    };
+    // Keep devDependencies minimal or empty for Vercel compatibility
+    pkg.devDependencies = pkg.devDependencies ?? {};
     await fsp.writeFile(pkgPath, JSON.stringify(pkg, null, 2) + "\n", "utf8");
 }
 //# sourceMappingURL=skeleton.js.map

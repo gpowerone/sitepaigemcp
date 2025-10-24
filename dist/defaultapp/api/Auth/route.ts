@@ -9,7 +9,7 @@ import { NextResponse } from 'next/server';
 import * as crypto from 'node:crypto';
 
 import { db_init, db_query } from '../../db';
-import { upsertUser, ensureAuthTables, storeOAuthToken, validateSession, rotateSession } from '../../db-users';
+import { upsertUser, storeOAuthToken, validateSession, rotateSession } from '../../db-users';
 import { validateCsrfToken } from '../../csrf';
 
 type OAuthProvider = 'google' | 'facebook' | 'apple'  | 'github';
@@ -29,9 +29,6 @@ const USER_INFO_ENDPOINTS = {
 };
 
 export async function POST(request: Request) {
-  // Ensure authentication tables exist
-  await ensureAuthTables();
-  
   const db = await db_init();
   
   try {
@@ -159,14 +156,14 @@ export async function POST(request: Request) {
     
     // Delete existing sessions for this user
     const existingSessions = await db_query(db, 
-      "SELECT ID FROM UserSession WHERE userid = ?", 
+      "SELECT ID FROM usersession WHERE userid = ?", 
       [user.userid]
     );
     
     if (existingSessions && existingSessions.length > 0) {
         const sessionIds = existingSessions.map(session => session.ID);
         const placeholders = sessionIds.map(() => '?').join(',');
-        await db_query(db, `DELETE FROM UserSession WHERE ID IN (${placeholders})`, sessionIds);
+        await db_query(db, `DELETE FROM usersession WHERE ID IN (${placeholders})`, sessionIds);
     }
 
     // Generate secure session token and ID
@@ -175,7 +172,7 @@ export async function POST(request: Request) {
 
     // Create new session with secure token
     await db_query(db, 
-      "INSERT INTO UserSession (ID, SessionToken, userid, ExpirationDate) VALUES (?, ?, ?, ?)",
+      "INSERT INTO usersession (ID, SessionToken, userid, ExpirationDate) VALUES (?, ?, ?, ?)",
       [sessionId, sessionToken, user.userid, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()]
     );
 
@@ -214,9 +211,6 @@ export async function POST(request: Request) {
 }
 
 export async function GET() {
-  // Ensure authentication tables exist
-  await ensureAuthTables();
-  
   try {
     // Get session token from cookies
     const sessionCookie = await cookies();
@@ -308,9 +302,6 @@ export async function DELETE(request: Request) {
     );
   }
   
-  // Ensure authentication tables exist
-  await ensureAuthTables();
-  
   const db = await db_init();
   
   try {
@@ -327,7 +318,7 @@ export async function DELETE(request: Request) {
 
     // Delete session from database using the actual session token
     await db_query(db, 
-      "DELETE FROM UserSession WHERE SessionToken = ?", 
+      "DELETE FROM usersession WHERE SessionToken = ?", 
       [sessionToken]
     );
 

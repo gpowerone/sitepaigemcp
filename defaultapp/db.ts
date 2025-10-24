@@ -40,6 +40,13 @@ export interface DatabaseConfig {
   database?: string;
   sqliteDir?: string; // For sqlite
   efsMountPath?: string; // For production sqlite
+  ssl?: {
+    rejectUnauthorized?: boolean;
+    require?: boolean;
+    ca?: string;
+    cert?: string;
+    key?: string;
+  }; // SSL configuration for postgres/mysql
 }
 
 // Get database configuration from environment
@@ -55,7 +62,11 @@ export function getDatabaseConfig(): DatabaseConfig {
         port: parseInt(process.env.DB_PORT || process.env.POSTGRES_PORT || '5432'),
         user: process.env.DB_USER || process.env.POSTGRES_USER || 'postgres',
         password: process.env.DB_PASSWORD || process.env.POSTGRES_PASSWORD,
-        database: process.env.DB_NAME || process.env.POSTGRES_DB || 'app'
+        database: process.env.DB_NAME || process.env.POSTGRES_DB || 'app',
+        ssl: {
+          rejectUnauthorized: true,
+          require: true // Always require SSL for PostgreSQL
+        }
       };
     
     case 'mysql':
@@ -101,13 +112,13 @@ async function loadDatabaseImplementation(dbType: DatabaseType) {
  * @returns Database client
  */
 export async function db_init(): Promise<DatabaseClient> {
-  const config = getDatabaseConfig();
+  const dbType = (process.env.DATABASE_TYPE || process.env.DB_TYPE || 'postgres').toLowerCase() as DatabaseType;
   
   if (!dbImplementation) {
-    await loadDatabaseImplementation(config.type);
+    await loadDatabaseImplementation(dbType);
   }
   
-  return dbImplementation.db_init(config);
+  return dbImplementation.db_init();
 }
 
 /**
@@ -131,52 +142,8 @@ export async function db_query(
  * @returns SQL string for creating the table
  */
 export function db_migrate(model: Model): string {
-  const config = getDatabaseConfig();
-  return dbImplementation.db_migrate(model, config.type);
+  const dbType = (process.env.DATABASE_TYPE || process.env.DB_TYPE || 'postgres').toLowerCase() as DatabaseType;
+  return dbImplementation.db_migrate(model, dbType);
 }
-
-/**
- * Initialize the database with models and sample data
- * @param models Array of models to create tables for
- * @param sampleData Optional array of sample data SQL statements
- */
-export async function initializeDatabase(
-  models: Model[], 
-  sampleData?: Array<{tableName: string, sql: string}>
-): Promise<void> {
-  const client = await db_init();
-  
-  try {
-    // Create tables for each model
-    for (const model of models) {
-      const createTableSql = db_migrate(model);
-      await db_query(client, createTableSql);
-    }
-    
-    // Insert sample data if provided
-    if (sampleData && sampleData.length > 0) {
-      for (const data of sampleData) {
-        try {
-          await db_query(client, data.sql);
-        } catch (error) {
-          // Continue with other tables even if one fails
-        }
-      }
-    }
-  } catch (error) {
-    throw error;
-  }
-}
-
-/**
- * Close database connection(s)
- * @param dbPath Optional path for SQLite databases
- */
-export async function closeDatabase(dbPath?: string): Promise<void> {
-  if (dbImplementation && dbImplementation.closeDatabase) {
-    return dbImplementation.closeDatabase(dbPath);
-  }
-}
-
 // Export types
 export type { Model, ModelField };

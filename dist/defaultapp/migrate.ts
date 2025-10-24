@@ -7,34 +7,38 @@ This script initializes the database and runs all migrations
 
 import fs from 'fs';
 import path from 'path';
-import { db_init, db_query, getDatabaseConfig } from './db';
+import { db_init, db_query } from './db';
 
 async function runMigrations() {
   console.log('🚀 Starting database migration...');
   
   try {
-    // Get database configuration
-    const config = getDatabaseConfig();
+    // Get database type from environment
+    const dbType = (process.env.DATABASE_TYPE || process.env.DB_TYPE || 'postgres').toLowerCase();
     
-    if (config.type !== 'sqlite') {
-      console.log(`⚠️  Migration runner currently only supports SQLite. Detected: ${config.type}`);
+    if (dbType !== 'sqlite') {
+      console.log(`⚠️  Migration runner currently only supports SQLite. Detected: ${dbType}`);
       console.log('Please run your database migrations manually.');
       return;
     }
     
     // Display database path for SQLite
     let dbPath: string;
-    if (config.connectionString) {
-      dbPath = config.connectionString.startsWith('sqlite://') 
-        ? config.connectionString.slice(9) 
-        : config.connectionString;
+    const databaseUrl = process.env.DATABASE_URL;
+    const efsMountPath = process.env.EFS_MOUNT_PATH;
+    const sqliteDir = process.env.SQLITE_DIR || '.';
+    
+    if (databaseUrl) {
+      dbPath = databaseUrl.startsWith('sqlite://') 
+        ? databaseUrl.slice(9) 
+        : databaseUrl;
       console.log(`📁 Database location: ${dbPath} (from DATABASE_URL)`);
-    } else if (config.efsMountPath) {
-      dbPath = path.join(config.efsMountPath, 'data', 'app.db');
+    } else if (efsMountPath) {
+      dbPath = path.join(efsMountPath, 'data', 'app.db');
       console.log(`📁 Database location: ${dbPath} (from EFS_MOUNT_PATH)`);
     } else {
-      dbPath = path.join(config.sqliteDir || '.', 'app.db');
-      console.log(`📁 Database location: ${dbPath} (default: ${config.sqliteDir ? 'SQLITE_DIR' : 'current directory'})`);
+      dbPath = path.join(sqliteDir, 'app.db');
+      console.log(`📁 Database location: ${dbPath} (default: ${sqliteDir !== '.' ? 'SQLITE_DIR' : 'current directory'})`);
     }
     
     // Initialize database connection

@@ -34,7 +34,7 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
         const { projectId, mode } = await initialize_site_generation({
             projectName,
             requirements: prompt,
-            databaseType: databaseType || "sqlite",
+            databaseType: databaseType || "postgres",
             login_providers: login_providers || "google",
             designStyle,
             generateImages,
@@ -49,7 +49,7 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
         // Store the projectId, targetDir, and databaseType in the job
         jobs.setProjectId(jobId, projectId);
         jobs.setTargetDir(jobId, targetDir);
-        jobs.setDatabaseType(jobId, databaseType || "sqlite");
+        jobs.setDatabaseType(jobId, databaseType || "postgres");
         jobs.appendLog(jobId, `Project initialized with ID: ${projectId}, mode: ${mode}`);
         jobs.setStatus(jobId, { step: "generating", progressPercent: 20 });
         // Continue generation asynchronously (don't await)
@@ -91,7 +91,7 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
                 await write_site_by_project_id({
                     projectId,
                     targetDir,
-                    databaseType: databaseType || "sqlite"
+                    databaseType: databaseType || "postgres"
                 }, {
                     onLog: (message) => jobs.appendLog(jobId, message)
                 });
@@ -187,7 +187,7 @@ async function runCompleteBackendJob(jobId, projectId, targetDir, databaseType) 
         let project, wroteTo;
         try {
             jobs.setStatus(jobId, { step: "generating_backend", progressPercent: 30 });
-            const result = await complete_backend_and_write({ projectId, targetDir, databaseType: databaseType || "sqlite" }, {
+            const result = await complete_backend_and_write({ projectId, targetDir, databaseType: databaseType || "postgres" }, {
                 onLog: (message) => jobs.appendLog(jobId, message)
             });
             project = result.project;
@@ -239,7 +239,7 @@ server.tool("generate_site", {
     prompt: z.string().min(1),
     targetDir: z.string().min(1),
     projectName: z.string().optional(),
-    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("sqlite"),
+    databaseType: z.enum(["postgres", "sqlite", "mysql"]).optional().default("postgres"),
     login_providers: z.string().optional().default("google"),
     designStyle: z.string().optional(),
     generateImages: z.boolean().optional(),
@@ -481,7 +481,7 @@ server.tool("get_status", {
                     const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
                     await writeProjectPagesOnly(project, {
                         targetDir: actualTargetDir,
-                        databaseType: actualDatabaseType || "sqlite",
+                        databaseType: actualDatabaseType || "postgres",
                         writeApis: shouldWriteBackend // Only write backend stuff if it exists
                     });
                     // Fetch and write library files
@@ -631,7 +631,7 @@ server.tool("get_status", {
 server.tool("complete_backend", {
     projectId: z.string().min(1),
     targetDir: z.string().min(1),
-    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("sqlite")
+    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("postgres")
 }, async ({ projectId, targetDir, databaseType }) => {
     // Backend completion typically takes 2-3 minutes
     const job = jobs.createJob(180, 90); // 3 minutes expected, poll every 1.5 minutes
@@ -640,7 +640,7 @@ server.tool("complete_backend", {
     // Store project info in the job for status checking
     jobs.setProjectId(job.id, projectId);
     jobs.setTargetDir(job.id, targetDir);
-    jobs.setDatabaseType(job.id, databaseType || "sqlite");
+    jobs.setDatabaseType(job.id, databaseType || "postgres");
     // Start the backend completion job asynchronously
     void runCompleteBackendJob(job.id, projectId, targetDir, databaseType);
     return {

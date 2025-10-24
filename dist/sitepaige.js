@@ -278,7 +278,7 @@ export async function write_site_by_project_id(params, options) {
         const { writeProjectPagesOnly } = await import("./blueprintWriter.js");
         await writeProjectPagesOnly(project, {
             targetDir: params.targetDir,
-            databaseType: params.databaseType || "sqlite",
+            databaseType: params.databaseType || "postgres",
             writeApis: true // write_site_by_project_id will conditionally write APIs/models if they exist
         });
         // Fetch and write library files
@@ -342,7 +342,7 @@ export async function complete_backend_and_write(params, options) {
         const { writeProjectBackendOnly } = await import("./blueprintWriter.js");
         await writeProjectBackendOnly(project, {
             targetDir: params.targetDir,
-            databaseType: params.databaseType || "sqlite"
+            databaseType: params.databaseType || "postgres"
         });
         // Fetch and write library files (they might have been updated with the backend)
         await debugLog(`[complete_backend_and_write] About to fetch library files for project: ${params.projectId}`);

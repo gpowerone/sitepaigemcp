@@ -5,7 +5,7 @@ import { ensureDir } from "./utils.js";
 import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-export async function writeModelsSql(targetDir, blueprint, databaseType = "sqlite") {
+export async function writeModelsSql(targetDir, blueprint, databaseType = "postgres") {
     const migrationsDir = path.join(targetDir, "migrations");
     ensureDir(migrationsDir);
     const basePath = path.join(migrationsDir, "000_base.sql");
@@ -75,15 +75,15 @@ export async function writeModelsSql(targetDir, blueprint, databaseType = "sqlit
             'BOOLEAN': 'BOOLEAN'
         }
     };
-    const dbTypeMap = typeMap[databaseType] || typeMap.postgres;
+    const dbTypeMap = typeMap[databaseType] || typeMap.sqlite;
     const quoteChar = databaseType === 'mysql' ? '`' : '"';
     for (const model of models) {
-        const tableName = model.name || model.id || "table";
+        const tableName = (model.name || model.id || "table").toLowerCase();
         lines.push(`\n-- Model: ${tableName}`);
         const fieldDefs = [];
         const fields = model.fields || [];
         for (const f of fields) {
-            const name = f.name || "col";
+            const name = (f.name || "col").toLowerCase();
             const dt = f.datatype.toUpperCase() || "TEXT";
             const size = f.datatypesize || "";
             const required = f.required.toLowerCase() === "true" ? " NOT NULL" : "";
@@ -98,7 +98,7 @@ export async function writeModelsSql(targetDir, blueprint, databaseType = "sqlit
         if (model.data_is_user_specific.toLowerCase() === "true") {
             const userIdType = databaseType === 'mysql' ? 'VARCHAR(36)' : (databaseType === 'postgres' ? 'UUID' : 'TEXT');
             fieldDefs.push(`  ${quoteChar}userid${quoteChar} ${userIdType} NOT NULL`);
-            fieldDefs.push(`  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}Users${quoteChar} (${quoteChar}userid${quoteChar})`);
+            fieldDefs.push(`  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}users${quoteChar} (${quoteChar}userid${quoteChar})`);
         }
         const createSql = `CREATE TABLE IF NOT EXISTS ${quoteChar}${tableName}${quoteChar} (\n${fieldDefs.join(",\n")}\n);`;
         lines.push(createSql);
@@ -158,12 +158,12 @@ export function generateSQLFromMigrations(migrations, databaseType = "postgres")
             'BOOLEAN': 'BOOLEAN'
         }
     };
-    const dbTypeMap = typeMap[databaseType] || typeMap.postgres;
+    const dbTypeMap = typeMap[databaseType] || typeMap.sqlite;
     const quoteChar = databaseType === 'mysql' ? '`' : '"';
     const sql = [];
     for (const m of migrations) {
         const action = m.action;
-        const modelName = m.modelName || m.modelId || "";
+        const modelName = (m.modelName || m.modelId || "").toLowerCase();
         if (action === "create") {
             const modelChange = m.changes.find((c) => c.type === "model" && c.operation === "add");
             const model = (modelChange?.newValue ?? { name: modelName });
@@ -179,9 +179,9 @@ export function generateSQLFromMigrations(migrations, databaseType = "postgres")
                 }
                 const required = f.required.toLowerCase() === "true" ? " NOT NULL" : "";
                 const pk = (f.key === "primary") ? " PRIMARY KEY" : "";
-                return `  ${quoteChar}${f.name}${quoteChar} ${mappedType}${required}${pk}`;
+                return `  ${quoteChar}${f.name.toLowerCase()}${quoteChar} ${mappedType}${required}${pk}`;
             });
-            sql.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}${model.name || modelName}${quoteChar} (\n${fieldDefs.join(",\n")}\n);`);
+            sql.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}${(model.name || modelName).toLowerCase()}${quoteChar} (\n${fieldDefs.join(",\n")}\n);`);
             continue;
         }
         if (action === "delete") {
@@ -204,19 +204,19 @@ export function generateSQLFromMigrations(migrations, databaseType = "postgres")
                     const required = f.required.toLowerCase() === "true" ? " NOT NULL" : "";
                     // SQLite doesn't support ALTER COLUMN syntax, needs special handling
                     if (databaseType === 'sqlite') {
-                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} ADD COLUMN ${quoteChar}${f.name}${quoteChar} ${mappedType}${required};`);
+                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} ADD COLUMN ${quoteChar}${f.name.toLowerCase()}${quoteChar} ${mappedType}${required};`);
                     }
                     else {
-                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} ADD COLUMN ${quoteChar}${f.name}${quoteChar} ${mappedType}${required};`);
+                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} ADD COLUMN ${quoteChar}${f.name.toLowerCase()}${quoteChar} ${mappedType}${required};`);
                     }
                 }
                 else if (c.operation === "remove" && c.field) {
                     // SQLite doesn't support DROP COLUMN before version 3.35.0
                     if (databaseType === 'sqlite') {
-                        sql.push(`-- WARNING: SQLite doesn't support DROP COLUMN. Manual migration required for: ${quoteChar}${modelName}${quoteChar}.${quoteChar}${c.field}${quoteChar}`);
+                        sql.push(`-- WARNING: SQLite doesn't support DROP COLUMN. Manual migration required for: ${quoteChar}${modelName}${quoteChar}.${quoteChar}${c.field.toLowerCase()}${quoteChar}`);
                     }
                     else {
-                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} DROP COLUMN ${quoteChar}${c.field}${quoteChar};`);
+                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} DROP COLUMN ${quoteChar}${c.field.toLowerCase()}${quoteChar};`);
                     }
                 }
                 else if (c.operation === "modify") {
@@ -230,15 +230,15 @@ export function generateSQLFromMigrations(migrations, databaseType = "postgres")
                     }
                     // SQLite doesn't support ALTER COLUMN TYPE
                     if (databaseType === 'sqlite') {
-                        sql.push(`-- WARNING: SQLite doesn't support ALTER COLUMN TYPE. Manual migration required for: ${quoteChar}${modelName}${quoteChar}.${quoteChar}${f.name || c.field || "col"}${quoteChar}`);
+                        sql.push(`-- WARNING: SQLite doesn't support ALTER COLUMN TYPE. Manual migration required for: ${quoteChar}${modelName}${quoteChar}.${quoteChar}${(f.name || c.field || "col").toLowerCase()}${quoteChar}`);
                     }
                     else if (databaseType === 'mysql') {
                         // MySQL uses MODIFY syntax
-                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} MODIFY COLUMN ${quoteChar}${f.name || c.field || "col"}${quoteChar} ${mappedType};`);
+                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} MODIFY COLUMN ${quoteChar}${(f.name || c.field || "col").toLowerCase()}${quoteChar} ${mappedType};`);
                     }
                     else {
                         // PostgreSQL uses ALTER COLUMN TYPE
-                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} ALTER COLUMN ${quoteChar}${f.name || c.field || "col"}${quoteChar} TYPE ${mappedType};`);
+                        sql.push(`ALTER TABLE ${quoteChar}${modelName}${quoteChar} ALTER COLUMN ${quoteChar}${(f.name || c.field || "col").toLowerCase()}${quoteChar} TYPE ${mappedType};`);
                     }
                 }
             }

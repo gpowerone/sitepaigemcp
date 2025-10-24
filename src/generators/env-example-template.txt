@@ -1,6 +1,7 @@
 # Database Configuration
-# Set DATABASE_TYPE to one of: sqlite, postgres, mysql
+# Set DATABASE_TYPE or DB_TYPE to one of: sqlite, postgres, mysql
 DATABASE_TYPE=sqlite
+# DB_TYPE=postgres
 
 # SQLite Configuration
 # Option 1: Specify full database path (recommended)
@@ -27,6 +28,10 @@ DATABASE_TYPE=sqlite
 # POSTGRES_USER=postgres
 # POSTGRES_PASSWORD=yourpassword
 # POSTGRES_DB=app
+
+# SSL Configuration for PostgreSQL (e.g., AWS RDS)
+# SSL is always enabled for PostgreSQL connections
+# DB_SSL_REJECT_UNAUTHORIZED=false (set to 'false' for self-signed certificates)
 
 # MySQL Configuration
 # Option 1: Use connection string

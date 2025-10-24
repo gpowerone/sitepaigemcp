@@ -39,156 +39,13 @@ export interface OAuthToken {
 }
 
 /**
- * Ensure the Users table exists with the correct schema
- */
-export async function ensureUsersTable(): Promise<void> {
-  // Skip table creation during build time
-  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
-    return;
-  }
-  
-  const client = await db_init();
-
-  // Create or migrate the Users table
-  const createTableSQL = `
-    CREATE TABLE IF NOT EXISTS Users (
-      userid VARCHAR(36) PRIMARY KEY NOT NULL,
-      OAuthID VARCHAR(255) NOT NULL UNIQUE,
-      Source VARCHAR(20) NOT NULL CHECK(Source IN ('google', 'facebook', 'apple', 'github')),
-      UserName VARCHAR(255) NOT NULL,
-      Email VARCHAR(255),
-      AvatarURL TEXT,
-      UserLevel INTEGER NOT NULL DEFAULT 1 CHECK(UserLevel IN (0, 1, 2)),
-      UserTier INTEGER NOT NULL DEFAULT 0,
-      LastLoginDate DATETIME NOT NULL,
-      CreatedDate DATETIME NOT NULL,
-      IsActive BOOLEAN NOT NULL DEFAULT true
-    );
-    
-    CREATE INDEX IF NOT EXISTS idx_users_oauth ON Users(OAuthID);
-    CREATE INDEX IF NOT EXISTS idx_users_permission ON Users(UserLevel);
-  `;
-  
-  // Split and execute statements separately for compatibility
-  const statements = createTableSQL.split(';').map(s => s.trim()).filter(s => s.length > 0);
-  for (const statement of statements) {
-    try {
-      await db_query(client, statement);
-    } catch (error) {
-      // Ignore errors for index creation as some databases don't support IF NOT EXISTS for indexes
-      if (!statement.includes('CREATE INDEX')) {
-        throw error;
-      }
-    }
-  }
-}
-
-/**
- * Ensure the UserSession table exists
- */
-export async function ensureUserSessionTable(): Promise<void> {
-  // Skip table creation during build time
-  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
-    return;
-  }
-  
-  const client = await db_init();
-  
-  const createTableSQL = `
-    CREATE TABLE IF NOT EXISTS UserSession (
-      ID VARCHAR(36) PRIMARY KEY NOT NULL,
-      SessionToken VARCHAR(255) NOT NULL UNIQUE,
-      userid VARCHAR(36) NOT NULL,
-      ExpirationDate DATETIME NOT NULL,
-      FOREIGN KEY (userid) REFERENCES Users(userid) ON DELETE CASCADE
-    );
-    
-    CREATE INDEX IF NOT EXISTS idx_session_token ON UserSession(SessionToken);
-    CREATE INDEX IF NOT EXISTS idx_session_user ON UserSession(userid);
-    CREATE INDEX IF NOT EXISTS idx_session_expiry ON UserSession(ExpirationDate);
-  `;
-  
-  // Split and execute statements separately for compatibility
-  const statements = createTableSQL.split(';').map(s => s.trim()).filter(s => s.length > 0);
-  for (const statement of statements) {
-    try {
-      await db_query(client, statement);
-    } catch (error) {
-      // Ignore errors for index creation as some databases don't support IF NOT EXISTS for indexes
-      if (!statement.includes('CREATE INDEX')) {
-        throw error;
-      }
-    }
-  }
-}
-
-/**
- * Ensure the OAuthTokens table exists
- */
-export async function ensureOAuthTokensTable(): Promise<void> {
-  // Skip table creation during build time
-  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
-    return;
-  }
-  
-  const client = await db_init();
-  
-  const createTableSQL = `
-    CREATE TABLE IF NOT EXISTS OAuthTokens (
-      ID VARCHAR(36) PRIMARY KEY NOT NULL,
-      userid VARCHAR(36) NOT NULL,
-      Provider VARCHAR(20) NOT NULL CHECK(Provider IN ('google', 'facebook', 'apple', 'github')),
-      AccessToken TEXT NOT NULL,
-      RefreshToken TEXT,
-      ExpiresAt DATETIME,
-      CreatedAt DATETIME NOT NULL,
-      UpdatedAt DATETIME NOT NULL,
-      FOREIGN KEY (userid) REFERENCES Users(userid) ON DELETE CASCADE
-    );
-    
-    CREATE INDEX IF NOT EXISTS idx_oauth_user ON OAuthTokens(userid);
-    CREATE INDEX IF NOT EXISTS idx_oauth_provider ON OAuthTokens(userid, Provider);
-  `;
-  
-  // Split and execute statements separately for compatibility
-  const statements = createTableSQL.split(';').map(s => s.trim()).filter(s => s.length > 0);
-  for (const statement of statements) {
-    try {
-      await db_query(client, statement);
-    } catch (error) {
-      // Ignore errors for index creation as some databases don't support IF NOT EXISTS for indexes
-      if (!statement.includes('CREATE INDEX')) {
-        throw error;
-      }
-    }
-  }
-}
-
-/**
- * Ensure all authentication tables exist
- */
-export async function ensureAuthTables(): Promise<void> {
-  // Skip table creation during build time
-  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
-    return;
-  }
-  
-  const client = await db_init();
-  
-  // IMPORTANT: Create Users table first since UserSession and OAuthTokens have foreign keys to it
-  await ensureUsersTable();
-  await ensureUserSessionTable();
-  await ensureOAuthTokensTable();
-}
-
-/**
  * Get all users from the database
  */
 export async function getAllUsers(): Promise<User[]> {
   const client = await db_init();
   
   const users = await db_query(client, 
-    `SELECT * FROM Users 
+    `SELECT * FROM users 
      WHERE IsActive = ? 
      ORDER BY UserLevel DESC, UserName ASC`,
     [true]
@@ -204,7 +61,7 @@ export async function getUserByOAuthID(oauthId: string): Promise<User | null> {
   const client = await db_init();
 
   const users = await db_query(client, 
-    "SELECT * FROM Users WHERE OAuthID = ? AND IsActive = ?",
+    "SELECT * FROM users WHERE OAuthID = ? AND IsActive = ?",
     [oauthId, true]
   );
   
@@ -218,7 +75,7 @@ export async function getUserByID(userId: string): Promise<User | null> {
   const client = await db_init();
   
   const users = await db_query(client, 
-    "SELECT * FROM Users WHERE userid = ? AND IsActive = ?",
+    "SELECT * FROM users WHERE userid = ? AND IsActive = ?",
     [userId, true]
   );
   
@@ -243,7 +100,7 @@ export async function upsertUser(
   if (existingUser) {
     // Update existing user
     await db_query(client,
-      `UPDATE Users 
+      `UPDATE users 
        SET UserName = ?, Email = COALESCE(?, Email), AvatarURL = ?, 
            LastLoginDate = CURRENT_TIMESTAMP, Source = ?
        WHERE OAuthID = ?`,
@@ -253,7 +110,7 @@ export async function upsertUser(
     return (await getUserByOAuthID(oauthId))!;
   } else {
     // Check if this is the first user (should be admin)
-    const allUsers = await db_query(client, "SELECT COUNT(*) as count FROM Users");
+    const allUsers = await db_query(client, "SELECT COUNT(*) as count FROM users");
     const isFirstUser = allUsers[0].count === 0;
     
     // Create new user
@@ -261,7 +118,7 @@ export async function upsertUser(
     const permissionLevel = isFirstUser ? 2 : 1; // First user is admin
     
     await db_query(client,
-      `INSERT INTO Users 
+      `INSERT INTO users 
        (userid, OAuthID, Source, UserName, Email, AvatarURL, UserLevel, UserTier,
         LastLoginDate, CreatedDate, IsActive)
        VALUES (?, ?, ?, ?, ?, ?, ?, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?)`,
@@ -284,7 +141,7 @@ export async function updateUserPermission(
   // Ensure there's always at least one admin
   if (permissionLevel < 2) {
     const admins = await db_query(client,
-      "SELECT COUNT(*) as count FROM Users WHERE UserLevel = ? AND userid != ? AND IsActive = ?",
+      "SELECT COUNT(*) as count FROM users WHERE UserLevel = ? AND userid != ? AND IsActive = ?",
       [2, userId, true]
     );
     
@@ -294,7 +151,7 @@ export async function updateUserPermission(
   }
   
   const result = await db_query(client,
-    "UPDATE Users SET UserLevel = ? WHERE userid = ?",
+    "UPDATE users SET UserLevel = ? WHERE userid = ?",
     [permissionLevel, userId]
   );
   
@@ -311,7 +168,7 @@ export async function deleteUser(userId: string): Promise<boolean> {
   const user = await getUserByID(userId);
   if (user && user.UserLevel === 2) {
     const admins = await db_query(client,
-      "SELECT COUNT(*) as count FROM Users WHERE UserLevel = ? AND userid != ? AND IsActive = ?",
+      "SELECT COUNT(*) as count FROM users WHERE UserLevel = ? AND userid != ? AND IsActive = ?",
       [2, userId, true]
     );
     
@@ -322,7 +179,7 @@ export async function deleteUser(userId: string): Promise<boolean> {
   
   // Soft delete the user
   const result = await db_query(client,
-    "UPDATE Users SET IsActive = ? WHERE userid = ?",
+    "UPDATE users SET IsActive = ? WHERE userid = ?",
     [false, userId]
   );
   
@@ -346,7 +203,7 @@ export async function getUserStats(): Promise<{
       SUM(CASE WHEN UserLevel = 2 THEN 1 ELSE 0 END) as admins,
       SUM(CASE WHEN UserLevel = 1 THEN 1 ELSE 0 END) as registeredUsers,
       SUM(CASE WHEN UserLevel = 0 THEN 1 ELSE 0 END) as guestUsers
-    FROM Users
+    FROM users
     WHERE IsActive = ?
   `, [true]);
   
@@ -360,7 +217,7 @@ export async function cleanupExpiredSessions(): Promise<number> {
   const client = await db_init();
   
   const result = await db_query(client,
-    "DELETE FROM UserSession WHERE ExpirationDate < CURRENT_TIMESTAMP"
+    "DELETE FROM usersession WHERE ExpirationDate < CURRENT_TIMESTAMP"
   );
   
   return result[0].changes;
@@ -384,13 +241,13 @@ export async function storeOAuthToken(
   
   // Delete existing tokens for this user/provider combo
   await db_query(client,
-    "DELETE FROM OAuthTokens WHERE userid = ? AND Provider = ?",
+    "DELETE FROM oauthtokens WHERE userid = ? AND Provider = ?",
     [userId, provider]
   );
   
   // Insert new token
   await db_query(client,
-    `INSERT INTO OAuthTokens 
+    `INSERT INTO oauthtokens 
      (ID, userid, Provider, AccessToken, RefreshToken, ExpiresAt, CreatedAt, UpdatedAt)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [tokenId, userId, provider, accessToken, refreshToken || null, expiresAt, now, now]
@@ -407,7 +264,7 @@ export async function getOAuthToken(
   const client = await db_init();
   
   const tokens = await db_query(client,
-    "SELECT * FROM OAuthTokens WHERE userid = ? AND Provider = ?",
+    "SELECT * FROM oauthtokens WHERE userid = ? AND Provider = ?",
     [userId, provider]
   );
   
@@ -426,8 +283,8 @@ export async function validateSession(sessionToken: string): Promise<{
   
   // Get session details
   const sessions = await db_query(client,
-    `SELECT s.*, u.* FROM UserSession s 
-     JOIN Users u ON s.userid = u.userid 
+    `SELECT s.*, u.* FROM usersession s 
+     JOIN users u ON s.userid = u.userid 
      WHERE s.SessionToken = ? AND s.ExpirationDate > CURRENT_TIMESTAMP AND u.IsActive = ?`,
     [sessionToken, true]
   );
@@ -468,7 +325,7 @@ export async function rotateSession(oldSessionToken: string): Promise<string | n
   
   // Get existing session
   const sessions = await db_query(client,
-    "SELECT * FROM UserSession WHERE SessionToken = ? AND ExpirationDate > CURRENT_TIMESTAMP",
+    "SELECT * FROM usersession WHERE SessionToken = ? AND ExpirationDate > CURRENT_TIMESTAMP",
     [oldSessionToken]
   );
   
@@ -481,7 +338,7 @@ export async function rotateSession(oldSessionToken: string): Promise<string | n
   
   // Update session with new token
   await db_query(client,
-    "UPDATE UserSession SET SessionToken = ?, ExpirationDate = ? WHERE ID = ?",
+    "UPDATE usersession SET SessionToken = ?, ExpirationDate = ? WHERE ID = ?",
     [newSessionToken, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), session.ID]
   );
   

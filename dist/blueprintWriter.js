@@ -145,8 +145,8 @@ export async function writeProjectBackendOnly(project, options) {
         throw new Error("No code found in project data");
     }
     // Only write backend-specific files
-    await writeModelsSql(targetDir, blueprint, options.databaseType || "postgres");
-    await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "postgres");
+    await writeModelsSql(targetDir, blueprint, options.databaseType || "sqlite");
+    await writeIncrementalMigrations(targetDir, blueprint, options.databaseType || "sqlite");
     await writeApis(targetDir, blueprint, projectCode);
     // Write architecture documentation (now includes backend)
     await writeArchitectureDoc(targetDir, blueprint);

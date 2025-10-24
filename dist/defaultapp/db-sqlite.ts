@@ -8,7 +8,7 @@ import Database from 'better-sqlite3';
 import * as path from 'path';
 import * as fs from 'fs';
 import { promises as fsPromises } from 'fs';
-import type { DatabaseConfig, Model, ModelField } from './db';
+import type { Model, ModelField } from './db';
 
 // Map to store multiple database connections by path
 const dbConnections: Map<string, Database.Database> = new Map();
@@ -16,23 +16,24 @@ const dbConnections: Map<string, Database.Database> = new Map();
 /**
  * Get the default database path
  */
-function getDefaultDbPath(config: DatabaseConfig): string {
-  // First check if DATABASE_URL is provided (connectionString)
-  if (config.connectionString) {
+function getDefaultDbPath(): string {
+  // First check if DATABASE_URL is provided
+  const databaseUrl = process.env.DATABASE_URL;
+  if (databaseUrl) {
     // DATABASE_URL can be either a direct file path or a sqlite:// URL
-    if (config.connectionString.startsWith('sqlite://')) {
+    if (databaseUrl.startsWith('sqlite://')) {
       // Remove the sqlite:// prefix and return the path
-      return config.connectionString.slice(9);
+      return databaseUrl.slice(9);
     } else {
       // Assume it's a direct file path
-      return config.connectionString;
+      return databaseUrl;
     }
   }
   
   // Use EFS_MOUNT_PATH for production (in container with EFS)
   // Use SQLITE_DIR for local development
-  const efsMountPath = config.efsMountPath;
-  const sqliteDir = config.sqliteDir || '.';
+  const efsMountPath = process.env.EFS_MOUNT_PATH;
+  const sqliteDir = process.env.SQLITE_DIR || '.';
   
   if (efsMountPath) {
     // In production with EFS
@@ -50,16 +51,11 @@ function getDefaultDbPath(config: DatabaseConfig): string {
  * If the file doesn't exist, it will be created automatically.
  * @returns Database client
  */
-export async function db_init(config: DatabaseConfig): Promise<Database.Database> {
-  // Skip database initialization during build time
-  // Check if we're in a build environment by detecting the absence of runtime variables
-  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
-    // Return a mock database object that won't cause errors during static generation
-    return {} as Database.Database;
-  }
+export async function db_init(): Promise<Database.Database> {
+
   
   // Always use the default path - no parameter needed
-  const actualPath = getDefaultDbPath(config);
+  const actualPath = getDefaultDbPath();
   
   // Check if we already have a connection to this database
   const existingConnection = dbConnections.get(actualPath);
@@ -101,10 +97,7 @@ export async function db_query(
   query: string,
   params?: any[]
 ): Promise<any[]> {
-  // Return empty results during build time
-  if (typeof window === 'undefined' && !process.env.HOSTNAME && process.env.NODE_ENV === 'production') {
-    return [];
-  }
+
   
   try {
     // Convert booleans to integers for SQLite3 compatibility
@@ -180,6 +173,8 @@ export async function db_query(
  * @returns SQL string for creating the table
  */
 export function db_migrate(model: Model, dbType: string): string {
+  // Special handling for auth tables - create them first
+
   const sanitizedTableName = model.name;
   
   // Start with the model's fields
@@ -246,28 +241,6 @@ export function db_migrate(model: Model, dbType: string): string {
 
   return sql;
 }
-
-/**
- * Close a specific database connection or all connections
- * @param dbPath Optional path to close a specific database connection. 
- *               If not provided, closes all connections.
- */
-export function closeDatabase(dbPath?: string): void {
-  if (!dbPath) {
-    // Close all file-based connections
-    for (const [path, connection] of dbConnections.entries()) {
-      connection.close();
-    }
-    dbConnections.clear();
-  } else {
-    // Close specific database connection
-    const connection = dbConnections.get(dbPath);
-    if (connection) {
-      connection.close();
-      dbConnections.delete(dbPath);
-    }
-  }
-} 
 
 /**
  * Get or create a database connection for the specified path
