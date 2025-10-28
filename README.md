@@ -8,8 +8,8 @@ Quickly transform your ideas into web applications with Sitepaige. Generate site
 - **Seamless authentication system** powered by OAuth - your users can sign in with one click
 - **All frontend components, pages, and views** ready to use
 
-## Step 2: Backend Completion (50 credits - optional)
-- **Production-ready database architecture** (SQLite, PostgreSQL, or MySQL) - no setup headaches
+## Step 2: Backend Completion (FREE)
+- **Production-ready database architecture** (PostgreSQL, SQLlite, or MySQL) - no setup headaches
 - **RESTful API endpoints** with complete input/output schemas and step-by-step implementation guidance
 - **Comprehensive [ARCHITECTURE.md](EXAMPLE_ARCHITECTURE.md) documentation** that maps out your entire codebase for your coding agent to finish the site - no guesswork required
 - **SQL models and migrations** ready for production
@@ -160,28 +160,12 @@ The tool will:
 - Generate API routes with full implementation
 - Create comprehensive ARCHITECTURE.md documentation
 - Preserve all frontend files (no overwrites)
-- **Cost**: 50 credits
 
 ### 3. Check Status
 
 Monitor the progress of site generation using the job ID or project ID.
 If a job has been completed but the files are not written, this function will write the files to disk. 
 If you are stalled out, use 'check the status of sitepaige' to get the latest status
-
-## Cost
-
-### Frontend Generation (generate_site)
-- **First project**: FREE
-- **Additional projects**: 12 credits each
-
-### Backend Completion (complete_backend)
-- **All projects**: 50 credits each
-
-### Total for a Complete Site
-- **First complete site**: 50 credits (free frontend + 50 credit backend)
-- **Additional complete sites**: 62 credits (12 credit frontend + 50 credit backend)
-
-Purchase credits at https://sitepaige.com
 
 ## Example Workflow
 
@@ -216,6 +200,7 @@ Here's a typical workflow for generating a complete site:
 1. **"Insufficient credits" error**
    - Sign up for a SitePaige API key at https://sitepaige.com
    - Add the API key to your environment configuration
+   - Purchase credits, if needed
 
 2. **API "401 Unauthorized Error" Error**
    - Verify your API key is correctly set in the environment
