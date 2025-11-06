@@ -8,6 +8,8 @@ import {
   SitepaigePagesFirstResponse,
   SitepaigeCompleteGenerationBody,
   SitepaigeCompleteGenerationResponse,
+  SitepaigeBuildSiteBody,
+  SitepaigeBuildSiteResponse,
   SitepaigeProject,
   GenerateSiteParams,
   GenerateSiteResult,
@@ -60,6 +62,7 @@ interface LibraryFiles {
 
 export interface RequestOptions {
   onLog?: (message: string) => void;
+  headers?: Record<string, string>;
 }
 
 const debugEnv = process.env.SITEPAIGE_DEBUG;
@@ -90,7 +93,8 @@ async function requestJson<T>(
   const url = `${BASE_URL}${pathname}`;
   const headers: Record<string, string> = {
     "Authorization": `Bearer ${API_KEY}`,
-    "Content-Type": "application/json"
+    "Content-Type": "application/json",
+    ...(opts?.headers || {})
   };
 
   if (isDebug) {
@@ -177,8 +181,6 @@ export async function generate_site(
     requiresAuth,
     login_providers,
     designStyle,
-    generateImages,
-    imageGenerationStrategy,
     generateLogo,
     selectedLayout,
     selectedColorScheme,
@@ -224,8 +226,6 @@ export async function generate_site(
     ...(websiteLanguage ? { websiteLanguage } : {}),
     ...(requiresAuth !== undefined ? { requiresAuth } : {}),
     ...(designStyle ? { designStyle } : {}),
-    ...(generateImages !== undefined ? { generateImages } : {}),
-    ...(imageGenerationStrategy ? { imageGenerationStrategy } : {}),
     ...(generateLogo !== undefined ? { generateLogo } : {}),
     ...(selectedLayout ? { selectedLayout } : {}),
     ...(selectedColorScheme ? { selectedColorScheme } : {}),
@@ -241,25 +241,8 @@ export async function generate_site(
     projectId,
     mode: jobRes.mode,
     project,
-    tbd: "Frontend generated. Use complete_backend to add models and API routes."
+    tbd: "Site generated successfully."
   };
-}
-
-// Complete backend generation (models/SQL and API routes) - costs 50 credits
-export async function complete_backend(
-  projectId: string,
-  options?: RequestOptions
-): Promise<SitepaigeProject> {
-  // WARNING: This endpoint costs 50 credits
-  // Call complete generation endpoint to add models, SQL migrations, and API routes
-  const completeBody: SitepaigeCompleteGenerationBody = { projectId };
-  await requestJson<SitepaigeCompleteGenerationResponse>("POST", "/api/agentic/complete-generation", completeBody, options);
-
-  // Fetch updated project details with backend included
-  const projectUrl = `/api/project?id=${encodeURIComponent(projectId)}`;
-  const project = await requestJson<SitepaigeProject>("GET", projectUrl, undefined, options);
-
-  return project;
 }
 
 // Helper function to build full API URLs
@@ -280,8 +263,6 @@ export async function initialize_site_generation(
     requiresAuth,
     login_providers,
     designStyle,
-    generateImages,
-    imageGenerationStrategy,
     generateLogo,
     selectedLayout,
     selectedColorScheme,
@@ -324,7 +305,7 @@ export async function initialize_site_generation(
   };
 }
 
-// Continue site generation after initialization (pages-first only)
+// Continue site generation after initialization (complete frontend + backend)
 export async function continue_site_generation(
   projectId: string,
   params: Partial<GenerateSiteParams>,
@@ -335,31 +316,35 @@ export async function continue_site_generation(
     websiteLanguage,
     requiresAuth,
     designStyle,
-    generateImages,
-    imageGenerationStrategy,
     generateLogo,
     selectedLayout,
     selectedColorScheme,
     selectedFont
   } = params;
 
-  // Pages-first blueprint (FREE for first project, then 12 credits)
-  const pagesFirstBody: SitepaigePagesFirstBody = {
+  // Build complete site (frontend + backend) - takes 8-10 minutes
+  const buildSiteBody: SitepaigeBuildSiteBody = {
     projectId,
+    isSimpleApp: false, // Default to full site
+    ...(designStyle ? { designStyle } : {}),
     ...(targetLocation ? { targetLocation } : {}),
     ...(websiteLanguage ? { websiteLanguage } : {}),
     ...(requiresAuth !== undefined ? { requiresAuth } : {}),
-    ...(designStyle ? { designStyle } : {}),
-    ...(generateImages !== undefined ? { generateImages } : {}),
-    ...(imageGenerationStrategy ? { imageGenerationStrategy } : {}),
+    generateImages: true, // Always generate images
+    imageGenerationStrategy: 'AI' as 'AI' | 'Unsplash' | 'None', // Always use AI
     ...(generateLogo !== undefined ? { generateLogo } : {}),
     ...(selectedLayout ? { selectedLayout } : {}),
     ...(selectedColorScheme ? { selectedColorScheme } : {}),
     ...(selectedFont ? { selectedFont } : {})
   };
-  await requestJson<SitepaigePagesFirstResponse>("POST", "/api/agentic/pages-first", pagesFirstBody, options);
   
-  // No longer calling complete-generation here - that's a separate paid operation
+  await requestJson<SitepaigeBuildSiteResponse>("POST", "/api/agentic/build-site", buildSiteBody, {
+    ...options,
+    headers: {
+      ...options?.headers,
+      'X-Long-Running-Request': 'true'
+    }
+  });
 }
 
 // Convenience: run generation, then write files to disk based on the blueprint/code (pages only)
@@ -490,116 +475,6 @@ export async function write_site_by_project_id(
   return { project, wroteTo: params.targetDir };
 }
 
-// Complete backend and write to disk (costs 50 credits)
-export async function complete_backend_and_write(
-  params: { projectId: string; targetDir: string; databaseType?: "sqlite" | "postgres" | "mysql" },
-  options?: RequestOptions
-): Promise<{ project: SitepaigeProject; wroteTo: string }> {
-  // WARNING: This operation costs 50 credits
-  // First complete the backend generation including models, SQL migrations, and API routes
-  const project = await complete_backend(params.projectId, options);
-  
-  if (options?.onLog) {
-    options.onLog('[complete_backend_and_write] Fetched project keys: ' + Object.keys(project).join(', '));
-    options.onLog('[complete_backend_and_write] Has code? ' + (!!project.code));
-    options.onLog('[complete_backend_and_write] Has blueprint? ' + (!!project.blueprint));
-    
-    if (project.code) {
-      options.onLog('[complete_backend_and_write] Code structure: ' + JSON.stringify({
-        isObject: typeof project.code === 'object',
-        hasApis: 'apis' in project.code,
-        hasViews: 'views' in project.code
-      }));
-    }
-  }
-  
-  // Then write ONLY the backend files (models/SQL, APIs, architecture doc)
-  // This ensures we don't overwrite frontend files from generate_site
-  try {
-    const { writeProjectBackendOnly } = await import("./blueprintWriter.js");
-    await writeProjectBackendOnly(project as any, { 
-      targetDir: params.targetDir,
-      databaseType: params.databaseType || "postgres"
-    });
-    
-    // Fetch and write library files (they might have been updated with the backend)
-    await debugLog(`[complete_backend_and_write] About to fetch library files for project: ${params.projectId}`);
-    if (options?.onLog) {
-      options.onLog(`[complete_backend_and_write] About to fetch library files for project: ${params.projectId}`);
-    }
-    
-    try {
-      const libraryFiles = await fetch_all_library_files(params.projectId, options);
-      await debugLog(`[complete_backend_and_write] Successfully fetched library files`);
-      
-      // Just write the library files without updating views
-      // We create a minimal writer that doesn't update blueprint
-      const { writeLibraryFile } = await import("./blueprintWriter.js");
-      
-      for (const image of libraryFiles.images) {
-        try {
-          const base64Data = await fetchBinaryAsBase64(`/api/image?imageid=${encodeURIComponent(image.ImageID)}`, options);
-          await writeLibraryFile(params.targetDir, 'image', image.Name, base64Data);
-        } catch (error) {
-          if (options?.onLog) {
-            options.onLog(`[complete_backend_and_write] Error downloading image ${image.Name}: ${error}`);
-          }
-        }
-      }
-      
-      for (const file of libraryFiles.files) {
-        try {
-          const base64Data = await fetchBinaryAsBase64(`/api/files?fileid=${encodeURIComponent(file.FileID)}`, options);
-          await writeLibraryFile(params.targetDir, 'file', file.Name, base64Data);
-        } catch (error) {
-          if (options?.onLog) {
-            options.onLog(`[complete_backend_and_write] Error downloading file ${file.Name}: ${error}`);
-          }
-        }
-      }
-      
-      for (const video of libraryFiles.videos) {
-        try {
-          const base64Data = await fetchBinaryAsBase64(`/api/video?videoid=${encodeURIComponent(video.VideoID)}`, options);
-          await writeLibraryFile(params.targetDir, 'video', video.Name, base64Data);
-          
-          if (video.ThumbnailID) {
-            try {
-              const thumbBase64 = await fetchBinaryAsBase64(`/api/image?imageid=${encodeURIComponent(video.ThumbnailID)}`, options);
-              const thumbName = `${video.Name.replace(/\.[^.]+$/, '')}_thumb.jpg`;
-              await writeLibraryFile(params.targetDir, 'image', thumbName, thumbBase64);
-            } catch (error) {
-              if (options?.onLog) {
-                options.onLog(`[complete_backend_and_write] Error downloading video thumbnail: ${error}`);
-              }
-            }
-          }
-        } catch (error) {
-          if (options?.onLog) {
-            options.onLog(`[complete_backend_and_write] Error downloading video ${video.Name}: ${error}`);
-          }
-        }
-      }
-      
-      await debugLog(`[complete_backend_and_write] Successfully wrote library files`);
-      
-      // Note: We don't update blueprint or re-write views here since complete_backend_and_write only writes backend files
-      // The frontend views should already have been written with library mappings from initial generation
-    } catch (libError) {
-      const errorMsg = `[complete_backend_and_write] Failed to fetch/write library files: ${libError}`;
-      await debugLog(errorMsg);
-      if (options?.onLog) {
-        options.onLog(`Warning: ${errorMsg}`);
-      }
-    }
-  } catch (error) {
-    if (options?.onLog) {
-      options.onLog(`[complete_backend_and_write] ERROR in writeProjectBackendOnly: ${error}`);
-    }
-    throw error;
-  }
-  return { project, wroteTo: params.targetDir };
-}
 
 // Fetch library images for a project
 export async function fetch_library_images(

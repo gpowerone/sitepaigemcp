@@ -9,10 +9,11 @@ Quickly transform your ideas into web applications with Sitepaige. Generate site
 - **All frontend components, pages, and views** ready to use
 
 ## Step 2: Backend Completion (FREE)
-- **Production-ready database architecture** (PostgreSQL, SQLlite, or MySQL) - no setup headaches
+- **Production-ready database architecture** (PostgreSQL, SQLite, or MySQL) - simple environment configuration
 - **RESTful API endpoints** with complete input/output schemas and step-by-step implementation guidance
 - **Comprehensive [ARCHITECTURE.md](EXAMPLE_ARCHITECTURE.md) documentation** that maps out your entire codebase for your coding agent to finish the site - no guesswork required
 - **SQL models and migrations** ready for production
+- **Environment configuration template** (`.env.example`) with all database options pre-configured
 
 ## Prerequisites
 
@@ -140,57 +141,117 @@ Generate the frontend of a web application from natural language prompts:
 
 The tool will:
 - Return immediately with a job ID and project ID
-- Generate the frontend asynchronously (typically takes 2-3 minutes)
-- Automatically write frontend files when generation is complete
-- **Cost**: FREE for your first project, then 12 credits
+- Generate the complete site asynchronously (typically takes 8-10 minutes)
+- Automatically write all files when generation is complete
+- **Cost**: FREE for your first project, then credits based on your plan
+- **Duration**: Takes approximately 8-10 minutes to complete
 
-**Note**: This generates only the frontend (pages, components, views, styles). To add backend functionality, use `complete_backend`. Frontend will
-require further generation after backend is completed
+**Note**: This generates the complete web application including both frontend (pages, components, views, styles) and backend (models, APIs, database migrations)
 
-### 2. Complete Backend (Optional)
-
-Add backend functionality to your generated site:
-
-```
-"Complete the backend for the project using the project ID from generate_site"
-```
-
-The tool will:
-- Add database models and SQL migrations
-- Generate API routes with full implementation
-- Create comprehensive ARCHITECTURE.md documentation
-- Preserve all frontend files (no overwrites)
-
-### 3. Check Status
+### 2. Check Status
 
 Monitor the progress of site generation using the job ID or project ID.
 If a job has been completed but the files are not written, this function will write the files to disk. 
 If you are stalled out, use 'check the status of sitepaige' to get the latest status
 
+## Database Configuration
+
+The generated sites support PostgreSQL, MySQL, and SQLite databases. Here's how to configure PostgreSQL for your generated application:
+
+### Setting Up PostgreSQL Environment Variables
+
+After your site is generated, you'll need to configure the database connection. The generated site includes a `.env.example` file with all available options.
+
+1. **Copy the environment file**:
+   ```bash
+   cd /path/to/your/generated/site
+   cp .env.example .env
+   ```
+
+2. **Configure PostgreSQL**:
+   ```env
+   DATABASE_TYPE=postgres
+   DB_HOST=localhost      # Default: localhost
+   DB_PORT=5432           # Default: 5432
+   DB_USER=postgres       # Default: postgres
+   DB_PASSWORD=yourpassword  # Required - no default
+   DB_NAME=app            # Default: app
+   ```
+   
+   **Important Notes**: 
+   - The implementation uses only the generic `DB_*` variables
+   - `DB_PASSWORD` is required and has no default value
+   - Do not use `POSTGRES_*` or `DATABASE_URL` variables - they are not used by the implementation
+
+3. **SSL Configuration**:
+   - PostgreSQL: SSL is always enabled with `rejectUnauthorized: false` (accepts self-signed certificates)
+   - MySQL: No SSL configuration by default
+
+4. **Run database migrations**:
+   ```bash
+   npm run migrate
+   ```
+
+### Alternative Database Options
+
+**MySQL Configuration**:
+```env
+DATABASE_TYPE=mysql
+DB_HOST=localhost      # Default: localhost
+DB_PORT=3306          # Default: 3306
+DB_USER=root          # Default: root
+DB_PASSWORD=yourpassword  # Required - no default
+DB_NAME=app           # Default: app
+```
+**Note**: MySQL uses only the generic `DB_*` variables. Do not use `MYSQL_*` or `DATABASE_URL` variables.
+
+**SQLite Configuration** (Default - No setup required):
+```env
+DATABASE_TYPE=sqlite
+DATABASE_URL=./data/app.db
+# Or use SQLITE_DIR to specify the directory:
+# SQLITE_DIR=./data
+# SQLite creates the database file automatically
+```
+
+### Database Setup Requirements
+
+Before running your generated site with PostgreSQL:
+
+1. **Install PostgreSQL** if not already installed
+2. **Create a database** for your application:
+   ```sql
+   CREATE DATABASE your_app_name;
+   ```
+3. **Create a user** (optional, if not using default postgres user):
+   ```sql
+   CREATE USER your_username WITH PASSWORD 'your_password';
+   GRANT ALL PRIVILEGES ON DATABASE your_app_name TO your_username;
+   ```
+
 ## Example Workflow
 
 Here's a typical workflow for generating a complete site:
 
-1. **Generate the frontend**:
+1. **Generate the complete site**:
    ```
    "Use sitepaige to create a task management app with user authentication in /Users/me/projects/taskapp"
    ```
-   This returns a project ID (e.g., `proj_abc123`) and starts frontend generation.
+   This returns a job ID and project ID, and starts the complete site generation (frontend + backend).
 
 2. **Check status** (optional):
    ```
    "Check the status of the sitepaige generation"
    ```
    
-3. **Complete the backend** (after frontend is done):
-   ```
-   "Complete the backend for project proj_abc123"
-   ```
-   This adds database models, API routes, and full documentation.
-
+3. **Configure the database**:
+   - Navigate to the generated site directory
+   - Copy `.env.example` to `.env`
+   - Configure your database settings (see Database Configuration section above)
+   
 4. **Start developing**:
-   - Frontend is ready immediately after step 1
-   - Full backend functionality available after step 3
+   - Complete site (frontend + backend) is ready after generation completes (8-10 minutes)
+   - Run `npm run migrate` to set up the database
    - Use the generated ARCHITECTURE.md as a guide
 
 ## Troubleshooting
@@ -210,6 +271,12 @@ Here's a typical workflow for generating a complete site:
 3. **"Permission denied" when writing files**
    - Ensure the target directory is within `SITEPAIGE_ALLOWED_ROOTS`
    - Check that the directory exists and you have write permissions
+
+4. **Database connection errors**
+   - For PostgreSQL: Ensure the database service is running (`pg_ctl status` or `systemctl status postgresql`)
+   - Verify the connection details (default PostgreSQL port is 5432)
+   - Check that the database and user exist with proper permissions
+   - For cloud databases, ensure SSL settings are configured correctly
 
 
 ## License

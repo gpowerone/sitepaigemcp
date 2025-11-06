@@ -394,7 +394,7 @@ export default function ${comp}(){
             objectFit: 'cover',
             objectPosition: 'center',
             height: height ? \`\${height}px\` : 'auto',
-            display: 'block'
+            display: 'inline-block'
           }}
           crossOrigin="anonymous"
           referrerPolicy="no-referrer"

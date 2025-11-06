@@ -5,8 +5,8 @@ import { z } from "zod";
 import path from "node:path";
 import fsp from "node:fs/promises";
 import { JobRegistry } from "./jobRegistry.js";
-import { write_site_by_project_id, fetch_project_by_id, initialize_site_generation, continue_site_generation, complete_backend_and_write } from "./sitepaige.js";
-export { generate_site, complete_backend } from "./sitepaige.js";
+import { write_site_by_project_id, fetch_project_by_id, initialize_site_generation, continue_site_generation } from "./sitepaige.js";
+export { generate_site } from "./sitepaige.js";
 export { writeProjectFromBlueprint } from "./blueprintWriter.js";
 const server = new McpServer({ name: "sitepaige-mcp-server", version: "0.1.0" });
 const transport = new StdioServerTransport();
@@ -20,7 +20,7 @@ async function debugLog(message) {
 function publishResourceListChanged() {
     server.sendResourceListChanged();
 }
-async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, databaseType, login_providers, designStyle, generateImages, imageGenerationStrategy, generateLogo, selectedLayout, selectedColorScheme, selectedFont) {
+async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, databaseType, login_providers, requiresAuth, designStyle, generateLogo, selectedLayout, selectedColorScheme, selectedFont) {
     try {
         jobs.setStatus(jobId, { status: "running", step: "generate", progressPercent: 5 });
         jobs.appendLog(jobId, `Starting job ${jobId}`);
@@ -36,9 +36,8 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
             requirements: prompt,
             databaseType: databaseType || "postgres",
             login_providers: login_providers || "google",
+            requiresAuth: requiresAuth ?? true,
             designStyle,
-            generateImages,
-            imageGenerationStrategy,
             generateLogo,
             selectedLayout: selectedLayout,
             selectedColorScheme,
@@ -54,9 +53,8 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
         jobs.setStatus(jobId, { step: "generating", progressPercent: 20 });
         // Continue generation asynchronously (don't await)
         continue_site_generation(projectId, {
+            requiresAuth: requiresAuth ?? true,
             designStyle,
-            generateImages,
-            imageGenerationStrategy,
             generateLogo,
             selectedLayout: selectedLayout,
             selectedColorScheme,
@@ -64,7 +62,7 @@ async function runGenerateJob(jobId, prompt, targetDir, projectNameArg, database
         }, {
             onLog: (message) => jobs.appendLog(jobId, message)
         }).then(async () => {
-            jobs.appendLog(jobId, `Frontend generation complete for project ${projectId}.`);
+            jobs.appendLog(jobId, `Site generation complete for project ${projectId}.`);
             jobs.setStatus(jobId, { status: "completed", step: "writing", progressPercent: 90 });
             // Write the generated files to the target directory
             try {
@@ -175,75 +173,14 @@ async function runWriteJob(jobId, projectId, targetDir) {
         publishResourceListChanged();
     }
 }
-async function runCompleteBackendJob(jobId, projectId, targetDir, databaseType) {
-    try {
-        jobs.setStatus(jobId, { status: "running", step: "complete_backend", progressPercent: 10 });
-        jobs.appendLog(jobId, `Starting backend completion job ${jobId} for project ${projectId}`);
-        jobs.appendLog(jobId, `WARNING: This operation will consume 50 credits`);
-        const debugEnv = process.env.SITEPAIGE_DEBUG;
-        const debug = typeof debugEnv === "string" && ["1", "true", "yes", "on"].includes(debugEnv.toLowerCase());
-        if (debug)
-            jobs.appendLog(jobId, `Debug: calling complete_backend_and_write`);
-        let project, wroteTo;
-        try {
-            jobs.setStatus(jobId, { step: "generating_backend", progressPercent: 30 });
-            const result = await complete_backend_and_write({ projectId, targetDir, databaseType: databaseType || "postgres" }, {
-                onLog: (message) => jobs.appendLog(jobId, message)
-            });
-            project = result.project;
-            wroteTo = result.wroteTo;
-            jobs.appendLog(jobId, `Backend generation and writing completed`);
-        }
-        catch (error) {
-            console.error(`[runCompleteBackendJob] ERROR:`, error);
-            jobs.appendLog(jobId, `ERROR: ${error?.message ?? String(error)}`);
-            // Check for insufficient credits
-            if (error?.code === 'INSUFFICIENT_CREDITS') {
-                throw error; // Re-throw to be handled by caller
-            }
-            throw error;
-        }
-        jobs.setStatus(jobId, { step: "finalize", progressPercent: 95 });
-        jobs.setResult(jobId, {
-            created: ["Backend files written: models, SQL migrations, API routes, ARCHITECTURE.md"],
-            updated: [],
-            skipped: ["Frontend files preserved"],
-            conflicts: [],
-            backups: []
-        });
-        jobs.appendLog(jobId, `Backend files written to ${wroteTo}. Frontend files were preserved.`);
-        jobs.setStatus(jobId, { status: "completed", step: "done", progressPercent: 100 });
-    }
-    catch (err) {
-        // Check if this is an insufficient credits error
-        if (err?.code === 'INSUFFICIENT_CREDITS') {
-            const message = `Insufficient credits: The user needs 50 credits to complete backend generation. Please direct them to upgrade their account or purchase more credits.`;
-            jobs.appendLog(jobId, message);
-            jobs.setStatus(jobId, {
-                status: "failed",
-                step: "error",
-                progressPercent: 100,
-                errorMessage: message
-            });
-        }
-        else {
-            jobs.appendLog(jobId, `Error: ${err?.message ?? String(err)}`);
-            jobs.setStatus(jobId, { status: "failed", step: "error", progressPercent: 100, errorMessage: err?.message ?? String(err) });
-        }
-    }
-    finally {
-        publishResourceListChanged();
-    }
-}
 server.tool("generate_site", {
     prompt: z.string().min(1),
     targetDir: z.string().min(1),
     projectName: z.string().optional(),
     databaseType: z.enum(["postgres", "sqlite", "mysql"]).optional().default("postgres"),
     login_providers: z.string().optional().default("google"),
+    requiresAuth: z.boolean().optional().default(true),
     designStyle: z.string().optional(),
-    generateImages: z.boolean().optional(),
-    imageGenerationStrategy: z.enum(["AI", "Unsplash", "None"]).optional(),
     generateLogo: z.boolean().optional(),
     selectedLayout: z.enum([
         "classic-hero",
@@ -276,7 +213,7 @@ server.tool("generate_site", {
     heroHeaderFont: z.string().optional().default("Roboto"),
     heroButtonFont: z.string().optional().default("Roboto"),
     heroTextFont: z.string().optional().default("Roboto")
-}, async ({ prompt, targetDir, projectName, databaseType, login_providers, designStyle, generateImages, imageGenerationStrategy, generateLogo, selectedLayout, 
+}, async ({ prompt, targetDir, projectName, databaseType, login_providers, requiresAuth, designStyle, generateLogo, selectedLayout, 
 // Website colors
 websiteBackgroundColor, websiteTextColor, websiteHeaderColor, websiteButtonColor, websiteButtonTextColor, 
 // Hero colors
@@ -318,13 +255,13 @@ heroHeaderFont, heroButtonFont, heroTextFont }) => {
         }
     };
     const selectedFont = JSON.stringify(fontScheme);
-    // Site generation typically takes around 5 minutes
-    const job = jobs.createJob(300, 150); // 5 minutes expected, poll every 2.5 minutes
+    // Site generation typically takes around 8-10 minutes
+    const job = jobs.createJob(600, 300); // 10 minutes expected, poll every 5 minutes
     const baseUri = `mem://jobs/${job.id}`;
     publishResourceListChanged();
     try {
         // Wait for the projectId from the initial API call
-        const projectId = await runGenerateJob(job.id, prompt, targetDir, projectName, databaseType, login_providers, designStyle, generateImages, imageGenerationStrategy, generateLogo, selectedLayout, selectedColorScheme, selectedFont);
+        const projectId = await runGenerateJob(job.id, prompt, targetDir, projectName, databaseType, login_providers, requiresAuth, designStyle, generateLogo, selectedLayout, selectedColorScheme, selectedFont);
         return {
             content: [
                 {
@@ -338,9 +275,9 @@ heroHeaderFont, heroButtonFont, heroTextFont }) => {
                         logsUri: `${baseUri}/logs`,
                         planUri: `${baseUri}/plan`,
                         resultUri: `${baseUri}/result`,
-                        expectedDurationSeconds: 300,
-                        recommendedPollingIntervalSeconds: 150,
-                        hint: "Frontend generation started in the background and typically takes 5-7 minutes. Files will be written automatically to the target directory when generation completes. To add backend functionality later, use complete_backend (50 credits)."
+                        expectedDurationSeconds: 600,
+                        recommendedPollingIntervalSeconds: 300,
+                        hint: "Full site generation (frontend + backend) started in the background and typically takes 8-10 minutes. Files will be written automatically to the target directory when generation completes."
                     })
                 }
             ]
@@ -543,7 +480,7 @@ server.tool("get_status", {
                                     status: "success",
                                     jobId,
                                     projectId: actualProjectId,
-                                    message: "Frontend generation complete and files written successfully. To add backend functionality, use complete_backend (50 credits).",
+                                    message: "Site generation complete and files written successfully.",
                                     targetDir: actualTargetDir
                                 })
                             }
@@ -627,44 +564,6 @@ server.tool("get_status", {
             ]
         };
     }
-});
-server.tool("complete_backend", {
-    projectId: z.string().min(1),
-    targetDir: z.string().min(1),
-    databaseType: z.enum(["sqlite", "postgres", "mysql"]).optional().default("postgres")
-}, async ({ projectId, targetDir, databaseType }) => {
-    // Backend completion typically takes 2-3 minutes
-    const job = jobs.createJob(180, 90); // 3 minutes expected, poll every 1.5 minutes
-    const baseUri = `mem://jobs/${job.id}`;
-    publishResourceListChanged();
-    // Store project info in the job for status checking
-    jobs.setProjectId(job.id, projectId);
-    jobs.setTargetDir(job.id, targetDir);
-    jobs.setDatabaseType(job.id, databaseType || "postgres");
-    // Start the backend completion job asynchronously
-    void runCompleteBackendJob(job.id, projectId, targetDir, databaseType);
-    return {
-        content: [
-            {
-                type: "text",
-                text: JSON.stringify({
-                    status: "generating",
-                    jobId: job.id,
-                    projectId: projectId,
-                    targetDir: targetDir,
-                    statusUri: `${baseUri}/status`,
-                    logsUri: `${baseUri}/logs`,
-                    planUri: `${baseUri}/plan`,
-                    resultUri: `${baseUri}/result`,
-                    expectedDurationSeconds: 180,
-                    recommendedPollingIntervalSeconds: 90,
-                    creditsCost: 50,
-                    warning: "This operation will consume 50 credits from your account",
-                    hint: "Backend generation started. This will add models, SQL migrations, API routes, and ARCHITECTURE.md to your project. Frontend files will be preserved. Use get_status to check progress."
-                })
-            }
-        ]
-    };
 });
 server.resource("job_statuses", "mem://jobs/{jobId}/status", { mimeType: "application/json" }, async (uri) => {
     const res = jobs.readResource(uri.toString());

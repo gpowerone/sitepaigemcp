@@ -16,7 +16,7 @@
     "tools": [
       {
         "name": "generate_site",
-        "description": "Generate a web application frontend from a natural language prompt (FREE for first project, then 12 credits)",
+        "description": "Generate a complete web application (frontend + backend) from a natural language prompt. Takes approximately 8-10 minutes to complete.",
         "parameters": {
           "type": "object",
           "properties": {
@@ -40,32 +40,13 @@
             "login_providers": {
               "type": "string",
               "description": "Login providers to support (defaults to 'google')"
+            },
+            "requiresAuth": {
+              "type": "boolean",
+              "description": "Whether the application requires user authentication (defaults to true)"
             }
           },
           "required": ["prompt", "targetDir"]
-        }
-      },
-      {
-        "name": "complete_backend",
-        "description": "Complete backend generation with models and API routes for an existing project. Runs asynchronously and returns a job ID. Only writes backend files (models, SQL, APIs, ARCHITECTURE.md) without overwriting frontend files. WARNING: This operation costs 50 credits and will be deducted from your account.",
-        "parameters": {
-          "type": "object",
-          "properties": {
-            "projectId": {
-              "type": "string",
-              "description": "The project ID from generate_site"
-            },
-            "targetDir": {
-              "type": "string",
-              "description": "Absolute path to the directory where the complete site will be written"
-            },
-            "databaseType": {
-              "type": "string",
-              "enum": ["postgres", "sqlite", "mysql"],
-              "description": "Database type to use (defaults to postgres)"
-            }
-          },
-          "required": ["projectId", "targetDir"]
         }
       },
       {

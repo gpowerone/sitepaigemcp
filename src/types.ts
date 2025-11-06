@@ -589,8 +589,6 @@ export interface SitepaigePagesFirstBody {
   websiteLanguage?: string;
   requiresAuth?: boolean;
   designStyle?: string;
-  generateImages?: boolean;
-  imageGenerationStrategy?: 'AI' | 'Unsplash' | 'None';
   generateLogo?: boolean;
   selectedLayout?: LayoutOption;
   selectedColorScheme?: string; // JSON stringified FullColorScheme
@@ -614,6 +612,29 @@ export interface SitepaigeCompleteGenerationResponse {
     viewsGenerated: number;
     apisGenerated: number;
   };
+}
+
+export interface SitepaigeBuildSiteBody {
+  projectId: string; // UUID
+  isSimpleApp?: boolean;
+  designStyle?: string;
+  targetLocation?: string;
+  websiteLanguage?: string;
+  requiresAuth?: boolean;
+  generateImages?: boolean;
+  imageGenerationStrategy?: 'AI' | 'Unsplash' | 'None';
+  generateLogo?: boolean;
+  selectedLayout?: LayoutOption;
+  selectedColorScheme?: string; // JSON stringified FullColorScheme
+  selectedFont?: string; // JSON stringified FontScheme
+}
+
+export interface SitepaigeBuildSiteResponse {
+  success: boolean;
+  blueprint?: Record<string, unknown>;
+  code?: Record<string, unknown>;
+  error?: string;
+  errorCode?: string;
 }
 
 export interface SitepaigeProjectQuery {
@@ -679,8 +700,6 @@ export interface GenerateSiteParams {
   databaseType?: "sqlite" | "postgres" | "mysql";
   login_providers?: string; // default 'google'
   designStyle?: string;
-  generateImages?: boolean;
-  imageGenerationStrategy?: 'AI' | 'Unsplash' | 'None';
   generateLogo?: boolean;
   selectedLayout?: LayoutOption;
   selectedColorScheme?: string; // JSON stringified FullColorScheme
