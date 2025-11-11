@@ -9,6 +9,133 @@ interface RFormProps {
   design: Design;
 }
 
+// Translation function for form submit text
+const getFormTranslation = (key: string, websiteLanguage: string) => {
+  const translations: Record<string, Record<string, string>> = {
+    'Submit': {
+      'English': 'Submit',
+      'Spanish': 'Enviar',
+      'French': 'Soumettre',
+      'German': 'Absenden',
+      'Portuguese': 'Enviar',
+      'Italian': 'Invia',
+      'Dutch': 'Versturen',
+      'Chinese': '提交',
+      'Japanese': '送信',
+      'Korean': '제출',
+      'Russian': 'Отправить',
+      'Arabic': 'إرسال',
+      'Hindi': 'सबमिट करें'
+    },
+    'Submitting...': {
+      'English': 'Submitting...',
+      'Spanish': 'Enviando...',
+      'French': 'Envoi en cours...',
+      'German': 'Wird gesendet...',
+      'Portuguese': 'Enviando...',
+      'Italian': 'Invio in corso...',
+      'Dutch': 'Bezig met versturen...',
+      'Chinese': '提交中...',
+      'Japanese': '送信中...',
+      'Korean': '제출 중...',
+      'Russian': 'Отправка...',
+      'Arabic': 'جاري الإرسال...',
+      'Hindi': 'सबमिट हो रहा है...'
+    },
+    'Submit Another Response': {
+      'English': 'Submit Another Response',
+      'Spanish': 'Enviar otra respuesta',
+      'French': 'Soumettre une autre réponse',
+      'German': 'Weitere Antwort senden',
+      'Portuguese': 'Enviar outra resposta',
+      'Italian': 'Invia un\'altra risposta',
+      'Dutch': 'Nog een reactie versturen',
+      'Chinese': '提交另一个回复',
+      'Japanese': '別の回答を送信',
+      'Korean': '다른 응답 제출',
+      'Russian': 'Отправить еще один ответ',
+      'Arabic': 'إرسال رد آخر',
+      'Hindi': 'एक और प्रतिक्रिया सबमिट करें'
+    },
+    'Thank You!': {
+      'English': 'Thank You!',
+      'Spanish': '¡Gracias!',
+      'French': 'Merci!',
+      'German': 'Vielen Dank!',
+      'Portuguese': 'Obrigado!',
+      'Italian': 'Grazie!',
+      'Dutch': 'Bedankt!',
+      'Chinese': '谢谢！',
+      'Japanese': 'ありがとうございます！',
+      'Korean': '감사합니다!',
+      'Russian': 'Спасибо!',
+      'Arabic': 'شكراً لك!',
+      'Hindi': 'धन्यवाद!'
+    },
+    'Your form has been submitted successfully. We\'ll get back to you soon.': {
+      'English': 'Your form has been submitted successfully. We\'ll get back to you soon.',
+      'Spanish': 'Tu formulario ha sido enviado exitosamente. Nos pondremos en contacto contigo pronto.',
+      'French': 'Votre formulaire a été soumis avec succès. Nous vous contacterons bientôt.',
+      'German': 'Ihr Formular wurde erfolgreich gesendet. Wir werden uns bald bei Ihnen melden.',
+      'Portuguese': 'Seu formulário foi enviado com sucesso. Entraremos em contato em breve.',
+      'Italian': 'Il tuo modulo è stato inviato con successo. Ti contatteremo presto.',
+      'Dutch': 'Uw formulier is succesvol verzonden. We nemen binnenkort contact met u op.',
+      'Chinese': '您的表单已成功提交。我们会尽快与您联系。',
+      'Japanese': 'フォームが正常に送信されました。近日中にご連絡いたします。',
+      'Korean': '양식이 성공적으로 제출되었습니다. 곧 연락드리겠습니다.',
+      'Russian': 'Ваша форма успешно отправлена. Мы свяжемся с вами в ближайшее время.',
+      'Arabic': 'تم إرسال النموذج بنجاح. سنتواصل معك قريباً.',
+      'Hindi': 'आपका फॉर्म सफलतापूर्वक सबमिट किया गया है। हम जल्द ही आपसे संपर्क करेंगे।'
+    },
+    'Form secured by FormSubmit': {
+      'English': 'Form secured by FormSubmit',
+      'Spanish': 'Formulario protegido por FormSubmit',
+      'French': 'Formulaire sécurisé par FormSubmit',
+      'German': 'Formular gesichert durch FormSubmit',
+      'Portuguese': 'Formulário protegido por FormSubmit',
+      'Italian': 'Modulo protetto da FormSubmit',
+      'Dutch': 'Formulier beveiligd door FormSubmit',
+      'Chinese': '表单由FormSubmit保护',
+      'Japanese': 'FormSubmitによって保護されたフォーム',
+      'Korean': 'FormSubmit로 보호된 양식',
+      'Russian': 'Форма защищена FormSubmit',
+      'Arabic': 'النموذج محمي بواسطة FormSubmit',
+      'Hindi': 'फॉर्म FormSubmit द्वारा सुरक्षित'
+    }
+  };
+
+  // Determine which language to use
+  let language = 'English'; // Default
+  if (websiteLanguage) {
+    // Extract the main language from the input
+    const langMap: Record<string, string> = {
+      'English': 'English',
+      'Spanish': 'Spanish',
+      'French': 'French',
+      'German': 'German',
+      'Portuguese': 'Portuguese',
+      'Italian': 'Italian',
+      'Dutch': 'Dutch',
+      'Chinese': 'Chinese',
+      'Japanese': 'Japanese',
+      'Korean': 'Korean',
+      'Russian': 'Russian',
+      'Arabic': 'Arabic',
+      'Hindi': 'Hindi'
+    };
+    
+    // Find the matching language
+    for (const [langKey, langValue] of Object.entries(langMap)) {
+      if (websiteLanguage.includes(langKey)) {
+        language = langValue;
+        break;
+      }
+    }
+  }
+
+  return translations[key]?.[language] || key;
+};
+
 interface FormField {
   id: string;
   name: string;
@@ -85,9 +212,9 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
               d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
             />
           </svg>
-          <h3 className="text-2xl font-bold text-green-800 mb-2">Thank You!</h3>
+          <h3 className="text-2xl font-bold text-green-800 mb-2">{getFormTranslation('Thank You!', design.websiteLanguage)}</h3>
           <p className="text-green-700">
-            Your form has been submitted successfully. We'll get back to you soon.
+            {getFormTranslation('Your form has been submitted successfully. We\'ll get back to you soon.', design.websiteLanguage)}
           </p>
           <button
             onClick={() => {
@@ -97,7 +224,7 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
             }}
             className="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
-            Submit Another Response
+            {getFormTranslation('Submit Another Response', design.websiteLanguage)}
           </button>
         </div>
       </div>
@@ -249,10 +376,10 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   />
                 </svg>
-                Submitting...
+                {getFormTranslation('Submitting...', design.websiteLanguage)}
               </span>
             ) : (
-              'Submit'
+              getFormTranslation('Submit', design.websiteLanguage)
             )}
           </button>
         </div>
@@ -260,7 +387,7 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
       
       {/* FormSubmit.co attribution (optional but nice to have) */}
       <div className="mt-6 text-center text-xs text-gray-400">
-        <p>Form secured by FormSubmit</p>
+        <p>{getFormTranslation('Form secured by FormSubmit', design.websiteLanguage)}</p>
       </div>
     </div>
   );

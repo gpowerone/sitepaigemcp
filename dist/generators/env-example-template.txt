@@ -51,3 +51,30 @@ DATABASE_TYPE=sqlite
 # DB_USER=dbuser
 # DB_PASSWORD=dbpassword
 # DB_NAME=app
+
+# Email Configuration (Resend)
+# Get your API key from https://resend.com/api-keys
+# RESEND_API_KEY=re_123456789_abcdefghijklmnopqrstuvwxyz
+# EMAIL_FROM=noreply@yourdomain.com
+
+# Site Configuration
+# SITE_DOMAIN is used for generating absolute URLs (e.g., in emails)
+# Defaults to https://sitepaige.com if not set
+# SITE_DOMAIN=https://yourdomain.com
+
+# OAuth Configuration
+# Google OAuth
+# NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
+# GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# GitHub OAuth
+# NEXT_PUBLIC_GITHUB_CLIENT_ID=your-github-client-id
+# GITHUB_CLIENT_SECRET=your-github-client-secret
+
+# Facebook OAuth
+# NEXT_PUBLIC_FACEBOOK_CLIENT_ID=your-facebook-app-id
+# FACEBOOK_CLIENT_SECRET=your-facebook-app-secret
+
+# Apple OAuth
+# NEXT_PUBLIC_APPLE_CLIENT_ID=your-apple-client-id
+# APPLE_CLIENT_SECRET=your-apple-client-secret

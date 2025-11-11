@@ -103,6 +103,25 @@ export async function writeModelsSql(targetDir, blueprint, databaseType = "postg
         const createSql = `CREATE TABLE IF NOT EXISTS ${quoteChar}${tableName}${quoteChar} (\n${fieldDefs.join(",\n")}\n);`;
         lines.push(createSql);
     }
+    // Add PasswordAuth table for username/password authentication
+    lines.push(`\n-- PasswordAuth table for username/password authentication`);
+    const passwordAuthTable = [];
+    if (databaseType === 'sqlite') {
+        passwordAuthTable.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}passwordauth${quoteChar} (`, `  ${quoteChar}id${quoteChar} TEXT PRIMARY KEY,`, `  ${quoteChar}email${quoteChar} TEXT NOT NULL UNIQUE,`, `  ${quoteChar}passwordhash${quoteChar} TEXT NOT NULL,`, `  ${quoteChar}salt${quoteChar} TEXT NOT NULL,`, `  ${quoteChar}verificationtoken${quoteChar} TEXT,`, `  ${quoteChar}verificationtokenexpires${quoteChar} TEXT,`, `  ${quoteChar}emailverified${quoteChar} INTEGER DEFAULT 0,`, `  ${quoteChar}resettoken${quoteChar} TEXT,`, `  ${quoteChar}resettokenexpires${quoteChar} TEXT,`, `  ${quoteChar}createdat${quoteChar} TEXT DEFAULT CURRENT_TIMESTAMP,`, `  ${quoteChar}updatedat${quoteChar} TEXT DEFAULT CURRENT_TIMESTAMP`, `);`);
+    }
+    else if (databaseType === 'postgres') {
+        passwordAuthTable.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}passwordauth${quoteChar} (`, `  ${quoteChar}id${quoteChar} UUID PRIMARY KEY,`, `  ${quoteChar}email${quoteChar} VARCHAR(255) NOT NULL UNIQUE,`, `  ${quoteChar}passwordhash${quoteChar} TEXT NOT NULL,`, `  ${quoteChar}salt${quoteChar} TEXT NOT NULL,`, `  ${quoteChar}verificationtoken${quoteChar} TEXT,`, `  ${quoteChar}verificationtokenexpires${quoteChar} TIMESTAMP,`, `  ${quoteChar}emailverified${quoteChar} BOOLEAN DEFAULT FALSE,`, `  ${quoteChar}resettoken${quoteChar} TEXT,`, `  ${quoteChar}resettokenexpires${quoteChar} TIMESTAMP,`, `  ${quoteChar}createdat${quoteChar} TIMESTAMP DEFAULT CURRENT_TIMESTAMP,`, `  ${quoteChar}updatedat${quoteChar} TIMESTAMP DEFAULT CURRENT_TIMESTAMP`, `);`);
+    }
+    else if (databaseType === 'mysql') {
+        passwordAuthTable.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}passwordauth${quoteChar} (`, `  ${quoteChar}id${quoteChar} VARCHAR(36) PRIMARY KEY,`, `  ${quoteChar}email${quoteChar} VARCHAR(255) NOT NULL UNIQUE,`, `  ${quoteChar}passwordhash${quoteChar} TEXT NOT NULL,`, `  ${quoteChar}salt${quoteChar} TEXT NOT NULL,`, `  ${quoteChar}verificationtoken${quoteChar} TEXT,`, `  ${quoteChar}verificationtokenexpires${quoteChar} DATETIME,`, `  ${quoteChar}emailverified${quoteChar} BOOLEAN DEFAULT FALSE,`, `  ${quoteChar}resettoken${quoteChar} TEXT,`, `  ${quoteChar}resettokenexpires${quoteChar} DATETIME,`, `  ${quoteChar}createdat${quoteChar} DATETIME DEFAULT CURRENT_TIMESTAMP,`, `  ${quoteChar}updatedat${quoteChar} DATETIME DEFAULT CURRENT_TIMESTAMP`, `);`);
+    }
+    lines.push(...passwordAuthTable);
+    // Add indexes for PasswordAuth
+    lines.push(`\n-- Indexes for PasswordAuth`);
+    lines.push(`CREATE INDEX IF NOT EXISTS idx_passwordauth_email ON ${quoteChar}passwordauth${quoteChar}(${quoteChar}email${quoteChar});`);
+    lines.push(`CREATE INDEX IF NOT EXISTS idx_passwordauth_verification_token ON ${quoteChar}passwordauth${quoteChar}(${quoteChar}verificationtoken${quoteChar});`);
+    lines.push(`CREATE INDEX IF NOT EXISTS idx_passwordauth_reset_token ON ${quoteChar}passwordauth${quoteChar}(${quoteChar}resettoken${quoteChar});`);
+    lines.push(`CREATE INDEX IF NOT EXISTS idx_passwordauth_email_verified ON ${quoteChar}passwordauth${quoteChar}(${quoteChar}emailverified${quoteChar});`);
     lines.push("");
     await fsp.writeFile(basePath, lines.join("\n"), "utf8");
 }

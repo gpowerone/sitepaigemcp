@@ -112,7 +112,7 @@ export default function RTestimonial({ name, custom_view_description, design }: 
               <div className="flex items-center">
                 {testimonial.photoId && (
                   <img
-                    src={`/api/image?imageid=${testimonial.photoId}`}
+                    src={`/images/${testimonial.photoId}.jpg`}
                     alt={testimonial.attribution}
                     className="w-12 h-12 rounded-full object-cover mr-4"
                     onError={(e) => {

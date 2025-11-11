@@ -32,11 +32,113 @@ export async function POST(request: Request) {
   const db = await db_init();
   
   try {
-    const { code, provider } = await request.json();
+    const { code, provider, email, password } = await request.json();
     
-    if (!code || !provider) {
+    if (!provider) {
       return NextResponse.json(
-        { error: 'No authorization code or provider specified' },
+        { error: 'No provider specified' },
+        { status: 400 }
+      );
+    }
+
+    // Handle username/password authentication
+    if (provider === 'username') {
+      if (!email || !password) {
+        return NextResponse.json(
+          { error: 'Email and password are required' },
+          { status: 400 }
+        );
+      }
+
+      const { authenticateUser, createPasswordAuthTable } = await import('../../db-password-auth');
+      const { upsertUser } = await import('../../db-users');
+      
+      // Ensure password auth table exists
+      await createPasswordAuthTable();
+
+      try {
+        // Authenticate the user
+        const authRecord = await authenticateUser(email, password);
+        
+        if (!authRecord) {
+          return NextResponse.json(
+            { error: 'Invalid email or password' },
+            { status: 401 }
+          );
+        }
+
+        // Create or update user in the main Users table
+        const user = await upsertUser(
+          `password_${authRecord.id}`, // Unique OAuth ID for password users
+          'username' as any, // Source type
+          email.split('@')[0], // Username from email
+          email,
+          undefined // No avatar for password auth
+        );
+
+        // Delete existing sessions for this user
+        const existingSessions = await db_query(db, 
+          "SELECT ID FROM usersession WHERE userid = ?", 
+          [user.userid]
+        );
+        
+        if (existingSessions && existingSessions.length > 0) {
+          const sessionIds = existingSessions.map(session => session.ID);
+          const placeholders = sessionIds.map(() => '?').join(',');
+          await db_query(db, `DELETE FROM usersession WHERE ID IN (${placeholders})`, sessionIds);
+        }
+
+        // Generate secure session token and ID
+        const sessionId = crypto.randomUUID();
+        const sessionToken = crypto.randomBytes(32).toString('base64url');
+
+        // Create new session with secure token
+        await db_query(db, 
+          "INSERT INTO usersession (ID, SessionToken, userid, ExpirationDate) VALUES (?, ?, ?, ?)",
+          [sessionId, sessionToken, user.userid, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()]
+        );
+
+        // Set session cookie with secure token
+        const sessionCookie = await cookies();
+        sessionCookie.set({
+          name: 'session_id', 
+          value: sessionToken,
+          httpOnly: true,
+          secure: process.env.NODE_ENV === 'production',
+          sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+          maxAge: 30 * 24 * 60 * 60, // 30 days
+          path: '/',
+        });
+
+        // Create a completely clean object to avoid any database result object issues
+        const cleanUserData = {
+          userid: String(user.userid),
+          userName: String(user.UserName),
+          avatarURL: String(user.AvatarURL || ''),
+          userLevel: Number(user.UserLevel),
+          isAdmin: Number(user.UserLevel) === 2
+        };
+        
+        return NextResponse.json({ 
+          success: true,
+          user: cleanUserData
+        });
+
+      } catch (error: any) {
+        if (error.message === 'Email not verified') {
+          return NextResponse.json(
+            { error: 'Please verify your email before logging in' },
+            { status: 403 }
+          );
+        }
+        throw error;
+      }
+    }
+
+    // Handle OAuth authentication
+    if (!code) {
+      return NextResponse.json(
+        { error: 'No authorization code specified' },
         { status: 400 }
       );
     }

@@ -37,7 +37,7 @@ export async function writePages(targetDir, blueprint, viewMap) {
             const total = rowGroup.reduce((sum, v) => sum + (v.colpos || 1), 0);
             const legacy = total !== 12;
             const colsPerView = legacy ? Math.floor(12 / rowGroup.length) : null;
-            let rowCode = `\n                    <div className="h-full gap-4 grid grid-cols-12 relative">`;
+            let rowCode = `\n                    <div className="h-full grid grid-cols-12 relative">`;
             for (const rv of rowGroup) {
                 const sys = systemViews.find((sv) => sv.id === rv.id);
                 const info = viewMap.get(rv.id);

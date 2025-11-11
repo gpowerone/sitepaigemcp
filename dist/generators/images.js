@@ -12,12 +12,27 @@ function collectImageUuidsFromBlueprint(blueprint) {
         if (!val)
             return;
         let uuid = null;
-        if (val.startsWith("image|")) {
+        // Handle new object format {"imageId":"uuid","width":1200,"height":600}
+        if (val.startsWith("{") && val.includes("imageId")) {
+            try {
+                // Decode HTML entities and parse JSON
+                const decoded = val.replace(/&quot;/g, '"');
+                const parsed = JSON.parse(decoded);
+                if (parsed.imageId && isUuidV4Like(parsed.imageId)) {
+                    uuid = parsed.imageId;
+                }
+            }
+            catch {
+                // Not valid JSON, continue with other formats
+            }
+        }
+        // Handle legacy formats
+        if (!uuid && val.startsWith("image|")) {
             const id = val.slice("image|".length);
             if (isUuidV4Like(id))
                 uuid = id;
         }
-        else if (isUuidV4Like(val)) {
+        else if (!uuid && isUuidV4Like(val)) {
             uuid = val;
         }
         if (uuid && !imageInfo.has(uuid)) {
@@ -55,17 +70,8 @@ function collectImageUuidsFromBlueprint(blueprint) {
             }
         }
     }
-    // SQL sample data pattern: 'image|uuid' or ="image|uuid"
-    const sample = blueprint.sample_data || [];
-    const pat1 = /'image\|([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})'/gi;
-    const pat2 = /="image\|([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})"/gi;
-    for (const row of sample) {
-        const sql = row.sql || "";
-        for (const m of sql.matchAll(pat1))
-            add(m[1]);
-        for (const m of sql.matchAll(pat2))
-            add(m[1]);
-    }
+    // Skip sample_data images - let the builder handle these
+    // As requested, we don't fetch images from sample records
     return imageInfo;
 }
 async function detectExtensionFromBytes(buf) {
@@ -197,6 +203,25 @@ export function replaceImageRefsInBlueprint(blueprint, imageMap) {
     const replaceStr = (val) => {
         if (typeof val !== "string")
             return val;
+        // Handle new object format {"imageId":"uuid","width":1200,"height":600}
+        if (val.startsWith("{") && val.includes("imageId")) {
+            try {
+                // Decode HTML entities and parse JSON
+                const decoded = val.replace(/&quot;/g, '"');
+                const parsed = JSON.parse(decoded);
+                if (parsed.imageId && isUuidV4Like(parsed.imageId)) {
+                    const p = imageMap.get(parsed.imageId);
+                    if (p) {
+                        // Return just the path, not the object
+                        return p;
+                    }
+                }
+            }
+            catch {
+                // Not valid JSON, continue with other formats
+            }
+        }
+        // Handle legacy formats
         if (val.startsWith("image|")) {
             const id = val.slice("image|".length);
             const p = imageMap.get(id);

@@ -343,7 +343,22 @@ export default function ${comp}({ isContainer = false }: ${comp}Props){
 }`;
             }
             else if (type === "image") {
-                const src = v.custom_view_description || v.background_image || "";
+                let src = v.custom_view_description || v.background_image || "";
+                // Handle new object format {"imageId":"uuid","width":1200,"height":600}
+                if (src.startsWith("{") && src.includes("imageId")) {
+                    try {
+                        // Decode HTML entities and parse JSON
+                        const decoded = src.replace(/&quot;/g, '"');
+                        const parsed = JSON.parse(decoded);
+                        if (parsed.imageId) {
+                            // Extract just the image path - the image should already be replaced by processBlueprintImages
+                            src = parsed.imageId;
+                        }
+                    }
+                    catch {
+                        // Not valid JSON, use as-is
+                    }
+                }
                 const height = v.height;
                 const altText = v.alttext || 'Image';
                 const textColor = blueprint.design?.textColor || '#666';

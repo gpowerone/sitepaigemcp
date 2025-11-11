@@ -26,8 +26,10 @@ interface MenuItem {
   page: string | null;
   menu: string | null;
   untouchable: boolean;
-  link_type?: 'page' | 'external';
+  link_type?: 'page' | 'external' | 'file';
   external_url?: string | null;
+  file_id?: string | null;
+  file_name?: string | null;
   hiddenOnDesktop?: boolean; // New field to hide item on desktop (shows in icon bar instead)
 }
 
@@ -57,6 +59,8 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedPage, setSelectedPage] = useState<string | null>(null);
+  const [isPaigeLoading, setIsPaigeLoading] = useState(false);
 
   // Handle case where menu is undefined/null
   if (!menu) {
@@ -88,7 +92,8 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const direction = menu.direction === 'vertical' ? 'vertical' : 'horizontal';
+  const direction = menu.direction === 'vertical' ? 'vertical' : 
+                   menu.direction === 'tiled' ? 'tiled' : 'horizontal';
 
   const renderMenuItem = (item: MenuItem, index: number) => {
     const handleClick = () => {
@@ -187,8 +192,128 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
     );
   };
 
+  // Render a tiled menu item
+  const renderTiledMenuItem = (item: MenuItem, index: number) => {
+    const isSelected = item.page === selectedPage;
+    
+    // Helper function to get font size value
+    const getFontSizeValue = (sizeClass: string) => {
+      const sizeMap: Record<string, string> = {
+        'text-xs': '0.75rem',
+        'text-sm': '0.875rem',
+        'text-base': '1rem',
+        'text-lg': '1.125rem',
+        'text-xl': '1.25rem',
+        'text-2xl': '1.5rem',
+        'text-3xl': '1.875rem',
+      };
+      return sizeMap[sizeClass] || '1.25rem';
+    };
+    
+    const tileContent = (
+      <div className={`
+        p-6 
+        bg-white 
+        border-2 
+        border-gray-300 
+        rounded-lg 
+        shadow-md 
+        hover:shadow-lg 
+        hover:border-blue-500 
+        transition-all 
+        duration-200 
+        cursor-pointer
+        text-center
+        h-full
+        flex
+        flex-col
+        items-center
+        justify-center
+        ${isSelected ? 'border-blue-600 bg-blue-50' : ''}
+        ${isPaigeLoading ? 'opacity-50 cursor-not-allowed' : ''}
+      `}>
+        <h3 
+          className={`${isSelected ? 'font-bold' : 'font-medium'} text-gray-800`}
+          style={{ fontFamily: menu.font, fontSize: getFontSizeValue(menu.fontSize || 'text-xl') }}
+        >
+          {item.name}
+        </h3>
+      </div>
+    );
+
+    if (item.link_type === 'external' && item.external_url) {
+      return (
+        <a
+          key={item.name}
+          href={item.external_url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block h-full"
+        >
+          {tileContent}
+        </a>
+      );
+    } else if (item.link_type === 'file' && item.file_name) {
+      return (
+        <a
+          key={item.name}
+          href={`/library/files/${item.file_name}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block h-full"
+        >
+          {tileContent}
+        </a>
+      );
+    } else if (item.page) {
+      const page = pages.find(p => p.id === item.page);
+      let linkUrl = '#';
+      
+      if (page) {
+        let urlPath = page.name
+          .replace(/[^a-zA-Z0-9\s]/g, '')
+          .trim()
+          .replace(/\s+/g, '_')
+          .toLowerCase();
+        linkUrl = urlPath === 'home' || urlPath === 'index' ? '/' : `/${urlPath}`;
+      }
+      
+      return (
+        <Link
+          key={item.name}
+          href={linkUrl}
+          onClick={(e) => {
+            e.preventDefault();
+            if (isPaigeLoading) {
+              console.log('Navigation blocked: Paige is currently processing a request');
+              return;
+            }
+            setSelectedPage(item.page);
+            onClick?.();
+          }}
+          className="block h-full"
+        >
+          {tileContent}
+        </Link>
+      );
+    } else {
+      return (
+        <div key={item.name} className="block h-full">
+          {tileContent}
+        </div>
+      );
+    }
+  };
+
   return (
     <>
+      {/* Tiled menu layout */}
+      {direction === 'tiled' && (
+        <div className={`grid gap-4 ${isMobile ? 'grid-cols-1' : 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'}`}>
+          {menu.items?.map((item, index) => renderTiledMenuItem(item, index)) || []}
+        </div>
+      )}
+      
       {/* Hamburger menu for mobile horizontal menus */}
       {isMobile && direction === 'horizontal' && (
         <div className="relative">
@@ -211,7 +336,7 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
       )}
       
       {/* Regular menu for desktop or vertical menus */}
-      {(!isMobile || direction === 'vertical') && (
+      {(!isMobile || direction === 'vertical') && direction !== 'tiled' && (
         <nav className={`${direction === 'horizontal' ? 'space-x-4' : 'flex flex-col'} ${menu.align === 'Left' ? 'justify-start' : menu.align === 'Center' ? 'justify-center' : menu.align === 'Right' ? 'justify-end' : ''}`}>
           {menu.items?.filter(item => !item.hiddenOnDesktop).map((item, index) => renderMenuItem(item, index)) || []}
         </nav>

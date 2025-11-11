@@ -9,11 +9,17 @@ checked in the system build settings. It is safe to modify this file without it 
 import React, { useState } from 'react';
 
 interface LoginProps {
-  providers: ('apple' | 'facebook' | 'github' | 'google')[];
+  providers: ('apple' | 'facebook' | 'github' | 'google' | 'username')[];
 }
 
 export default function Login({ providers }: LoginProps) {
   const [error, setError] = useState<string | null>(null);
+  const [isSignup, setIsSignup] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
 
   const handleProviderLogin = async (provider: string) => {
@@ -43,37 +49,183 @@ export default function Login({ providers }: LoginProps) {
     
   };
 
+  const handleUsernamePasswordAuth = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setMessage(null);
+    setIsLoading(true);
+
+    try {
+      if (isSignup) {
+        // Handle signup
+        if (password !== confirmPassword) {
+          setError('Passwords do not match');
+          setIsLoading(false);
+          return;
+        }
+
+        const response = await fetch('/api/Auth/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          setMessage({ type: 'success', text: 'Verification email sent! Please check your inbox.' });
+          setIsSignup(false);
+          setPassword('');
+          setConfirmPassword('');
+        } else {
+          setError(data.error || 'Signup failed');
+        }
+      } else {
+        // Handle login
+        const response = await fetch('/api/Auth', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password, provider: 'username' })
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Redirect to home or dashboard
+          window.location.href = '/';
+        } else {
+          setError(data.error || 'Login failed');
+        }
+      }
+    } catch (err) {
+      setError('An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const showUsernamePasswordForm = providers?.includes('username');
+  const oauthProviders = providers?.filter(p => p !== 'username') || [];
+
   return (
     <div className="flex flex-col items-center justify-center min-h-[500px] p-4">
       <div className="w-full max-w-md space-y-8">
         <div className="text-center">
-          <h2 className="text-3xl font-bold">Sign in to your account</h2>
+          <h2 className="text-3xl font-bold">{isSignup ? 'Create an account' : 'Sign in to your account'}</h2>
         </div>
 
-        {(
-          <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t"></div>
+        {showUsernamePasswordForm && (
+          <form onSubmit={handleUsernamePasswordAuth} className="mt-8 space-y-6">
+            <div className="space-y-4">
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  Email address
+                </label>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
               </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Continue with</span>
-              </div>
-            </div>
 
-            <div className="mt-6 grid grid-cols-2 gap-3">
-              {providers?.map(provider => 
-                 (
-                  <button
-                    key={provider}
-                    onClick={() => handleProviderLogin(provider)}
-                    className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 classButtonRounding classButtonBackground classButtonFontType  classButtonFontSize"
-                  >
-                    {provider}
-                  </button>
-                )
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete={isSignup ? 'new-password' : 'current-password'}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+              </div>
+
+              {isSignup && (
+                <div>
+                  <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
+                    Confirm Password
+                  </label>
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type="password"
+                    autoComplete="new-password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                  />
+                </div>
               )}
             </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={isLoading}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              >
+                {isLoading ? 'Processing...' : (isSignup ? 'Sign up' : 'Sign in')}
+              </button>
+            </div>
+
+            <div className="text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setIsSignup(!isSignup);
+                  setError(null);
+                  setMessage(null);
+                }}
+                className="text-sm text-indigo-600 hover:text-indigo-500"
+              >
+                {isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+              </button>
+            </div>
+          </form>
+        )}
+
+        {oauthProviders.length > 0 && (
+          <div className="mt-6">
+            {showUsernamePasswordForm && (
+              <>
+                <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 bg-white text-gray-500">Or continue with</span>
+                  </div>
+                </div>
+              </>
+            )}
+
+            <div className={`mt-6 grid grid-cols-${Math.min(oauthProviders.length, 2)} gap-3`}>
+              {oauthProviders.map(provider => (
+                <button
+                  key={provider}
+                  onClick={() => handleProviderLogin(provider)}
+                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 transition duration-150 classButtonRounding classButtonBackground classButtonFontType classButtonFontSize"
+                >
+                  {provider}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {message && (
+          <div className={`mt-4 text-center ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+            {message.text}
           </div>
         )}
 

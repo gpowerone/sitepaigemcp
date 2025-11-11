@@ -215,7 +215,23 @@ export async function writeLibraryFile(
   ensureDir(fullPath);
   
   // Ensure filename is safe and unique
-  const safeFileName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  let safeFileName = fileName.replace(/[^a-zA-Z0-9._-]/g, '_');
+  
+  // Simple approach: Take first 40 chars and add extension
+  const nameOnly = safeFileName.substring(0, 40);
+  
+  // Add appropriate extension based on file type
+  let extension = '';
+  if (fileType === 'image') {
+    extension = '.jpg';
+  } else if (fileType === 'video') {
+    extension = '.mp4';
+  } else {
+    extension = '.pdf';
+  }
+  
+  safeFileName = nameOnly + extension;
+  
   const filePath = path.join(fullPath, safeFileName);
   
   try {

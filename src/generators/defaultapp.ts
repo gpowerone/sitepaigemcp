@@ -59,7 +59,7 @@ export async function writeDefaultApp(targetDir: string, databaseType: "sqlite" 
   ensureDir(appDir);
   
   // Copy all contents from defaultapp to src/app, excluding database files we'll handle separately
-  const excludeFiles = ['db.ts', 'db-sqlite.ts', 'db-postgres.ts', 'db-mysql.ts', 'db-users.ts', 'util.ts', 'middleware.ts', 'csrf.ts'];
+  const excludeFiles = ['db.ts', 'db-sqlite.ts', 'db-postgres.ts', 'db-mysql.ts', 'db-users.ts', 'db-password-auth.ts', 'util.ts', 'middleware.ts', 'csrf.ts'];
   await copyDirectoryWithExclusions(defaultAppPath, appDir, excludeFiles);
   
   // Copy defaultpublic folder to public directory if it exists
@@ -68,7 +68,7 @@ export async function writeDefaultApp(targetDir: string, databaseType: "sqlite" 
   }
   
   // Copy database files based on selected database type
-  const dbFiles = ['db-users.ts', 'util.ts', 'csrf.ts'];
+  const dbFiles = ['db-users.ts', 'db-password-auth.ts', 'util.ts', 'csrf.ts'];
   
   // Copy the common database files
   for (const file of dbFiles) {
