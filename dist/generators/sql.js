@@ -5,6 +5,14 @@ import { ensureDir } from "./utils.js";
 import { fileURLToPath } from 'node:url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+/**
+ * Sanitizes a table name by converting to lowercase and replacing spaces with underscores
+ * @param name The raw table name
+ * @returns The sanitized table name
+ */
+function sanitizeTableName(name) {
+    return name.toLowerCase().replace(/\s+/g, '_');
+}
 export async function writeModelsSql(targetDir, blueprint, databaseType = "postgres") {
     const migrationsDir = path.join(targetDir, "migrations");
     ensureDir(migrationsDir);
@@ -78,7 +86,7 @@ export async function writeModelsSql(targetDir, blueprint, databaseType = "postg
     const dbTypeMap = typeMap[databaseType] || typeMap.sqlite;
     const quoteChar = databaseType === 'mysql' ? '`' : '"';
     for (const model of models) {
-        const tableName = (model.name || model.id || "table").toLowerCase();
+        const tableName = sanitizeTableName(model.name || model.id || "table");
         lines.push(`\n-- Model: ${tableName}`);
         const fieldDefs = [];
         const fields = model.fields || [];
@@ -182,7 +190,7 @@ export function generateSQLFromMigrations(migrations, databaseType = "postgres")
     const sql = [];
     for (const m of migrations) {
         const action = m.action;
-        const modelName = (m.modelName || m.modelId || "").toLowerCase();
+        const modelName = sanitizeTableName(m.modelName || m.modelId || "");
         if (action === "create") {
             const modelChange = m.changes.find((c) => c.type === "model" && c.operation === "add");
             const model = (modelChange?.newValue ?? { name: modelName });
@@ -200,7 +208,7 @@ export function generateSQLFromMigrations(migrations, databaseType = "postgres")
                 const pk = (f.key === "primary") ? " PRIMARY KEY" : "";
                 return `  ${quoteChar}${f.name.toLowerCase()}${quoteChar} ${mappedType}${required}${pk}`;
             });
-            sql.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}${(model.name || modelName).toLowerCase()}${quoteChar} (\n${fieldDefs.join(",\n")}\n);`);
+            sql.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}${sanitizeTableName(model.name || modelName)}${quoteChar} (\n${fieldDefs.join(",\n")}\n);`);
             continue;
         }
         if (action === "delete") {

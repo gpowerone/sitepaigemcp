@@ -1,21 +1,18 @@
 /*
- * Signup endpoint for username/password authentication
- * Handles user registration with email verification
+ * Resend verification email endpoint
+ * Allows users to request a new verification email
  */
 
 import { NextResponse } from 'next/server';
-import { createPasswordAuth } from '../../../db-password-auth';
+import { regenerateVerificationToken } from '../../../db-password-auth';
 import { send_email } from '../../../storage/email';
 
 // Email validation regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-// Password validation - at least 8 characters, one uppercase, one lowercase, one number
-const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
-
 export async function POST(request: Request) {
   try {
-    const { email, password } = await request.json();
+    const { email } = await request.json();
 
     // Validate email format
     if (!email || !emailRegex.test(email)) {
@@ -25,16 +22,18 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validate password strength
-    if (!password || !passwordRegex.test(password)) {
-      return NextResponse.json(
-        { error: 'Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number' },
-        { status: 400 }
-      );
+    // Regenerate verification token
+    const result = await regenerateVerificationToken(email);
+
+    if (!result) {
+      // Don't reveal whether the email exists or not
+      return NextResponse.json({
+        success: true,
+        message: 'If an unverified account exists with this email, a verification email has been sent.'
+      });
     }
 
-    // Create password auth record
-    const { passwordAuth, verificationToken } = await createPasswordAuth(email, password);
+    const { verificationToken } = result;
 
     // Get site domain from environment or default
     const siteDomain = process.env.SITE_DOMAIN || 'https://sitepaige.com';
@@ -63,8 +62,8 @@ export async function POST(request: Request) {
           </head>
           <body>
             <div class="container">
-              <h2>Welcome to ${siteDomain}!</h2>
-              <p>Thank you for signing up. Please verify your email address by clicking the button below:</p>
+              <h2>Verify Your Email Address</h2>
+              <p>You requested a new verification email for your account at ${siteDomain}. Please verify your email address by clicking the button below:</p>
               <p style="margin: 30px 0;">
                 <a href="${verificationUrl}" class="button">Verify Email Address</a>
               </p>
@@ -72,7 +71,7 @@ export async function POST(request: Request) {
               <p style="word-break: break-all; color: #0066cc;">${verificationUrl}</p>
               <p>This link will expire in 24 hours.</p>
               <div class="footer">
-                <p>If you didn't create an account, you can safely ignore this email.</p>
+                <p>If you didn't request this email, you can safely ignore it.</p>
               </div>
             </div>
           </body>
@@ -80,15 +79,15 @@ export async function POST(request: Request) {
       `;
 
       const emailText = `
-Welcome to ${siteDomain}!
+Verify Your Email Address
 
-Thank you for signing up. Please verify your email address by clicking the link below:
+You requested a new verification email for your account at ${siteDomain}. Please verify your email address by clicking the link below:
 
 ${verificationUrl}
 
 This link will expire in 24 hours.
 
-If you didn't create an account, you can safely ignore this email.
+If you didn't request this email, you can safely ignore it.
       `;
 
       await send_email({
@@ -101,33 +100,31 @@ If you didn't create an account, you can safely ignore this email.
 
       return NextResponse.json({
         success: true,
-        message: 'Registration successful! Please check your email to verify your account.'
+        message: 'Verification email sent successfully! Please check your email.'
       });
 
     } catch (emailError) {
       console.error('Failed to send verification email:', emailError);
-      // Still return success but with a warning
       return NextResponse.json({
-        success: true,
-        message: 'Registration successful! However, we could not send the verification email. Please contact support.',
-        warning: 'Email sending failed'
-      });
+        success: false,
+        error: 'Failed to send verification email. Please try again later.'
+      }, { status: 500 });
     }
 
   } catch (error: any) {
-    console.error('Signup error:', error);
+    console.error('Resend verification error:', error);
 
-    // Handle specific errors
-    if (error.message === 'Email already registered') {
+    if (error.message === 'Email is already verified') {
       return NextResponse.json(
-        { error: 'This email is already registered. Please sign in instead.' },
-        { status: 409 }
+        { error: 'This email is already verified. Please sign in.' },
+        { status: 400 }
       );
     }
 
-    return NextResponse.json(
-      { error: error.message || 'Signup failed' },
-      { status: 500 }
-    );
+    // Generic response to avoid revealing whether email exists
+    return NextResponse.json({
+      success: true,
+      message: 'If an unverified account exists with this email, a verification email has been sent.'
+    });
   }
 }

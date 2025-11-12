@@ -59,6 +59,7 @@ export default function IntegrationComponent({
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           description: editedPrompt || 'Create integration code',
           projectId: projectId,

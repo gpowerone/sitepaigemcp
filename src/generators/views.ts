@@ -167,18 +167,18 @@ export function generateStyleProps(systemView: View, isContainer: boolean): { st
     const verticalAlign = (systemView.verticalAlign || '').toLowerCase();
     const align = (systemView.align || '').toLowerCase();
 
-   
-    if (verticalAlign === 'top') {
-      styleProps.push(`alignContent: 'start'`)
-    }
-    else if (verticalAlign === 'center') {
-      styleProps.push(`alignContent: 'center'`)
-    }
-    else if (verticalAlign === 'bottom') {
-      styleProps.push(`alignContent: 'end'`)
+    if (systemView.type !== 'container') {
+      if (verticalAlign === 'top') {
+        styleProps.push(`alignContent: 'start'`)
+      }
+      else if (verticalAlign === 'center') {
+        styleProps.push(`alignContent: 'center'`)
+      }
+      else if (verticalAlign === 'bottom') {
+        styleProps.push(`alignContent: 'end'`)
+      }
     }
   
-
     // Text alignment 
     if (systemView.type === 'container') {
       if (align.toLowerCase() === 'left') {
@@ -273,7 +273,7 @@ function parseContainerSubviews(desc: unknown): Array<ContainerSubview> {
   return [];
 }
 
-export async function writeViews(targetDir: string, blueprint: Blueprint, projectCode?: Code, authProviders?: { apple: boolean; facebook: boolean; github: boolean; google: boolean }): Promise<Map<string, { componentName: string; relImport: string }>> {
+export async function writeViews(targetDir: string, blueprint: Blueprint, projectCode?: Code, authProviders?: { password?: boolean; apple: boolean; facebook: boolean; github: boolean; google: boolean }): Promise<Map<string, { componentName: string; relImport: string }>> {
   // Clear the component names set for a fresh start
   generatedComponentNames.clear();
   // Clear the generated file names tracking for unique filenames
@@ -569,7 +569,7 @@ export default function ${comp}() {
 
   return (
     <>
-      <div className={\`hidden md:flex gap-4 p-2 \${alignmentClasses[align as keyof typeof alignmentClasses]}\`}>
+      <div className={\`hidden md:flex gap-4 p-3 \${alignmentClasses[align as keyof typeof alignmentClasses]}\`}>
         {items.map((item, index) => (
           <button
             key={index}
@@ -625,6 +625,7 @@ export default function ${comp}() {
       // Convert authProviders object to providers array
       const providers: string[] = [];
       if (authProviders) {
+        if ((authProviders as any).password) providers.push('userpass');
         if (authProviders.google) providers.push('google');
         if (authProviders.facebook) providers.push('facebook');
         if (authProviders.github) providers.push('github');
@@ -686,7 +687,7 @@ export default function ${comp}() {
     }
   };
   
-  return <RCTA custom_view_description={customViewDescription} onNavigate={handleNavigate} isPaigeLoading={false} />;
+  return <RCTA custom_view_description={customViewDescription} onNavigate={handleNavigate} />;
 }`;
     } else if (type === "loggedinmenu") {
       // Import the LoggedInMenu component
@@ -921,9 +922,6 @@ export default function ${comp}(){
     const importLines: string[] = [];
     const blocks: string[] = [];
 
-    // Check if container has background image for opacity handling
-    const hasContainerBackground = v.background_image && v.background_image !== '';
-
     for (const s of normalized) {
       const subId = s.viewId || s.id || "";
       if (!subId) continue;
@@ -966,8 +964,6 @@ export default function ${comp}(){
       const innerWrapperClasses = [
         "w-full",
         "h-full",
-        "flex",
-        "flex-col",
         // Vertical alignment
         verticalAlign === 'top' ? 'justify-start' :
         verticalAlign === 'bottom' ? 'justify-end' : 'justify-center',

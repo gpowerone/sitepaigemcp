@@ -9,33 +9,33 @@ import * as crypto from 'node:crypto';
 
 export interface User {
   userid: string;
-  OAuthID: string;
-  Source: 'google' | 'facebook' | 'apple' | 'github';
-  UserName: string;
-  Email?: string;
-  AvatarURL?: string;
-  UserLevel: number; // 0: everyone, 1: registered user, 2: admin
-  LastLoginDate: string;
-  CreatedDate: string;
-  IsActive: boolean;
+  oauthid: string;
+  source: 'google' | 'facebook' | 'apple' | 'github' | 'userpass';
+  username: string;
+  email?: string;
+  avatarurl?: string;
+  userlevel: number; // 0: everyone, 1: registered user, 2: admin
+  lastlogindate: string;
+  createddate: string;
+  isactive: boolean;
 }
 
 export interface UserSession {
-  ID: string;
-  SessionToken: string;
+  id: string;
+  sessiontoken: string;
   userid: string;
-  ExpirationDate: string;
+  expirationdate: string;
 }
 
 export interface OAuthToken {
-  ID: string;
+  id: string;
   userid: string;
-  Provider: 'google' | 'facebook' | 'apple' | 'github';
-  AccessToken: string;
-  RefreshToken?: string;
-  ExpiresAt?: string;
-  CreatedAt: string;
-  UpdatedAt: string;
+  provider: 'google' | 'facebook' | 'apple' | 'github';
+  accesstoken: string;
+  refreshtoken?: string;
+  expiresat?: string;
+  createdat: string;
+  updatedat: string;
 }
 
 /**
@@ -46,9 +46,9 @@ export async function getAllUsers(): Promise<User[]> {
   
   const users = await db_query(client, 
     `SELECT * FROM users 
-     WHERE IsActive = ? 
-     ORDER BY UserLevel DESC, UserName ASC`,
-    [true]
+     WHERE isactive = ? 
+     ORDER BY userlevel DESC, username ASC`,
+    [1]  // Use 1 instead of true for PostgreSQL compatibility
   );
   
   return users as User[];
@@ -61,8 +61,8 @@ export async function getUserByOAuthID(oauthId: string): Promise<User | null> {
   const client = await db_init();
 
   const users = await db_query(client, 
-    "SELECT * FROM users WHERE OAuthID = ? AND IsActive = ?",
-    [oauthId, true]
+    "SELECT * FROM users WHERE oauthid = ? AND isactive = ?",
+    [oauthId, 1]  // Use 1 instead of true for PostgreSQL compatibility
   );
   
   return users.length > 0 ? users[0] as User : null;
@@ -75,8 +75,8 @@ export async function getUserByID(userId: string): Promise<User | null> {
   const client = await db_init();
   
   const users = await db_query(client, 
-    "SELECT * FROM users WHERE userid = ? AND IsActive = ?",
-    [userId, true]
+    "SELECT * FROM users WHERE userid = ? AND isactive = ?",
+    [userId, 1]  // Use 1 instead of true for PostgreSQL compatibility
   );
   
   return users.length > 0 ? users[0] as User : null;
@@ -87,7 +87,7 @@ export async function getUserByID(userId: string): Promise<User | null> {
  */
 export async function upsertUser(
   oauthId: string,
-  source: 'google' | 'facebook' | 'apple' | 'github',
+  source: 'google' | 'facebook' | 'apple' | 'github' | 'userpass',
   userName: string,
   email?: string,
   avatarUrl?: string
@@ -101,9 +101,9 @@ export async function upsertUser(
     // Update existing user
     await db_query(client,
       `UPDATE users 
-       SET UserName = ?, Email = COALESCE(?, Email), AvatarURL = ?, 
-           LastLoginDate = CURRENT_TIMESTAMP, Source = ?
-       WHERE OAuthID = ?`,
+       SET username = ?, email = COALESCE(?, email), avatarurl = ?, 
+           lastlogindate = CURRENT_TIMESTAMP, source = ?
+       WHERE oauthid = ?`,
       [userName, email, avatarUrl || '', source, oauthId]
     );
     
@@ -119,10 +119,10 @@ export async function upsertUser(
     
     await db_query(client,
       `INSERT INTO users 
-       (userid, OAuthID, Source, UserName, Email, AvatarURL, UserLevel, UserTier,
-        LastLoginDate, CreatedDate, IsActive)
+       (userid, oauthid, source, username, email, avatarurl, userlevel, usertier,
+        lastlogindate, createddate, isactive)
        VALUES (?, ?, ?, ?, ?, ?, ?, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, ?)`,
-      [userId, oauthId, source, userName, email || null, avatarUrl || '', permissionLevel, true]
+      [userId, oauthId, source, userName, email || null, avatarUrl || '', permissionLevel, 1]  // Use 1 instead of true for PostgreSQL compatibility
     );
     
     return (await getUserByOAuthID(oauthId))!;
@@ -141,8 +141,8 @@ export async function updateUserPermission(
   // Ensure there's always at least one admin
   if (permissionLevel < 2) {
     const admins = await db_query(client,
-      "SELECT COUNT(*) as count FROM users WHERE UserLevel = ? AND userid != ? AND IsActive = ?",
-      [2, userId, true]
+      "SELECT COUNT(*) as count FROM users WHERE userlevel = ? AND userid != ? AND isactive = ?",
+      [2, userId, 1]  // Use 1 instead of true for PostgreSQL compatibility
     );
     
     if (admins[0].count === 0) {
@@ -151,7 +151,7 @@ export async function updateUserPermission(
   }
   
   const result = await db_query(client,
-    "UPDATE users SET UserLevel = ? WHERE userid = ?",
+    "UPDATE users SET userlevel = ? WHERE userid = ?",
     [permissionLevel, userId]
   );
   
@@ -166,10 +166,10 @@ export async function deleteUser(userId: string): Promise<boolean> {
   
   // Ensure there's always at least one admin
   const user = await getUserByID(userId);
-  if (user && user.UserLevel === 2) {
+  if (user && user.userlevel === 2) {
     const admins = await db_query(client,
-      "SELECT COUNT(*) as count FROM users WHERE UserLevel = ? AND userid != ? AND IsActive = ?",
-      [2, userId, true]
+      "SELECT COUNT(*) as count FROM users WHERE userlevel = ? AND userid != ? AND isactive = ?",
+      [2, userId, 1]  // Use 1 instead of true for PostgreSQL compatibility
     );
     
     if (admins[0].count === 0) {
@@ -179,8 +179,8 @@ export async function deleteUser(userId: string): Promise<boolean> {
   
   // Soft delete the user
   const result = await db_query(client,
-    "UPDATE users SET IsActive = ? WHERE userid = ?",
-    [false, userId]
+    "UPDATE users SET isactive = ? WHERE userid = ?",
+    [0, userId]  // Use 0 instead of false for PostgreSQL compatibility
   );
   
   return result[0].changes > 0;
@@ -200,12 +200,12 @@ export async function getUserStats(): Promise<{
   const stats = await db_query(client, `
     SELECT 
       COUNT(*) as totalUsers,
-      SUM(CASE WHEN UserLevel = 2 THEN 1 ELSE 0 END) as admins,
-      SUM(CASE WHEN UserLevel = 1 THEN 1 ELSE 0 END) as registeredUsers,
-      SUM(CASE WHEN UserLevel = 0 THEN 1 ELSE 0 END) as guestUsers
+      SUM(CASE WHEN userlevel = 2 THEN 1 ELSE 0 END) as admins,
+      SUM(CASE WHEN userlevel = 1 THEN 1 ELSE 0 END) as registeredUsers,
+      SUM(CASE WHEN userlevel = 0 THEN 1 ELSE 0 END) as guestUsers
     FROM users
-    WHERE IsActive = ?
-  `, [true]);
+    WHERE isactive = ?
+  `, [1]);  // Use 1 instead of true for PostgreSQL compatibility
   
   return stats[0];
 }
@@ -217,7 +217,7 @@ export async function cleanupExpiredSessions(): Promise<number> {
   const client = await db_init();
   
   const result = await db_query(client,
-    "DELETE FROM usersession WHERE ExpirationDate < CURRENT_TIMESTAMP"
+    "DELETE FROM usersession WHERE expirationdate::TIMESTAMP < CURRENT_TIMESTAMP"
   );
   
   return result[0].changes;
@@ -241,14 +241,14 @@ export async function storeOAuthToken(
   
   // Delete existing tokens for this user/provider combo
   await db_query(client,
-    "DELETE FROM oauthtokens WHERE userid = ? AND Provider = ?",
+    "DELETE FROM oauthtokens WHERE userid = ? AND provider = ?",
     [userId, provider]
   );
   
   // Insert new token
   await db_query(client,
     `INSERT INTO oauthtokens 
-     (ID, userid, Provider, AccessToken, RefreshToken, ExpiresAt, CreatedAt, UpdatedAt)
+     (id, userid, provider, accesstoken, refreshtoken, expiresat, createdat, updatedat)
      VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
     [tokenId, userId, provider, accessToken, refreshToken || null, expiresAt, now, now]
   );
@@ -264,7 +264,7 @@ export async function getOAuthToken(
   const client = await db_init();
   
   const tokens = await db_query(client,
-    "SELECT * FROM oauthtokens WHERE userid = ? AND Provider = ?",
+    "SELECT * FROM oauthtokens WHERE userid = ? AND provider = ?",
     [userId, provider]
   );
   
@@ -285,8 +285,8 @@ export async function validateSession(sessionToken: string): Promise<{
   const sessions = await db_query(client,
     `SELECT s.*, u.* FROM usersession s 
      JOIN users u ON s.userid = u.userid 
-     WHERE s.SessionToken = ? AND s.ExpirationDate > CURRENT_TIMESTAMP AND u.IsActive = ?`,
-    [sessionToken, true]
+     WHERE s.sessiontoken = ? AND s.expirationdate::TIMESTAMP > CURRENT_TIMESTAMP AND u.isactive = ?`,
+    [sessionToken, 1]  // Use 1 instead of true for PostgreSQL compatibility
   );
   
   if (!sessions || sessions.length === 0) {
@@ -296,22 +296,22 @@ export async function validateSession(sessionToken: string): Promise<{
   const session = sessions[0];
   
   // Check if session needs rotation (older than 24 hours)
-  const sessionAge = Date.now() - new Date(session.ID).getTime();
+  const sessionAge = Date.now() - new Date(session.id).getTime();
   const needsRotation = sessionAge > 24 * 60 * 60 * 1000; // 24 hours
   
   return {
     valid: true,
     user: {
       userid: session.userid,
-      OAuthID: session.OAuthID,
-      Source: session.Source,
-      UserName: session.UserName,
-      Email: session.Email,
-      AvatarURL: session.AvatarURL,
-      UserLevel: session.UserLevel,
-      LastLoginDate: session.LastLoginDate,
-      CreatedDate: session.CreatedDate,
-      IsActive: session.IsActive
+      oauthid: session.oauthid,
+      source: session.source,
+      username: session.username,
+      email: session.email,
+      avatarurl: session.avatarurl,
+      userlevel: session.userlevel,
+      lastlogindate: session.lastlogindate,
+      createddate: session.createddate,
+      isactive: session.isactive
     } as User,
     needsRotation
   };
@@ -325,7 +325,7 @@ export async function rotateSession(oldSessionToken: string): Promise<string | n
   
   // Get existing session
   const sessions = await db_query(client,
-    "SELECT * FROM usersession WHERE SessionToken = ? AND ExpirationDate > CURRENT_TIMESTAMP",
+    "SELECT * FROM usersession WHERE sessiontoken = ? AND expirationdate::TIMESTAMP > CURRENT_TIMESTAMP",
     [oldSessionToken]
   );
   
@@ -338,8 +338,8 @@ export async function rotateSession(oldSessionToken: string): Promise<string | n
   
   // Update session with new token
   await db_query(client,
-    "UPDATE usersession SET SessionToken = ?, ExpirationDate = ? WHERE ID = ?",
-    [newSessionToken, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), session.ID]
+    "UPDATE usersession SET sessiontoken = ?, expirationdate = ? WHERE id = ?",
+    [newSessionToken, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), session.id]
   );
   
   return newSessionToken;
@@ -371,9 +371,9 @@ export async function validateOAuthToken(
   }
   
   // Check if token is expired based on stored expiry
-  if (token.ExpiresAt && new Date(token.ExpiresAt) < new Date()) {
+  if (token.expiresat && new Date(token.expiresat) < new Date()) {
     // Try to refresh the token
-    if (token.RefreshToken) {
+    if (token.refreshtoken) {
       return await refreshOAuthToken(userId, provider);
     }
     return false;
@@ -384,10 +384,10 @@ export async function validateOAuthToken(
     let validationUrl: string;
     switch (provider) {
       case 'google':
-        validationUrl = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token.AccessToken}`;
+        validationUrl = `https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${token.accesstoken}`;
         break;
       case 'facebook':
-        validationUrl = `https://graph.facebook.com/me?access_token=${token.AccessToken}`;
+        validationUrl = `https://graph.facebook.com/me?access_token=${token.accesstoken}`;
         break;
       case 'github':
         validationUrl = 'https://api.github.com/user';
@@ -398,7 +398,7 @@ export async function validateOAuthToken(
     
     const response = await fetch(validationUrl, {
       headers: provider === 'github' ? {
-        Authorization: `Bearer ${token.AccessToken}`
+        Authorization: `Bearer ${token.accesstoken}`
       } : {}
     });
     
@@ -419,7 +419,7 @@ export async function refreshOAuthToken(
   
   // Get stored OAuth token with refresh token
   const token = await getOAuthToken(userId, provider);
-  if (!token || !token.RefreshToken) {
+  if (!token || !token.refreshtoken) {
     return false;
   }
   
@@ -428,7 +428,7 @@ export async function refreshOAuthToken(
     
     const params: Record<string, string> = {
       grant_type: 'refresh_token',
-      refresh_token: token.RefreshToken,
+      refresh_token: token.refreshtoken,
       client_id: process.env[`NEXT_PUBLIC_${provider.toUpperCase()}_CLIENT_ID`]!,
       client_secret: process.env[`${provider.toUpperCase()}_CLIENT_SECRET`]!
     };
@@ -453,7 +453,7 @@ export async function refreshOAuthToken(
       userId,
       provider,
       data.access_token,
-      data.refresh_token || token.RefreshToken, // Some providers don't return new refresh token
+      data.refresh_token || token.refreshtoken, // Some providers don't return new refresh token
       data.expires_in
     );
     

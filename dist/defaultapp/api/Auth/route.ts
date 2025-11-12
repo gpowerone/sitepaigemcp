@@ -10,7 +10,6 @@ import * as crypto from 'node:crypto';
 
 import { db_init, db_query } from '../../db';
 import { upsertUser, storeOAuthToken, validateSession, rotateSession } from '../../db-users';
-import { validateCsrfToken } from '../../csrf';
 
 type OAuthProvider = 'google' | 'facebook' | 'apple'  | 'github';
 
@@ -42,7 +41,7 @@ export async function POST(request: Request) {
     }
 
     // Handle username/password authentication
-    if (provider === 'username') {
+    if (provider === 'userpass') {
       if (!email || !password) {
         return NextResponse.json(
           { error: 'Email and password are required' },
@@ -70,7 +69,7 @@ export async function POST(request: Request) {
         // Create or update user in the main Users table
         const user = await upsertUser(
           `password_${authRecord.id}`, // Unique OAuth ID for password users
-          'username' as any, // Source type
+          'userpass' as any, // Source type
           email.split('@')[0], // Username from email
           email,
           undefined // No avatar for password auth
@@ -78,14 +77,14 @@ export async function POST(request: Request) {
 
         // Delete existing sessions for this user
         const existingSessions = await db_query(db, 
-          "SELECT ID FROM usersession WHERE userid = ?", 
+          "SELECT id FROM usersession WHERE userid = ?", 
           [user.userid]
         );
         
         if (existingSessions && existingSessions.length > 0) {
-          const sessionIds = existingSessions.map(session => session.ID);
+          const sessionIds = existingSessions.map(session => session.id);
           const placeholders = sessionIds.map(() => '?').join(',');
-          await db_query(db, `DELETE FROM usersession WHERE ID IN (${placeholders})`, sessionIds);
+          await db_query(db, `DELETE FROM usersession WHERE id IN (${placeholders})`, sessionIds);
         }
 
         // Generate secure session token and ID
@@ -94,7 +93,7 @@ export async function POST(request: Request) {
 
         // Create new session with secure token
         await db_query(db, 
-          "INSERT INTO usersession (ID, SessionToken, userid, ExpirationDate) VALUES (?, ?, ?, ?)",
+          "INSERT INTO usersession (id, sessiontoken, userid, expirationdate) VALUES (?, ?, ?, ?)",
           [sessionId, sessionToken, user.userid, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()]
         );
 
@@ -113,10 +112,10 @@ export async function POST(request: Request) {
         // Create a completely clean object to avoid any database result object issues
         const cleanUserData = {
           userid: String(user.userid),
-          userName: String(user.UserName),
-          avatarURL: String(user.AvatarURL || ''),
-          userLevel: Number(user.UserLevel),
-          isAdmin: Number(user.UserLevel) === 2
+          userName: String(user.username),
+          avatarURL: String(user.avatarurl || ''),
+          userLevel: Number(user.userlevel),
+          isAdmin: Number(user.userlevel) === 2
         };
         
         return NextResponse.json({ 
@@ -153,7 +152,7 @@ export async function POST(request: Request) {
     }
 
     let userData = {
-        ID: '',
+        id: '',
         name: '',
         email: '',
         avatar_url: '',
@@ -204,28 +203,28 @@ export async function POST(request: Request) {
     switch (validProvider) {
    
         case 'google':
-            userData.ID = fetchedUserData.id;
+            userData.id = fetchedUserData.id;
             userData.name = fetchedUserData.name;
             userData.email = fetchedUserData.email;
             userData.avatar_url = fetchedUserData.picture;
             break;
 
         case 'facebook':
-            userData.ID = fetchedUserData.id;
+            userData.id = fetchedUserData.id;
             userData.name = fetchedUserData.name;
             userData.email = fetchedUserData.email;
             userData.avatar_url = fetchedUserData.picture?.data?.url;
             break;
 
         case 'apple':
-            userData.ID = fetchedUserData.sub;
+            userData.id = fetchedUserData.sub;
             userData.name = `${fetchedUserData.given_name || ''} ${fetchedUserData.family_name || ''}`.trim();
             userData.email = fetchedUserData.email;
             // Apple doesn't provide avatar URL
             break;
 
         case 'github':
-            userData.ID = fetchedUserData.id?.toString();
+            userData.id = fetchedUserData.id?.toString();
             userData.name = fetchedUserData.name || fetchedUserData.login;
             userData.email = fetchedUserData.email;
             userData.avatar_url = fetchedUserData.avatar_url;
@@ -240,7 +239,7 @@ export async function POST(request: Request) {
     
     // Create or update user using the new user management system
     const user = await upsertUser(
-      userData.ID,
+      userData.id,
       validProvider,
       userData.name,
       userData.email,
@@ -258,14 +257,14 @@ export async function POST(request: Request) {
     
     // Delete existing sessions for this user
     const existingSessions = await db_query(db, 
-      "SELECT ID FROM usersession WHERE userid = ?", 
+      "SELECT id FROM usersession WHERE userid = ?", 
       [user.userid]
     );
     
     if (existingSessions && existingSessions.length > 0) {
-        const sessionIds = existingSessions.map(session => session.ID);
+        const sessionIds = existingSessions.map(session => session.id);
         const placeholders = sessionIds.map(() => '?').join(',');
-        await db_query(db, `DELETE FROM usersession WHERE ID IN (${placeholders})`, sessionIds);
+        await db_query(db, `DELETE FROM usersession WHERE id IN (${placeholders})`, sessionIds);
     }
 
     // Generate secure session token and ID
@@ -274,7 +273,7 @@ export async function POST(request: Request) {
 
     // Create new session with secure token
     await db_query(db, 
-      "INSERT INTO usersession (ID, SessionToken, userid, ExpirationDate) VALUES (?, ?, ?, ?)",
+      "INSERT INTO usersession (id, sessiontoken, userid, expirationdate) VALUES (?, ?, ?, ?)",
       [sessionId, sessionToken, user.userid, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()]
     );
 
@@ -293,10 +292,10 @@ export async function POST(request: Request) {
     // Create a completely clean object to avoid any database result object issues
     const cleanUserData = {
       userid: String(user.userid),
-      userName: String(user.UserName),
-      avatarURL: String(user.AvatarURL || ''),
-      userLevel: Number(user.UserLevel),
-      isAdmin: Number(user.UserLevel) === 2
+      userName: String(user.username),
+      avatarURL: String(user.avatarurl || ''),
+      userLevel: Number(user.userlevel),
+      isAdmin: Number(user.userlevel) === 2
     };
     
     return NextResponse.json({ 
@@ -347,13 +346,13 @@ export async function GET() {
         const response = NextResponse.json({
           user: {
             userid: sessionData.user.userid,
-            UserName: sessionData.user.UserName,
-            AvatarURL: sessionData.user.AvatarURL,
-            Email: sessionData.user.Email,
-            UserLevel: sessionData.user.UserLevel,
-            IsAdmin: sessionData.user.UserLevel === 2,
-            Source: sessionData.user.Source,
-            LastLoginDate: sessionData.user.LastLoginDate
+            username: sessionData.user.username,
+            avatarurl: sessionData.user.avatarurl,
+            email: sessionData.user.email,
+            userlevel: sessionData.user.userlevel,
+            isadmin: sessionData.user.userlevel === 2,
+            source: sessionData.user.source,
+            lastlogindate: sessionData.user.lastlogindate
           }
         });
         
@@ -376,13 +375,13 @@ export async function GET() {
     return NextResponse.json({
       user: {
         userid: sessionData.user.userid,
-        UserName: sessionData.user.UserName,
-        AvatarURL: sessionData.user.AvatarURL,
-        Email: sessionData.user.Email,
-        UserLevel: sessionData.user.UserLevel,
-        IsAdmin: sessionData.user.UserLevel === 2,
-        Source: sessionData.user.Source,
-        LastLoginDate: sessionData.user.LastLoginDate
+        username: sessionData.user.username,
+        avatarurl: sessionData.user.avatarurl,
+        email: sessionData.user.email,
+        userlevel: sessionData.user.userlevel,
+        isadmin: sessionData.user.userlevel === 2,
+        source: sessionData.user.source,
+        lastlogindate: sessionData.user.lastlogindate
       }
     });
 
@@ -395,15 +394,6 @@ export async function GET() {
 }
 
 export async function DELETE(request: Request) {
-  // Validate CSRF token for logout
-  const isValidCsrf = await validateCsrfToken(request);
-  if (!isValidCsrf) {
-    return NextResponse.json(
-      { error: 'Invalid CSRF token' },
-      { status: 403 }
-    );
-  }
-  
   const db = await db_init();
   
   try {
@@ -420,7 +410,7 @@ export async function DELETE(request: Request) {
 
     // Delete session from database using the actual session token
     await db_query(db, 
-      "DELETE FROM usersession WHERE SessionToken = ?", 
+      "DELETE FROM usersession WHERE sessiontoken = ?", 
       [sessionToken]
     );
 

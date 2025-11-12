@@ -17,11 +17,11 @@ interface MenuItem {
 
 interface UserData {
   userid: string;
-  UserName: string;
-  AvatarURL: string;
-  Email: string;
-  UserLevel: number;
-  IsAdmin: boolean;
+  username: string;
+  avatarurl: string;
+  email: string;
+  userlevel: number;
+  isadmin: boolean;
 }
 
 const getLocalizedText = (text: string, language: string = 'English'): string => {
@@ -210,11 +210,11 @@ const LoginSection: React.FC<LoginSectionProps> = ({ websiteLanguage = 'English'
           className="flex items-center focus:outline-none relative group cursor-pointer"
           style={{ color: textColor }}
         >
-          <span className="mr-2" style={{ color: textColor }}>{userData.UserName || getLocalizedText('Sample User', websiteLanguage)}</span>
+          <span className="mr-2" style={{ color: textColor }}>{userData.username || getLocalizedText('Sample User', websiteLanguage)}</span>
           <div className="relative">
-            {userData.AvatarURL ? (
+            {userData.avatarurl ? (
               <img
-                src={userData.AvatarURL}
+                src={userData.avatarurl}
                 alt="User avatar"
                 className="w-10 h-10 rounded-full"
                 referrerPolicy="no-referrer"
@@ -222,7 +222,7 @@ const LoginSection: React.FC<LoginSectionProps> = ({ websiteLanguage = 'English'
               />
             ) : (
               <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-white font-semibold">
-                {userData.UserName ? userData.UserName.charAt(0).toUpperCase() : 'U'}
+                {userData.username ? userData.username.charAt(0).toUpperCase() : 'U'}
               </div>
             )}
           </div>

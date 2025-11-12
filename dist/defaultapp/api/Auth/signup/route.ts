@@ -4,7 +4,6 @@
  */
 
 import { NextResponse } from 'next/server';
-import { validateCsrfToken } from '../../../csrf';
 import { createPasswordAuth } from '../../../db-password-auth';
 import { send_email } from '../../../storage/email';
 
@@ -15,15 +14,6 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
 
 export async function POST(request: Request) {
-  // Validate CSRF token
-  const isValidCsrf = await validateCsrfToken(request);
-  if (!isValidCsrf) {
-    return NextResponse.json(
-      { error: 'Invalid CSRF token' },
-      { status: 403 }
-    );
-  }
-
   try {
     const { email, password } = await request.json();
 
@@ -62,11 +52,11 @@ export async function POST(request: Request) {
               .button { 
                 display: inline-block; 
                 padding: 12px 24px; 
-                background-color: #4F46E5; 
-                color: white; 
+                background-color: #f0f0f0; 
+                color: #000000; 
                 text-decoration: none; 
-                border-radius: 6px;
-                font-weight: bold;
+                border: 1px solid #cccccc;
+                border-radius: 4px;
               }
               .footer { margin-top: 30px; font-size: 12px; color: #666; }
             </style>
@@ -79,7 +69,7 @@ export async function POST(request: Request) {
                 <a href="${verificationUrl}" class="button">Verify Email Address</a>
               </p>
               <p>Or copy and paste this link into your browser:</p>
-              <p style="word-break: break-all; color: #4F46E5;">${verificationUrl}</p>
+              <p style="word-break: break-all; color: #0066cc;">${verificationUrl}</p>
               <p>This link will expire in 24 hours.</p>
               <div class="footer">
                 <p>If you didn't create an account, you can safely ignore this email.</p>

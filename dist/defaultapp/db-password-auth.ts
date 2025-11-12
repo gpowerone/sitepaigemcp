@@ -296,6 +296,43 @@ export async function updatePassword(email: string, currentPassword: string, new
 }
 
 /**
+ * Regenerate email verification token for unverified accounts
+ */
+export async function regenerateVerificationToken(email: string): Promise<{ passwordAuth: PasswordAuth; verificationToken: string } | null> {
+  const client = await db_init();
+  
+  const authRecord = await getPasswordAuthByEmail(email);
+  if (!authRecord) {
+    return null;
+  }
+  
+  // Only regenerate for unverified accounts
+  if (authRecord.emailverified) {
+    throw new Error('Email is already verified');
+  }
+  
+  // Generate new verification token
+  const verificationToken = randomBytes(32).toString('base64url');
+  const verificationTokenExpires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours
+  
+  await db_query(client,
+    `UPDATE passwordauth 
+     SET verificationtoken = ?, 
+         verificationtokenexpires = ?,
+         updatedat = CURRENT_TIMESTAMP
+     WHERE id = ?`,
+    [verificationToken, verificationTokenExpires.toISOString(), authRecord.id]
+  );
+  
+  const updatedAuth = await getPasswordAuthByEmail(email);
+  if (!updatedAuth) {
+    throw new Error('Failed to update verification token');
+  }
+  
+  return { passwordAuth: updatedAuth, verificationToken };
+}
+
+/**
  * Check if an email is already registered
  */
 export async function isEmailRegistered(email: string): Promise<boolean> {

@@ -35,25 +35,32 @@ export async function GET(request: Request) {
     // Create or update user in the main Users table
     const user = await upsertUser(
       `password_${authRecord.id}`, // Unique OAuth ID for password users
-      'username' as any, // Source type
+      'userpass' as any, // Source type
       authRecord.email.split('@')[0], // Username from email
       authRecord.email,
       undefined // No avatar for password auth
     );
+
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Failed to create user account' },
+        { status: 500 }
+      );
+    }
 
     // Auto-login the user after verification
     const db = await db_init();
     
     // Delete existing sessions for this user
     const existingSessions = await db_query(db, 
-      "SELECT ID FROM usersession WHERE userid = ?", 
+      "SELECT id FROM usersession WHERE userid = ?", 
       [user.userid]
     );
     
     if (existingSessions && existingSessions.length > 0) {
-      const sessionIds = existingSessions.map(session => session.ID);
+      const sessionIds = existingSessions.map(session => session.id);
       const placeholders = sessionIds.map(() => '?').join(',');
-      await db_query(db, `DELETE FROM usersession WHERE ID IN (${placeholders})`, sessionIds);
+      await db_query(db, `DELETE FROM usersession WHERE id IN (${placeholders})`, sessionIds);
     }
 
     // Generate secure session token and ID
@@ -62,7 +69,7 @@ export async function GET(request: Request) {
 
     // Create new session with secure token
     await db_query(db, 
-      "INSERT INTO usersession (ID, SessionToken, userid, ExpirationDate) VALUES (?, ?, ?, ?)",
+      "INSERT INTO usersession (id, sessiontoken, userid, expirationdate) VALUES (?, ?, ?, ?)",
       [sessionId, sessionToken, user.userid, new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()]
     );
 

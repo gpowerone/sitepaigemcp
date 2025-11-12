@@ -9,7 +9,7 @@ checked in the system build settings. It is safe to modify this file without it 
 import React, { useState } from 'react';
 
 interface LoginProps {
-  providers: ('apple' | 'facebook' | 'github' | 'google' | 'username')[];
+  providers: ('apple' | 'facebook' | 'github' | 'google' | 'userpass')[];
 }
 
 export default function Login({ providers }: LoginProps) {
@@ -20,6 +20,8 @@ export default function Login({ providers }: LoginProps) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [showResendVerification, setShowResendVerification] = useState(false);
+  const [resendEmail, setResendEmail] = useState('');
 
 
   const handleProviderLogin = async (provider: string) => {
@@ -49,6 +51,37 @@ export default function Login({ providers }: LoginProps) {
     
   };
 
+  const handleResendVerification = async () => {
+    setError(null);
+    setMessage(null);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/Auth/resend-verification', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        credentials: 'include', // Include cookies in request
+        body: JSON.stringify({ email: resendEmail || email })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setMessage({ type: 'success', text: data.message || 'Verification email sent! Please check your inbox.' });
+        setShowResendVerification(false);
+        setResendEmail('');
+      } else {
+        setError(data.error || 'Failed to send verification email');
+      }
+    } catch (err) {
+      setError('An unexpected error occurred');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleUsernamePasswordAuth = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
@@ -66,7 +99,10 @@ export default function Login({ providers }: LoginProps) {
 
         const response = await fetch('/api/Auth/signup', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include', // Include cookies in request
           body: JSON.stringify({ email, password })
         });
 
@@ -84,8 +120,11 @@ export default function Login({ providers }: LoginProps) {
         // Handle login
         const response = await fetch('/api/Auth', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, password, provider: 'username' })
+          headers: { 
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include', // Include cookies in request
+          body: JSON.stringify({ email, password, provider: 'userpass' })
         });
 
         const data = await response.json();
@@ -95,6 +134,11 @@ export default function Login({ providers }: LoginProps) {
           window.location.href = '/';
         } else {
           setError(data.error || 'Login failed');
+          // Check if error is about email verification
+          if (response.status === 403 || data.error?.toLowerCase().includes('verify')) {
+            setShowResendVerification(true);
+            setResendEmail(email);
+          }
         }
       }
     } catch (err) {
@@ -104,8 +148,8 @@ export default function Login({ providers }: LoginProps) {
     }
   };
 
-  const showUsernamePasswordForm = providers?.includes('username');
-  const oauthProviders = providers?.filter(p => p !== 'username') || [];
+  const showUsernamePasswordForm = providers?.includes('userpass');
+  const oauthProviders = providers?.filter(p => p !== 'userpass') || [];
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[500px] p-4">
@@ -179,17 +223,18 @@ export default function Login({ providers }: LoginProps) {
             </div>
 
             <div className="text-center">
-              <button
-                type="button"
-                onClick={() => {
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
                   setIsSignup(!isSignup);
                   setError(null);
                   setMessage(null);
                 }}
-                className="text-sm text-indigo-600 hover:text-indigo-500"
+                className="text-sm text-indigo-600 hover:text-indigo-500 underline"
               >
                 {isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
-              </button>
+              </a>
             </div>
           </form>
         )}
@@ -232,6 +277,40 @@ export default function Login({ providers }: LoginProps) {
         {error && (
           <div className="mt-4 text-red-600 text-center">
             {error}
+          </div>
+        )}
+
+        {showResendVerification && (
+          <div className="mt-4 p-4 border border-gray-200 rounded-md bg-gray-50">
+            <p className="text-sm text-gray-700 mb-3">
+              Need a new verification email? Enter your email address and we'll send you a new link.
+            </p>
+            <div className="space-y-3">
+              <input
+                type="email"
+                value={resendEmail}
+                onChange={(e) => setResendEmail(e.target.value)}
+                placeholder="Email address"
+                className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 text-sm"
+              />
+              <button
+                onClick={handleResendVerification}
+                disabled={isLoading || !resendEmail}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
+              >
+                {isLoading ? 'Sending...' : 'Resend Verification Email'}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setShowResendVerification(false);
+                  setResendEmail('');
+                }}
+                className="w-full text-sm text-gray-500 hover:text-gray-700 bg-transparent border-0 p-0 underline"
+              >
+                Cancel
+              </button>
+            </div>
           </div>
         )}
       </div>

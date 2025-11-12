@@ -5,15 +5,15 @@ import { useRouter } from 'next/navigation';
 
 interface User {
   userid: string;
-  OAuthID: string;
-  Source: string;
-  UserName: string;
-  Email?: string;
-  AvatarURL?: string;
-  UserLevel: number;
-  LastLoginDate: string;
-  CreatedDate: string;
-  IsActive: boolean;
+  oauthid: string;
+  source: string;
+  username: string;
+  email?: string;
+  avatarurl?: string;
+  userlevel: number;
+  lastlogindate: string;
+  createddate: string;
+  isactive: boolean;
 }
 
 interface UserStats {
@@ -46,7 +46,9 @@ export default function AdminPanel() {
       setError(null);
       
       // Fetch users - authorization is handled server-side via session cookie
-      const response = await fetch('/api/admin/users');
+      const response = await fetch('/api/admin/users', {
+        credentials: 'include'
+      });
       if (!response.ok) {
         if (response.status === 401) {
           setError('Access denied. Admin privileges required.');
@@ -80,6 +82,7 @@ export default function AdminPanel() {
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials: 'include',
         body: JSON.stringify({
           userId,
           permissionLevel: newLevel,
@@ -169,13 +172,13 @@ export default function AdminPanel() {
 
   // Filter users based on search and permission level
   const filteredUsers = users.filter(user => {
-    const matchesSearch = user.UserName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         (user.Email && user.Email.toLowerCase().includes(searchTerm.toLowerCase()));
+    const matchesSearch = user.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         (user.email && user.email.toLowerCase().includes(searchTerm.toLowerCase()));
     
     const matchesFilter = filterLevel === 'all' || 
-                         (filterLevel === 'admin' && user.UserLevel === 2) ||
-                         (filterLevel === 'registered' && user.UserLevel === 1) ||
-                         (filterLevel === 'guest' && user.UserLevel === 0);
+                         (filterLevel === 'admin' && user.userlevel === 2) ||
+                         (filterLevel === 'registered' && user.userlevel === 1) ||
+                         (filterLevel === 'guest' && user.userlevel === 0);
     
     return matchesSearch && matchesFilter;
   });
@@ -298,26 +301,26 @@ export default function AdminPanel() {
                 <tr key={user.userid} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
-                      {user.AvatarURL ? (
+                      {user.avatarurl ? (
                         <img
                           className="h-10 w-10 rounded-full"
-                          src={user.AvatarURL}
-                          alt={user.UserName}
+                          src={user.avatarurl}
+                          alt={user.username}
                         />
                       ) : (
                         <div className="h-10 w-10 rounded-full bg-gray-300 flex items-center justify-center">
                           <span className="text-gray-600 font-medium">
-                            {user.UserName.charAt(0).toUpperCase()}
+                            {user.username.charAt(0).toUpperCase()}
                           </span>
                         </div>
                       )}
                       <div className="ml-4">
                         <div className="text-sm font-medium text-gray-900">
-                          {user.UserName}
+                          {user.username}
                         </div>
-                        {user.Email && (
+                        {user.email && (
                           <div className="text-sm text-gray-500">
-                            {user.Email}
+                            {user.email}
                           </div>
                         )}
                       </div>
@@ -325,15 +328,15 @@ export default function AdminPanel() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-gray-100 text-gray-800">
-                      {user.Source}
+                      {user.source}
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <select
-                      value={user.UserLevel}
+                      value={user.userlevel}
                       onChange={(e) => handlePermissionChange(user.userid, parseInt(e.target.value))}
                       disabled={isUpdating === user.userid}
-                      className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getPermissionLevelColor(user.UserLevel)} cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed`}
+                      className={`px-2 py-1 text-xs leading-5 font-semibold rounded-full ${getPermissionLevelColor(user.userlevel)} cursor-pointer hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
                       <option value={0}>Guest</option>
                       <option value={1}>Registered User</option>
@@ -341,11 +344,11 @@ export default function AdminPanel() {
                     </select>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {formatDate(user.LastLoginDate)}
+                    {formatDate(user.lastlogindate)}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <button
-                      onClick={() => handleDeleteUser(user.userid, user.UserName)}
+                      onClick={() => handleDeleteUser(user.userid, user.username)}
                       disabled={isDeleting === user.userid}
                       className="text-red-600 hover:text-red-900 disabled:opacity-50 disabled:cursor-not-allowed"
                     >

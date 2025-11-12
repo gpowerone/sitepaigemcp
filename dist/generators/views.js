@@ -159,14 +159,16 @@ export function generateStyleProps(systemView, isContainer) {
     // Combined alignment using placeItems (matches rview.tsx exactly)
     const verticalAlign = (systemView.verticalAlign || '').toLowerCase();
     const align = (systemView.align || '').toLowerCase();
-    if (verticalAlign === 'top') {
-        styleProps.push(`alignContent: 'start'`);
-    }
-    else if (verticalAlign === 'center') {
-        styleProps.push(`alignContent: 'center'`);
-    }
-    else if (verticalAlign === 'bottom') {
-        styleProps.push(`alignContent: 'end'`);
+    if (systemView.type !== 'container') {
+        if (verticalAlign === 'top') {
+            styleProps.push(`alignContent: 'start'`);
+        }
+        else if (verticalAlign === 'center') {
+            styleProps.push(`alignContent: 'center'`);
+        }
+        else if (verticalAlign === 'bottom') {
+            styleProps.push(`alignContent: 'end'`);
+        }
     }
     // Text alignment 
     if (systemView.type === 'container') {
@@ -540,7 +542,7 @@ export default function ${comp}() {
 
   return (
     <>
-      <div className={\`hidden md:flex gap-4 p-2 \${alignmentClasses[align as keyof typeof alignmentClasses]}\`}>
+      <div className={\`hidden md:flex gap-4 p-3 \${alignmentClasses[align as keyof typeof alignmentClasses]}\`}>
         {items.map((item, index) => (
           <button
             key={index}
@@ -600,6 +602,8 @@ export default function ${comp}() {
                 // Convert authProviders object to providers array
                 const providers = [];
                 if (authProviders) {
+                    if (authProviders.password)
+                        providers.push('userpass');
                     if (authProviders.google)
                         providers.push('google');
                     if (authProviders.facebook)
@@ -667,7 +671,7 @@ export default function ${comp}() {
     }
   };
   
-  return <RCTA custom_view_description={customViewDescription} onNavigate={handleNavigate} isPaigeLoading={false} />;
+  return <RCTA custom_view_description={customViewDescription} onNavigate={handleNavigate} />;
 }`;
             }
             else if (type === "loggedinmenu") {
@@ -900,8 +904,6 @@ export default function ${comp}(){
         const colsPerView = legacy ? Math.floor(12 / normalized.length) : null;
         const importLines = [];
         const blocks = [];
-        // Check if container has background image for opacity handling
-        const hasContainerBackground = v.background_image && v.background_image !== '';
         for (const s of normalized) {
             const subId = s.viewId || s.id || "";
             if (!subId)
@@ -936,8 +938,6 @@ export default function ${comp}(){
             const innerWrapperClasses = [
                 "w-full",
                 "h-full",
-                "flex",
-                "flex-col",
                 // Vertical alignment
                 verticalAlign === 'top' ? 'justify-start' :
                     verticalAlign === 'bottom' ? 'justify-end' : 'justify-center',

@@ -95,7 +95,7 @@ export async function db_query(
  */
 export function db_migrate(model: Model, dbType: string): string {
  
-  const sanitizedTableName = model.name;
+  const sanitizedTableName = model.name.toLowerCase().replace(/\s+/g, '_');
   
   // Start with the model's fields
   let fields = [...model.fields];

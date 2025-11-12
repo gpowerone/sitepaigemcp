@@ -89,23 +89,21 @@ export function middleware(request: NextRequest) {
   // Using Report-Only mode to monitor CSP violations without breaking functionality
   response.headers.set('Content-Security-Policy-Report-Only', csp)
     
-  // Add CSRF token generation for state-changing requests
-  if (request.method !== 'GET' && request.method !== 'HEAD') {
-    const csrfToken = request.cookies.get('csrf-token')?.value;
-    
-    // If no CSRF token exists, generate one
-    if (!csrfToken) {
-      const newCsrfToken = crypto.randomUUID();
-      response.cookies.set({
-        name: 'csrf-token',
-        value: newCsrfToken,
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-        maxAge: 60 * 60 * 24, // 24 hours
-        path: '/'
-      });
-    }
+  // Add CSRF token generation for all requests
+  const csrfToken = request.cookies.get('csrf-token')?.value;
+  
+  // If no CSRF token exists, generate one
+  if (!csrfToken) {
+    const newCsrfToken = crypto.randomUUID();
+    response.cookies.set({
+      name: 'csrf-token',
+      value: newCsrfToken,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 60 * 60 * 24, // 24 hours
+      path: '/'
+    });
   }
     
   

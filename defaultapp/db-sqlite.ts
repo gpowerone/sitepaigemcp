@@ -175,7 +175,7 @@ export async function db_query(
 export function db_migrate(model: Model, dbType: string): string {
   // Special handling for auth tables - create them first
 
-  const sanitizedTableName = model.name;
+  const sanitizedTableName = model.name.toLowerCase().replace(/\s+/g, '_');
   
   // Start with the model's fields
   let fields = [...model.fields];

@@ -44,6 +44,7 @@ export default function LoginCallback({ code, state }: LoginCallbackProps) {
           headers: {
             'Content-Type': 'application/json',
           },
+          credentials: 'include',
           body: JSON.stringify({
             code,
             provider

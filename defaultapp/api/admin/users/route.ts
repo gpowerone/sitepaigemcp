@@ -28,9 +28,11 @@ async function checkAdminAuth(): Promise<{ isAdmin: boolean; userId?: string }> 
   
   // Get session
   const sessions = await db_query(db,
-    "SELECT userid FROM UserSession WHERE SessionToken = ?",
+    "SELECT userid FROM usersession WHERE sessiontoken = ?",
     [sessionId]
   );
+
+  console.log(sessions);
   
   if (sessions.length === 0) {
     return { isAdmin: false };
@@ -38,8 +40,8 @@ async function checkAdminAuth(): Promise<{ isAdmin: boolean; userId?: string }> 
   
   // Check if user is admin
   const user = await getUserByID(sessions[0].userid);
-  
-  if (!user || user.UserLevel !== 2) {
+
+  if (!user || user.userlevel !== 2) {
     return { isAdmin: false };
   }
   

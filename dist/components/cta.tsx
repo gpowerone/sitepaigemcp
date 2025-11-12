@@ -28,10 +28,9 @@ interface CTAData {
 interface RCTAProps {
   custom_view_description: string;
   onNavigate: (pageId: string) => void;
-  isPaigeLoading?: boolean;
 }
 
-const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate, isPaigeLoading = false }) => {
+const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate }) => {
   let ctaData: CTAData;
   
   try {
@@ -101,10 +100,6 @@ const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate, isPaig
   };
 
   const handleButtonClick = (pageId: string) => {
-    if (isPaigeLoading) {
-      console.log('Navigation blocked: Paige is currently processing a request');
-      return;
-    }
     if (pageId) {
       onNavigate(pageId);
     }
@@ -175,11 +170,9 @@ const RCTA: React.FC<RCTAProps> = ({ custom_view_description, onNavigate, isPaig
               <button
                 key={index}
                 onClick={() => handleButtonClick(button.page)}
-                className={`px-6 py-3 rounded-lg transition-all ${hoverClass} ${
-                  isPaigeLoading ? 'opacity-50 cursor-not-allowed' : ''
-                } ${!button.page ? 'opacity-75 cursor-not-allowed' : ''}`}
+                className={`px-6 py-3 rounded-lg transition-all ${hoverClass} ${!button.page ? 'opacity-75 cursor-not-allowed' : ''}`}
                 style={buttonStyles}
-                disabled={isPaigeLoading || !button.page}
+                disabled={!button.page}
               >
                 {button.buttonTitle || 'Button'}
               </button>

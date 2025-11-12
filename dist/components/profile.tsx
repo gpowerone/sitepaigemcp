@@ -9,9 +9,9 @@ checked in the system build settings. It is safe to modify this file without it 
 import { useState, useEffect } from 'react';
 
 interface UserProfile {
-  ID: string;
-  UserName: string;
-  AvatarURL: string | null;
+  id: string;
+  username: string;
+  avatarurl: string | null;
 }
 
 export default function Profile() {
@@ -23,7 +23,8 @@ export default function Profile() {
     const fetchProfile = async () => {
       try {
         const response = await fetch('/api/Auth', {
-          method: 'GET'
+          method: 'GET',
+          credentials: 'include'
         });
 
         if (!response.ok) {
@@ -39,9 +40,9 @@ export default function Profile() {
         // Use the user object from the response
         const userData = data.user;
         setProfile({
-          ID: userData.userid,
-          UserName: userData.UserName,
-          AvatarURL: userData.AvatarURL
+          id: userData.userid,
+          username: userData.username,
+          avatarurl: userData.avatarurl
         });
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
@@ -68,17 +69,17 @@ export default function Profile() {
   return (
     <div className="max-w-md mx-auto mt-8 p-6 bg-white rounded-lg shadow-md">
       <div className="flex flex-col items-center">
-        {profile.AvatarURL && (
+        {profile.avatarurl && (
           <img 
-            src={profile.AvatarURL}
+            src={profile.avatarurl}
             alt="Profile avatar"
             className="w-32 h-32 rounded-full mb-4"
             referrerPolicy="no-referrer"
             crossOrigin="anonymous"
           />
         )}
-        <h2 className="text-2xl font-semibold text-gray-800">{profile.UserName}</h2>
-        <p className="text-gray-500 mt-2">User ID: {profile.ID}</p>
+        <h2 className="text-2xl font-semibold text-gray-800">{profile.username}</h2>
+        <p className="text-gray-500 mt-2">User ID: {profile.id}</p>
       </div>
     </div>
   );

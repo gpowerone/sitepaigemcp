@@ -11,11 +11,11 @@ import { useUserStore } from '@/store/user';
 
 interface AuthProps {
   auth: {
-    ID: string;
-    UserName: string;
-    AvatarURL: string;
-    UserLevel: string;
-    IsAdmin: boolean;
+    id: string;
+    username: string;
+    avatarurl: string;
+    userlevel: string;
+    isadmin: boolean;
   } | null;
 }
 
@@ -25,10 +25,10 @@ export default function Auth({ auth }: AuthProps) {
   useEffect(() => {
     if (auth) {
       setIsAuthenticated(true);
-      setUserLevel(auth.UserLevel);
-      setIsAdmin(auth.IsAdmin);
-      setUserName(auth.UserName);
-      setAvatarURL(auth.AvatarURL);
+      setUserLevel(auth.userlevel);
+      setIsAdmin(auth.isadmin);
+      setUserName(auth.username);
+      setAvatarURL(auth.avatarurl);
     } else {
       setIsAuthenticated(false); 
       setUserLevel('0');

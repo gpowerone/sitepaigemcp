@@ -60,7 +60,6 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [selectedPage, setSelectedPage] = useState<string | null>(null);
-  const [isPaigeLoading, setIsPaigeLoading] = useState(false);
 
   // Handle case where menu is undefined/null
   if (!menu) {
@@ -230,7 +229,6 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
         items-center
         justify-center
         ${isSelected ? 'border-blue-600 bg-blue-50' : ''}
-        ${isPaigeLoading ? 'opacity-50 cursor-not-allowed' : ''}
       `}>
         <h3 
           className={`${isSelected ? 'font-bold' : 'font-medium'} text-gray-800`}
@@ -284,10 +282,6 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
           href={linkUrl}
           onClick={(e) => {
             e.preventDefault();
-            if (isPaigeLoading) {
-              console.log('Navigation blocked: Paige is currently processing a request');
-              return;
-            }
             setSelectedPage(item.page);
             onClick?.();
           }}
