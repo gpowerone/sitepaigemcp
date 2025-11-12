@@ -111,7 +111,7 @@ export async function upsertUser(
   } else {
     // Check if this is the first user (should be admin)
     const allUsers = await db_query(client, "SELECT COUNT(*) as count FROM users");
-    const isFirstUser = allUsers[0].count === 0;
+    const isFirstUser = Number(allUsers[0].count) === 0;
     
     // Create new user
     const userId = crypto.randomUUID();

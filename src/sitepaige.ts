@@ -194,7 +194,8 @@ export async function generate_site(
     google: providersArray.includes('google'),
     facebook: providersArray.includes('facebook'),
     github: providersArray.includes('github'),
-    apple: providersArray.includes('apple')
+    apple: providersArray.includes('apple'),
+    password: providersArray.includes('password')
   };
 
   // 1) Create project via /api/jobs

@@ -45,7 +45,6 @@ const LoginSection: React.FC<LoginSectionProps> = ({ websiteLanguage = 'English'
   const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [profileMenuItems, setProfileMenuItems] = useState<MenuItem[]>([]);
   const userMenuRef = useRef<HTMLDivElement>(null);
 
   // Hardcoded values
@@ -53,33 +52,16 @@ const LoginSection: React.FC<LoginSectionProps> = ({ websiteLanguage = 'English'
   const align = 'Right' as "Left" | "Center" | "Right";
   const mobileViewMode = 'desktop' as 'desktop' | 'phone' | 'sm-tablet' | 'lg-tablet';
 
-  // Load profile menu items from localStorage
-  useEffect(() => {
-    const loadProfileMenuItems = () => {
-      try {
-        const storedMenuData = localStorage.getItem('blueprint_profile_menu');
-        if (storedMenuData) {
-          const menuData = JSON.parse(storedMenuData);
-          setProfileMenuItems(menuData);
-        } else {
-          // Default fallback menu items
-          setProfileMenuItems([
-            { label: 'Profile', link: '/profile' },
-            { label: 'Settings', link: '/settings' }
-          ]);
-        }
-      } catch (error) {
-        console.error('Failed to load profile menu from localStorage:', error);
-        // Default fallback menu items
-        setProfileMenuItems([
-          { label: 'Profile', link: '/profile' },
-          { label: 'Settings', link: '/settings' }
-        ]);
-      }
-    };
-
-    loadProfileMenuItems();
-  }, []);
+  // Build menu items based on user level
+  const profileMenuItems: MenuItem[] = [
+    { label: 'Dashboard', link: '/dashboard' },
+    { label: 'Profile', link: '/profile' }
+  ];
+  
+  // Add Admin Dashboard only if user is an admin (userlevel == 2)
+  if (userData?.userlevel === 2) {
+    profileMenuItems.push({ label: 'Admin Dashboard', link: '/admin_dashboard' });
+  }
 
   // Fetch user authentication status and data
   useEffect(() => {

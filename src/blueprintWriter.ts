@@ -43,6 +43,7 @@ interface ProjectInput {
     facebook: boolean;
     github: boolean;
     google: boolean;
+    password: boolean;
   };
 }
 

@@ -6673,3 +6673,1113 @@
 [2025-11-12T05:44:23.784Z] [writeViews] Looking for code for view 5376ba91-0cbe-4344-a531-97023b036555, found: no
 [2025-11-12T05:44:23.785Z] [writeViews] Processing view: 4b293348-a711-4130-bd14-8f4fbbd54c16, type: generatedcomponent, name: New View
 [2025-11-12T05:44:23.785Z] [writeViews] Looking for code for view 4b293348-a711-4130-bd14-8f4fbbd54c16, found: no
+[2025-11-12T15:31:59.060Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"postgres","writeApis":true}
+[2025-11-12T15:31:59.063Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-11-12T15:31:59.063Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":45,"hasViews":true,"viewsCount":17}
+[2025-11-12T15:31:59.160Z] [writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)
+[2025-11-12T15:32:00.002Z] [writeViews] projectCode: exists
+[2025-11-12T15:32:00.003Z] [writeViews] projectCode.views count: 17
+[2025-11-12T15:32:00.003Z] [writeViews] View code available for ID: home-featured-products, code length: 8568
+[2025-11-12T15:32:00.003Z] [writeViews] View code available for ID: home-featured-categories, code length: 6658
+[2025-11-12T15:32:00.003Z] [writeViews] View code available for ID: shop-categories-grid, code length: 4318
+[2025-11-12T15:32:00.003Z] [writeViews] View code available for ID: dresses-listing-main, code length: 15077
+[2025-11-12T15:32:00.004Z] [writeViews] View code available for ID: dress-detail-main, code length: 15956
+[2025-11-12T15:32:00.004Z] [writeViews] View code available for ID: shopping-cart-main, code length: 17654
+[2025-11-12T15:32:00.004Z] [writeViews] View code available for ID: checkout-form-main, code length: 28050
+[2025-11-12T15:32:00.005Z] [writeViews] View code available for ID: order-confirmation-main, code length: 12036
+[2025-11-12T15:32:00.005Z] [writeViews] View code available for ID: user-orders-list, code length: 8804
+[2025-11-12T15:32:00.005Z] [writeViews] View code available for ID: order-detail-main, code length: 17502
+[2025-11-12T15:32:00.005Z] [writeViews] View code available for ID: user-wishlist-items, code length: 10147
+[2025-11-12T15:32:00.005Z] [writeViews] View code available for ID: admin-inventory-management, code length: 45503
+[2025-11-12T15:32:00.005Z] [writeViews] View code available for ID: admin-order-management, code length: 30197
+[2025-11-12T15:32:00.005Z] [writeViews] View code available for ID: admin-category-management, code length: 14904
+[2025-11-12T15:32:00.006Z] [writeViews] View code available for ID: admin-customer-management, code length: 24286
+[2025-11-12T15:32:00.006Z] [writeViews] View code available for ID: admin-options-management, code length: 17442
+[2025-11-12T15:32:00.006Z] [writeViews] View code available for ID: admin-variants-management, code length: 19241
+[2025-11-12T15:32:00.007Z] [writeViews] Processing view: 86531455-bf17-4b36-b23a-dac307717bf8, type: logo, name: Logo
+[2025-11-12T15:32:00.007Z] [writeViews] Looking for code for view 86531455-bf17-4b36-b23a-dac307717bf8, found: no
+[2025-11-12T15:32:00.007Z] [writeViews] Processing view: 03749b7b-9215-49d3-8a56-ff2d70b31d92, type: menu, name: Header Menu
+[2025-11-12T15:32:00.008Z] [writeViews] Looking for code for view 03749b7b-9215-49d3-8a56-ff2d70b31d92, found: no
+[2025-11-12T15:32:00.008Z] [writeViews] Processing view: 44f48709-e694-439e-b3a7-f3c6e88575f7, type: loginbutton, name: Login Button
+[2025-11-12T15:32:00.008Z] [writeViews] Looking for code for view 44f48709-e694-439e-b3a7-f3c6e88575f7, found: no
+[2025-11-12T15:32:00.009Z] [writeViews] Processing view: 97e68202-b4d1-428c-8c4c-911bf19f9e15, type: iconbar, name: Header Icon Bar
+[2025-11-12T15:32:00.009Z] [writeViews] Looking for code for view 97e68202-b4d1-428c-8c4c-911bf19f9e15, found: no
+[2025-11-12T15:32:00.010Z] [writeViews] Processing view: 6b34770a-2fd6-4854-86a9-5c212fda4c80, type: menu, name: Footer Menu
+[2025-11-12T15:32:00.010Z] [writeViews] Looking for code for view 6b34770a-2fd6-4854-86a9-5c212fda4c80, found: no
+[2025-11-12T15:32:00.010Z] [writeViews] Processing view: d105805f-e242-41db-9648-d55ad2e298b9, type: socialbar, name: Social Media Bar
+[2025-11-12T15:32:00.011Z] [writeViews] Looking for code for view d105805f-e242-41db-9648-d55ad2e298b9, found: no
+[2025-11-12T15:32:00.011Z] [writeViews] Processing view: 2c73c1b5-f04b-4573-bffd-0b9aff7240da, type: text, name: Copyright
+[2025-11-12T15:32:00.012Z] [writeViews] Looking for code for view 2c73c1b5-f04b-4573-bffd-0b9aff7240da, found: no
+[2025-11-12T15:32:00.012Z] [writeViews] Processing view: dc553d42-e4b1-4048-b8f5-e8479428a7db, type: slideshow, name: Hero Slideshow
+[2025-11-12T15:32:00.012Z] [writeViews] Looking for code for view dc553d42-e4b1-4048-b8f5-e8479428a7db, found: no
+[2025-11-12T15:32:00.013Z] [writeViews] Processing view: 99a3580e-423d-4251-a316-92ae11cb6e2d, type: logo, name: Logo
+[2025-11-12T15:32:00.013Z] [writeViews] Looking for code for view 99a3580e-423d-4251-a316-92ae11cb6e2d, found: no
+[2025-11-12T15:32:00.013Z] [writeViews] Processing view: 137db2e5-02a2-4f4b-a6ae-353864aed1f1, type: menu, name: Header Menu
+[2025-11-12T15:32:00.014Z] [writeViews] Looking for code for view 137db2e5-02a2-4f4b-a6ae-353864aed1f1, found: no
+[2025-11-12T15:32:00.014Z] [writeViews] Processing view: 08372858-81f2-4b26-b05d-b8ffdffeb31e, type: loginbutton, name: Header Login
+[2025-11-12T15:32:00.015Z] [writeViews] Looking for code for view 08372858-81f2-4b26-b05d-b8ffdffeb31e, found: no
+[2025-11-12T15:32:00.015Z] [writeViews] Processing view: home-featured-products, type: component, name: Featured Products
+[2025-11-12T15:32:00.015Z] [writeViews] Looking for code for view home-featured-products, found: yes
+[2025-11-12T15:32:00.245Z] [writeViews] Processing view: home-featured-categories, type: component, name: Featured Categories
+[2025-11-12T15:32:00.246Z] [writeViews] Looking for code for view home-featured-categories, found: yes
+[2025-11-12T15:32:00.259Z] [writeViews] Processing view: home-about-text, type: text, name: About Emma's
+[2025-11-12T15:32:00.259Z] [writeViews] Looking for code for view home-about-text, found: no
+[2025-11-12T15:32:00.259Z] [writeViews] Processing view: shop-categories-grid, type: component, name: Categories Grid
+[2025-11-12T15:32:00.259Z] [writeViews] Looking for code for view shop-categories-grid, found: yes
+[2025-11-12T15:32:00.269Z] [writeViews] Processing view: dresses-listing-main, type: component, name: Product Listing
+[2025-11-12T15:32:00.269Z] [writeViews] Looking for code for view dresses-listing-main, found: yes
+[2025-11-12T15:32:00.289Z] [writeViews] Processing view: dress-detail-main, type: component, name: Product Details
+[2025-11-12T15:32:00.289Z] [writeViews] Looking for code for view dress-detail-main, found: yes
+[2025-11-12T15:32:00.314Z] [writeViews] Processing view: shopping-cart-main, type: component, name: Shopping Cart
+[2025-11-12T15:32:00.314Z] [writeViews] Looking for code for view shopping-cart-main, found: yes
+[2025-11-12T15:32:00.339Z] [writeViews] Processing view: checkout-form-main, type: component, name: Checkout Form
+[2025-11-12T15:32:00.339Z] [writeViews] Looking for code for view checkout-form-main, found: yes
+[2025-11-12T15:32:00.376Z] [writeViews] Processing view: order-confirmation-main, type: component, name: Order Confirmation
+[2025-11-12T15:32:00.377Z] [writeViews] Looking for code for view order-confirmation-main, found: yes
+[2025-11-12T15:32:00.397Z] [writeViews] Processing view: user-orders-list, type: component, name: Order List
+[2025-11-12T15:32:00.397Z] [writeViews] Looking for code for view user-orders-list, found: yes
+[2025-11-12T15:32:00.406Z] [writeViews] Processing view: order-detail-main, type: component, name: Order Details
+[2025-11-12T15:32:00.406Z] [writeViews] Looking for code for view order-detail-main, found: yes
+[2025-11-12T15:32:00.421Z] [writeViews] Processing view: user-wishlist-items, type: component, name: Wishlist
+[2025-11-12T15:32:00.421Z] [writeViews] Looking for code for view user-wishlist-items, found: yes
+[2025-11-12T15:32:00.430Z] [writeViews] Processing view: about-story-text, type: text, name: Our Story
+[2025-11-12T15:32:00.430Z] [writeViews] Looking for code for view about-story-text, found: no
+[2025-11-12T15:32:00.431Z] [writeViews] Processing view: size-guide-content, type: text, name: Size Guide
+[2025-11-12T15:32:00.431Z] [writeViews] Looking for code for view size-guide-content, found: no
+[2025-11-12T15:32:00.432Z] [writeViews] Processing view: shipping-policy-text, type: text, name: Shipping Policy
+[2025-11-12T15:32:00.432Z] [writeViews] Looking for code for view shipping-policy-text, found: no
+[2025-11-12T15:32:00.432Z] [writeViews] Processing view: returns-policy-text, type: text, name: Returns Policy
+[2025-11-12T15:32:00.432Z] [writeViews] Looking for code for view returns-policy-text, found: no
+[2025-11-12T15:32:00.433Z] [writeViews] Processing view: contact-info-text, type: text, name: Contact Info
+[2025-11-12T15:32:00.433Z] [writeViews] Looking for code for view contact-info-text, found: no
+[2025-11-12T15:32:00.433Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-11-12T15:32:00.433Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-11-12T15:32:00.434Z] [writeViews] Processing view: faq-content, type: text, name: FAQ
+[2025-11-12T15:32:00.434Z] [writeViews] Looking for code for view faq-content, found: no
+[2025-11-12T15:32:00.434Z] [writeViews] Processing view: admin-inventory-management, type: component, name: Inventory Management
+[2025-11-12T15:32:00.435Z] [writeViews] Looking for code for view admin-inventory-management, found: yes
+[2025-11-12T15:32:00.469Z] [writeViews] Processing view: admin-order-management, type: component, name: Order Management
+[2025-11-12T15:32:00.469Z] [writeViews] Looking for code for view admin-order-management, found: yes
+[2025-11-12T15:32:00.500Z] [writeViews] Processing view: admin-category-management, type: component, name: Category Management
+[2025-11-12T15:32:00.500Z] [writeViews] Looking for code for view admin-category-management, found: yes
+[2025-11-12T15:32:00.511Z] [writeViews] Processing view: admin-customer-management, type: component, name: Customer Management
+[2025-11-12T15:32:00.511Z] [writeViews] Looking for code for view admin-customer-management, found: yes
+[2025-11-12T15:32:00.532Z] [writeViews] Processing view: admin-options-management, type: component, name: Options Management
+[2025-11-12T15:32:00.532Z] [writeViews] Looking for code for view admin-options-management, found: yes
+[2025-11-12T15:32:00.537Z] [writeViews] Transpilation failed for view admin-options-management: {"code":"BABEL_PARSER_SYNTAX_ERROR","reasonCode":"UnterminatedString","loc":{"line":275,"column":27,"index":10789},"pos":10789}
+[2025-11-12T15:32:00.539Z] [writeViews] Processing view: admin-variants-management, type: component, name: Variants Management
+[2025-11-12T15:32:00.539Z] [writeViews] Looking for code for view admin-variants-management, found: yes
+[2025-11-12T15:32:00.557Z] [writeViews] Processing view: dfebfbaf-14cb-4587-998a-81e7c7cff8f5, type: menu, name: User Dashboard Menu
+[2025-11-12T15:32:00.557Z] [writeViews] Looking for code for view dfebfbaf-14cb-4587-998a-81e7c7cff8f5, found: no
+[2025-11-12T15:32:00.558Z] [writeViews] Processing view: 0cde8958-2469-4581-8f09-7c3e9fa60fb9, type: useradmin, name: UserAdminView
+[2025-11-12T15:32:00.558Z] [writeViews] Looking for code for view 0cde8958-2469-4581-8f09-7c3e9fa60fb9, found: no
+[2025-11-12T15:32:00.558Z] [writeViews] Processing view: db04020d-7466-4036-82cc-6c1c468c0f83, type: menu, name: Admin Dashboard Menu
+[2025-11-12T15:32:00.559Z] [writeViews] Looking for code for view db04020d-7466-4036-82cc-6c1c468c0f83, found: no
+[2025-11-12T15:32:00.559Z] [writeViews] Processing view: 01796b09-9e8c-4fad-8909-575504373be5, type: text, name: Terms of Service
+[2025-11-12T15:32:00.559Z] [writeViews] Looking for code for view 01796b09-9e8c-4fad-8909-575504373be5, found: no
+[2025-11-12T15:32:00.560Z] [writeViews] Processing view: 0b5644bf-ab66-450f-98a6-e411ebbbd174, type: text, name: Privacy Policy
+[2025-11-12T15:32:00.560Z] [writeViews] Looking for code for view 0b5644bf-ab66-450f-98a6-e411ebbbd174, found: no
+[2025-11-12T15:32:00.560Z] [writeViews] Processing view: 2435b3ed-14d4-47cb-8957-e6dc8c485147, type: login, name: LoginView
+[2025-11-12T15:32:00.560Z] [writeViews] Looking for code for view 2435b3ed-14d4-47cb-8957-e6dc8c485147, found: no
+[2025-11-12T15:32:00.561Z] [writeViews] Processing view: aa0a7244-f86b-4ba6-859a-02ffc89ec552, type: generatedcomponent, name: New View
+[2025-11-12T15:32:00.561Z] [writeViews] Looking for code for view aa0a7244-f86b-4ba6-859a-02ffc89ec552, found: no
+[2025-11-12T15:32:00.562Z] [writeViews] Processing view: 9e6a58ea-be29-4d85-9343-06c720665431, type: generatedcomponent, name: New View
+[2025-11-12T15:32:00.562Z] [writeViews] Looking for code for view 9e6a58ea-be29-4d85-9343-06c720665431, found: no
+[2025-11-12T15:32:00.563Z] [writeViews] Processing view: 5376ba91-0cbe-4344-a531-97023b036555, type: generatedcomponent, name: New View
+[2025-11-12T15:32:00.563Z] [writeViews] Looking for code for view 5376ba91-0cbe-4344-a531-97023b036555, found: no
+[2025-11-12T15:32:00.564Z] [writeViews] Processing view: 4b293348-a711-4130-bd14-8f4fbbd54c16, type: generatedcomponent, name: New View
+[2025-11-12T15:32:00.564Z] [writeViews] Looking for code for view 4b293348-a711-4130-bd14-8f4fbbd54c16, found: no
+[2025-11-12T15:32:00.590Z] [writeProjectPagesOnly] Writing APIs (writeApis=true and APIs exist)
+[2025-11-12T15:32:00.591Z] [writeApis] APIs count: 45
+[2025-11-12T15:32:00.591Z] [writeApis] Code groups count: 45
+[2025-11-12T15:32:00.591Z] [writeApis] Processing API: categoriescreate, name: CategoriesCreate
+[2025-11-12T15:32:00.592Z] [writeApis] Found code group for API categoriescreate: yes
+[2025-11-12T15:32:00.592Z] [writeApis] API code length: 2044
+[2025-11-12T15:32:00.593Z] [writeApis] Processing API: categoriesdelete, name: CategoriesDelete
+[2025-11-12T15:32:00.593Z] [writeApis] Found code group for API categoriesdelete: yes
+[2025-11-12T15:32:00.593Z] [writeApis] API code length: 1786
+[2025-11-12T15:32:00.594Z] [writeApis] Processing API: categoriesget, name: CategoriesGet
+[2025-11-12T15:32:00.594Z] [writeApis] Found code group for API categoriesget: yes
+[2025-11-12T15:32:00.595Z] [writeApis] API code length: 1708
+[2025-11-12T15:32:00.595Z] [writeApis] Processing API: categorieslist, name: CategoriesList
+[2025-11-12T15:32:00.596Z] [writeApis] Found code group for API categorieslist: yes
+[2025-11-12T15:32:00.596Z] [writeApis] API code length: 3058
+[2025-11-12T15:32:00.597Z] [writeApis] Processing API: categoriesupdate, name: CategoriesUpdate
+[2025-11-12T15:32:00.597Z] [writeApis] Found code group for API categoriesupdate: yes
+[2025-11-12T15:32:00.597Z] [writeApis] API code length: 3474
+[2025-11-12T15:32:00.598Z] [writeApis] Processing API: customersdelete, name: CustomersDelete
+[2025-11-12T15:32:00.598Z] [writeApis] Found code group for API customersdelete: yes
+[2025-11-12T15:32:00.599Z] [writeApis] API code length: 1404
+[2025-11-12T15:32:00.600Z] [writeApis] Processing API: customersget, name: CustomersGet
+[2025-11-12T15:32:00.600Z] [writeApis] Found code group for API customersget: yes
+[2025-11-12T15:32:00.600Z] [writeApis] API code length: 2773
+[2025-11-12T15:32:00.601Z] [writeApis] Processing API: customerslist, name: CustomersList
+[2025-11-12T15:32:00.601Z] [writeApis] Found code group for API customerslist: yes
+[2025-11-12T15:32:00.601Z] [writeApis] API code length: 4862
+[2025-11-12T15:32:00.602Z] [writeApis] Processing API: customersorders, name: CustomersOrders
+[2025-11-12T15:32:00.603Z] [writeApis] Found code group for API customersorders: yes
+[2025-11-12T15:32:00.603Z] [writeApis] API code length: 3183
+[2025-11-12T15:32:00.604Z] [writeApis] Processing API: customersupdate, name: CustomersUpdate
+[2025-11-12T15:32:00.604Z] [writeApis] Found code group for API customersupdate: yes
+[2025-11-12T15:32:00.604Z] [writeApis] API code length: 4319
+[2025-11-12T15:32:00.605Z] [writeApis] Processing API: orderitemslist, name: OrderItemsList
+[2025-11-12T15:32:00.605Z] [writeApis] Found code group for API orderitemslist: yes
+[2025-11-12T15:32:00.605Z] [writeApis] API code length: 2506
+[2025-11-12T15:32:00.606Z] [writeApis] Processing API: ordersget, name: OrdersGet
+[2025-11-12T15:32:00.606Z] [writeApis] Found code group for API ordersget: yes
+[2025-11-12T15:32:00.607Z] [writeApis] API code length: 3716
+[2025-11-12T15:32:00.608Z] [writeApis] Processing API: orderslist, name: OrdersList
+[2025-11-12T15:32:00.608Z] [writeApis] Found code group for API orderslist: yes
+[2025-11-12T15:32:00.608Z] [writeApis] API code length: 4066
+[2025-11-12T15:32:00.609Z] [writeApis] Processing API: ordersupdate, name: OrdersUpdate
+[2025-11-12T15:32:00.609Z] [writeApis] Found code group for API ordersupdate: yes
+[2025-11-12T15:32:00.609Z] [writeApis] API code length: 6477
+[2025-11-12T15:32:00.610Z] [writeApis] Processing API: processorder, name: ProcessOrder
+[2025-11-12T15:32:00.610Z] [writeApis] Found code group for API processorder: yes
+[2025-11-12T15:32:00.611Z] [writeApis] API code length: 9910
+[2025-11-12T15:32:00.611Z] [writeApis] Processing API: productimagescreate, name: ProductImagesCreate
+[2025-11-12T15:32:00.612Z] [writeApis] Found code group for API productimagescreate: yes
+[2025-11-12T15:32:00.612Z] [writeApis] API code length: 2868
+[2025-11-12T15:32:00.613Z] [writeApis] Processing API: productimagesdelete, name: ProductImagesDelete
+[2025-11-12T15:32:00.613Z] [writeApis] Found code group for API productimagesdelete: yes
+[2025-11-12T15:32:00.613Z] [writeApis] API code length: 2416
+[2025-11-12T15:32:00.614Z] [writeApis] Processing API: productimageslist, name: ProductImagesList
+[2025-11-12T15:32:00.614Z] [writeApis] Found code group for API productimageslist: yes
+[2025-11-12T15:32:00.614Z] [writeApis] API code length: 1657
+[2025-11-12T15:32:00.615Z] [writeApis] Processing API: productimagesupdate, name: ProductImagesUpdate
+[2025-11-12T15:32:00.616Z] [writeApis] Found code group for API productimagesupdate: yes
+[2025-11-12T15:32:00.616Z] [writeApis] API code length: 3378
+[2025-11-12T15:32:00.617Z] [writeApis] Processing API: productoptionscreate, name: ProductOptionsCreate
+[2025-11-12T15:32:00.617Z] [writeApis] Found code group for API productoptionscreate: yes
+[2025-11-12T15:32:00.617Z] [writeApis] API code length: 2802
+[2025-11-12T15:32:00.618Z] [writeApis] Processing API: productoptionsdelete, name: ProductOptionsDelete
+[2025-11-12T15:32:00.618Z] [writeApis] Found code group for API productoptionsdelete: yes
+[2025-11-12T15:32:00.618Z] [writeApis] API code length: 2462
+[2025-11-12T15:32:00.619Z] [writeApis] Processing API: productoptionsget, name: ProductOptionsGet
+[2025-11-12T15:32:00.619Z] [writeApis] Found code group for API productoptionsget: yes
+[2025-11-12T15:32:00.620Z] [writeApis] API code length: 1679
+[2025-11-12T15:32:00.620Z] [writeApis] Processing API: productoptionslist, name: ProductOptionsList
+[2025-11-12T15:32:00.621Z] [writeApis] Found code group for API productoptionslist: yes
+[2025-11-12T15:32:00.621Z] [writeApis] API code length: 3072
+[2025-11-12T15:32:00.622Z] [writeApis] Processing API: productoptionsmapcreate, name: ProductOptionsMapCreate
+[2025-11-12T15:32:00.622Z] [writeApis] Found code group for API productoptionsmapcreate: yes
+[2025-11-12T15:32:00.622Z] [writeApis] API code length: 3225
+[2025-11-12T15:32:00.623Z] [writeApis] Processing API: productoptionsmapdelete, name: ProductOptionsMapDelete
+[2025-11-12T15:32:00.623Z] [writeApis] Found code group for API productoptionsmapdelete: yes
+[2025-11-12T15:32:00.624Z] [writeApis] API code length: 1616
+[2025-11-12T15:32:00.624Z] [writeApis] Processing API: productoptionsmaplist, name: ProductOptionsMapList
+[2025-11-12T15:32:00.625Z] [writeApis] Found code group for API productoptionsmaplist: yes
+[2025-11-12T15:32:00.625Z] [writeApis] API code length: 2785
+[2025-11-12T15:32:00.626Z] [writeApis] Processing API: productoptionsupdate, name: ProductOptionsUpdate
+[2025-11-12T15:32:00.626Z] [writeApis] Found code group for API productoptionsupdate: yes
+[2025-11-12T15:32:00.626Z] [writeApis] API code length: 4423
+[2025-11-12T15:32:00.627Z] [writeApis] Processing API: productoptionvaluescreate, name: ProductOptionValuesCreate
+[2025-11-12T15:32:00.627Z] [writeApis] Found code group for API productoptionvaluescreate: yes
+[2025-11-12T15:32:00.628Z] [writeApis] API code length: 3423
+[2025-11-12T15:32:00.629Z] [writeApis] Processing API: productoptionvaluesdelete, name: ProductOptionValuesDelete
+[2025-11-12T15:32:00.630Z] [writeApis] Found code group for API productoptionvaluesdelete: yes
+[2025-11-12T15:32:00.633Z] [writeApis] API code length: 2154
+[2025-11-12T15:32:00.634Z] [writeApis] Processing API: productoptionvaluesget, name: ProductOptionValuesGet
+[2025-11-12T15:32:00.635Z] [writeApis] Found code group for API productoptionvaluesget: yes
+[2025-11-12T15:32:00.635Z] [writeApis] API code length: 2217
+[2025-11-12T15:32:00.636Z] [writeApis] Processing API: productoptionvalueslist, name: ProductOptionValuesList
+[2025-11-12T15:32:00.636Z] [writeApis] Found code group for API productoptionvalueslist: yes
+[2025-11-12T15:32:00.636Z] [writeApis] API code length: 3556
+[2025-11-12T15:32:00.637Z] [writeApis] Processing API: productoptionvaluesupdate, name: ProductOptionValuesUpdate
+[2025-11-12T15:32:00.637Z] [writeApis] Found code group for API productoptionvaluesupdate: yes
+[2025-11-12T15:32:00.638Z] [writeApis] API code length: 4146
+[2025-11-12T15:32:00.639Z] [writeApis] Processing API: productscreate, name: ProductsCreate
+[2025-11-12T15:32:00.639Z] [writeApis] Found code group for API productscreate: yes
+[2025-11-12T15:32:00.639Z] [writeApis] API code length: 4509
+[2025-11-12T15:32:00.640Z] [writeApis] Processing API: productsdelete, name: ProductsDelete
+[2025-11-12T15:32:00.640Z] [writeApis] Found code group for API productsdelete: yes
+[2025-11-12T15:32:00.641Z] [writeApis] API code length: 2412
+[2025-11-12T15:32:00.641Z] [writeApis] Processing API: productsget, name: ProductsGet
+[2025-11-12T15:32:00.642Z] [writeApis] Found code group for API productsget: yes
+[2025-11-12T15:32:00.642Z] [writeApis] API code length: 2892
+[2025-11-12T15:32:00.643Z] [writeApis] Processing API: productslist, name: ProductsList
+[2025-11-12T15:32:00.643Z] [writeApis] Found code group for API productslist: yes
+[2025-11-12T15:32:00.643Z] [writeApis] API code length: 4861
+[2025-11-12T15:32:00.644Z] [writeApis] Processing API: productsupdate, name: ProductsUpdate
+[2025-11-12T15:32:00.644Z] [writeApis] Found code group for API productsupdate: yes
+[2025-11-12T15:32:00.644Z] [writeApis] API code length: 6318
+[2025-11-12T15:32:00.645Z] [writeApis] Processing API: productvariantscreate, name: ProductVariantsCreate
+[2025-11-12T15:32:00.646Z] [writeApis] Found code group for API productvariantscreate: yes
+[2025-11-12T15:32:00.646Z] [writeApis] API code length: 4740
+[2025-11-12T15:32:00.647Z] [writeApis] Processing API: productvariantsdelete, name: ProductVariantsDelete
+[2025-11-12T15:32:00.647Z] [writeApis] Found code group for API productvariantsdelete: yes
+[2025-11-12T15:32:00.648Z] [writeApis] API code length: 2155
+[2025-11-12T15:32:00.649Z] [writeApis] Processing API: productvariantsget, name: ProductVariantsGet
+[2025-11-12T15:32:00.649Z] [writeApis] Found code group for API productvariantsget: yes
+[2025-11-12T15:32:00.649Z] [writeApis] API code length: 2340
+[2025-11-12T15:32:00.650Z] [writeApis] Processing API: productvariantslist, name: ProductVariantsList
+[2025-11-12T15:32:00.650Z] [writeApis] Found code group for API productvariantslist: yes
+[2025-11-12T15:32:00.651Z] [writeApis] API code length: 3747
+[2025-11-12T15:32:00.651Z] [writeApis] Processing API: productvariantsupdate, name: ProductVariantsUpdate
+[2025-11-12T15:32:00.652Z] [writeApis] Found code group for API productvariantsupdate: yes
+[2025-11-12T15:32:00.652Z] [writeApis] API code length: 5964
+[2025-11-12T15:32:00.653Z] [writeApis] Processing API: wishlistcreate, name: WishlistCreate
+[2025-11-12T15:32:00.653Z] [writeApis] Found code group for API wishlistcreate: yes
+[2025-11-12T15:32:00.653Z] [writeApis] API code length: 3185
+[2025-11-12T15:32:00.654Z] [writeApis] Processing API: wishlistdelete, name: WishlistDelete
+[2025-11-12T15:32:00.654Z] [writeApis] Found code group for API wishlistdelete: yes
+[2025-11-12T15:32:00.654Z] [writeApis] API code length: 1755
+[2025-11-12T15:32:00.655Z] [writeApis] Processing API: wishlistlist, name: WishlistList
+[2025-11-12T15:32:00.656Z] [writeApis] Found code group for API wishlistlist: yes
+[2025-11-12T15:32:00.656Z] [writeApis] API code length: 1865
+[2025-11-12T15:32:01.926Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Logo__Emma_s.jpg
+[2025-11-12T15:32:02.383Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T15:32:02.731Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T15:32:03.077Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T15:32:03.625Z] [writeViews] projectCode: exists
+[2025-11-12T15:32:03.638Z] [writeViews] projectCode.views count: 17
+[2025-11-12T15:32:03.638Z] [writeViews] View code available for ID: home-featured-products, code length: 8568
+[2025-11-12T15:32:03.638Z] [writeViews] View code available for ID: home-featured-categories, code length: 6658
+[2025-11-12T15:32:03.638Z] [writeViews] View code available for ID: shop-categories-grid, code length: 4318
+[2025-11-12T15:32:03.638Z] [writeViews] View code available for ID: dresses-listing-main, code length: 15077
+[2025-11-12T15:32:03.639Z] [writeViews] View code available for ID: dress-detail-main, code length: 15956
+[2025-11-12T15:32:03.639Z] [writeViews] View code available for ID: shopping-cart-main, code length: 17654
+[2025-11-12T15:32:03.639Z] [writeViews] View code available for ID: checkout-form-main, code length: 28050
+[2025-11-12T15:32:03.639Z] [writeViews] View code available for ID: order-confirmation-main, code length: 12036
+[2025-11-12T15:32:03.639Z] [writeViews] View code available for ID: user-orders-list, code length: 8804
+[2025-11-12T15:32:03.640Z] [writeViews] View code available for ID: order-detail-main, code length: 17502
+[2025-11-12T15:32:03.640Z] [writeViews] View code available for ID: user-wishlist-items, code length: 10147
+[2025-11-12T15:32:03.640Z] [writeViews] View code available for ID: admin-inventory-management, code length: 45503
+[2025-11-12T15:32:03.640Z] [writeViews] View code available for ID: admin-order-management, code length: 30197
+[2025-11-12T15:32:03.640Z] [writeViews] View code available for ID: admin-category-management, code length: 14904
+[2025-11-12T15:32:03.640Z] [writeViews] View code available for ID: admin-customer-management, code length: 24286
+[2025-11-12T15:32:03.641Z] [writeViews] View code available for ID: admin-options-management, code length: 17442
+[2025-11-12T15:32:03.641Z] [writeViews] View code available for ID: admin-variants-management, code length: 19241
+[2025-11-12T15:32:03.641Z] [writeViews] Processing view: 86531455-bf17-4b36-b23a-dac307717bf8, type: logo, name: Logo
+[2025-11-12T15:32:03.641Z] [writeViews] Looking for code for view 86531455-bf17-4b36-b23a-dac307717bf8, found: no
+[2025-11-12T15:32:03.641Z] [writeViews] Processing view: 03749b7b-9215-49d3-8a56-ff2d70b31d92, type: menu, name: Header Menu
+[2025-11-12T15:32:03.642Z] [writeViews] Looking for code for view 03749b7b-9215-49d3-8a56-ff2d70b31d92, found: no
+[2025-11-12T15:32:03.642Z] [writeViews] Processing view: 44f48709-e694-439e-b3a7-f3c6e88575f7, type: loginbutton, name: Login Button
+[2025-11-12T15:32:03.642Z] [writeViews] Looking for code for view 44f48709-e694-439e-b3a7-f3c6e88575f7, found: no
+[2025-11-12T15:32:03.642Z] [writeViews] Processing view: 97e68202-b4d1-428c-8c4c-911bf19f9e15, type: iconbar, name: Header Icon Bar
+[2025-11-12T15:32:03.643Z] [writeViews] Looking for code for view 97e68202-b4d1-428c-8c4c-911bf19f9e15, found: no
+[2025-11-12T15:32:03.643Z] [writeViews] Processing view: 6b34770a-2fd6-4854-86a9-5c212fda4c80, type: menu, name: Footer Menu
+[2025-11-12T15:32:03.643Z] [writeViews] Looking for code for view 6b34770a-2fd6-4854-86a9-5c212fda4c80, found: no
+[2025-11-12T15:32:03.643Z] [writeViews] Processing view: d105805f-e242-41db-9648-d55ad2e298b9, type: socialbar, name: Social Media Bar
+[2025-11-12T15:32:03.643Z] [writeViews] Looking for code for view d105805f-e242-41db-9648-d55ad2e298b9, found: no
+[2025-11-12T15:32:03.644Z] [writeViews] Processing view: 2c73c1b5-f04b-4573-bffd-0b9aff7240da, type: text, name: Copyright
+[2025-11-12T15:32:03.644Z] [writeViews] Looking for code for view 2c73c1b5-f04b-4573-bffd-0b9aff7240da, found: no
+[2025-11-12T15:32:03.644Z] [writeViews] Processing view: dc553d42-e4b1-4048-b8f5-e8479428a7db, type: slideshow, name: Hero Slideshow
+[2025-11-12T15:32:03.645Z] [writeViews] Looking for code for view dc553d42-e4b1-4048-b8f5-e8479428a7db, found: no
+[2025-11-12T15:32:03.645Z] [writeViews] Processing view: 99a3580e-423d-4251-a316-92ae11cb6e2d, type: logo, name: Logo
+[2025-11-12T15:32:03.645Z] [writeViews] Looking for code for view 99a3580e-423d-4251-a316-92ae11cb6e2d, found: no
+[2025-11-12T15:32:03.645Z] [writeViews] Processing view: 137db2e5-02a2-4f4b-a6ae-353864aed1f1, type: menu, name: Header Menu
+[2025-11-12T15:32:03.645Z] [writeViews] Looking for code for view 137db2e5-02a2-4f4b-a6ae-353864aed1f1, found: no
+[2025-11-12T15:32:03.646Z] [writeViews] Processing view: 08372858-81f2-4b26-b05d-b8ffdffeb31e, type: loginbutton, name: Header Login
+[2025-11-12T15:32:03.647Z] [writeViews] Looking for code for view 08372858-81f2-4b26-b05d-b8ffdffeb31e, found: no
+[2025-11-12T15:32:03.647Z] [writeViews] Processing view: home-featured-products, type: component, name: Featured Products
+[2025-11-12T15:32:03.647Z] [writeViews] Looking for code for view home-featured-products, found: yes
+[2025-11-12T15:32:03.653Z] [writeViews] Processing view: home-featured-categories, type: component, name: Featured Categories
+[2025-11-12T15:32:03.654Z] [writeViews] Looking for code for view home-featured-categories, found: yes
+[2025-11-12T15:32:03.659Z] [writeViews] Processing view: home-about-text, type: text, name: About Emma's
+[2025-11-12T15:32:03.659Z] [writeViews] Looking for code for view home-about-text, found: no
+[2025-11-12T15:32:03.659Z] [writeViews] Processing view: shop-categories-grid, type: component, name: Categories Grid
+[2025-11-12T15:32:03.660Z] [writeViews] Looking for code for view shop-categories-grid, found: yes
+[2025-11-12T15:32:03.664Z] [writeViews] Processing view: dresses-listing-main, type: component, name: Product Listing
+[2025-11-12T15:32:03.664Z] [writeViews] Looking for code for view dresses-listing-main, found: yes
+[2025-11-12T15:32:03.680Z] [writeViews] Processing view: dress-detail-main, type: component, name: Product Details
+[2025-11-12T15:32:03.680Z] [writeViews] Looking for code for view dress-detail-main, found: yes
+[2025-11-12T15:32:03.693Z] [writeViews] Processing view: shopping-cart-main, type: component, name: Shopping Cart
+[2025-11-12T15:32:03.693Z] [writeViews] Looking for code for view shopping-cart-main, found: yes
+[2025-11-12T15:32:03.705Z] [writeViews] Processing view: checkout-form-main, type: component, name: Checkout Form
+[2025-11-12T15:32:03.705Z] [writeViews] Looking for code for view checkout-form-main, found: yes
+[2025-11-12T15:32:03.728Z] [writeViews] Processing view: order-confirmation-main, type: component, name: Order Confirmation
+[2025-11-12T15:32:03.729Z] [writeViews] Looking for code for view order-confirmation-main, found: yes
+[2025-11-12T15:32:03.736Z] [writeViews] Processing view: user-orders-list, type: component, name: Order List
+[2025-11-12T15:32:03.737Z] [writeViews] Looking for code for view user-orders-list, found: yes
+[2025-11-12T15:32:03.748Z] [writeViews] Processing view: order-detail-main, type: component, name: Order Details
+[2025-11-12T15:32:03.748Z] [writeViews] Looking for code for view order-detail-main, found: yes
+[2025-11-12T15:32:03.758Z] [writeViews] Processing view: user-wishlist-items, type: component, name: Wishlist
+[2025-11-12T15:32:03.758Z] [writeViews] Looking for code for view user-wishlist-items, found: yes
+[2025-11-12T15:32:03.766Z] [writeViews] Processing view: about-story-text, type: text, name: Our Story
+[2025-11-12T15:32:03.766Z] [writeViews] Looking for code for view about-story-text, found: no
+[2025-11-12T15:32:03.766Z] [writeViews] Processing view: size-guide-content, type: text, name: Size Guide
+[2025-11-12T15:32:03.766Z] [writeViews] Looking for code for view size-guide-content, found: no
+[2025-11-12T15:32:03.767Z] [writeViews] Processing view: shipping-policy-text, type: text, name: Shipping Policy
+[2025-11-12T15:32:03.767Z] [writeViews] Looking for code for view shipping-policy-text, found: no
+[2025-11-12T15:32:03.767Z] [writeViews] Processing view: returns-policy-text, type: text, name: Returns Policy
+[2025-11-12T15:32:03.767Z] [writeViews] Looking for code for view returns-policy-text, found: no
+[2025-11-12T15:32:03.768Z] [writeViews] Processing view: contact-info-text, type: text, name: Contact Info
+[2025-11-12T15:32:03.768Z] [writeViews] Looking for code for view contact-info-text, found: no
+[2025-11-12T15:32:03.768Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-11-12T15:32:03.769Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-11-12T15:32:03.769Z] [writeViews] Processing view: faq-content, type: text, name: FAQ
+[2025-11-12T15:32:03.769Z] [writeViews] Looking for code for view faq-content, found: no
+[2025-11-12T15:32:03.770Z] [writeViews] Processing view: admin-inventory-management, type: component, name: Inventory Management
+[2025-11-12T15:32:03.770Z] [writeViews] Looking for code for view admin-inventory-management, found: yes
+[2025-11-12T15:32:03.805Z] [writeViews] Processing view: admin-order-management, type: component, name: Order Management
+[2025-11-12T15:32:03.806Z] [writeViews] Looking for code for view admin-order-management, found: yes
+[2025-11-12T15:32:03.829Z] [writeViews] Processing view: admin-category-management, type: component, name: Category Management
+[2025-11-12T15:32:03.829Z] [writeViews] Looking for code for view admin-category-management, found: yes
+[2025-11-12T15:32:03.838Z] [writeViews] Processing view: admin-customer-management, type: component, name: Customer Management
+[2025-11-12T15:32:03.839Z] [writeViews] Looking for code for view admin-customer-management, found: yes
+[2025-11-12T15:32:03.858Z] [writeViews] Processing view: admin-options-management, type: component, name: Options Management
+[2025-11-12T15:32:03.859Z] [writeViews] Looking for code for view admin-options-management, found: yes
+[2025-11-12T15:32:03.861Z] [writeViews] Transpilation failed for view admin-options-management: {"code":"BABEL_PARSER_SYNTAX_ERROR","reasonCode":"UnterminatedString","loc":{"line":275,"column":27,"index":10789},"pos":10789}
+[2025-11-12T15:32:03.862Z] [writeViews] Processing view: admin-variants-management, type: component, name: Variants Management
+[2025-11-12T15:32:03.862Z] [writeViews] Looking for code for view admin-variants-management, found: yes
+[2025-11-12T15:32:03.875Z] [writeViews] Processing view: dfebfbaf-14cb-4587-998a-81e7c7cff8f5, type: menu, name: User Dashboard Menu
+[2025-11-12T15:32:03.875Z] [writeViews] Looking for code for view dfebfbaf-14cb-4587-998a-81e7c7cff8f5, found: no
+[2025-11-12T15:32:03.876Z] [writeViews] Processing view: 0cde8958-2469-4581-8f09-7c3e9fa60fb9, type: useradmin, name: UserAdminView
+[2025-11-12T15:32:03.876Z] [writeViews] Looking for code for view 0cde8958-2469-4581-8f09-7c3e9fa60fb9, found: no
+[2025-11-12T15:32:03.876Z] [writeViews] Processing view: db04020d-7466-4036-82cc-6c1c468c0f83, type: menu, name: Admin Dashboard Menu
+[2025-11-12T15:32:03.877Z] [writeViews] Looking for code for view db04020d-7466-4036-82cc-6c1c468c0f83, found: no
+[2025-11-12T15:32:03.877Z] [writeViews] Processing view: 01796b09-9e8c-4fad-8909-575504373be5, type: text, name: Terms of Service
+[2025-11-12T15:32:03.877Z] [writeViews] Looking for code for view 01796b09-9e8c-4fad-8909-575504373be5, found: no
+[2025-11-12T15:32:03.878Z] [writeViews] Processing view: 0b5644bf-ab66-450f-98a6-e411ebbbd174, type: text, name: Privacy Policy
+[2025-11-12T15:32:03.878Z] [writeViews] Looking for code for view 0b5644bf-ab66-450f-98a6-e411ebbbd174, found: no
+[2025-11-12T15:32:03.878Z] [writeViews] Processing view: 2435b3ed-14d4-47cb-8957-e6dc8c485147, type: login, name: LoginView
+[2025-11-12T15:32:03.878Z] [writeViews] Looking for code for view 2435b3ed-14d4-47cb-8957-e6dc8c485147, found: no
+[2025-11-12T15:32:03.879Z] [writeViews] Processing view: aa0a7244-f86b-4ba6-859a-02ffc89ec552, type: generatedcomponent, name: New View
+[2025-11-12T15:32:03.879Z] [writeViews] Looking for code for view aa0a7244-f86b-4ba6-859a-02ffc89ec552, found: no
+[2025-11-12T15:32:03.880Z] [writeViews] Processing view: 9e6a58ea-be29-4d85-9343-06c720665431, type: generatedcomponent, name: New View
+[2025-11-12T15:32:03.880Z] [writeViews] Looking for code for view 9e6a58ea-be29-4d85-9343-06c720665431, found: no
+[2025-11-12T15:32:03.880Z] [writeViews] Processing view: 5376ba91-0cbe-4344-a531-97023b036555, type: generatedcomponent, name: New View
+[2025-11-12T15:32:03.881Z] [writeViews] Looking for code for view 5376ba91-0cbe-4344-a531-97023b036555, found: no
+[2025-11-12T15:32:03.882Z] [writeViews] Processing view: 4b293348-a711-4130-bd14-8f4fbbd54c16, type: generatedcomponent, name: New View
+[2025-11-12T15:32:03.882Z] [writeViews] Looking for code for view 4b293348-a711-4130-bd14-8f4fbbd54c16, found: no
+[2025-11-12T19:57:29.932Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"postgres","writeApis":true}
+[2025-11-12T19:57:29.934Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-11-12T19:57:29.934Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":45,"hasViews":true,"viewsCount":17}
+[2025-11-12T19:57:30.021Z] [writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)
+[2025-11-12T19:57:30.778Z] [writeViews] projectCode: exists
+[2025-11-12T19:57:30.778Z] [writeViews] projectCode.views count: 17
+[2025-11-12T19:57:30.779Z] [writeViews] View code available for ID: home-featured-products, code length: 8568
+[2025-11-12T19:57:30.779Z] [writeViews] View code available for ID: home-featured-categories, code length: 6658
+[2025-11-12T19:57:30.779Z] [writeViews] View code available for ID: shop-categories-grid, code length: 4318
+[2025-11-12T19:57:30.779Z] [writeViews] View code available for ID: dresses-listing-main, code length: 15077
+[2025-11-12T19:57:30.779Z] [writeViews] View code available for ID: dress-detail-main, code length: 15956
+[2025-11-12T19:57:30.780Z] [writeViews] View code available for ID: shopping-cart-main, code length: 17654
+[2025-11-12T19:57:30.780Z] [writeViews] View code available for ID: checkout-form-main, code length: 28050
+[2025-11-12T19:57:30.780Z] [writeViews] View code available for ID: order-confirmation-main, code length: 12036
+[2025-11-12T19:57:30.780Z] [writeViews] View code available for ID: user-orders-list, code length: 8804
+[2025-11-12T19:57:30.780Z] [writeViews] View code available for ID: order-detail-main, code length: 17502
+[2025-11-12T19:57:30.780Z] [writeViews] View code available for ID: user-wishlist-items, code length: 10147
+[2025-11-12T19:57:30.781Z] [writeViews] View code available for ID: admin-inventory-management, code length: 45503
+[2025-11-12T19:57:30.781Z] [writeViews] View code available for ID: admin-order-management, code length: 30197
+[2025-11-12T19:57:30.781Z] [writeViews] View code available for ID: admin-category-management, code length: 14904
+[2025-11-12T19:57:30.781Z] [writeViews] View code available for ID: admin-customer-management, code length: 24286
+[2025-11-12T19:57:30.781Z] [writeViews] View code available for ID: admin-options-management, code length: 17442
+[2025-11-12T19:57:30.782Z] [writeViews] View code available for ID: admin-variants-management, code length: 19241
+[2025-11-12T19:57:30.782Z] [writeViews] Processing view: 86531455-bf17-4b36-b23a-dac307717bf8, type: logo, name: Logo
+[2025-11-12T19:57:30.782Z] [writeViews] Looking for code for view 86531455-bf17-4b36-b23a-dac307717bf8, found: no
+[2025-11-12T19:57:30.783Z] [writeViews] Processing view: 03749b7b-9215-49d3-8a56-ff2d70b31d92, type: menu, name: Header Menu
+[2025-11-12T19:57:30.783Z] [writeViews] Looking for code for view 03749b7b-9215-49d3-8a56-ff2d70b31d92, found: no
+[2025-11-12T19:57:30.784Z] [writeViews] Processing view: 44f48709-e694-439e-b3a7-f3c6e88575f7, type: loginbutton, name: Login Button
+[2025-11-12T19:57:30.784Z] [writeViews] Looking for code for view 44f48709-e694-439e-b3a7-f3c6e88575f7, found: no
+[2025-11-12T19:57:30.785Z] [writeViews] Processing view: 97e68202-b4d1-428c-8c4c-911bf19f9e15, type: iconbar, name: Header Icon Bar
+[2025-11-12T19:57:30.785Z] [writeViews] Looking for code for view 97e68202-b4d1-428c-8c4c-911bf19f9e15, found: no
+[2025-11-12T19:57:30.785Z] [writeViews] Processing view: 6b34770a-2fd6-4854-86a9-5c212fda4c80, type: menu, name: Footer Menu
+[2025-11-12T19:57:30.786Z] [writeViews] Looking for code for view 6b34770a-2fd6-4854-86a9-5c212fda4c80, found: no
+[2025-11-12T19:57:30.786Z] [writeViews] Processing view: d105805f-e242-41db-9648-d55ad2e298b9, type: socialbar, name: Social Media Bar
+[2025-11-12T19:57:30.786Z] [writeViews] Looking for code for view d105805f-e242-41db-9648-d55ad2e298b9, found: no
+[2025-11-12T19:57:30.787Z] [writeViews] Processing view: 2c73c1b5-f04b-4573-bffd-0b9aff7240da, type: text, name: Copyright
+[2025-11-12T19:57:30.787Z] [writeViews] Looking for code for view 2c73c1b5-f04b-4573-bffd-0b9aff7240da, found: no
+[2025-11-12T19:57:30.787Z] [writeViews] Processing view: dc553d42-e4b1-4048-b8f5-e8479428a7db, type: slideshow, name: Hero Slideshow
+[2025-11-12T19:57:30.788Z] [writeViews] Looking for code for view dc553d42-e4b1-4048-b8f5-e8479428a7db, found: no
+[2025-11-12T19:57:30.789Z] [writeViews] Processing view: 99a3580e-423d-4251-a316-92ae11cb6e2d, type: logo, name: Logo
+[2025-11-12T19:57:30.789Z] [writeViews] Looking for code for view 99a3580e-423d-4251-a316-92ae11cb6e2d, found: no
+[2025-11-12T19:57:30.789Z] [writeViews] Processing view: 137db2e5-02a2-4f4b-a6ae-353864aed1f1, type: menu, name: Header Menu
+[2025-11-12T19:57:30.790Z] [writeViews] Looking for code for view 137db2e5-02a2-4f4b-a6ae-353864aed1f1, found: no
+[2025-11-12T19:57:30.790Z] [writeViews] Processing view: 08372858-81f2-4b26-b05d-b8ffdffeb31e, type: loginbutton, name: Header Login
+[2025-11-12T19:57:30.791Z] [writeViews] Looking for code for view 08372858-81f2-4b26-b05d-b8ffdffeb31e, found: no
+[2025-11-12T19:57:30.791Z] [writeViews] Processing view: home-featured-products, type: component, name: Featured Products
+[2025-11-12T19:57:30.792Z] [writeViews] Looking for code for view home-featured-products, found: yes
+[2025-11-12T19:57:31.000Z] [writeViews] Processing view: home-featured-categories, type: component, name: Featured Categories
+[2025-11-12T19:57:31.001Z] [writeViews] Looking for code for view home-featured-categories, found: yes
+[2025-11-12T19:57:31.014Z] [writeViews] Processing view: home-about-text, type: text, name: About Emma's
+[2025-11-12T19:57:31.014Z] [writeViews] Looking for code for view home-about-text, found: no
+[2025-11-12T19:57:31.015Z] [writeViews] Processing view: shop-categories-grid, type: component, name: Categories Grid
+[2025-11-12T19:57:31.015Z] [writeViews] Looking for code for view shop-categories-grid, found: yes
+[2025-11-12T19:57:31.024Z] [writeViews] Processing view: dresses-listing-main, type: component, name: Product Listing
+[2025-11-12T19:57:31.024Z] [writeViews] Looking for code for view dresses-listing-main, found: yes
+[2025-11-12T19:57:31.045Z] [writeViews] Processing view: dress-detail-main, type: component, name: Product Details
+[2025-11-12T19:57:31.046Z] [writeViews] Looking for code for view dress-detail-main, found: yes
+[2025-11-12T19:57:31.073Z] [writeViews] Processing view: shopping-cart-main, type: component, name: Shopping Cart
+[2025-11-12T19:57:31.073Z] [writeViews] Looking for code for view shopping-cart-main, found: yes
+[2025-11-12T19:57:31.095Z] [writeViews] Processing view: checkout-form-main, type: component, name: Checkout Form
+[2025-11-12T19:57:31.095Z] [writeViews] Looking for code for view checkout-form-main, found: yes
+[2025-11-12T19:57:31.130Z] [writeViews] Processing view: order-confirmation-main, type: component, name: Order Confirmation
+[2025-11-12T19:57:31.130Z] [writeViews] Looking for code for view order-confirmation-main, found: yes
+[2025-11-12T19:57:31.140Z] [writeViews] Processing view: user-orders-list, type: component, name: Order List
+[2025-11-12T19:57:31.140Z] [writeViews] Looking for code for view user-orders-list, found: yes
+[2025-11-12T19:57:31.149Z] [writeViews] Processing view: order-detail-main, type: component, name: Order Details
+[2025-11-12T19:57:31.149Z] [writeViews] Looking for code for view order-detail-main, found: yes
+[2025-11-12T19:57:31.169Z] [writeViews] Processing view: user-wishlist-items, type: component, name: Wishlist
+[2025-11-12T19:57:31.170Z] [writeViews] Looking for code for view user-wishlist-items, found: yes
+[2025-11-12T19:57:31.189Z] [writeViews] Processing view: about-story-text, type: text, name: Our Story
+[2025-11-12T19:57:31.190Z] [writeViews] Looking for code for view about-story-text, found: no
+[2025-11-12T19:57:31.190Z] [writeViews] Processing view: size-guide-content, type: text, name: Size Guide
+[2025-11-12T19:57:31.191Z] [writeViews] Looking for code for view size-guide-content, found: no
+[2025-11-12T19:57:31.191Z] [writeViews] Processing view: shipping-policy-text, type: text, name: Shipping Policy
+[2025-11-12T19:57:31.191Z] [writeViews] Looking for code for view shipping-policy-text, found: no
+[2025-11-12T19:57:31.192Z] [writeViews] Processing view: returns-policy-text, type: text, name: Returns Policy
+[2025-11-12T19:57:31.192Z] [writeViews] Looking for code for view returns-policy-text, found: no
+[2025-11-12T19:57:31.192Z] [writeViews] Processing view: contact-info-text, type: text, name: Contact Info
+[2025-11-12T19:57:31.193Z] [writeViews] Looking for code for view contact-info-text, found: no
+[2025-11-12T19:57:31.193Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-11-12T19:57:31.193Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-11-12T19:57:31.194Z] [writeViews] Processing view: faq-content, type: text, name: FAQ
+[2025-11-12T19:57:31.194Z] [writeViews] Looking for code for view faq-content, found: no
+[2025-11-12T19:57:31.194Z] [writeViews] Processing view: admin-inventory-management, type: component, name: Inventory Management
+[2025-11-12T19:57:31.194Z] [writeViews] Looking for code for view admin-inventory-management, found: yes
+[2025-11-12T19:57:31.227Z] [writeViews] Processing view: admin-order-management, type: component, name: Order Management
+[2025-11-12T19:57:31.227Z] [writeViews] Looking for code for view admin-order-management, found: yes
+[2025-11-12T19:57:31.259Z] [writeViews] Processing view: admin-category-management, type: component, name: Category Management
+[2025-11-12T19:57:31.259Z] [writeViews] Looking for code for view admin-category-management, found: yes
+[2025-11-12T19:57:31.269Z] [writeViews] Processing view: admin-customer-management, type: component, name: Customer Management
+[2025-11-12T19:57:31.270Z] [writeViews] Looking for code for view admin-customer-management, found: yes
+[2025-11-12T19:57:31.289Z] [writeViews] Processing view: admin-options-management, type: component, name: Options Management
+[2025-11-12T19:57:31.290Z] [writeViews] Looking for code for view admin-options-management, found: yes
+[2025-11-12T19:57:31.294Z] [writeViews] Transpilation failed for view admin-options-management: {"code":"BABEL_PARSER_SYNTAX_ERROR","reasonCode":"UnterminatedString","loc":{"line":275,"column":27,"index":10789},"pos":10789}
+[2025-11-12T19:57:31.295Z] [writeViews] Processing view: admin-variants-management, type: component, name: Variants Management
+[2025-11-12T19:57:31.296Z] [writeViews] Looking for code for view admin-variants-management, found: yes
+[2025-11-12T19:57:31.314Z] [writeViews] Processing view: dfebfbaf-14cb-4587-998a-81e7c7cff8f5, type: menu, name: User Dashboard Menu
+[2025-11-12T19:57:31.314Z] [writeViews] Looking for code for view dfebfbaf-14cb-4587-998a-81e7c7cff8f5, found: no
+[2025-11-12T19:57:31.315Z] [writeViews] Processing view: 0cde8958-2469-4581-8f09-7c3e9fa60fb9, type: useradmin, name: UserAdminView
+[2025-11-12T19:57:31.315Z] [writeViews] Looking for code for view 0cde8958-2469-4581-8f09-7c3e9fa60fb9, found: no
+[2025-11-12T19:57:31.315Z] [writeViews] Processing view: db04020d-7466-4036-82cc-6c1c468c0f83, type: menu, name: Admin Dashboard Menu
+[2025-11-12T19:57:31.316Z] [writeViews] Looking for code for view db04020d-7466-4036-82cc-6c1c468c0f83, found: no
+[2025-11-12T19:57:31.316Z] [writeViews] Processing view: 01796b09-9e8c-4fad-8909-575504373be5, type: text, name: Terms of Service
+[2025-11-12T19:57:31.316Z] [writeViews] Looking for code for view 01796b09-9e8c-4fad-8909-575504373be5, found: no
+[2025-11-12T19:57:31.317Z] [writeViews] Processing view: 0b5644bf-ab66-450f-98a6-e411ebbbd174, type: text, name: Privacy Policy
+[2025-11-12T19:57:31.317Z] [writeViews] Looking for code for view 0b5644bf-ab66-450f-98a6-e411ebbbd174, found: no
+[2025-11-12T19:57:31.317Z] [writeViews] Processing view: 2435b3ed-14d4-47cb-8957-e6dc8c485147, type: login, name: LoginView
+[2025-11-12T19:57:31.317Z] [writeViews] Looking for code for view 2435b3ed-14d4-47cb-8957-e6dc8c485147, found: no
+[2025-11-12T19:57:31.318Z] [writeViews] Processing view: aa0a7244-f86b-4ba6-859a-02ffc89ec552, type: generatedcomponent, name: New View
+[2025-11-12T19:57:31.318Z] [writeViews] Looking for code for view aa0a7244-f86b-4ba6-859a-02ffc89ec552, found: no
+[2025-11-12T19:57:31.318Z] [writeViews] Processing view: 9e6a58ea-be29-4d85-9343-06c720665431, type: generatedcomponent, name: New View
+[2025-11-12T19:57:31.319Z] [writeViews] Looking for code for view 9e6a58ea-be29-4d85-9343-06c720665431, found: no
+[2025-11-12T19:57:31.319Z] [writeViews] Processing view: 5376ba91-0cbe-4344-a531-97023b036555, type: generatedcomponent, name: New View
+[2025-11-12T19:57:31.320Z] [writeViews] Looking for code for view 5376ba91-0cbe-4344-a531-97023b036555, found: no
+[2025-11-12T19:57:31.320Z] [writeViews] Processing view: 4b293348-a711-4130-bd14-8f4fbbd54c16, type: generatedcomponent, name: New View
+[2025-11-12T19:57:31.320Z] [writeViews] Looking for code for view 4b293348-a711-4130-bd14-8f4fbbd54c16, found: no
+[2025-11-12T19:57:31.337Z] [writeProjectPagesOnly] Writing APIs (writeApis=true and APIs exist)
+[2025-11-12T19:57:31.337Z] [writeApis] APIs count: 45
+[2025-11-12T19:57:31.338Z] [writeApis] Code groups count: 45
+[2025-11-12T19:57:31.338Z] [writeApis] Processing API: categoriescreate, name: CategoriesCreate
+[2025-11-12T19:57:31.338Z] [writeApis] Found code group for API categoriescreate: yes
+[2025-11-12T19:57:31.338Z] [writeApis] API code length: 2044
+[2025-11-12T19:57:31.339Z] [writeApis] Processing API: categoriesdelete, name: CategoriesDelete
+[2025-11-12T19:57:31.339Z] [writeApis] Found code group for API categoriesdelete: yes
+[2025-11-12T19:57:31.340Z] [writeApis] API code length: 1786
+[2025-11-12T19:57:31.340Z] [writeApis] Processing API: categoriesget, name: CategoriesGet
+[2025-11-12T19:57:31.340Z] [writeApis] Found code group for API categoriesget: yes
+[2025-11-12T19:57:31.341Z] [writeApis] API code length: 1708
+[2025-11-12T19:57:31.341Z] [writeApis] Processing API: categorieslist, name: CategoriesList
+[2025-11-12T19:57:31.341Z] [writeApis] Found code group for API categorieslist: yes
+[2025-11-12T19:57:31.342Z] [writeApis] API code length: 3058
+[2025-11-12T19:57:31.342Z] [writeApis] Processing API: categoriesupdate, name: CategoriesUpdate
+[2025-11-12T19:57:31.342Z] [writeApis] Found code group for API categoriesupdate: yes
+[2025-11-12T19:57:31.343Z] [writeApis] API code length: 3474
+[2025-11-12T19:57:31.343Z] [writeApis] Processing API: customersdelete, name: CustomersDelete
+[2025-11-12T19:57:31.343Z] [writeApis] Found code group for API customersdelete: yes
+[2025-11-12T19:57:31.343Z] [writeApis] API code length: 1404
+[2025-11-12T19:57:31.344Z] [writeApis] Processing API: customersget, name: CustomersGet
+[2025-11-12T19:57:31.344Z] [writeApis] Found code group for API customersget: yes
+[2025-11-12T19:57:31.345Z] [writeApis] API code length: 2745
+[2025-11-12T19:57:31.346Z] [writeApis] Processing API: customerslist, name: CustomersList
+[2025-11-12T19:57:31.346Z] [writeApis] Found code group for API customerslist: yes
+[2025-11-12T19:57:31.346Z] [writeApis] API code length: 4834
+[2025-11-12T19:57:31.347Z] [writeApis] Processing API: customersorders, name: CustomersOrders
+[2025-11-12T19:57:31.347Z] [writeApis] Found code group for API customersorders: yes
+[2025-11-12T19:57:31.347Z] [writeApis] API code length: 3183
+[2025-11-12T19:57:31.348Z] [writeApis] Processing API: customersupdate, name: CustomersUpdate
+[2025-11-12T19:57:31.348Z] [writeApis] Found code group for API customersupdate: yes
+[2025-11-12T19:57:31.348Z] [writeApis] API code length: 4291
+[2025-11-12T19:57:31.349Z] [writeApis] Processing API: orderitemslist, name: OrderItemsList
+[2025-11-12T19:57:31.349Z] [writeApis] Found code group for API orderitemslist: yes
+[2025-11-12T19:57:31.349Z] [writeApis] API code length: 2506
+[2025-11-12T19:57:31.350Z] [writeApis] Processing API: ordersget, name: OrdersGet
+[2025-11-12T19:57:31.350Z] [writeApis] Found code group for API ordersget: yes
+[2025-11-12T19:57:31.350Z] [writeApis] API code length: 3716
+[2025-11-12T19:57:31.351Z] [writeApis] Processing API: orderslist, name: OrdersList
+[2025-11-12T19:57:31.351Z] [writeApis] Found code group for API orderslist: yes
+[2025-11-12T19:57:31.352Z] [writeApis] API code length: 4066
+[2025-11-12T19:57:31.352Z] [writeApis] Processing API: ordersupdate, name: OrdersUpdate
+[2025-11-12T19:57:31.352Z] [writeApis] Found code group for API ordersupdate: yes
+[2025-11-12T19:57:31.353Z] [writeApis] API code length: 6477
+[2025-11-12T19:57:31.353Z] [writeApis] Processing API: processorder, name: ProcessOrder
+[2025-11-12T19:57:31.353Z] [writeApis] Found code group for API processorder: yes
+[2025-11-12T19:57:31.354Z] [writeApis] API code length: 9910
+[2025-11-12T19:57:31.354Z] [writeApis] Processing API: productimagescreate, name: ProductImagesCreate
+[2025-11-12T19:57:31.355Z] [writeApis] Found code group for API productimagescreate: yes
+[2025-11-12T19:57:31.355Z] [writeApis] API code length: 2868
+[2025-11-12T19:57:31.356Z] [writeApis] Processing API: productimagesdelete, name: ProductImagesDelete
+[2025-11-12T19:57:31.356Z] [writeApis] Found code group for API productimagesdelete: yes
+[2025-11-12T19:57:31.356Z] [writeApis] API code length: 2416
+[2025-11-12T19:57:31.357Z] [writeApis] Processing API: productimageslist, name: ProductImagesList
+[2025-11-12T19:57:31.357Z] [writeApis] Found code group for API productimageslist: yes
+[2025-11-12T19:57:31.357Z] [writeApis] API code length: 1657
+[2025-11-12T19:57:31.358Z] [writeApis] Processing API: productimagesupdate, name: ProductImagesUpdate
+[2025-11-12T19:57:31.358Z] [writeApis] Found code group for API productimagesupdate: yes
+[2025-11-12T19:57:31.358Z] [writeApis] API code length: 3378
+[2025-11-12T19:57:31.359Z] [writeApis] Processing API: productoptionscreate, name: ProductOptionsCreate
+[2025-11-12T19:57:31.359Z] [writeApis] Found code group for API productoptionscreate: yes
+[2025-11-12T19:57:31.359Z] [writeApis] API code length: 2802
+[2025-11-12T19:57:31.360Z] [writeApis] Processing API: productoptionsdelete, name: ProductOptionsDelete
+[2025-11-12T19:57:31.360Z] [writeApis] Found code group for API productoptionsdelete: yes
+[2025-11-12T19:57:31.360Z] [writeApis] API code length: 2462
+[2025-11-12T19:57:31.361Z] [writeApis] Processing API: productoptionsget, name: ProductOptionsGet
+[2025-11-12T19:57:31.361Z] [writeApis] Found code group for API productoptionsget: yes
+[2025-11-12T19:57:31.362Z] [writeApis] API code length: 1679
+[2025-11-12T19:57:31.362Z] [writeApis] Processing API: productoptionslist, name: ProductOptionsList
+[2025-11-12T19:57:31.362Z] [writeApis] Found code group for API productoptionslist: yes
+[2025-11-12T19:57:31.362Z] [writeApis] API code length: 3072
+[2025-11-12T19:57:31.363Z] [writeApis] Processing API: productoptionsmapcreate, name: ProductOptionsMapCreate
+[2025-11-12T19:57:31.363Z] [writeApis] Found code group for API productoptionsmapcreate: yes
+[2025-11-12T19:57:31.364Z] [writeApis] API code length: 3225
+[2025-11-12T19:57:31.364Z] [writeApis] Processing API: productoptionsmapdelete, name: ProductOptionsMapDelete
+[2025-11-12T19:57:31.365Z] [writeApis] Found code group for API productoptionsmapdelete: yes
+[2025-11-12T19:57:31.365Z] [writeApis] API code length: 1616
+[2025-11-12T19:57:31.365Z] [writeApis] Processing API: productoptionsmaplist, name: ProductOptionsMapList
+[2025-11-12T19:57:31.366Z] [writeApis] Found code group for API productoptionsmaplist: yes
+[2025-11-12T19:57:31.366Z] [writeApis] API code length: 2785
+[2025-11-12T19:57:31.366Z] [writeApis] Processing API: productoptionsupdate, name: ProductOptionsUpdate
+[2025-11-12T19:57:31.367Z] [writeApis] Found code group for API productoptionsupdate: yes
+[2025-11-12T19:57:31.367Z] [writeApis] API code length: 4423
+[2025-11-12T19:57:31.368Z] [writeApis] Processing API: productoptionvaluescreate, name: ProductOptionValuesCreate
+[2025-11-12T19:57:31.368Z] [writeApis] Found code group for API productoptionvaluescreate: yes
+[2025-11-12T19:57:31.368Z] [writeApis] API code length: 3381
+[2025-11-12T19:57:31.369Z] [writeApis] Processing API: productoptionvaluesdelete, name: ProductOptionValuesDelete
+[2025-11-12T19:57:31.369Z] [writeApis] Found code group for API productoptionvaluesdelete: yes
+[2025-11-12T19:57:31.369Z] [writeApis] API code length: 2154
+[2025-11-12T19:57:31.369Z] [writeApis] Processing API: productoptionvaluesget, name: ProductOptionValuesGet
+[2025-11-12T19:57:31.370Z] [writeApis] Found code group for API productoptionvaluesget: yes
+[2025-11-12T19:57:31.370Z] [writeApis] API code length: 2175
+[2025-11-12T19:57:31.370Z] [writeApis] Processing API: productoptionvalueslist, name: ProductOptionValuesList
+[2025-11-12T19:57:31.371Z] [writeApis] Found code group for API productoptionvalueslist: yes
+[2025-11-12T19:57:31.371Z] [writeApis] API code length: 3520
+[2025-11-12T19:57:31.371Z] [writeApis] Processing API: productoptionvaluesupdate, name: ProductOptionValuesUpdate
+[2025-11-12T19:57:31.371Z] [writeApis] Found code group for API productoptionvaluesupdate: yes
+[2025-11-12T19:57:31.372Z] [writeApis] API code length: 4103
+[2025-11-12T19:57:31.372Z] [writeApis] Processing API: productscreate, name: ProductsCreate
+[2025-11-12T19:57:31.372Z] [writeApis] Found code group for API productscreate: yes
+[2025-11-12T19:57:31.373Z] [writeApis] API code length: 4469
+[2025-11-12T19:57:31.373Z] [writeApis] Processing API: productsdelete, name: ProductsDelete
+[2025-11-12T19:57:31.373Z] [writeApis] Found code group for API productsdelete: yes
+[2025-11-12T19:57:31.373Z] [writeApis] API code length: 2412
+[2025-11-12T19:57:31.374Z] [writeApis] Processing API: productsget, name: ProductsGet
+[2025-11-12T19:57:31.374Z] [writeApis] Found code group for API productsget: yes
+[2025-11-12T19:57:31.374Z] [writeApis] API code length: 2852
+[2025-11-12T19:57:31.375Z] [writeApis] Processing API: productslist, name: ProductsList
+[2025-11-12T19:57:31.375Z] [writeApis] Found code group for API productslist: yes
+[2025-11-12T19:57:31.375Z] [writeApis] API code length: 4821
+[2025-11-12T19:57:31.376Z] [writeApis] Processing API: productsupdate, name: ProductsUpdate
+[2025-11-12T19:57:31.376Z] [writeApis] Found code group for API productsupdate: yes
+[2025-11-12T19:57:31.376Z] [writeApis] API code length: 6271
+[2025-11-12T19:57:31.377Z] [writeApis] Processing API: productvariantscreate, name: ProductVariantsCreate
+[2025-11-12T19:57:31.377Z] [writeApis] Found code group for API productvariantscreate: yes
+[2025-11-12T19:57:31.377Z] [writeApis] API code length: 4697
+[2025-11-12T19:57:31.378Z] [writeApis] Processing API: productvariantsdelete, name: ProductVariantsDelete
+[2025-11-12T19:57:31.378Z] [writeApis] Found code group for API productvariantsdelete: yes
+[2025-11-12T19:57:31.378Z] [writeApis] API code length: 2155
+[2025-11-12T19:57:31.379Z] [writeApis] Processing API: productvariantsget, name: ProductVariantsGet
+[2025-11-12T19:57:31.379Z] [writeApis] Found code group for API productvariantsget: yes
+[2025-11-12T19:57:31.379Z] [writeApis] API code length: 2297
+[2025-11-12T19:57:31.380Z] [writeApis] Processing API: productvariantslist, name: ProductVariantsList
+[2025-11-12T19:57:31.380Z] [writeApis] Found code group for API productvariantslist: yes
+[2025-11-12T19:57:31.380Z] [writeApis] API code length: 3704
+[2025-11-12T19:57:31.381Z] [writeApis] Processing API: productvariantsupdate, name: ProductVariantsUpdate
+[2025-11-12T19:57:31.381Z] [writeApis] Found code group for API productvariantsupdate: yes
+[2025-11-12T19:57:31.381Z] [writeApis] API code length: 5914
+[2025-11-12T19:57:31.382Z] [writeApis] Processing API: wishlistcreate, name: WishlistCreate
+[2025-11-12T19:57:31.382Z] [writeApis] Found code group for API wishlistcreate: yes
+[2025-11-12T19:57:31.382Z] [writeApis] API code length: 3185
+[2025-11-12T19:57:31.383Z] [writeApis] Processing API: wishlistdelete, name: WishlistDelete
+[2025-11-12T19:57:31.383Z] [writeApis] Found code group for API wishlistdelete: yes
+[2025-11-12T19:57:31.384Z] [writeApis] API code length: 1755
+[2025-11-12T19:57:31.384Z] [writeApis] Processing API: wishlistlist, name: WishlistList
+[2025-11-12T19:57:31.384Z] [writeApis] Found code group for API wishlistlist: yes
+[2025-11-12T19:57:31.384Z] [writeApis] API code length: 1865
+[2025-11-12T19:57:32.929Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Logo__Emma_s.jpg
+[2025-11-12T19:57:33.304Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T19:57:33.644Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T19:57:34.102Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T19:57:34.636Z] [writeViews] projectCode: exists
+[2025-11-12T19:57:34.637Z] [writeViews] projectCode.views count: 17
+[2025-11-12T19:57:34.637Z] [writeViews] View code available for ID: home-featured-products, code length: 8568
+[2025-11-12T19:57:34.637Z] [writeViews] View code available for ID: home-featured-categories, code length: 6658
+[2025-11-12T19:57:34.637Z] [writeViews] View code available for ID: shop-categories-grid, code length: 4318
+[2025-11-12T19:57:34.637Z] [writeViews] View code available for ID: dresses-listing-main, code length: 15077
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: dress-detail-main, code length: 15956
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: shopping-cart-main, code length: 17654
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: checkout-form-main, code length: 28050
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: order-confirmation-main, code length: 12036
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: user-orders-list, code length: 8804
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: order-detail-main, code length: 17502
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: user-wishlist-items, code length: 10147
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: admin-inventory-management, code length: 45503
+[2025-11-12T19:57:34.638Z] [writeViews] View code available for ID: admin-order-management, code length: 30197
+[2025-11-12T19:57:34.639Z] [writeViews] View code available for ID: admin-category-management, code length: 14904
+[2025-11-12T19:57:34.639Z] [writeViews] View code available for ID: admin-customer-management, code length: 24286
+[2025-11-12T19:57:34.639Z] [writeViews] View code available for ID: admin-options-management, code length: 17442
+[2025-11-12T19:57:34.639Z] [writeViews] View code available for ID: admin-variants-management, code length: 19241
+[2025-11-12T19:57:34.639Z] [writeViews] Processing view: 86531455-bf17-4b36-b23a-dac307717bf8, type: logo, name: Logo
+[2025-11-12T19:57:34.639Z] [writeViews] Looking for code for view 86531455-bf17-4b36-b23a-dac307717bf8, found: no
+[2025-11-12T19:57:34.640Z] [writeViews] Processing view: 03749b7b-9215-49d3-8a56-ff2d70b31d92, type: menu, name: Header Menu
+[2025-11-12T19:57:34.640Z] [writeViews] Looking for code for view 03749b7b-9215-49d3-8a56-ff2d70b31d92, found: no
+[2025-11-12T19:57:34.640Z] [writeViews] Processing view: 44f48709-e694-439e-b3a7-f3c6e88575f7, type: loginbutton, name: Login Button
+[2025-11-12T19:57:34.640Z] [writeViews] Looking for code for view 44f48709-e694-439e-b3a7-f3c6e88575f7, found: no
+[2025-11-12T19:57:34.640Z] [writeViews] Processing view: 97e68202-b4d1-428c-8c4c-911bf19f9e15, type: iconbar, name: Header Icon Bar
+[2025-11-12T19:57:34.641Z] [writeViews] Looking for code for view 97e68202-b4d1-428c-8c4c-911bf19f9e15, found: no
+[2025-11-12T19:57:34.641Z] [writeViews] Processing view: 6b34770a-2fd6-4854-86a9-5c212fda4c80, type: menu, name: Footer Menu
+[2025-11-12T19:57:34.641Z] [writeViews] Looking for code for view 6b34770a-2fd6-4854-86a9-5c212fda4c80, found: no
+[2025-11-12T19:57:34.642Z] [writeViews] Processing view: d105805f-e242-41db-9648-d55ad2e298b9, type: socialbar, name: Social Media Bar
+[2025-11-12T19:57:34.642Z] [writeViews] Looking for code for view d105805f-e242-41db-9648-d55ad2e298b9, found: no
+[2025-11-12T19:57:34.642Z] [writeViews] Processing view: 2c73c1b5-f04b-4573-bffd-0b9aff7240da, type: text, name: Copyright
+[2025-11-12T19:57:34.642Z] [writeViews] Looking for code for view 2c73c1b5-f04b-4573-bffd-0b9aff7240da, found: no
+[2025-11-12T19:57:34.643Z] [writeViews] Processing view: dc553d42-e4b1-4048-b8f5-e8479428a7db, type: slideshow, name: Hero Slideshow
+[2025-11-12T19:57:34.643Z] [writeViews] Looking for code for view dc553d42-e4b1-4048-b8f5-e8479428a7db, found: no
+[2025-11-12T19:57:34.643Z] [writeViews] Processing view: 99a3580e-423d-4251-a316-92ae11cb6e2d, type: logo, name: Logo
+[2025-11-12T19:57:34.643Z] [writeViews] Looking for code for view 99a3580e-423d-4251-a316-92ae11cb6e2d, found: no
+[2025-11-12T19:57:34.644Z] [writeViews] Processing view: 137db2e5-02a2-4f4b-a6ae-353864aed1f1, type: menu, name: Header Menu
+[2025-11-12T19:57:34.644Z] [writeViews] Looking for code for view 137db2e5-02a2-4f4b-a6ae-353864aed1f1, found: no
+[2025-11-12T19:57:34.645Z] [writeViews] Processing view: 08372858-81f2-4b26-b05d-b8ffdffeb31e, type: loginbutton, name: Header Login
+[2025-11-12T19:57:34.645Z] [writeViews] Looking for code for view 08372858-81f2-4b26-b05d-b8ffdffeb31e, found: no
+[2025-11-12T19:57:34.645Z] [writeViews] Processing view: home-featured-products, type: component, name: Featured Products
+[2025-11-12T19:57:34.645Z] [writeViews] Looking for code for view home-featured-products, found: yes
+[2025-11-12T19:57:34.656Z] [writeViews] Processing view: home-featured-categories, type: component, name: Featured Categories
+[2025-11-12T19:57:34.657Z] [writeViews] Looking for code for view home-featured-categories, found: yes
+[2025-11-12T19:57:34.662Z] [writeViews] Processing view: home-about-text, type: text, name: About Emma's
+[2025-11-12T19:57:34.662Z] [writeViews] Looking for code for view home-about-text, found: no
+[2025-11-12T19:57:34.663Z] [writeViews] Processing view: shop-categories-grid, type: component, name: Categories Grid
+[2025-11-12T19:57:34.663Z] [writeViews] Looking for code for view shop-categories-grid, found: yes
+[2025-11-12T19:57:34.667Z] [writeViews] Processing view: dresses-listing-main, type: component, name: Product Listing
+[2025-11-12T19:57:34.668Z] [writeViews] Looking for code for view dresses-listing-main, found: yes
+[2025-11-12T19:57:34.680Z] [writeViews] Processing view: dress-detail-main, type: component, name: Product Details
+[2025-11-12T19:57:34.680Z] [writeViews] Looking for code for view dress-detail-main, found: yes
+[2025-11-12T19:57:34.696Z] [writeViews] Processing view: shopping-cart-main, type: component, name: Shopping Cart
+[2025-11-12T19:57:34.696Z] [writeViews] Looking for code for view shopping-cart-main, found: yes
+[2025-11-12T19:57:34.711Z] [writeViews] Processing view: checkout-form-main, type: component, name: Checkout Form
+[2025-11-12T19:57:34.711Z] [writeViews] Looking for code for view checkout-form-main, found: yes
+[2025-11-12T19:57:34.735Z] [writeViews] Processing view: order-confirmation-main, type: component, name: Order Confirmation
+[2025-11-12T19:57:34.736Z] [writeViews] Looking for code for view order-confirmation-main, found: yes
+[2025-11-12T19:57:34.743Z] [writeViews] Processing view: user-orders-list, type: component, name: Order List
+[2025-11-12T19:57:34.744Z] [writeViews] Looking for code for view user-orders-list, found: yes
+[2025-11-12T19:57:34.750Z] [writeViews] Processing view: order-detail-main, type: component, name: Order Details
+[2025-11-12T19:57:34.751Z] [writeViews] Looking for code for view order-detail-main, found: yes
+[2025-11-12T19:57:34.761Z] [writeViews] Processing view: user-wishlist-items, type: component, name: Wishlist
+[2025-11-12T19:57:34.762Z] [writeViews] Looking for code for view user-wishlist-items, found: yes
+[2025-11-12T19:57:34.773Z] [writeViews] Processing view: about-story-text, type: text, name: Our Story
+[2025-11-12T19:57:34.773Z] [writeViews] Looking for code for view about-story-text, found: no
+[2025-11-12T19:57:34.774Z] [writeViews] Processing view: size-guide-content, type: text, name: Size Guide
+[2025-11-12T19:57:34.774Z] [writeViews] Looking for code for view size-guide-content, found: no
+[2025-11-12T19:57:34.774Z] [writeViews] Processing view: shipping-policy-text, type: text, name: Shipping Policy
+[2025-11-12T19:57:34.774Z] [writeViews] Looking for code for view shipping-policy-text, found: no
+[2025-11-12T19:57:34.775Z] [writeViews] Processing view: returns-policy-text, type: text, name: Returns Policy
+[2025-11-12T19:57:34.775Z] [writeViews] Looking for code for view returns-policy-text, found: no
+[2025-11-12T19:57:34.775Z] [writeViews] Processing view: contact-info-text, type: text, name: Contact Info
+[2025-11-12T19:57:34.775Z] [writeViews] Looking for code for view contact-info-text, found: no
+[2025-11-12T19:57:34.776Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-11-12T19:57:34.776Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-11-12T19:57:34.776Z] [writeViews] Processing view: faq-content, type: text, name: FAQ
+[2025-11-12T19:57:34.776Z] [writeViews] Looking for code for view faq-content, found: no
+[2025-11-12T19:57:34.777Z] [writeViews] Processing view: admin-inventory-management, type: component, name: Inventory Management
+[2025-11-12T19:57:34.777Z] [writeViews] Looking for code for view admin-inventory-management, found: yes
+[2025-11-12T19:57:34.811Z] [writeViews] Processing view: admin-order-management, type: component, name: Order Management
+[2025-11-12T19:57:34.811Z] [writeViews] Looking for code for view admin-order-management, found: yes
+[2025-11-12T19:57:34.832Z] [writeViews] Processing view: admin-category-management, type: component, name: Category Management
+[2025-11-12T19:57:34.832Z] [writeViews] Looking for code for view admin-category-management, found: yes
+[2025-11-12T19:57:34.848Z] [writeViews] Processing view: admin-customer-management, type: component, name: Customer Management
+[2025-11-12T19:57:34.849Z] [writeViews] Looking for code for view admin-customer-management, found: yes
+[2025-11-12T19:57:34.862Z] [writeViews] Processing view: admin-options-management, type: component, name: Options Management
+[2025-11-12T19:57:34.862Z] [writeViews] Looking for code for view admin-options-management, found: yes
+[2025-11-12T19:57:34.865Z] [writeViews] Transpilation failed for view admin-options-management: {"code":"BABEL_PARSER_SYNTAX_ERROR","reasonCode":"UnterminatedString","loc":{"line":275,"column":27,"index":10789},"pos":10789}
+[2025-11-12T19:57:34.866Z] [writeViews] Processing view: admin-variants-management, type: component, name: Variants Management
+[2025-11-12T19:57:34.866Z] [writeViews] Looking for code for view admin-variants-management, found: yes
+[2025-11-12T19:57:34.885Z] [writeViews] Processing view: dfebfbaf-14cb-4587-998a-81e7c7cff8f5, type: menu, name: User Dashboard Menu
+[2025-11-12T19:57:34.885Z] [writeViews] Looking for code for view dfebfbaf-14cb-4587-998a-81e7c7cff8f5, found: no
+[2025-11-12T19:57:34.886Z] [writeViews] Processing view: 0cde8958-2469-4581-8f09-7c3e9fa60fb9, type: useradmin, name: UserAdminView
+[2025-11-12T19:57:34.886Z] [writeViews] Looking for code for view 0cde8958-2469-4581-8f09-7c3e9fa60fb9, found: no
+[2025-11-12T19:57:34.886Z] [writeViews] Processing view: db04020d-7466-4036-82cc-6c1c468c0f83, type: menu, name: Admin Dashboard Menu
+[2025-11-12T19:57:34.887Z] [writeViews] Looking for code for view db04020d-7466-4036-82cc-6c1c468c0f83, found: no
+[2025-11-12T19:57:34.887Z] [writeViews] Processing view: 01796b09-9e8c-4fad-8909-575504373be5, type: text, name: Terms of Service
+[2025-11-12T19:57:34.887Z] [writeViews] Looking for code for view 01796b09-9e8c-4fad-8909-575504373be5, found: no
+[2025-11-12T19:57:34.887Z] [writeViews] Processing view: 0b5644bf-ab66-450f-98a6-e411ebbbd174, type: text, name: Privacy Policy
+[2025-11-12T19:57:34.888Z] [writeViews] Looking for code for view 0b5644bf-ab66-450f-98a6-e411ebbbd174, found: no
+[2025-11-12T19:57:34.888Z] [writeViews] Processing view: 2435b3ed-14d4-47cb-8957-e6dc8c485147, type: login, name: LoginView
+[2025-11-12T19:57:34.888Z] [writeViews] Looking for code for view 2435b3ed-14d4-47cb-8957-e6dc8c485147, found: no
+[2025-11-12T19:57:34.889Z] [writeViews] Processing view: aa0a7244-f86b-4ba6-859a-02ffc89ec552, type: generatedcomponent, name: New View
+[2025-11-12T19:57:34.889Z] [writeViews] Looking for code for view aa0a7244-f86b-4ba6-859a-02ffc89ec552, found: no
+[2025-11-12T19:57:34.889Z] [writeViews] Processing view: 9e6a58ea-be29-4d85-9343-06c720665431, type: generatedcomponent, name: New View
+[2025-11-12T19:57:34.889Z] [writeViews] Looking for code for view 9e6a58ea-be29-4d85-9343-06c720665431, found: no
+[2025-11-12T19:57:34.890Z] [writeViews] Processing view: 5376ba91-0cbe-4344-a531-97023b036555, type: generatedcomponent, name: New View
+[2025-11-12T19:57:34.890Z] [writeViews] Looking for code for view 5376ba91-0cbe-4344-a531-97023b036555, found: no
+[2025-11-12T19:57:34.890Z] [writeViews] Processing view: 4b293348-a711-4130-bd14-8f4fbbd54c16, type: generatedcomponent, name: New View
+[2025-11-12T19:57:34.891Z] [writeViews] Looking for code for view 4b293348-a711-4130-bd14-8f4fbbd54c16, found: no
+[2025-11-12T21:06:59.556Z] [writeProjectPagesOnly] Called with options: {"targetDir":"/Users/michaelmcdermott/Code/SaaSyTest2","databaseType":"postgres","writeApis":true}
+[2025-11-12T21:06:59.558Z] [writeProjectPagesOnly] project structure: {"hasBlueprint":true,"hasCode":true}
+[2025-11-12T21:06:59.558Z] [writeProjectPagesOnly] projectCode structure: {"hasApis":true,"apisCount":45,"hasViews":true,"viewsCount":17}
+[2025-11-12T21:06:59.630Z] [writeProjectPagesOnly] Writing models/migrations (writeApis=true and models exist)
+[2025-11-12T21:07:00.611Z] [writeViews] projectCode: exists
+[2025-11-12T21:07:00.612Z] [writeViews] projectCode.views count: 17
+[2025-11-12T21:07:00.612Z] [writeViews] View code available for ID: home-featured-products, code length: 8568
+[2025-11-12T21:07:00.612Z] [writeViews] View code available for ID: home-featured-categories, code length: 6658
+[2025-11-12T21:07:00.612Z] [writeViews] View code available for ID: shop-categories-grid, code length: 4318
+[2025-11-12T21:07:00.613Z] [writeViews] View code available for ID: dresses-listing-main, code length: 15077
+[2025-11-12T21:07:00.613Z] [writeViews] View code available for ID: dress-detail-main, code length: 15962
+[2025-11-12T21:07:00.613Z] [writeViews] View code available for ID: shopping-cart-main, code length: 17654
+[2025-11-12T21:07:00.613Z] [writeViews] View code available for ID: checkout-form-main, code length: 28050
+[2025-11-12T21:07:00.613Z] [writeViews] View code available for ID: order-confirmation-main, code length: 12036
+[2025-11-12T21:07:00.614Z] [writeViews] View code available for ID: user-orders-list, code length: 8804
+[2025-11-12T21:07:00.614Z] [writeViews] View code available for ID: order-detail-main, code length: 17502
+[2025-11-12T21:07:00.614Z] [writeViews] View code available for ID: user-wishlist-items, code length: 10147
+[2025-11-12T21:07:00.614Z] [writeViews] View code available for ID: admin-inventory-management, code length: 45503
+[2025-11-12T21:07:00.614Z] [writeViews] View code available for ID: admin-order-management, code length: 30197
+[2025-11-12T21:07:00.614Z] [writeViews] View code available for ID: admin-category-management, code length: 14904
+[2025-11-12T21:07:00.615Z] [writeViews] View code available for ID: admin-customer-management, code length: 24286
+[2025-11-12T21:07:00.615Z] [writeViews] View code available for ID: admin-options-management, code length: 17442
+[2025-11-12T21:07:00.615Z] [writeViews] View code available for ID: admin-variants-management, code length: 19241
+[2025-11-12T21:07:00.616Z] [writeViews] Processing view: 86531455-bf17-4b36-b23a-dac307717bf8, type: logo, name: Logo
+[2025-11-12T21:07:00.616Z] [writeViews] Looking for code for view 86531455-bf17-4b36-b23a-dac307717bf8, found: no
+[2025-11-12T21:07:00.616Z] [writeViews] Processing view: 03749b7b-9215-49d3-8a56-ff2d70b31d92, type: menu, name: Header Menu
+[2025-11-12T21:07:00.617Z] [writeViews] Looking for code for view 03749b7b-9215-49d3-8a56-ff2d70b31d92, found: no
+[2025-11-12T21:07:00.617Z] [writeViews] Processing view: 44f48709-e694-439e-b3a7-f3c6e88575f7, type: loginbutton, name: Login Button
+[2025-11-12T21:07:00.617Z] [writeViews] Looking for code for view 44f48709-e694-439e-b3a7-f3c6e88575f7, found: no
+[2025-11-12T21:07:00.618Z] [writeViews] Processing view: 97e68202-b4d1-428c-8c4c-911bf19f9e15, type: iconbar, name: Header Icon Bar
+[2025-11-12T21:07:00.618Z] [writeViews] Looking for code for view 97e68202-b4d1-428c-8c4c-911bf19f9e15, found: no
+[2025-11-12T21:07:00.619Z] [writeViews] Processing view: 6b34770a-2fd6-4854-86a9-5c212fda4c80, type: menu, name: Footer Menu
+[2025-11-12T21:07:00.619Z] [writeViews] Looking for code for view 6b34770a-2fd6-4854-86a9-5c212fda4c80, found: no
+[2025-11-12T21:07:00.619Z] [writeViews] Processing view: d105805f-e242-41db-9648-d55ad2e298b9, type: socialbar, name: Social Media Bar
+[2025-11-12T21:07:00.619Z] [writeViews] Looking for code for view d105805f-e242-41db-9648-d55ad2e298b9, found: no
+[2025-11-12T21:07:00.620Z] [writeViews] Processing view: 2c73c1b5-f04b-4573-bffd-0b9aff7240da, type: text, name: Copyright
+[2025-11-12T21:07:00.620Z] [writeViews] Looking for code for view 2c73c1b5-f04b-4573-bffd-0b9aff7240da, found: no
+[2025-11-12T21:07:00.621Z] [writeViews] Processing view: dc553d42-e4b1-4048-b8f5-e8479428a7db, type: slideshow, name: Hero Slideshow
+[2025-11-12T21:07:00.621Z] [writeViews] Looking for code for view dc553d42-e4b1-4048-b8f5-e8479428a7db, found: no
+[2025-11-12T21:07:00.621Z] [writeViews] Processing view: 99a3580e-423d-4251-a316-92ae11cb6e2d, type: logo, name: Logo
+[2025-11-12T21:07:00.621Z] [writeViews] Looking for code for view 99a3580e-423d-4251-a316-92ae11cb6e2d, found: no
+[2025-11-12T21:07:00.622Z] [writeViews] Processing view: 137db2e5-02a2-4f4b-a6ae-353864aed1f1, type: menu, name: Header Menu
+[2025-11-12T21:07:00.622Z] [writeViews] Looking for code for view 137db2e5-02a2-4f4b-a6ae-353864aed1f1, found: no
+[2025-11-12T21:07:00.622Z] [writeViews] Processing view: 08372858-81f2-4b26-b05d-b8ffdffeb31e, type: loginbutton, name: Header Login
+[2025-11-12T21:07:00.623Z] [writeViews] Looking for code for view 08372858-81f2-4b26-b05d-b8ffdffeb31e, found: no
+[2025-11-12T21:07:00.623Z] [writeViews] Processing view: home-featured-products, type: component, name: Featured Products
+[2025-11-12T21:07:00.623Z] [writeViews] Looking for code for view home-featured-products, found: yes
+[2025-11-12T21:07:00.827Z] [writeViews] Processing view: home-featured-categories, type: component, name: Featured Categories
+[2025-11-12T21:07:00.827Z] [writeViews] Looking for code for view home-featured-categories, found: yes
+[2025-11-12T21:07:00.840Z] [writeViews] Processing view: home-about-text, type: text, name: About Emma's
+[2025-11-12T21:07:00.840Z] [writeViews] Looking for code for view home-about-text, found: no
+[2025-11-12T21:07:00.841Z] [writeViews] Processing view: shop-categories-grid, type: component, name: Categories Grid
+[2025-11-12T21:07:00.841Z] [writeViews] Looking for code for view shop-categories-grid, found: yes
+[2025-11-12T21:07:00.851Z] [writeViews] Processing view: dresses-listing-main, type: component, name: Product Listing
+[2025-11-12T21:07:00.851Z] [writeViews] Looking for code for view dresses-listing-main, found: yes
+[2025-11-12T21:07:00.873Z] [writeViews] Processing view: dress-detail-main, type: component, name: Product Details
+[2025-11-12T21:07:00.873Z] [writeViews] Looking for code for view dress-detail-main, found: yes
+[2025-11-12T21:07:00.900Z] [writeViews] Processing view: shopping-cart-main, type: component, name: Shopping Cart
+[2025-11-12T21:07:00.901Z] [writeViews] Looking for code for view shopping-cart-main, found: yes
+[2025-11-12T21:07:00.923Z] [writeViews] Processing view: checkout-form-main, type: component, name: Checkout Form
+[2025-11-12T21:07:00.923Z] [writeViews] Looking for code for view checkout-form-main, found: yes
+[2025-11-12T21:07:00.959Z] [writeViews] Processing view: order-confirmation-main, type: component, name: Order Confirmation
+[2025-11-12T21:07:00.959Z] [writeViews] Looking for code for view order-confirmation-main, found: yes
+[2025-11-12T21:07:00.969Z] [writeViews] Processing view: user-orders-list, type: component, name: Order List
+[2025-11-12T21:07:00.969Z] [writeViews] Looking for code for view user-orders-list, found: yes
+[2025-11-12T21:07:00.978Z] [writeViews] Processing view: order-detail-main, type: component, name: Order Details
+[2025-11-12T21:07:00.978Z] [writeViews] Looking for code for view order-detail-main, found: yes
+[2025-11-12T21:07:01.016Z] [writeViews] Processing view: user-wishlist-items, type: component, name: Wishlist
+[2025-11-12T21:07:01.016Z] [writeViews] Looking for code for view user-wishlist-items, found: yes
+[2025-11-12T21:07:01.026Z] [writeViews] Processing view: about-story-text, type: text, name: Our Story
+[2025-11-12T21:07:01.026Z] [writeViews] Looking for code for view about-story-text, found: no
+[2025-11-12T21:07:01.026Z] [writeViews] Processing view: size-guide-content, type: text, name: Size Guide
+[2025-11-12T21:07:01.027Z] [writeViews] Looking for code for view size-guide-content, found: no
+[2025-11-12T21:07:01.027Z] [writeViews] Processing view: shipping-policy-text, type: text, name: Shipping Policy
+[2025-11-12T21:07:01.027Z] [writeViews] Looking for code for view shipping-policy-text, found: no
+[2025-11-12T21:07:01.028Z] [writeViews] Processing view: returns-policy-text, type: text, name: Returns Policy
+[2025-11-12T21:07:01.028Z] [writeViews] Looking for code for view returns-policy-text, found: no
+[2025-11-12T21:07:01.028Z] [writeViews] Processing view: contact-info-text, type: text, name: Contact Info
+[2025-11-12T21:07:01.029Z] [writeViews] Looking for code for view contact-info-text, found: no
+[2025-11-12T21:07:01.029Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-11-12T21:07:01.029Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-11-12T21:07:01.030Z] [writeViews] Processing view: faq-content, type: text, name: FAQ
+[2025-11-12T21:07:01.030Z] [writeViews] Looking for code for view faq-content, found: no
+[2025-11-12T21:07:01.031Z] [writeViews] Processing view: admin-inventory-management, type: component, name: Inventory Management
+[2025-11-12T21:07:01.031Z] [writeViews] Looking for code for view admin-inventory-management, found: yes
+[2025-11-12T21:07:01.061Z] [writeViews] Processing view: admin-order-management, type: component, name: Order Management
+[2025-11-12T21:07:01.062Z] [writeViews] Looking for code for view admin-order-management, found: yes
+[2025-11-12T21:07:01.085Z] [writeViews] Processing view: admin-category-management, type: component, name: Category Management
+[2025-11-12T21:07:01.085Z] [writeViews] Looking for code for view admin-category-management, found: yes
+[2025-11-12T21:07:01.100Z] [writeViews] Processing view: admin-customer-management, type: component, name: Customer Management
+[2025-11-12T21:07:01.101Z] [writeViews] Looking for code for view admin-customer-management, found: yes
+[2025-11-12T21:07:01.116Z] [writeViews] Processing view: admin-options-management, type: component, name: Options Management
+[2025-11-12T21:07:01.116Z] [writeViews] Looking for code for view admin-options-management, found: yes
+[2025-11-12T21:07:01.120Z] [writeViews] Transpilation failed for view admin-options-management: {"code":"BABEL_PARSER_SYNTAX_ERROR","reasonCode":"UnterminatedString","loc":{"line":275,"column":27,"index":10789},"pos":10789}
+[2025-11-12T21:07:01.122Z] [writeViews] Processing view: admin-variants-management, type: component, name: Variants Management
+[2025-11-12T21:07:01.122Z] [writeViews] Looking for code for view admin-variants-management, found: yes
+[2025-11-12T21:07:01.141Z] [writeViews] Processing view: dfebfbaf-14cb-4587-998a-81e7c7cff8f5, type: menu, name: User Dashboard Menu
+[2025-11-12T21:07:01.141Z] [writeViews] Looking for code for view dfebfbaf-14cb-4587-998a-81e7c7cff8f5, found: no
+[2025-11-12T21:07:01.142Z] [writeViews] Processing view: 0cde8958-2469-4581-8f09-7c3e9fa60fb9, type: useradmin, name: UserAdminView
+[2025-11-12T21:07:01.142Z] [writeViews] Looking for code for view 0cde8958-2469-4581-8f09-7c3e9fa60fb9, found: no
+[2025-11-12T21:07:01.142Z] [writeViews] Processing view: db04020d-7466-4036-82cc-6c1c468c0f83, type: menu, name: Admin Dashboard Menu
+[2025-11-12T21:07:01.142Z] [writeViews] Looking for code for view db04020d-7466-4036-82cc-6c1c468c0f83, found: no
+[2025-11-12T21:07:01.143Z] [writeViews] Processing view: 01796b09-9e8c-4fad-8909-575504373be5, type: text, name: Terms of Service
+[2025-11-12T21:07:01.143Z] [writeViews] Looking for code for view 01796b09-9e8c-4fad-8909-575504373be5, found: no
+[2025-11-12T21:07:01.143Z] [writeViews] Processing view: 0b5644bf-ab66-450f-98a6-e411ebbbd174, type: text, name: Privacy Policy
+[2025-11-12T21:07:01.143Z] [writeViews] Looking for code for view 0b5644bf-ab66-450f-98a6-e411ebbbd174, found: no
+[2025-11-12T21:07:01.144Z] [writeViews] Processing view: 2435b3ed-14d4-47cb-8957-e6dc8c485147, type: login, name: LoginView
+[2025-11-12T21:07:01.144Z] [writeViews] Looking for code for view 2435b3ed-14d4-47cb-8957-e6dc8c485147, found: no
+[2025-11-12T21:07:01.144Z] [writeViews] Processing view: aa0a7244-f86b-4ba6-859a-02ffc89ec552, type: generatedcomponent, name: New View
+[2025-11-12T21:07:01.145Z] [writeViews] Looking for code for view aa0a7244-f86b-4ba6-859a-02ffc89ec552, found: no
+[2025-11-12T21:07:01.145Z] [writeViews] Processing view: 9e6a58ea-be29-4d85-9343-06c720665431, type: generatedcomponent, name: New View
+[2025-11-12T21:07:01.145Z] [writeViews] Looking for code for view 9e6a58ea-be29-4d85-9343-06c720665431, found: no
+[2025-11-12T21:07:01.146Z] [writeViews] Processing view: 5376ba91-0cbe-4344-a531-97023b036555, type: generatedcomponent, name: New View
+[2025-11-12T21:07:01.146Z] [writeViews] Looking for code for view 5376ba91-0cbe-4344-a531-97023b036555, found: no
+[2025-11-12T21:07:01.147Z] [writeViews] Processing view: 4b293348-a711-4130-bd14-8f4fbbd54c16, type: generatedcomponent, name: New View
+[2025-11-12T21:07:01.147Z] [writeViews] Looking for code for view 4b293348-a711-4130-bd14-8f4fbbd54c16, found: no
+[2025-11-12T21:07:01.165Z] [writeProjectPagesOnly] Writing APIs (writeApis=true and APIs exist)
+[2025-11-12T21:07:01.165Z] [writeApis] APIs count: 45
+[2025-11-12T21:07:01.165Z] [writeApis] Code groups count: 45
+[2025-11-12T21:07:01.166Z] [writeApis] Processing API: categoriescreate, name: CategoriesCreate
+[2025-11-12T21:07:01.166Z] [writeApis] Found code group for API categoriescreate: yes
+[2025-11-12T21:07:01.166Z] [writeApis] API code length: 2044
+[2025-11-12T21:07:01.167Z] [writeApis] Processing API: categoriesdelete, name: CategoriesDelete
+[2025-11-12T21:07:01.167Z] [writeApis] Found code group for API categoriesdelete: yes
+[2025-11-12T21:07:01.167Z] [writeApis] API code length: 1786
+[2025-11-12T21:07:01.168Z] [writeApis] Processing API: categoriesget, name: CategoriesGet
+[2025-11-12T21:07:01.169Z] [writeApis] Found code group for API categoriesget: yes
+[2025-11-12T21:07:01.169Z] [writeApis] API code length: 1708
+[2025-11-12T21:07:01.170Z] [writeApis] Processing API: categorieslist, name: CategoriesList
+[2025-11-12T21:07:01.170Z] [writeApis] Found code group for API categorieslist: yes
+[2025-11-12T21:07:01.170Z] [writeApis] API code length: 3058
+[2025-11-12T21:07:01.171Z] [writeApis] Processing API: categoriesupdate, name: CategoriesUpdate
+[2025-11-12T21:07:01.171Z] [writeApis] Found code group for API categoriesupdate: yes
+[2025-11-12T21:07:01.171Z] [writeApis] API code length: 3474
+[2025-11-12T21:07:01.172Z] [writeApis] Processing API: customersdelete, name: CustomersDelete
+[2025-11-12T21:07:01.172Z] [writeApis] Found code group for API customersdelete: yes
+[2025-11-12T21:07:01.172Z] [writeApis] API code length: 1404
+[2025-11-12T21:07:01.173Z] [writeApis] Processing API: customersget, name: CustomersGet
+[2025-11-12T21:07:01.173Z] [writeApis] Found code group for API customersget: yes
+[2025-11-12T21:07:01.173Z] [writeApis] API code length: 2745
+[2025-11-12T21:07:01.173Z] [writeApis] Processing API: customerslist, name: CustomersList
+[2025-11-12T21:07:01.173Z] [writeApis] Found code group for API customerslist: yes
+[2025-11-12T21:07:01.174Z] [writeApis] API code length: 4834
+[2025-11-12T21:07:01.174Z] [writeApis] Processing API: customersorders, name: CustomersOrders
+[2025-11-12T21:07:01.174Z] [writeApis] Found code group for API customersorders: yes
+[2025-11-12T21:07:01.175Z] [writeApis] API code length: 3183
+[2025-11-12T21:07:01.175Z] [writeApis] Processing API: customersupdate, name: CustomersUpdate
+[2025-11-12T21:07:01.176Z] [writeApis] Found code group for API customersupdate: yes
+[2025-11-12T21:07:01.176Z] [writeApis] API code length: 4291
+[2025-11-12T21:07:01.177Z] [writeApis] Processing API: orderitemslist, name: OrderItemsList
+[2025-11-12T21:07:01.177Z] [writeApis] Found code group for API orderitemslist: yes
+[2025-11-12T21:07:01.177Z] [writeApis] API code length: 2506
+[2025-11-12T21:07:01.178Z] [writeApis] Processing API: ordersget, name: OrdersGet
+[2025-11-12T21:07:01.178Z] [writeApis] Found code group for API ordersget: yes
+[2025-11-12T21:07:01.178Z] [writeApis] API code length: 3716
+[2025-11-12T21:07:01.179Z] [writeApis] Processing API: orderslist, name: OrdersList
+[2025-11-12T21:07:01.179Z] [writeApis] Found code group for API orderslist: yes
+[2025-11-12T21:07:01.180Z] [writeApis] API code length: 4066
+[2025-11-12T21:07:01.181Z] [writeApis] Processing API: ordersupdate, name: OrdersUpdate
+[2025-11-12T21:07:01.181Z] [writeApis] Found code group for API ordersupdate: yes
+[2025-11-12T21:07:01.181Z] [writeApis] API code length: 6477
+[2025-11-12T21:07:01.182Z] [writeApis] Processing API: processorder, name: ProcessOrder
+[2025-11-12T21:07:01.182Z] [writeApis] Found code group for API processorder: yes
+[2025-11-12T21:07:01.182Z] [writeApis] API code length: 9910
+[2025-11-12T21:07:01.184Z] [writeApis] Processing API: productimagescreate, name: ProductImagesCreate
+[2025-11-12T21:07:01.184Z] [writeApis] Found code group for API productimagescreate: yes
+[2025-11-12T21:07:01.184Z] [writeApis] API code length: 2868
+[2025-11-12T21:07:01.185Z] [writeApis] Processing API: productimagesdelete, name: ProductImagesDelete
+[2025-11-12T21:07:01.185Z] [writeApis] Found code group for API productimagesdelete: yes
+[2025-11-12T21:07:01.186Z] [writeApis] API code length: 2416
+[2025-11-12T21:07:01.186Z] [writeApis] Processing API: productimageslist, name: ProductImagesList
+[2025-11-12T21:07:01.187Z] [writeApis] Found code group for API productimageslist: yes
+[2025-11-12T21:07:01.187Z] [writeApis] API code length: 1657
+[2025-11-12T21:07:01.188Z] [writeApis] Processing API: productimagesupdate, name: ProductImagesUpdate
+[2025-11-12T21:07:01.188Z] [writeApis] Found code group for API productimagesupdate: yes
+[2025-11-12T21:07:01.188Z] [writeApis] API code length: 3378
+[2025-11-12T21:07:01.189Z] [writeApis] Processing API: productoptionscreate, name: ProductOptionsCreate
+[2025-11-12T21:07:01.189Z] [writeApis] Found code group for API productoptionscreate: yes
+[2025-11-12T21:07:01.190Z] [writeApis] API code length: 2802
+[2025-11-12T21:07:01.190Z] [writeApis] Processing API: productoptionsdelete, name: ProductOptionsDelete
+[2025-11-12T21:07:01.190Z] [writeApis] Found code group for API productoptionsdelete: yes
+[2025-11-12T21:07:01.191Z] [writeApis] API code length: 2462
+[2025-11-12T21:07:01.191Z] [writeApis] Processing API: productoptionsget, name: ProductOptionsGet
+[2025-11-12T21:07:01.192Z] [writeApis] Found code group for API productoptionsget: yes
+[2025-11-12T21:07:01.192Z] [writeApis] API code length: 1723
+[2025-11-12T21:07:01.193Z] [writeApis] Processing API: productoptionslist, name: ProductOptionsList
+[2025-11-12T21:07:01.193Z] [writeApis] Found code group for API productoptionslist: yes
+[2025-11-12T21:07:01.193Z] [writeApis] API code length: 3072
+[2025-11-12T21:07:01.194Z] [writeApis] Processing API: productoptionsmapcreate, name: ProductOptionsMapCreate
+[2025-11-12T21:07:01.194Z] [writeApis] Found code group for API productoptionsmapcreate: yes
+[2025-11-12T21:07:01.194Z] [writeApis] API code length: 3225
+[2025-11-12T21:07:01.195Z] [writeApis] Processing API: productoptionsmapdelete, name: ProductOptionsMapDelete
+[2025-11-12T21:07:01.195Z] [writeApis] Found code group for API productoptionsmapdelete: yes
+[2025-11-12T21:07:01.196Z] [writeApis] API code length: 1616
+[2025-11-12T21:07:01.196Z] [writeApis] Processing API: productoptionsmaplist, name: ProductOptionsMapList
+[2025-11-12T21:07:01.197Z] [writeApis] Found code group for API productoptionsmaplist: yes
+[2025-11-12T21:07:01.197Z] [writeApis] API code length: 2785
+[2025-11-12T21:07:01.198Z] [writeApis] Processing API: productoptionsupdate, name: ProductOptionsUpdate
+[2025-11-12T21:07:01.198Z] [writeApis] Found code group for API productoptionsupdate: yes
+[2025-11-12T21:07:01.198Z] [writeApis] API code length: 4423
+[2025-11-12T21:07:01.199Z] [writeApis] Processing API: productoptionvaluescreate, name: ProductOptionValuesCreate
+[2025-11-12T21:07:01.199Z] [writeApis] Found code group for API productoptionvaluescreate: yes
+[2025-11-12T21:07:01.199Z] [writeApis] API code length: 3381
+[2025-11-12T21:07:01.200Z] [writeApis] Processing API: productoptionvaluesdelete, name: ProductOptionValuesDelete
+[2025-11-12T21:07:01.200Z] [writeApis] Found code group for API productoptionvaluesdelete: yes
+[2025-11-12T21:07:01.200Z] [writeApis] API code length: 2154
+[2025-11-12T21:07:01.201Z] [writeApis] Processing API: productoptionvaluesget, name: ProductOptionValuesGet
+[2025-11-12T21:07:01.201Z] [writeApis] Found code group for API productoptionvaluesget: yes
+[2025-11-12T21:07:01.202Z] [writeApis] API code length: 2175
+[2025-11-12T21:07:01.202Z] [writeApis] Processing API: productoptionvalueslist, name: ProductOptionValuesList
+[2025-11-12T21:07:01.203Z] [writeApis] Found code group for API productoptionvalueslist: yes
+[2025-11-12T21:07:01.203Z] [writeApis] API code length: 3520
+[2025-11-12T21:07:01.204Z] [writeApis] Processing API: productoptionvaluesupdate, name: ProductOptionValuesUpdate
+[2025-11-12T21:07:01.204Z] [writeApis] Found code group for API productoptionvaluesupdate: yes
+[2025-11-12T21:07:01.204Z] [writeApis] API code length: 4103
+[2025-11-12T21:07:01.205Z] [writeApis] Processing API: productscreate, name: ProductsCreate
+[2025-11-12T21:07:01.205Z] [writeApis] Found code group for API productscreate: yes
+[2025-11-12T21:07:01.205Z] [writeApis] API code length: 4469
+[2025-11-12T21:07:01.206Z] [writeApis] Processing API: productsdelete, name: ProductsDelete
+[2025-11-12T21:07:01.207Z] [writeApis] Found code group for API productsdelete: yes
+[2025-11-12T21:07:01.207Z] [writeApis] API code length: 2412
+[2025-11-12T21:07:01.208Z] [writeApis] Processing API: productsget, name: ProductsGet
+[2025-11-12T21:07:01.208Z] [writeApis] Found code group for API productsget: yes
+[2025-11-12T21:07:01.208Z] [writeApis] API code length: 2896
+[2025-11-12T21:07:01.209Z] [writeApis] Processing API: productslist, name: ProductsList
+[2025-11-12T21:07:01.209Z] [writeApis] Found code group for API productslist: yes
+[2025-11-12T21:07:01.209Z] [writeApis] API code length: 4821
+[2025-11-12T21:07:01.210Z] [writeApis] Processing API: productsupdate, name: ProductsUpdate
+[2025-11-12T21:07:01.211Z] [writeApis] Found code group for API productsupdate: yes
+[2025-11-12T21:07:01.211Z] [writeApis] API code length: 6271
+[2025-11-12T21:07:01.212Z] [writeApis] Processing API: productvariantscreate, name: ProductVariantsCreate
+[2025-11-12T21:07:01.212Z] [writeApis] Found code group for API productvariantscreate: yes
+[2025-11-12T21:07:01.212Z] [writeApis] API code length: 4697
+[2025-11-12T21:07:01.213Z] [writeApis] Processing API: productvariantsdelete, name: ProductVariantsDelete
+[2025-11-12T21:07:01.214Z] [writeApis] Found code group for API productvariantsdelete: yes
+[2025-11-12T21:07:01.214Z] [writeApis] API code length: 2155
+[2025-11-12T21:07:01.215Z] [writeApis] Processing API: productvariantsget, name: ProductVariantsGet
+[2025-11-12T21:07:01.215Z] [writeApis] Found code group for API productvariantsget: yes
+[2025-11-12T21:07:01.215Z] [writeApis] API code length: 2297
+[2025-11-12T21:07:01.216Z] [writeApis] Processing API: productvariantslist, name: ProductVariantsList
+[2025-11-12T21:07:01.216Z] [writeApis] Found code group for API productvariantslist: yes
+[2025-11-12T21:07:01.217Z] [writeApis] API code length: 3704
+[2025-11-12T21:07:01.217Z] [writeApis] Processing API: productvariantsupdate, name: ProductVariantsUpdate
+[2025-11-12T21:07:01.218Z] [writeApis] Found code group for API productvariantsupdate: yes
+[2025-11-12T21:07:01.218Z] [writeApis] API code length: 5914
+[2025-11-12T21:07:01.219Z] [writeApis] Processing API: wishlistcreate, name: WishlistCreate
+[2025-11-12T21:07:01.219Z] [writeApis] Found code group for API wishlistcreate: yes
+[2025-11-12T21:07:01.220Z] [writeApis] API code length: 3185
+[2025-11-12T21:07:01.221Z] [writeApis] Processing API: wishlistdelete, name: WishlistDelete
+[2025-11-12T21:07:01.221Z] [writeApis] Found code group for API wishlistdelete: yes
+[2025-11-12T21:07:01.221Z] [writeApis] API code length: 1755
+[2025-11-12T21:07:01.222Z] [writeApis] Processing API: wishlistlist, name: WishlistList
+[2025-11-12T21:07:01.222Z] [writeApis] Found code group for API wishlistlist: yes
+[2025-11-12T21:07:01.222Z] [writeApis] API code length: 1865
+[2025-11-12T21:07:02.447Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Logo__Emma_s.jpg
+[2025-11-12T21:07:02.936Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T21:07:03.358Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T21:07:03.731Z] [writeLibraryFile] Wrote image file: /Users/michaelmcdermott/Code/SaaSyTest2/public/library/images/Generated__An_online_boutique_selling_so.jpg
+[2025-11-12T21:07:04.324Z] [writeViews] projectCode: exists
+[2025-11-12T21:07:04.325Z] [writeViews] projectCode.views count: 17
+[2025-11-12T21:07:04.325Z] [writeViews] View code available for ID: home-featured-products, code length: 8568
+[2025-11-12T21:07:04.325Z] [writeViews] View code available for ID: home-featured-categories, code length: 6658
+[2025-11-12T21:07:04.326Z] [writeViews] View code available for ID: shop-categories-grid, code length: 4318
+[2025-11-12T21:07:04.326Z] [writeViews] View code available for ID: dresses-listing-main, code length: 15077
+[2025-11-12T21:07:04.326Z] [writeViews] View code available for ID: dress-detail-main, code length: 15962
+[2025-11-12T21:07:04.327Z] [writeViews] View code available for ID: shopping-cart-main, code length: 17654
+[2025-11-12T21:07:04.327Z] [writeViews] View code available for ID: checkout-form-main, code length: 28050
+[2025-11-12T21:07:04.327Z] [writeViews] View code available for ID: order-confirmation-main, code length: 12036
+[2025-11-12T21:07:04.327Z] [writeViews] View code available for ID: user-orders-list, code length: 8804
+[2025-11-12T21:07:04.332Z] [writeViews] View code available for ID: order-detail-main, code length: 17502
+[2025-11-12T21:07:04.333Z] [writeViews] View code available for ID: user-wishlist-items, code length: 10147
+[2025-11-12T21:07:04.333Z] [writeViews] View code available for ID: admin-inventory-management, code length: 45503
+[2025-11-12T21:07:04.333Z] [writeViews] View code available for ID: admin-order-management, code length: 30197
+[2025-11-12T21:07:04.333Z] [writeViews] View code available for ID: admin-category-management, code length: 14904
+[2025-11-12T21:07:04.333Z] [writeViews] View code available for ID: admin-customer-management, code length: 24286
+[2025-11-12T21:07:04.334Z] [writeViews] View code available for ID: admin-options-management, code length: 17442
+[2025-11-12T21:07:04.334Z] [writeViews] View code available for ID: admin-variants-management, code length: 19241
+[2025-11-12T21:07:04.334Z] [writeViews] Processing view: 86531455-bf17-4b36-b23a-dac307717bf8, type: logo, name: Logo
+[2025-11-12T21:07:04.334Z] [writeViews] Looking for code for view 86531455-bf17-4b36-b23a-dac307717bf8, found: no
+[2025-11-12T21:07:04.335Z] [writeViews] Processing view: 03749b7b-9215-49d3-8a56-ff2d70b31d92, type: menu, name: Header Menu
+[2025-11-12T21:07:04.335Z] [writeViews] Looking for code for view 03749b7b-9215-49d3-8a56-ff2d70b31d92, found: no
+[2025-11-12T21:07:04.336Z] [writeViews] Processing view: 44f48709-e694-439e-b3a7-f3c6e88575f7, type: loginbutton, name: Login Button
+[2025-11-12T21:07:04.336Z] [writeViews] Looking for code for view 44f48709-e694-439e-b3a7-f3c6e88575f7, found: no
+[2025-11-12T21:07:04.336Z] [writeViews] Processing view: 97e68202-b4d1-428c-8c4c-911bf19f9e15, type: iconbar, name: Header Icon Bar
+[2025-11-12T21:07:04.336Z] [writeViews] Looking for code for view 97e68202-b4d1-428c-8c4c-911bf19f9e15, found: no
+[2025-11-12T21:07:04.337Z] [writeViews] Processing view: 6b34770a-2fd6-4854-86a9-5c212fda4c80, type: menu, name: Footer Menu
+[2025-11-12T21:07:04.337Z] [writeViews] Looking for code for view 6b34770a-2fd6-4854-86a9-5c212fda4c80, found: no
+[2025-11-12T21:07:04.337Z] [writeViews] Processing view: d105805f-e242-41db-9648-d55ad2e298b9, type: socialbar, name: Social Media Bar
+[2025-11-12T21:07:04.338Z] [writeViews] Looking for code for view d105805f-e242-41db-9648-d55ad2e298b9, found: no
+[2025-11-12T21:07:04.338Z] [writeViews] Processing view: 2c73c1b5-f04b-4573-bffd-0b9aff7240da, type: text, name: Copyright
+[2025-11-12T21:07:04.338Z] [writeViews] Looking for code for view 2c73c1b5-f04b-4573-bffd-0b9aff7240da, found: no
+[2025-11-12T21:07:04.339Z] [writeViews] Processing view: dc553d42-e4b1-4048-b8f5-e8479428a7db, type: slideshow, name: Hero Slideshow
+[2025-11-12T21:07:04.339Z] [writeViews] Looking for code for view dc553d42-e4b1-4048-b8f5-e8479428a7db, found: no
+[2025-11-12T21:07:04.339Z] [writeViews] Processing view: 99a3580e-423d-4251-a316-92ae11cb6e2d, type: logo, name: Logo
+[2025-11-12T21:07:04.339Z] [writeViews] Looking for code for view 99a3580e-423d-4251-a316-92ae11cb6e2d, found: no
+[2025-11-12T21:07:04.340Z] [writeViews] Processing view: 137db2e5-02a2-4f4b-a6ae-353864aed1f1, type: menu, name: Header Menu
+[2025-11-12T21:07:04.340Z] [writeViews] Looking for code for view 137db2e5-02a2-4f4b-a6ae-353864aed1f1, found: no
+[2025-11-12T21:07:04.341Z] [writeViews] Processing view: 08372858-81f2-4b26-b05d-b8ffdffeb31e, type: loginbutton, name: Header Login
+[2025-11-12T21:07:04.341Z] [writeViews] Looking for code for view 08372858-81f2-4b26-b05d-b8ffdffeb31e, found: no
+[2025-11-12T21:07:04.341Z] [writeViews] Processing view: home-featured-products, type: component, name: Featured Products
+[2025-11-12T21:07:04.341Z] [writeViews] Looking for code for view home-featured-products, found: yes
+[2025-11-12T21:07:04.347Z] [writeViews] Processing view: home-featured-categories, type: component, name: Featured Categories
+[2025-11-12T21:07:04.348Z] [writeViews] Looking for code for view home-featured-categories, found: yes
+[2025-11-12T21:07:04.353Z] [writeViews] Processing view: home-about-text, type: text, name: About Emma's
+[2025-11-12T21:07:04.353Z] [writeViews] Looking for code for view home-about-text, found: no
+[2025-11-12T21:07:04.354Z] [writeViews] Processing view: shop-categories-grid, type: component, name: Categories Grid
+[2025-11-12T21:07:04.354Z] [writeViews] Looking for code for view shop-categories-grid, found: yes
+[2025-11-12T21:07:04.360Z] [writeViews] Processing view: dresses-listing-main, type: component, name: Product Listing
+[2025-11-12T21:07:04.361Z] [writeViews] Looking for code for view dresses-listing-main, found: yes
+[2025-11-12T21:07:04.372Z] [writeViews] Processing view: dress-detail-main, type: component, name: Product Details
+[2025-11-12T21:07:04.372Z] [writeViews] Looking for code for view dress-detail-main, found: yes
+[2025-11-12T21:07:04.398Z] [writeViews] Processing view: shopping-cart-main, type: component, name: Shopping Cart
+[2025-11-12T21:07:04.398Z] [writeViews] Looking for code for view shopping-cart-main, found: yes
+[2025-11-12T21:07:04.411Z] [writeViews] Processing view: checkout-form-main, type: component, name: Checkout Form
+[2025-11-12T21:07:04.411Z] [writeViews] Looking for code for view checkout-form-main, found: yes
+[2025-11-12T21:07:04.435Z] [writeViews] Processing view: order-confirmation-main, type: component, name: Order Confirmation
+[2025-11-12T21:07:04.435Z] [writeViews] Looking for code for view order-confirmation-main, found: yes
+[2025-11-12T21:07:04.443Z] [writeViews] Processing view: user-orders-list, type: component, name: Order List
+[2025-11-12T21:07:04.443Z] [writeViews] Looking for code for view user-orders-list, found: yes
+[2025-11-12T21:07:04.450Z] [writeViews] Processing view: order-detail-main, type: component, name: Order Details
+[2025-11-12T21:07:04.450Z] [writeViews] Looking for code for view order-detail-main, found: yes
+[2025-11-12T21:07:04.466Z] [writeViews] Processing view: user-wishlist-items, type: component, name: Wishlist
+[2025-11-12T21:07:04.466Z] [writeViews] Looking for code for view user-wishlist-items, found: yes
+[2025-11-12T21:07:04.473Z] [writeViews] Processing view: about-story-text, type: text, name: Our Story
+[2025-11-12T21:07:04.474Z] [writeViews] Looking for code for view about-story-text, found: no
+[2025-11-12T21:07:04.474Z] [writeViews] Processing view: size-guide-content, type: text, name: Size Guide
+[2025-11-12T21:07:04.474Z] [writeViews] Looking for code for view size-guide-content, found: no
+[2025-11-12T21:07:04.474Z] [writeViews] Processing view: shipping-policy-text, type: text, name: Shipping Policy
+[2025-11-12T21:07:04.474Z] [writeViews] Looking for code for view shipping-policy-text, found: no
+[2025-11-12T21:07:04.475Z] [writeViews] Processing view: returns-policy-text, type: text, name: Returns Policy
+[2025-11-12T21:07:04.475Z] [writeViews] Looking for code for view returns-policy-text, found: no
+[2025-11-12T21:07:04.475Z] [writeViews] Processing view: contact-info-text, type: text, name: Contact Info
+[2025-11-12T21:07:04.475Z] [writeViews] Looking for code for view contact-info-text, found: no
+[2025-11-12T21:07:04.476Z] [writeViews] Processing view: contact-form, type: form, name: Contact Form
+[2025-11-12T21:07:04.476Z] [writeViews] Looking for code for view contact-form, found: no
+[2025-11-12T21:07:04.476Z] [writeViews] Processing view: faq-content, type: text, name: FAQ
+[2025-11-12T21:07:04.477Z] [writeViews] Looking for code for view faq-content, found: no
+[2025-11-12T21:07:04.477Z] [writeViews] Processing view: admin-inventory-management, type: component, name: Inventory Management
+[2025-11-12T21:07:04.477Z] [writeViews] Looking for code for view admin-inventory-management, found: yes
+[2025-11-12T21:07:04.512Z] [writeViews] Processing view: admin-order-management, type: component, name: Order Management
+[2025-11-12T21:07:04.512Z] [writeViews] Looking for code for view admin-order-management, found: yes
+[2025-11-12T21:07:04.551Z] [writeViews] Processing view: admin-category-management, type: component, name: Category Management
+[2025-11-12T21:07:04.552Z] [writeViews] Looking for code for view admin-category-management, found: yes
+[2025-11-12T21:07:04.561Z] [writeViews] Processing view: admin-customer-management, type: component, name: Customer Management
+[2025-11-12T21:07:04.561Z] [writeViews] Looking for code for view admin-customer-management, found: yes
+[2025-11-12T21:07:04.580Z] [writeViews] Processing view: admin-options-management, type: component, name: Options Management
+[2025-11-12T21:07:04.580Z] [writeViews] Looking for code for view admin-options-management, found: yes
+[2025-11-12T21:07:04.582Z] [writeViews] Transpilation failed for view admin-options-management: {"code":"BABEL_PARSER_SYNTAX_ERROR","reasonCode":"UnterminatedString","loc":{"line":275,"column":27,"index":10789},"pos":10789}
+[2025-11-12T21:07:04.583Z] [writeViews] Processing view: admin-variants-management, type: component, name: Variants Management
+[2025-11-12T21:07:04.584Z] [writeViews] Looking for code for view admin-variants-management, found: yes
+[2025-11-12T21:07:04.599Z] [writeViews] Processing view: dfebfbaf-14cb-4587-998a-81e7c7cff8f5, type: menu, name: User Dashboard Menu
+[2025-11-12T21:07:04.599Z] [writeViews] Looking for code for view dfebfbaf-14cb-4587-998a-81e7c7cff8f5, found: no
+[2025-11-12T21:07:04.599Z] [writeViews] Processing view: 0cde8958-2469-4581-8f09-7c3e9fa60fb9, type: useradmin, name: UserAdminView
+[2025-11-12T21:07:04.600Z] [writeViews] Looking for code for view 0cde8958-2469-4581-8f09-7c3e9fa60fb9, found: no
+[2025-11-12T21:07:04.600Z] [writeViews] Processing view: db04020d-7466-4036-82cc-6c1c468c0f83, type: menu, name: Admin Dashboard Menu
+[2025-11-12T21:07:04.600Z] [writeViews] Looking for code for view db04020d-7466-4036-82cc-6c1c468c0f83, found: no
+[2025-11-12T21:07:04.601Z] [writeViews] Processing view: 01796b09-9e8c-4fad-8909-575504373be5, type: text, name: Terms of Service
+[2025-11-12T21:07:04.601Z] [writeViews] Looking for code for view 01796b09-9e8c-4fad-8909-575504373be5, found: no
+[2025-11-12T21:07:04.601Z] [writeViews] Processing view: 0b5644bf-ab66-450f-98a6-e411ebbbd174, type: text, name: Privacy Policy
+[2025-11-12T21:07:04.602Z] [writeViews] Looking for code for view 0b5644bf-ab66-450f-98a6-e411ebbbd174, found: no
+[2025-11-12T21:07:04.603Z] [writeViews] Processing view: 2435b3ed-14d4-47cb-8957-e6dc8c485147, type: login, name: LoginView
+[2025-11-12T21:07:04.603Z] [writeViews] Looking for code for view 2435b3ed-14d4-47cb-8957-e6dc8c485147, found: no
+[2025-11-12T21:07:04.604Z] [writeViews] Processing view: aa0a7244-f86b-4ba6-859a-02ffc89ec552, type: generatedcomponent, name: New View
+[2025-11-12T21:07:04.604Z] [writeViews] Looking for code for view aa0a7244-f86b-4ba6-859a-02ffc89ec552, found: no
+[2025-11-12T21:07:04.605Z] [writeViews] Processing view: 9e6a58ea-be29-4d85-9343-06c720665431, type: generatedcomponent, name: New View
+[2025-11-12T21:07:04.605Z] [writeViews] Looking for code for view 9e6a58ea-be29-4d85-9343-06c720665431, found: no
+[2025-11-12T21:07:04.606Z] [writeViews] Processing view: 5376ba91-0cbe-4344-a531-97023b036555, type: generatedcomponent, name: New View
+[2025-11-12T21:07:04.606Z] [writeViews] Looking for code for view 5376ba91-0cbe-4344-a531-97023b036555, found: no
+[2025-11-12T21:07:04.607Z] [writeViews] Processing view: 4b293348-a711-4130-bd14-8f4fbbd54c16, type: generatedcomponent, name: New View
+[2025-11-12T21:07:04.607Z] [writeViews] Looking for code for view 4b293348-a711-4130-bd14-8f4fbbd54c16, found: no

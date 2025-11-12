@@ -58,9 +58,10 @@ DATABASE_TYPE=sqlite
 # EMAIL_FROM=noreply@yourdomain.com
 
 # Site Configuration
-# SITE_DOMAIN is used for generating absolute URLs (e.g., in emails)
-# Defaults to https://sitepaige.com if not set
-# SITE_DOMAIN=https://yourdomain.com
+# DOMAIN is used for generating absolute URLs in production (e.g., in emails)
+# LOCAL_DOMAIN is used for development environment
+# DOMAIN=https://yourdomain.com
+# LOCAL_DOMAIN=http://localhost:3000
 
 # OAuth Configuration
 # Google OAuth

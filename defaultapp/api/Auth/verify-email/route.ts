@@ -86,7 +86,7 @@ export async function GET(request: Request) {
     });
 
     // Redirect to home page or dashboard with success message
-    const siteDomain = process.env.SITE_DOMAIN || 'https://sitepaige.com';
+    const siteDomain = process.env.NODE_ENV === 'production' ? process.env.DOMAIN : process.env.LOCAL_DOMAIN;
     const redirectUrl = new URL('/', siteDomain);
     redirectUrl.searchParams.set('verified', 'true');
     
@@ -96,7 +96,7 @@ export async function GET(request: Request) {
     console.error('Email verification error:', error);
     
     // Redirect to home with error
-    const siteDomain = process.env.SITE_DOMAIN || 'https://sitepaige.com';
+    const siteDomain = process.env.NODE_ENV === 'production' ? process.env.DOMAIN : process.env.LOCAL_DOMAIN;
     const redirectUrl = new URL('/', siteDomain);
     redirectUrl.searchParams.set('error', 'verification_failed');
     

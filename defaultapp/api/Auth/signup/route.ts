@@ -37,7 +37,7 @@ export async function POST(request: Request) {
     const { passwordAuth, verificationToken } = await createPasswordAuth(email, password);
 
     // Get site domain from environment or default
-    const siteDomain = process.env.SITE_DOMAIN || 'https://sitepaige.com';
+    const siteDomain = process.env.NODE_ENV === 'production' ? process.env.DOMAIN : process.env.LOCAL_DOMAIN;
     const verificationUrl = `${siteDomain}/api/Auth/verify-email?token=${verificationToken}`;
 
     // Send verification email
