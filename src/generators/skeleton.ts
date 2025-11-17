@@ -122,6 +122,10 @@ export async function writePackageJson(targetDir: string, projectName?: string, 
     tailwindcss: pkg.dependencies?.tailwindcss ?? "^3.4.1",
     postcss: pkg.dependencies?.postcss ?? "latest",
     autoprefixer: pkg.dependencies?.autoprefixer ?? "latest",
+    // Database dependencies - include all since we're copying all db files
+    "better-sqlite3": pkg.dependencies?.["better-sqlite3"] ?? "^11.3.0",
+    pg: pkg.dependencies?.pg ?? "^8.11.3",
+    mysql2: pkg.dependencies?.mysql2 ?? "^3.6.5",
     // TypeScript and types need to be in dependencies for Vercel
     typescript: pkg.dependencies?.typescript ?? "latest",
     "@types/node": pkg.dependencies?.["@types/node"] ?? "latest",
@@ -129,20 +133,6 @@ export async function writePackageJson(targetDir: string, projectName?: string, 
     "@types/react-dom": pkg.dependencies?.["@types/react-dom"] ?? "latest",
     "@types/mime-types": pkg.dependencies?.["@types/mime-types"] ?? "^2.1.4"
   };
-  
-  // Add database-specific dependencies
-  switch (databaseType) {
-    case "postgres":
-      pkg.dependencies.pg = pkg.dependencies?.pg ?? "^8.11.3";
-      break;
-    case "mysql":
-      pkg.dependencies.mysql2 = pkg.dependencies?.mysql2 ?? "^3.6.5";
-      break;
-    case "sqlite":
-    default:
-      pkg.dependencies["better-sqlite3"] = pkg.dependencies?.["better-sqlite3"] ?? "^9.2.2";
-      break;
-  }
 
   // Keep devDependencies minimal or empty for Vercel compatibility
   pkg.devDependencies = pkg.devDependencies ?? {};

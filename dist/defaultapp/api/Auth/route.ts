@@ -49,8 +49,8 @@ export async function POST(request: Request) {
         );
       }
 
-      const { authenticateUser, createPasswordAuthTable } = await import('../../db-password-auth');
-      const { upsertUser } = await import('../../db-users');
+      const { authenticateUser, createPasswordAuthTable } = await import('../db-password-auth');
+      const { upsertUser } = await import('../db-users');
       
       // Ensure password auth table exists
       await createPasswordAuthTable();

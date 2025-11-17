@@ -23,23 +23,6 @@ async function copyDirectory(source, destination) {
         }
     }
 }
-async function copyDirectoryWithExclusions(source, destination, excludeFiles) {
-    ensureDir(destination);
-    const entries = await fsp.readdir(source, { withFileTypes: true });
-    for (const entry of entries) {
-        const sourcePath = path.join(source, entry.name);
-        const destPath = path.join(destination, entry.name);
-        if (entry.isDirectory()) {
-            await copyDirectoryWithExclusions(sourcePath, destPath, excludeFiles);
-        }
-        else if (entry.isFile() && !excludeFiles.includes(entry.name)) {
-            // Only copy if the file doesn't already exist and is not in the exclude list
-            if (!fs.existsSync(destPath)) {
-                await fsp.copyFile(sourcePath, destPath);
-            }
-        }
-    }
-}
 export async function writeDefaultApp(targetDir, databaseType = "postgres") {
     // The defaultapp folder is at the root of the project
     const defaultAppPath = path.join(__dirname, "..", "..", "defaultapp");
@@ -48,43 +31,17 @@ export async function writeDefaultApp(targetDir, databaseType = "postgres") {
     const publicDir = path.join(targetDir, "public");
     // Ensure the app directory exists
     ensureDir(appDir);
-    // Copy all contents from defaultapp to src/app, excluding database files we'll handle separately
-    const excludeFiles = ['db.ts', 'db-sqlite.ts', 'db-postgres.ts', 'db-mysql.ts', 'db-users.ts', 'db-password-auth.ts', 'util.ts', 'middleware.ts', 'csrf.ts'];
-    await copyDirectoryWithExclusions(defaultAppPath, appDir, excludeFiles);
+    // Copy all contents from defaultapp to src/app
+    await copyDirectory(defaultAppPath, appDir);
     // Copy defaultpublic folder to public directory if it exists
     if (fs.existsSync(defaultPublicPath)) {
         await copyDirectory(defaultPublicPath, publicDir);
-    }
-    // Copy database files based on selected database type
-    const dbFiles = ['db-users.ts', 'db-password-auth.ts', 'util.ts', 'csrf.ts'];
-    // Copy the common database files
-    for (const file of dbFiles) {
-        const sourcePath = path.join(defaultAppPath, file);
-        const destPath = path.join(appDir, file);
-        if (fs.existsSync(sourcePath) && !fs.existsSync(destPath)) {
-            await fsp.copyFile(sourcePath, destPath);
-        }
     }
     // Copy middleware.ts to the src directory (not src/app)
     const middlewareSourcePath = path.join(defaultAppPath, 'middleware.ts');
     const middlewareDestPath = path.join(targetDir, 'src', 'middleware.ts');
     if (fs.existsSync(middlewareSourcePath) && !fs.existsSync(middlewareDestPath)) {
         await fsp.copyFile(middlewareSourcePath, middlewareDestPath);
-    }
-    // Copy only the selected database implementation
-    const dbImplFile = `db-${databaseType}.ts`;
-    const sourceDbImplPath = path.join(defaultAppPath, dbImplFile);
-    const destDbImplPath = path.join(appDir, dbImplFile);
-    if (fs.existsSync(sourceDbImplPath) && !fs.existsSync(destDbImplPath)) {
-        await fsp.copyFile(sourceDbImplPath, destDbImplPath);
-    }
-    // Generate the db.ts file from template
-    const dbTemplatePath = path.join(__dirname, "db-template.txt");
-    const dbTemplate = await fsp.readFile(dbTemplatePath, "utf8");
-    const dbContent = dbTemplate.replace('{{DATABASE_TYPE}}', databaseType);
-    const dbPath = path.join(appDir, "db.ts");
-    if (!fs.existsSync(dbPath)) {
-        await fsp.writeFile(dbPath, dbContent, "utf8");
     }
     // Create .env.example file
     const envExamplePath = path.join(targetDir, ".env.example");
