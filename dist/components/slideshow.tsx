@@ -80,10 +80,6 @@ export default function Slideshow({
     return (
       <div 
         className="relative w-full flex items-center justify-center bg-black rounded-lg"
-        style={{ 
-          height: height || 400,
-          maxHeight: '1000px'
-        }}
       >
         <p className="text-gray-400">No images in slideshow</p>
       </div>
@@ -102,15 +98,11 @@ export default function Slideshow({
   return (
     <div 
       className="relative w-full overflow-hidden rounded-lg bg-black"
-      style={{ 
-        height: height || 600,
-        maxHeight: '1000px'
-      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Main image display */}
-      <div className="absolute inset-0 flex items-center justify-center">
+      <div className="flex items-center justify-center">
         {animationType === 'fade' ? (
           // Fade animation - render all images with opacity transitions
           images.map((imageId, index) => (

@@ -96,11 +96,9 @@ export async function writePackageJson(targetDir, projectName, databaseType = "p
     pkg.private = true;
     pkg.scripts = {
         ...(pkg.scripts ?? {}),
-        dev: pkg.scripts?.dev ?? "npx tsx src/app/migrate.ts && next dev",
-        build: pkg.scripts?.build ?? "npx tsx src/app/migrate.ts && next build",
-        start: pkg.scripts?.start ?? "next start",
-        migrate: pkg.scripts?.migrate ?? "npx tsx src/app/migrate.ts",
-        postinstall: pkg.scripts?.postinstall ?? "npx tsx src/app/migrate.ts"
+        dev: pkg.scripts?.dev ?? "next dev",
+        build: pkg.scripts?.build ?? "next build",
+        start: pkg.scripts?.start ?? "next start"
     };
     pkg.dependencies = {
         ...(pkg.dependencies ?? {}),

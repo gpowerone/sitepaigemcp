@@ -92,6 +92,186 @@ export async function writeModelsSql(targetDir: string, blueprint: Blueprint, da
   const dbTypeMap = typeMap[databaseType] || typeMap.sqlite;
   const quoteChar = databaseType === 'mysql' ? '`' : '"';
   
+  // Add auth tables at the beginning
+  lines.push("\n-- Authentication and session management tables");
+  
+  // Migrations table
+  lines.push(`\n-- Migrations tracking table`);
+  if (databaseType === 'sqlite') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}migrations${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} INTEGER PRIMARY KEY AUTOINCREMENT,`,
+      `  ${quoteChar}filename${quoteChar} TEXT UNIQUE NOT NULL,`,
+      `  ${quoteChar}executed_at${quoteChar} TEXT DEFAULT CURRENT_TIMESTAMP`,
+      `);`
+    );
+  } else if (databaseType === 'postgres') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}migrations${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} SERIAL PRIMARY KEY,`,
+      `  ${quoteChar}filename${quoteChar} VARCHAR(255) UNIQUE NOT NULL,`,
+      `  ${quoteChar}executed_at${quoteChar} TIMESTAMP DEFAULT NOW()`,
+      `);`
+    );
+  } else if (databaseType === 'mysql') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}migrations${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} INT AUTO_INCREMENT PRIMARY KEY,`,
+      `  ${quoteChar}filename${quoteChar} VARCHAR(255) UNIQUE NOT NULL,`,
+      `  ${quoteChar}executed_at${quoteChar} TIMESTAMP DEFAULT CURRENT_TIMESTAMP`,
+      `);`
+    );
+  }
+  
+  // Users table
+  lines.push(`\n-- Users table (required for authentication)`);
+  if (databaseType === 'sqlite') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}users${quoteChar} (`,
+      `  ${quoteChar}userid${quoteChar} TEXT PRIMARY KEY,`,
+      `  ${quoteChar}oauthid${quoteChar} TEXT NOT NULL UNIQUE,`,
+      `  ${quoteChar}source${quoteChar} TEXT NOT NULL CHECK(${quoteChar}source${quoteChar} IN ('google', 'facebook', 'apple', 'github', 'userpass')),`,
+      `  ${quoteChar}username${quoteChar} TEXT NOT NULL,`,
+      `  ${quoteChar}email${quoteChar} TEXT,`,
+      `  ${quoteChar}avatarurl${quoteChar} TEXT,`,
+      `  ${quoteChar}userlevel${quoteChar} INTEGER NOT NULL DEFAULT 1 CHECK(${quoteChar}userlevel${quoteChar} IN (0, 1, 2)),`,
+      `  ${quoteChar}usertier${quoteChar} INTEGER NOT NULL DEFAULT 0,`,
+      `  ${quoteChar}lastlogindate${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}createddate${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}isactive${quoteChar} INTEGER NOT NULL DEFAULT 1`,
+      `);`
+    );
+  } else if (databaseType === 'postgres') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}users${quoteChar} (`,
+      `  ${quoteChar}userid${quoteChar} UUID PRIMARY KEY,`,
+      `  ${quoteChar}oauthid${quoteChar} TEXT NOT NULL UNIQUE,`,
+      `  ${quoteChar}source${quoteChar} TEXT NOT NULL CHECK(${quoteChar}source${quoteChar} IN ('google', 'facebook', 'apple', 'github', 'userpass')),`,
+      `  ${quoteChar}username${quoteChar} TEXT NOT NULL,`,
+      `  ${quoteChar}email${quoteChar} TEXT,`,
+      `  ${quoteChar}avatarurl${quoteChar} TEXT,`,
+      `  ${quoteChar}userlevel${quoteChar} INTEGER NOT NULL DEFAULT 1 CHECK(${quoteChar}userlevel${quoteChar} IN (0, 1, 2)),`,
+      `  ${quoteChar}usertier${quoteChar} INTEGER NOT NULL DEFAULT 0,`,
+      `  ${quoteChar}lastlogindate${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}createddate${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}isactive${quoteChar} INTEGER NOT NULL DEFAULT 1`,
+      `);`
+    );
+  } else if (databaseType === 'mysql') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}users${quoteChar} (`,
+      `  ${quoteChar}userid${quoteChar} VARCHAR(36) PRIMARY KEY,`,
+      `  ${quoteChar}oauthid${quoteChar} VARCHAR(255) NOT NULL UNIQUE,`,
+      `  ${quoteChar}source${quoteChar} VARCHAR(20) NOT NULL CHECK(${quoteChar}source${quoteChar} IN ('google', 'facebook', 'apple', 'github', 'userpass')),`,
+      `  ${quoteChar}username${quoteChar} VARCHAR(255) NOT NULL,`,
+      `  ${quoteChar}email${quoteChar} VARCHAR(255),`,
+      `  ${quoteChar}avatarurl${quoteChar} TEXT,`,
+      `  ${quoteChar}userlevel${quoteChar} INT NOT NULL DEFAULT 1 CHECK(${quoteChar}userlevel${quoteChar} IN (0, 1, 2)),`,
+      `  ${quoteChar}usertier${quoteChar} INT NOT NULL DEFAULT 0,`,
+      `  ${quoteChar}lastlogindate${quoteChar} TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}createddate${quoteChar} TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}isactive${quoteChar} TINYINT NOT NULL DEFAULT 1`,
+      `);`
+    );
+  }
+  
+  // Indexes for Users table
+  lines.push(`\n-- Indexes for Users table`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_users_oauthid ON ${quoteChar}users${quoteChar}(${quoteChar}oauthid${quoteChar});`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_users_email ON ${quoteChar}users${quoteChar}(${quoteChar}email${quoteChar});`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_users_usertier ON ${quoteChar}users${quoteChar}(${quoteChar}usertier${quoteChar});`);
+  
+  // UserSession table
+  lines.push(`\n-- UserSession table`);
+  if (databaseType === 'sqlite') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}usersession${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} TEXT PRIMARY KEY,`,
+      `  ${quoteChar}sessiontoken${quoteChar} TEXT NOT NULL UNIQUE,`,
+      `  ${quoteChar}userid${quoteChar} TEXT NOT NULL,`,
+      `  ${quoteChar}expirationdate${quoteChar} TEXT NOT NULL,`,
+      `  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}users${quoteChar}(${quoteChar}userid${quoteChar}) ON DELETE CASCADE`,
+      `);`
+    );
+  } else if (databaseType === 'postgres') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}usersession${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} UUID PRIMARY KEY,`,
+      `  ${quoteChar}sessiontoken${quoteChar} TEXT NOT NULL UNIQUE,`,
+      `  ${quoteChar}userid${quoteChar} UUID NOT NULL,`,
+      `  ${quoteChar}expirationdate${quoteChar} TEXT NOT NULL,`,
+      `  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}users${quoteChar}(${quoteChar}userid${quoteChar}) ON DELETE CASCADE`,
+      `);`
+    );
+  } else if (databaseType === 'mysql') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}usersession${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} VARCHAR(36) PRIMARY KEY,`,
+      `  ${quoteChar}sessiontoken${quoteChar} VARCHAR(255) NOT NULL UNIQUE,`,
+      `  ${quoteChar}userid${quoteChar} VARCHAR(36) NOT NULL,`,
+      `  ${quoteChar}expirationdate${quoteChar} VARCHAR(255) NOT NULL,`,
+      `  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}users${quoteChar}(${quoteChar}userid${quoteChar}) ON DELETE CASCADE`,
+      `);`
+    );
+  }
+  
+  // Indexes for UserSession table
+  lines.push(`\n-- Indexes for UserSession table`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_session_token ON ${quoteChar}usersession${quoteChar}(${quoteChar}sessiontoken${quoteChar});`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_session_user ON ${quoteChar}usersession${quoteChar}(${quoteChar}userid${quoteChar});`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_session_expiry ON ${quoteChar}usersession${quoteChar}(${quoteChar}expirationdate${quoteChar});`);
+  
+  // OAuthTokens table
+  lines.push(`\n-- OAuthTokens table`);
+  if (databaseType === 'sqlite') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}oauthtokens${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} TEXT PRIMARY KEY,`,
+      `  ${quoteChar}userid${quoteChar} TEXT NOT NULL,`,
+      `  ${quoteChar}provider${quoteChar} TEXT NOT NULL CHECK(${quoteChar}provider${quoteChar} IN ('google', 'facebook', 'apple', 'github', 'userpass')),`,
+      `  ${quoteChar}accesstoken${quoteChar} TEXT NOT NULL,`,
+      `  ${quoteChar}refreshtoken${quoteChar} TEXT,`,
+      `  ${quoteChar}expiresat${quoteChar} TEXT,`,
+      `  ${quoteChar}createdat${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}updatedat${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}users${quoteChar}(${quoteChar}userid${quoteChar}) ON DELETE CASCADE`,
+      `);`
+    );
+  } else if (databaseType === 'postgres') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}oauthtokens${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} UUID PRIMARY KEY,`,
+      `  ${quoteChar}userid${quoteChar} UUID NOT NULL,`,
+      `  ${quoteChar}provider${quoteChar} TEXT NOT NULL CHECK(${quoteChar}provider${quoteChar} IN ('google', 'facebook', 'apple', 'github', 'userpass')),`,
+      `  ${quoteChar}accesstoken${quoteChar} TEXT NOT NULL,`,
+      `  ${quoteChar}refreshtoken${quoteChar} TEXT,`,
+      `  ${quoteChar}expiresat${quoteChar} TEXT,`,
+      `  ${quoteChar}createdat${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}updatedat${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}users${quoteChar}(${quoteChar}userid${quoteChar}) ON DELETE CASCADE`,
+      `);`
+    );
+  } else if (databaseType === 'mysql') {
+    lines.push(
+      `CREATE TABLE IF NOT EXISTS ${quoteChar}oauthtokens${quoteChar} (`,
+      `  ${quoteChar}id${quoteChar} VARCHAR(36) PRIMARY KEY,`,
+      `  ${quoteChar}userid${quoteChar} VARCHAR(36) NOT NULL,`,
+      `  ${quoteChar}provider${quoteChar} VARCHAR(20) NOT NULL CHECK(${quoteChar}provider${quoteChar} IN ('google', 'facebook', 'apple', 'github', 'userpass')),`,
+      `  ${quoteChar}accesstoken${quoteChar} TEXT NOT NULL,`,
+      `  ${quoteChar}refreshtoken${quoteChar} TEXT,`,
+      `  ${quoteChar}expiresat${quoteChar} VARCHAR(255),`,
+      `  ${quoteChar}createdat${quoteChar} TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  ${quoteChar}updatedat${quoteChar} TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,`,
+      `  FOREIGN KEY (${quoteChar}userid${quoteChar}) REFERENCES ${quoteChar}users${quoteChar}(${quoteChar}userid${quoteChar}) ON DELETE CASCADE`,
+      `);`
+    );
+  }
+  
+  // Indexes for OAuthTokens table
+  lines.push(`\n-- Indexes for OAuthTokens table`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_oauth_user ON ${quoteChar}oauthtokens${quoteChar}(${quoteChar}userid${quoteChar});`);
+  lines.push(`CREATE INDEX IF NOT EXISTS idx_oauth_provider ON ${quoteChar}oauthtokens${quoteChar}(${quoteChar}userid${quoteChar}, ${quoteChar}provider${quoteChar});`);
+  
   for (const model of models) {
     const tableName = sanitizeTableName(model.name || model.id || "table");
     lines.push(`\n-- Model: ${tableName}`);

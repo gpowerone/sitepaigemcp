@@ -4,8 +4,8 @@
  */
 
 import { NextResponse } from 'next/server';
-import { regenerateVerificationToken } from '../../../db-password-auth';
-import { send_email } from '../../../storage/email';
+import { regenerateVerificationToken } from '../../db-password-auth';
+import { send_email } from '../../storage/email';
 
 // Email validation regex
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

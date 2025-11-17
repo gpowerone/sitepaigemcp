@@ -8,8 +8,8 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import * as crypto from 'node:crypto';
 
-import { db_init, db_query } from '../../db';
-import { upsertUser, storeOAuthToken, validateSession, rotateSession } from '../../db-users';
+import { db_init, db_query } from '../db';
+import { upsertUser, storeOAuthToken, validateSession, rotateSession } from '../db-users';
 
 type OAuthProvider = 'google' | 'facebook' | 'apple'  | 'github';
 

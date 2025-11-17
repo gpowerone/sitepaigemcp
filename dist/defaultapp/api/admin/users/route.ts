@@ -5,15 +5,15 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { db_init, db_query } from '../../../db';
+import { db_init, db_query } from '../../db';
 import { 
   getAllUsers, 
   updateUserPermission, 
   deleteUser, 
   getUserStats,
   getUserByID
-} from '../../../db-users';
-import { validateCsrfToken } from '../../../csrf';
+} from '../../db-users';
+import { validateCsrfToken } from '../../csrf';
 
 // Helper function to check if the current user is an admin
 async function checkAdminAuth(): Promise<{ isAdmin: boolean; userId?: string }> {

@@ -4,9 +4,9 @@
  */
 
 import { NextResponse } from 'next/server';
-import { verifyEmailWithToken } from '../../../db-password-auth';
-import { upsertUser } from '../../../db-users';
-import { db_init, db_query } from '../../../db';
+import { verifyEmailWithToken } from '../../db-password-auth';
+import { upsertUser } from '../../db-users';
+import { db_init, db_query } from '../../db';
 import { cookies } from 'next/headers';
 import * as crypto from 'node:crypto';
 
