@@ -155,6 +155,7 @@ interface FormData {
 export default function RForm({ name, custom_view_description, design }: RFormProps) {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Parse form configuration
   let formData: FormData = {
@@ -171,26 +172,60 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
     console.error('Error parsing form data:', e);
   }
 
-  // Don't render if no submission email
-  if (!formData.submissionEmail) {
-    return (
-      <div className="p-8 text-center text-gray-500">
-        <h1>{name}</h1>
-        <p>Form configuration error: No submission email specified.</p>
-      </div>
-    );
-  }
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
     
-    // FormSubmit.co will handle the actual submission
-    // We just need to show the success message after a delay
-    setTimeout(() => {
-      setSubmitted(true);
+    // Get form data
+    const form = e.currentTarget;
+    const formDataObj: Record<string, any> = {};
+    
+    // Collect all form fields
+    formData.fields.forEach((field) => {
+      const element = form.elements.namedItem(field.name) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+      if (element) {
+        formDataObj[field.name] = element.value;
+      }
+    });
+    
+    // Add metadata
+    formDataObj._formName = name;
+    if (formData.submissionEmail) {
+      formDataObj._notificationEmail = formData.submissionEmail;
+    }
+    
+    try {
+      // Get CSRF token if available
+      const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+      const csrfToken = csrfMeta?.getAttribute('content');
+      
+      const response = await fetch('/api/form', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(csrfToken && { 'X-CSRF-Token': csrfToken })
+        },
+        body: JSON.stringify({
+          formName: name,
+          data: formDataObj
+        })
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        setSubmitted(true);
+        setIsSubmitting(false);
+      } else {
+        setError(result.error || 'Failed to submit form. Please try again.');
+        setIsSubmitting(false);
+      }
+    } catch (err) {
+      console.error('Form submission error:', err);
+      setError('Network error. Please check your connection and try again.');
       setIsSubmitting(false);
-    }, 1000);
+    }
   };
 
   if (submitted) {
@@ -219,8 +254,7 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
           <button
             onClick={() => {
               setSubmitted(false);
-              // Reset form by reloading (formsubmit.co doesn't provide a JS API)
-              window.location.reload();
+              setError(null);
             }}
             className="mt-6 px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
           >
@@ -252,18 +286,16 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
     <div className="w-full max-w-2xl mx-auto p-6" style={formStyles}>
       <h1>{name}</h1>
       <form 
-        action={`https://formsubmit.co/${formData.submissionEmail}`} 
-        method="POST"
         onSubmit={handleSubmit}
         className="space-y-6"
       >
-        {/* Hidden fields for FormSubmit.co configuration */}
-        {!formData.useCaptcha && (
-          <input type="hidden" name="_captcha" value="false" />
+        {/* Display error message if any */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700">
+            <p className="font-medium">Error</p>
+            <p className="text-sm mt-1">{error}</p>
+          </div>
         )}
-        
-        {/* Thank you page - redirect back to same page with submitted state */}
-        <input type="hidden" name="_next" value={typeof window !== 'undefined' ? window.location.href : ''} />
         
         {/* Render form fields */}
         {formData.fields.map((field, index) => (
@@ -384,11 +416,6 @@ export default function RForm({ name, custom_view_description, design }: RFormPr
           </button>
         </div>
       </form>
-      
-      {/* FormSubmit.co attribution (optional but nice to have) */}
-      <div className="mt-6 text-center text-xs text-gray-400">
-        <p>{getFormTranslation('Form secured by FormSubmit', design.websiteLanguage)}</p>
-      </div>
     </div>
   );
 }

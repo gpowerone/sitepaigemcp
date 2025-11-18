@@ -159,7 +159,7 @@ export default function RSocialBar({ viewData, textColor }: RsocialbarProps) {
         </div>
       ) : (
         <div className="text-gray-400 text-sm">
-          Click to add social media links
+          &nbsp;
         </div>
       )}
     </div>

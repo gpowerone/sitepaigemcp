@@ -190,6 +190,21 @@ export async function writeModelsSql(targetDir, blueprint, databaseType = "postg
     lines.push(`CREATE INDEX IF NOT EXISTS idx_passwordauth_verification_token ON ${quoteChar}passwordauth${quoteChar}(${quoteChar}verificationtoken${quoteChar});`);
     lines.push(`CREATE INDEX IF NOT EXISTS idx_passwordauth_reset_token ON ${quoteChar}passwordauth${quoteChar}(${quoteChar}resettoken${quoteChar});`);
     lines.push(`CREATE INDEX IF NOT EXISTS idx_passwordauth_email_verified ON ${quoteChar}passwordauth${quoteChar}(${quoteChar}emailverified${quoteChar});`);
+    // Add FormSubmissions table for storing form data
+    lines.push(`\n-- FormSubmissions table for storing form data`);
+    if (databaseType === 'sqlite') {
+        lines.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}form_submissions${quoteChar} (`, `  ${quoteChar}id${quoteChar} INTEGER PRIMARY KEY AUTOINCREMENT,`, `  ${quoteChar}timestamp${quoteChar} TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,`, `  ${quoteChar}form_name${quoteChar} TEXT NOT NULL,`, `  ${quoteChar}form_data${quoteChar} TEXT NOT NULL`, `);`);
+    }
+    else if (databaseType === 'postgres') {
+        lines.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}form_submissions${quoteChar} (`, `  ${quoteChar}id${quoteChar} SERIAL PRIMARY KEY,`, `  ${quoteChar}timestamp${quoteChar} TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,`, `  ${quoteChar}form_name${quoteChar} VARCHAR(255) NOT NULL,`, `  ${quoteChar}form_data${quoteChar} JSONB NOT NULL`, `);`);
+    }
+    else if (databaseType === 'mysql') {
+        lines.push(`CREATE TABLE IF NOT EXISTS ${quoteChar}form_submissions${quoteChar} (`, `  ${quoteChar}id${quoteChar} INT AUTO_INCREMENT PRIMARY KEY,`, `  ${quoteChar}timestamp${quoteChar} TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,`, `  ${quoteChar}form_name${quoteChar} VARCHAR(255) NOT NULL,`, `  ${quoteChar}form_data${quoteChar} JSON NOT NULL`, `);`);
+    }
+    // Add indexes for FormSubmissions
+    lines.push(`\n-- Indexes for FormSubmissions`);
+    lines.push(`CREATE INDEX IF NOT EXISTS idx_form_submissions_name ON ${quoteChar}form_submissions${quoteChar}(${quoteChar}form_name${quoteChar});`);
+    lines.push(`CREATE INDEX IF NOT EXISTS idx_form_submissions_timestamp ON ${quoteChar}form_submissions${quoteChar}(${quoteChar}timestamp${quoteChar});`);
     lines.push("");
     await fsp.writeFile(basePath, lines.join("\n"), "utf8");
 }
