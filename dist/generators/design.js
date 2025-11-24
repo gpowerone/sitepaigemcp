@@ -144,7 +144,6 @@ h3 {
 button {
   background-color: ${design.accentColor || '#516ab8'};
   color: ${design.accentTextColor || 'white'};
-  font-family: ${design.titleFont || 'Roboto'}, sans-serif;
   border-radius: ${buttonBorderRadius};
 }
 

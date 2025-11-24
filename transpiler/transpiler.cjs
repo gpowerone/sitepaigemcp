@@ -656,6 +656,9 @@ function transpileCode(code, pages, dictionary = {}) {
     
     // Replace window.fetchTest with standard fetch
     code = code.replace(/window\.fetchTest/g, "fetch");
+
+    // Replace window.store_file with standard store_file
+    code = code.replace(/window\.store_file/g, "store_file");
     
     code = code.replace(/window.location.search/g, "typeof(window)!=='undefined' ? window.location.search : ''");
 

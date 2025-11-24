@@ -281,7 +281,6 @@ export default function Menu({ menu, onClick, pages = [] }: MenuProps) {
           key={item.name}
           href={linkUrl}
           onClick={(e) => {
-            e.preventDefault();
             setSelectedPage(item.page);
             onClick?.();
           }}

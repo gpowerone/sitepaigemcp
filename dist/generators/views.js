@@ -2,6 +2,7 @@ import fsp from "node:fs/promises";
 import fs from "node:fs";
 import path from "node:path";
 import { ensureDir, viewFileBaseName, clearGeneratedFileNames } from "./utils.js";
+import { convertHtmlToJsx } from "./html-to-jsx.js";
 import { generateMenuViewCode } from "./menus.js";
 // Debug logging helper for MCP context
 async function debugLog(message) {
@@ -329,20 +330,51 @@ export async function writeViews(targetDir, blueprint, projectCode, authProvider
         // Only generate default code if we don't have provided code
         if (!hasProvidedCode) {
             if (type === "text") {
-                const html = v.custom_view_description.replace(/`/g, "\\`");
-                const useCard = false; // You can modify this based on view properties if needed
-                code = `import React from 'react';
+                const processedJsx = convertHtmlToJsx(v.custom_view_description || "");
+                try {
+                    // Dynamically import the transpiler
+                    // @ts-ignore - CommonJS module
+                    const { transpileCode } = await import("../../transpiler/transpiler.cjs");
+                    const tempCode = `import React from 'react';
+import { useRouter } from 'next/navigation';
 
 interface ${comp}Props {
   isContainer?: boolean;
 }
 
 export default function ${comp}({ isContainer = false }: ${comp}Props){
-  const useCard = ${useCard};
+  const router = useRouter();
+  return (
+      <div className="rtext-content">
+        ${processedJsx}
+      </div>
+  );
+}`;
+                    const dictionary = blueprint.dictionary || {};
+                    const transpiledResult = JSON.parse(transpileCode(tempCode, pages, dictionary));
+                    if (transpiledResult.success) {
+                        code = transpiledResult.code;
+                    }
+                    else {
+                        throw new Error(transpiledResult.error);
+                    }
+                }
+                catch (error) {
+                    await debugLog(`[writeViews] Text view transpilation failed for ${v.id}: ${error}`);
+                    // Fallback to dangerouslySetInnerHTML
+                    const html = v.custom_view_description.replace(/`/g, "\\`");
+                    code = `import React from 'react';
+
+interface ${comp}Props {
+  isContainer?: boolean;
+}
+
+export default function ${comp}({ isContainer = false }: ${comp}Props){
   return (
       <div className="rtext-content" dangerouslySetInnerHTML={{__html: ${JSON.stringify(html)} }} />
   );
 }`;
+                }
             }
             else if (type === "image") {
                 let src = v.custom_view_description || v.background_image || "";

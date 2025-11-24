@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
-import { validateSession } from '../../db-users';
-import { updatePassword, getPasswordAuthByEmail } from '../../db-password-auth';
-import { deleteUser } from '../../db-users';
+import { validateSession } from '../db-users';
+import { updatePassword } from '../db-password-auth';
+import { deleteUser } from '../db-users';
 
 // Handle password change
 export async function PUT(request: NextRequest) {

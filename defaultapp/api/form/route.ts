@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { insertFormSubmission, getFormSubmissions, getFormSubmissionById } from '../db-forms';
+import { getFormSubmissions, getFormSubmissionById } from '../db-forms';
 import { validateSession } from '../db-users';
 import { cookies } from 'next/headers';
-import { validateCSRFToken } from '../csrf';
+import { send_email } from '../storage/email';
 
 /**
  * POST /api/form
@@ -17,20 +17,12 @@ import { validateCSRFToken } from '../csrf';
  * Response:
  * {
  *   success: boolean,
- *   submissionId: number,
  *   message: string
  * }
  */
 export async function POST(request: NextRequest) {
   try {
-    // Validate CSRF token for security
-    const csrfToken = request.headers.get('X-CSRF-Token');
-    if (csrfToken && !(await validateCSRFToken(csrfToken))) {
-      return NextResponse.json(
-        { error: 'Invalid CSRF token' },
-        { status: 403 }
-      );
-    }
+
     
     const body = await request.json();
     const { formName, data } = body;
@@ -64,7 +56,7 @@ export async function POST(request: NextRequest) {
     };
     
     // Check if user is authenticated (optional - forms can work for anonymous users too)
-    let userId = null;
+    let userId: string | null = null;
     try {
       const sessionCookie = await cookies();
       const sessionToken = sessionCookie.get('session_id')?.value;
@@ -80,12 +72,68 @@ export async function POST(request: NextRequest) {
       // Authentication is optional, continue without user data
     }
     
-    // Insert the form submission
-    const submissionId = await insertFormSubmission(formName, enrichedData);
+    // Send email using Resend
+    const siteDomain = process.env.NODE_ENV === 'production' ? process.env.DOMAIN : process.env.LOCAL_DOMAIN;
+    
+    // Determine hostname for email addresses
+    let hostname = 'sitepaige.com'; // Fallback
+    try {
+      if (siteDomain) {
+        // Handle potential missing protocol
+        const urlStr = siteDomain.startsWith('http') ? siteDomain : `https://${siteDomain}`;
+        hostname = new URL(urlStr).hostname;
+      }
+    } catch (e) {
+      console.warn('Could not parse siteDomain for hostname', siteDomain);
+    }
+
+    const toAddress = `admin@${hostname}`;
+    const fromAddress = process.env.EMAIL_FROM || `noreply@sitepaige.com`;
+    
+    // Construct email content
+    const dataRows = Object.entries(enrichedData)
+      .filter(([key]) => key !== '_metadata')
+      .map(([key, value]) => `
+        <tr>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;"><strong>${key}</strong></td>
+          <td style="padding: 8px; border-bottom: 1px solid #ddd;">${typeof value === 'object' ? JSON.stringify(value) : String(value)}</td>
+        </tr>
+      `).join('');
+
+    const emailHtml = `
+      <h2>New Form Submission: ${formName}</h2>
+      <table style="width: 100%; border-collapse: collapse;">
+        <tbody>
+          ${dataRows}
+        </tbody>
+      </table>
+      <br>
+      <h3>Metadata</h3>
+      <pre>${JSON.stringify(enrichedData._metadata, null, 2)}</pre>
+    `;
+    
+    const emailText = `
+New Form Submission: ${formName}
+--------------------------------
+${Object.entries(enrichedData)
+    .filter(([key]) => key !== '_metadata')
+    .map(([key, value]) => `${key}: ${typeof value === 'object' ? JSON.stringify(value) : String(value)}`)
+    .join('\n')}
+
+Metadata:
+${JSON.stringify(enrichedData._metadata, null, 2)}
+    `;
+
+    await send_email({
+      to: toAddress,
+      from: fromAddress,
+      subject: `New Form Submission: ${formName}`,
+      html: emailHtml,
+      text: emailText
+    });
     
     return NextResponse.json({
       success: true,
-      submissionId,
       message: 'Form submitted successfully'
     }, { status: 201 });
     

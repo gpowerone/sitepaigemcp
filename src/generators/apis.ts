@@ -253,7 +253,7 @@ export async function writeApis(targetDir: string, blueprint: Blueprint, project
 
       if (api.requires_auth === 'admin') {
         authCode += `
-    if (UserInfo.IsAdmin !== true) { return NextResponse.json({ error: "Forbidden" }, { status: 403 }); }
+    if (UserInfo.isadmin !== true) { return NextResponse.json({ error: "Forbidden" }, { status: 403 }); }
 `;
       }
 
@@ -281,7 +281,7 @@ import { store_file } from '${relativePathToRoot}storage/files';
 import { send_email } from '${relativePathToRoot}storage/email';
 import { db_init, db_query } from '${relativePathToRoot}db';
 `;
-    const routeCode = header + "\n" + processedApiCode + "\n";
+    const routeCode = header + "\n" + processedApiCode.replace(/window\.store_file/g, "store_file").replace(/window\.send_email/g, "send_email") + "\n";
     await fsp.writeFile(path.join(routeDir, "route.ts"), routeCode, "utf8");
   }
 }
