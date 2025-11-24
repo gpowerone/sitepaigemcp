@@ -79,7 +79,8 @@ export default function Slideshow({
   if (!images || images.length === 0) {
     return (
       <div 
-        className="relative w-full flex items-center justify-center bg-black rounded-lg"
+        className="relative h-full w-full flex items-center justify-center bg-black rounded-lg"
+        style={{ minHeight: height || 400 }}
       >
         <p className="text-gray-400">No images in slideshow</p>
       </div>
@@ -97,18 +98,21 @@ export default function Slideshow({
 
   return (
     <div 
-      className="relative w-full overflow-hidden rounded-lg bg-black"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      className="relative h-full w-full overflow-hidden rounded-lg bg-black"
+      style={{ minHeight: height || 400 }}
     >
       {/* Main image display */}
-      <div className="flex items-center justify-center">
+      <div 
+        className="relative w-full h-full flex items-center justify-center"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
         {animationType === 'fade' ? (
           // Fade animation - render all images with opacity transitions
           images.map((imageId, index) => (
             <div
               key={imageId}
-              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ${
+              className={`absolute inset-0 flex items-center justify-center transition-opacity duration-1000 pointer-events-none ${
                 index === currentIndex ? 'opacity-100' : 'opacity-0'
               }`}
             >
@@ -120,7 +124,7 @@ export default function Slideshow({
                 <img
                   src={getImageSrc(imageId)}
                   alt={`Slide ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none"
                   onError={() => {
                     setImageLoadErrors(prev => ({ ...prev, [imageId]: true }));
                   }}
@@ -138,39 +142,43 @@ export default function Slideshow({
             <img
               src={getImageSrc(currentImageId)}
               alt={`Slide ${currentIndex + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover pointer-events-none"
               onError={() => {
                 setImageLoadErrors(prev => ({ ...prev, [currentImageId]: true }));
               }}
             />
           )
         )}
+        
+        {/* Gradient overlay for better text visibility */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+
+        {/* Navigation arrows - only show if more than one image */}
+        {images.length > 1 && isHovered && (
+          <>
+            <button
+              onClick={handlePrevious}
+              className={`absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 backdrop-blur-sm border-2 border-white text-white transition-all duration-200 transform hover:scale-110 ${
+                isHovered ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+              }`}
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            
+            <button
+              onClick={handleNext}
+              className={`absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/50 backdrop-blur-sm border-2 border-white text-white transition-all duration-200 transform hover:scale-110 ${
+                isHovered ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+              }`}
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-6 h-6" />
+            </button>
+          </>
+        )}
       </div>
       
-      {/* Gradient overlay for better text visibility */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
-
-      {/* Navigation arrows - only show if more than one image and on hover */}
-      {images.length > 1 && isHovered && (
-        <>
-          <button
-            onClick={handlePrevious}
-            className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full !bg-transparent border-2 border-white text-white transition-all duration-200 transform hover:scale-110"
-            aria-label="Previous slide"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          
-          <button
-            onClick={handleNext}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full !bg-transparent border-2 border-white text-white transition-all duration-200 transform hover:scale-110"
-            aria-label="Next slide"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </>
-      )}
-
       {/* Slide indicators */}
       {images.length > 1 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
@@ -188,8 +196,6 @@ export default function Slideshow({
           ))}
         </div>
       )}
-
-     
     </div>
   );
 }
