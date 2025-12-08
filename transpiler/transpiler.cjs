@@ -580,6 +580,145 @@ function pageNameLookup(pages, pageId) {
   // This handles cases where the page ID is passed directly as the page name
   return pageId.toLowerCase().replace(/[^a-zA-Z0-9]/g, '_');
 }
+
+/**
+ * Helper to convert text content to an array of JSX nodes (Text + Links)
+ * @param {string} text - The text to process
+ * @returns {Array} - Array of AST nodes
+ */
+function createNodesFromText(text) {
+  if (!text) return [];
+  
+  // Check for URLs
+  const urlRegex = /(https?:\/\/[^\s]+)/g;
+  if (!urlRegex.test(text)) {
+    return [t.jsxText(text)];
+  }
+
+  const parts = text.split(urlRegex);
+  const nodes = [];
+  
+  parts.forEach(part => {
+    if (!part) return;
+    
+    if (part.match(/^https?:\/\//)) {
+       // It's a URL
+       const link = t.jsxElement(
+         t.jsxOpeningElement(
+           t.jsxIdentifier('a'),
+           [
+             t.jsxAttribute(t.jsxIdentifier('href'), t.stringLiteral(part)),
+             t.jsxAttribute(t.jsxIdentifier('target'), t.stringLiteral('_blank')),
+             t.jsxAttribute(t.jsxIdentifier('rel'), t.stringLiteral('noopener noreferrer')),
+           ]
+         ),
+         t.jsxClosingElement(t.jsxIdentifier('a')),
+         [t.jsxText(part)]
+       );
+       nodes.push(link);
+    } else {
+       // Text
+       nodes.push(t.jsxText(part));
+    }
+  });
+  
+  return nodes;
+}
+
+/**
+ * Converts window.processText calls to text or JSX with links
+ * @param {Object} path - The AST path
+ * @param {Object} dictionary - The text dictionary
+ */
+function convertWindowProcessText(path, dictionary) {
+  // Check for window.processText
+  if (!path.node.callee || path.node.callee.type !== 'MemberExpression') return;
+  
+  const callee = path.node.callee;
+  if (!callee.object || callee.object.name !== 'window' || 
+      !callee.property || callee.property.name !== 'processText') return;
+
+  const args = path.node.arguments;
+  if (args.length === 0) {
+    path.replaceWith(t.stringLiteral(""));
+    return;
+  }
+
+  // Handle template literals (remove them as per original logic)
+  if (args[0].type === 'TemplateLiteral') {
+    path.replaceWith(t.stringLiteral(""));
+    return;
+  }
+
+  // Get key
+  let key = "";
+  if (args[0].type === 'StringLiteral') {
+    key = args[0].value;
+  } else {
+     path.replaceWith(t.stringLiteral(""));
+     return;
+  }
+
+  // Get default text
+  let defaultText = "";
+  if (args.length > 1 && args[1].type === 'StringLiteral') {
+    defaultText = args[1].value;
+    // Restore https/http for logic
+    defaultText = defaultText.replace(/\[httpsstart\]/g, 'https://').replace(/\[httpstart\]/g, 'http://');
+  }
+
+  // Lookup
+  const lowercaseId = key.toLowerCase();
+  const textContent = dictionary[lowercaseId] || dictionary[key];
+  
+  let finalText = textContent !== undefined ? textContent : defaultText;
+  
+  if (!finalText) {
+    path.replaceWith(t.stringLiteral(""));
+    return;
+  }
+  
+  // Check if we are in a prop where JSX is not allowed
+  if (path.parentPath.isJSXExpressionContainer() && path.parentPath.parentPath.isJSXAttribute()) {
+     // Don't convert to JSX in props, return string
+     path.replaceWith(t.stringLiteral(finalText));
+     return;
+  }
+  
+  // CRITICAL FIX: Only convert to JSX links if we are in a valid JSX child position.
+  // If we are in an expression (assignment, function arg, return statement not in JSX),
+  // we MUST return the string, otherwise logic breaks.
+  // e.g. const url = window.processText(...) -> const url = <Fragment>...</Fragment> (BAD)
+  
+  const isJsxChild = path.parentPath.isJSXElement() || path.parentPath.isJSXFragment() || path.parentPath.isJSXExpressionContainer();
+  
+  // Special case: If inside JSXExpressionContainer, check if that container is a child of JSXElement
+  // path.parentPath.isJSXExpressionContainer() is true for both props and children.
+  // We already handled props above (parentPath.parentPath.isJSXAttribute).
+  // So if we are here and it is JSXExpressionContainer, it's likely a child expression { window.processText() }
+  
+  // If NOT in JSX context (e.g. variable assignment, alert(), window.open()), return plain string.
+  if (!isJsxChild) {
+      path.replaceWith(t.stringLiteral(finalText));
+      return;
+  }
+
+  // Get nodes (Text + Links)
+  const nodes = createNodesFromText(finalText);
+  
+  if (nodes.length === 1 && t.isJSXText(nodes[0])) {
+      path.replaceWith(t.stringLiteral(nodes[0].value));
+      return;
+  }
+
+  const fragment = t.jsxFragment(
+    t.jsxOpeningFragment(),
+    t.jsxClosingFragment(),
+    nodes
+  );
+
+  path.replaceWith(fragment);
+}
 /**
  * Removes all comments from the code
  * @param {string} code - The source code with comments
@@ -616,43 +755,7 @@ function transpileCode(code, pages, dictionary = {}) {
     });
     
     // First handle template literals - these shouldn't be sent by frontend, so remove them entirely
-    // Match window.processText with template literal first parameter and any optional second parameter
-    code = code.replace(/window\.processText\(\s*`[^]*?`\s*(?:,\s*[^)]+)?\s*\)/g, function(match) {
-      // Frontend shouldn't send template literals, return empty string
-      return '""';
-    });
-
-    // Then handle static strings - window.processText calls with actual text content from dictionary
-    // Handle both single parameter: window.processText("key") 
-    // and two parameter: window.processText("key", "default") formats
-    // Updated regex to handle escaped quotes within strings
-    code = code.replace(/window\.processText\(\s*(['"`])([^]*?)\1\s*(?:,\s*(['"`])([^]*?)\3)?\s*\)/g, function(match, quote1, dictionaryId, quote2, defaultText) {
-      // Skip if this contains template literal syntax (shouldn't happen after first pass, but be safe)
-      if (dictionaryId.includes('${')) {
-        return match;
-      }
-      
-      // Try lowercase version of the key first (system expects lowercase keys)
-      const lowercaseId = dictionaryId.toLowerCase();
-      const textContent = dictionary[lowercaseId] || dictionary[dictionaryId];
-      let finalText;
-      
-      if (textContent !== undefined) {
-        // Use dictionary value if found
-        finalText = textContent;
-       } else if (defaultText !== undefined) {
-        // Use default text if dictionary key not found but default provided
-        finalText = defaultText;
-
-      } else {
-        // No dictionary value and no default - remove the window.processText call entirely
-        // Return empty string to remove it from the output
-        return '""';
-      }
-      
-      // Escape the text content for safe inclusion in JavaScript
-      return JSON.stringify(finalText);
-    });
+    // Logic moved to AST traversal in convertWindowProcessText
     
     // Replace window.fetchTest with standard fetch
     code = code.replace(/window\.fetchTest/g, "fetch");
@@ -676,6 +779,53 @@ function transpileCode(code, pages, dictionary = {}) {
     const ast = parser.parse(code, {
       sourceType: 'module',
       plugins: ['jsx', 'typescript'],
+    });
+
+    // Pass 1: Process window.processText calls (convert to text or JSX with links)
+    traverse(ast, {
+      CallExpression(path) {
+        convertWindowProcessText(path, dictionary);
+      },
+      JSXText(path) {
+        // Handle window.processText appearing as text content (not in curly braces)
+        const text = path.node.value;
+        const regex = /window\.processText\(\s*(['"`])([^]*?)\1\s*(?:,\s*(['"`])([^]*?)\3)?\s*\)/g;
+        
+        if (!regex.test(text)) return;
+        
+        const nodes = [];
+        let lastIndex = 0;
+        regex.lastIndex = 0;
+        
+        let match;
+        while ((match = regex.exec(text)) !== null) {
+            // Add text before match
+            if (match.index > lastIndex) {
+                nodes.push(t.jsxText(text.slice(lastIndex, match.index)));
+            }
+            
+            const [fullMatch, quote1, dictionaryId, quote2, defaultText] = match;
+            
+             const lowercaseId = dictionaryId.toLowerCase();
+             const textContent = dictionary[lowercaseId] || dictionary[dictionaryId];
+             let finalText = textContent !== undefined ? textContent : (defaultText || "");
+             
+             // Restore https/http (in case defaultText had them)
+             finalText = finalText.replace(/\[httpsstart\]/g, 'https://').replace(/\[httpstart\]/g, 'http://');
+
+             // Convert finalText to nodes (Text + Links)
+             nodes.push(...createNodesFromText(finalText));
+             
+             lastIndex = regex.lastIndex;
+        }
+        
+        // Add remaining text
+        if (lastIndex < text.length) {
+            nodes.push(t.jsxText(text.slice(lastIndex)));
+        }
+        
+        path.replaceWithMultiple(nodes);
+      }
     });
 
     // Add React import if needed

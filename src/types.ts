@@ -76,6 +76,11 @@ export interface Design {
     textColor: string;
     accentColor: string;
     backgroundColor: string;
+    // Gradient and background image support
+    backgroundGradient?: string;
+    backgroundImage?: string;
+    // Background overlay pattern
+    backgroundOverlay?: string | null;
     accentTextColor: string;
     useGradient: boolean;
     gradientColor: string;
@@ -480,6 +485,9 @@ export function getDesign(blueprint: Blueprint): Design {
     textColor: blueprint.design.textColor ?? defaultDesign.textColor,
     accentColor: blueprint.design.accentColor ?? defaultDesign.accentColor,
     backgroundColor: blueprint.design.backgroundColor ?? defaultDesign.backgroundColor,
+    backgroundGradient: blueprint.design.backgroundGradient,
+    backgroundImage: blueprint.design.backgroundImage,
+    backgroundOverlay: blueprint.design.backgroundOverlay,
     accentTextColor: blueprint.design.accentTextColor ?? defaultDesign.accentTextColor,
     useGradient: blueprint.design.useGradient ?? defaultDesign.useGradient,
     gradientColor: blueprint.design.gradientColor ?? defaultDesign.gradientColor,

@@ -20,6 +20,10 @@ h1, h2 {
   margin: 10px 0 !important;
 }
 
+.rtext-content a {
+  text-decoration: underline;
+}
+
 /* Slide down animation for top tray */
 @keyframes slideDown {
   from {

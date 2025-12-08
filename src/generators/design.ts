@@ -1,10 +1,48 @@
 import { Design, Blueprint, getDesign } from "../types.js";
+import { getBackgroundOverlay } from "../constants/backgrounds.js";
 import fs from 'fs';
 import fsp from 'fs/promises';
 import path from 'path';
 
 function isUuidV4Like(s: string): boolean {
   return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s);
+}
+
+// Helper to determine if a color is dark (luminance < 0.5)
+function isColorDark(hexColor: string): boolean {
+  if (!hexColor) return false;
+  const hex = hexColor.replace('#', '');
+  // Handle shorthand hex like #fff
+  const fullHex = hex.length === 3 
+    ? hex.split('').map(c => c + c).join('') 
+    : hex;
+    
+  const r = parseInt(fullHex.substring(0, 2), 16);
+  const g = parseInt(fullHex.substring(2, 4), 16);
+  const b = parseInt(fullHex.substring(4, 6), 16);
+  
+  if (isNaN(r) || isNaN(g) || isNaN(b)) return false;
+
+  // Relative luminance formula
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance < 0.5;
+}
+
+function getBackgroundOverlayCss(id: string | null | undefined, backgroundColor: string = '#ffffff'): string {
+  const overlay = getBackgroundOverlay(id || null);
+  if (!overlay) return '';
+  
+  // Determine if background is dark or light
+  const isDark = isColorDark(backgroundColor);
+  
+  // Use contrasting color with low opacity
+  const patternColor = isDark 
+    ? 'rgba(255,255,255,0.08)'  // White for dark backgrounds
+    : 'rgba(0,0,0,0.06)';       // Black for light backgrounds
+  
+  // Replace placeholder and encode as data URL
+  const svg = overlay.svgTemplate.replace(/\{\{COLOR\}\}/g, patternColor);
+  return `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
 }
 
 
@@ -139,16 +177,43 @@ export async function updateGlobalCSS(targetDir: string, blueprint: Blueprint, v
     `/* CLAUDE IMPORTS */\n${fontImport}\n/* END CLAUDE IMPORTS */`
   );
   
+  // Calculate background styles
+  const overlayCss = getBackgroundOverlayCss(design.backgroundOverlay, design.backgroundColor);
+  const backgroundGradient = design.backgroundGradient ? `background: ${design.backgroundGradient};` : '';
+  
   // Create the CSS content to insert
   const viewStylesContent = viewStyles.length > 0 ? '\n/* PER-VIEW STYLES */\n' + viewStyles.join('\n') + '\n/* END PER-VIEW STYLES */\n' : '';
   
   const cssToInsert = `
 body {
-  background: ${design.backgroundColor || 'white'}; 
+  background: ${design.backgroundColor || 'white'};
+  ${backgroundGradient}
   color: ${design.textColor || 'black'};
   font-family: ${design.textFont || 'Roboto'}, sans-serif;
   font-size: ${textFontSizeValue};
+  min-height: 100vh;
+  position: relative;
 }
+
+${overlayCss ? `
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: ${overlayCss};
+  background-repeat: repeat;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
+}
+` : ''}
 
 h1 {
   color: ${design.titleColor || 'inherit'};

@@ -7,6 +7,7 @@ import { writeApis } from "./generators/apis.js";
 import { processBlueprintImages } from "./generators/images.js";
 import { writeDefaultApp } from "./generators/defaultapp.js";
 import { updateGlobalCSS } from "./generators/design.js";
+import { generateBackgrounds } from "./generators/background-generator.js";
 import { writeArchitectureDoc } from "./generators/architecture.js";
 import path from "node:path";
 import { ensureDir } from "./generators/utils.js";
@@ -62,6 +63,8 @@ export async function writeProjectFromBlueprint(project, options) {
     const viewMap = await writeViews(targetDir, bpWithImages, projectCode, project.AuthProviders);
     // Get the collected view styles
     const viewStyles = getViewStyles();
+    // Generate background gradient/overlay if needed
+    generateBackgrounds(bpWithImages.design);
     await updateGlobalCSS(targetDir, bpWithImages, viewStyles);
     await writePages(targetDir, bpWithImages, viewMap);
     await writeApis(targetDir, bpWithImages, projectCode);
@@ -120,6 +123,8 @@ export async function writeProjectPagesOnly(project, options) {
     const viewMap = await writeViews(targetDir, bpWithImages, projectCode, project.AuthProviders);
     // Get the collected view styles
     const viewStyles = getViewStyles();
+    // Generate background gradient/overlay if needed
+    generateBackgrounds(bpWithImages.design);
     await updateGlobalCSS(targetDir, bpWithImages, viewStyles);
     await writePages(targetDir, bpWithImages, viewMap);
     // Conditionally write APIs based on writeApis option AND if they exist in code

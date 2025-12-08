@@ -7,6 +7,7 @@ import { writeApis } from "./generators/apis.js";
 import { processBlueprintImages } from "./generators/images.js";
 import { writeDefaultApp } from "./generators/defaultapp.js";
 import { updateGlobalCSS } from "./generators/design.js";
+import { generateBackgrounds } from "./generators/background-generator.js";
 import { writeArchitectureDoc } from "./generators/architecture.js";
 import fs from "node:fs";
 import path from "node:path";
@@ -91,6 +92,9 @@ export async function writeProjectFromBlueprint(project: ProjectInput, options: 
   // Get the collected view styles
   const viewStyles = getViewStyles();
 
+  // Generate background gradient/overlay if needed
+  generateBackgrounds(bpWithImages.design);
+
   await updateGlobalCSS(targetDir, bpWithImages, viewStyles);
   await writePages(targetDir, bpWithImages, viewMap);
   await writeApis(targetDir, bpWithImages, projectCode);
@@ -157,6 +161,9 @@ export async function writeProjectPagesOnly(project: ProjectInput, options: Writ
   const viewMap = await writeViews(targetDir, bpWithImages, projectCode, project.AuthProviders);
   // Get the collected view styles
   const viewStyles = getViewStyles();
+
+  // Generate background gradient/overlay if needed
+  generateBackgrounds(bpWithImages.design);
 
   await updateGlobalCSS(targetDir, bpWithImages, viewStyles);
   await writePages(targetDir, bpWithImages, viewMap);
